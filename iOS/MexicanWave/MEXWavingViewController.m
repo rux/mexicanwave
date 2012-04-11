@@ -201,6 +201,7 @@
     [swipeRight release];
     
     [self bounceAnimation];
+    
 
 }
 

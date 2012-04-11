@@ -48,12 +48,19 @@
 }
 
 -(void)commonInitialisation{
+
+    btnYellAppLink.titleLabel.numberOfLines = 2;
+    btnYellAppLink.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    btnYellAppLink.titleLabel.textAlignment = UITextAlignmentCenter;
+    btnYellAppLink.titleLabel.textColor = [UIColor whiteColor];
+
+    
+    
     //if we are in a geography we have an app present it
     if([[self appstoreURLForCurrentLocale] length]){
         btnYellAppLink.hidden = NO;
-        [btnYellAppLink setTitle:NSLocalizedString(@"Yell and Find",@"Yell tag line button Link to appstore") forState:UIControlStateNormal];
+        [btnYellAppLink setTitle:NSLocalizedString(@"Download the Yell app to start finding",@"Yell tag line button Link to appstore") forState:UIControlStateNormal];
     }
-
 
 }
 
