@@ -23,7 +23,7 @@
 @interface MEXWavingViewController ()
 @property (nonatomic,retain) MEXLegacyTorchController* legacyTorchController;
 @property (nonatomic) SystemSoundID waveSoundID;
--(void)animateHintToUser;
+-(void)bounceAnimation;
 -(void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 @end
@@ -35,6 +35,7 @@
 @synthesize waveView;
 @synthesize crowdTypeSelectionControl;
 @synthesize settingView;
+@synthesize tabImageView;
 @synthesize waveModel;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize legacyTorchController;
@@ -175,6 +176,7 @@
     [legacyTorchController release];
     [containerView release];
     [settingView release];
+    [tabImageView release];
     [super dealloc];
 }
 
@@ -190,40 +192,72 @@
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
-    UISwipeGestureRecognizer* swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(didRecieveSwipeLeftGesture:)];
-    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
     [self.containerView addGestureRecognizer:swipeLeft];
     [swipeLeft release];
 
-    UISwipeGestureRecognizer* swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(didRecieveSwipeRightGesture:)];
-    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.settingView addGestureRecognizer:swipeRight];
+    UIPanGestureRecognizer* swipeRight = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureRight:)];
+    [self.tabImageView addGestureRecognizer:swipeRight];
     [swipeRight release];
     
-    [self animateHintToUser];
+    [self bounceAnimation];
 
 }
 
--(void)didRecieveSwipeLeftGesture:(UISwipeGestureRecognizer*)recognizer{
+-(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
+    
+    CGFloat offset = [recognizer translationInView:self.containerView].x;    
+    CGFloat velocity = [recognizer velocityInView:self.containerView].x;
+    //we only want the view to move left
+    if(offset>0){
+        return;
+    }
+    //move the view with the correct offset - we want to start at minus the size of view so that
+
+    self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
+       
     if(recognizer.state == UIGestureRecognizerStateEnded){
+        //if the velocity is high we can assue it was a flick and animate all the way across its minus because we are going left
+        if(velocity<-1000){
+            [UIView animateWithDuration:0.2 animations:^{
+                self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            return;
+        }
+        //if not compare the current offset in relation to the view - if over half way snap to the side
+        offset = (offset> -160) ? 0 : -320;
         [UIView animateWithDuration:0.2 animations:^{
-            self.containerView.frame = CGRectMake(-320.0f, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
-
-      }   
+            self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+    }       
 }
--(void)didRecieveSwipeRightGesture:(UISwipeGestureRecognizer*)recognizer{
+-(void)didRecievePanGestureRight:(UIPanGestureRecognizer*)recognizer{
+    
+    CGFloat offset = [recognizer translationInView:self.containerView].x;    
+    CGFloat velocity = [recognizer velocityInView:self.containerView].x;
+    //we only want the view to move Right
+    if(offset<0){
+        return;
+    }
+    //move the view with the correct offset - we want to start at minus the size of view so that
+    self.containerView.frame = CGRectMake(-320+offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
     
     if(recognizer.state == UIGestureRecognizerStateEnded){
+        //if the velocity is high we can assue it was a flick and animate all the way across
+        if(velocity>1000){
+            [UIView animateWithDuration:0.2 animations:^{
+                self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            return;
+        }
+        //if not compare the current offset in relation to the view - if over half way snap to the side
+        offset = (offset> 160) ? 0 : -320;
         [UIView animateWithDuration:0.2 animations:^{
-            self.containerView.frame = CGRectMake(0.0f, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
-        
+            self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
     }   
 }
-
 
 - (void)viewDidUnload {
     [self setContainerView:nil];
     [self setSettingView:nil];
+    [self setTabImageView:nil];
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MEXWaveModelDidWaveNotification object:nil];
 
@@ -286,9 +320,9 @@
     view.layer.anchorPoint = anchorPoint;
 }
 
--(void)animateHintToUser{
+-(void)bounceAnimation{
    
-       
+    //animate the conatiner view left - and create a bounce like effect  
     CATransform3D shiftedOnScreenTransform = CATransform3DMakeTranslation(0, 0, 0);
     
     CATransform3D startTransfom = CATransform3DMakeTranslation(-20, 0, 0);

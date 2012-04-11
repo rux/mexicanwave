@@ -23,6 +23,7 @@
 @property (nonatomic,retain) IBOutlet MEXWaveFxView* waveView;
 @property (nonatomic,retain) IBOutlet MEXCrowdTypeSelectionControl* crowdTypeSelectionControl;
 @property (retain, nonatomic) IBOutlet SettingsView *settingView;
+@property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
 
 - (IBAction)didChangeCrowdType:(id)sender;
 - (void)pause;

@@ -54,16 +54,36 @@
         [btnYellAppLink setTitle:NSLocalizedString(@"Yell and Find",@"Yell tag line button Link to appstore") forState:UIControlStateNormal];
     }
 
+
 }
 
 #pragma mark TableView Delegates
 
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(10, 10, 300, 30);
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor whiteColor];
+    label.shadowColor = [UIColor blackColor];
+    label.shadowOffset = CGSizeMake(0.0, 1.0);
+    label.font = [UIFont boldSystemFontOfSize:16];
+    label.text = NSLocalizedString(@"Wave Effects", @"Settings table header title");
+    UIView* header = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 40)]autorelease];
+    header.backgroundColor = [UIColor clearColor];
+    [header addSubview:label];
+    [label release];
+    
+    return header;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 40.0f;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return kNumberOfSettings;
 }
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return NSLocalizedString(@"Wave Effects", @"Settings table header title");
-}
+
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"Cell";
     
