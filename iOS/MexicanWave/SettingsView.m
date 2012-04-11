@@ -1,13 +1,12 @@
 //
-//  SettingsViewController.m
+//  SettingsView.m
 //  MexicanWave
 //
-//  Created by Daniel Anderton on 05/04/2012.
+//  Created by Daniel Anderton on 11/04/2012.
 //  Copyright (c) 2012 Yell Group Plc. All rights reserved.
 //
 
-#import "SettingsViewController.h"
-#import "MEXWavingViewController.h"
+#import "SettingsView.h"
 #define kNumberOfSettings 2
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")
@@ -20,11 +19,13 @@
 #define kNSLocaleKeyUS @"US"
 #define kSwitchWidthOffset 20.0f
 
-@interface SettingsViewController ()
+@interface SettingsView ()
 -(NSString*)appstoreURLForCurrentLocale;
+-(void)commonInitialisation;
 @end
 
-@implementation SettingsViewController
+@implementation SettingsView
+
 @synthesize btnYellAppLink;
 @synthesize table;
 - (void)dealloc {
@@ -32,61 +33,27 @@
     [btnYellAppLink release];
     [super dealloc];
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithFrame:frame];
     if (self) {
-        // Custom initialization
+        // Initialization code
     }
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+-(void)awakeFromNib{
+    [self commonInitialisation];
 }
 
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-        
-    //tap gesture to make it eaiser to go back to home screen
-    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapCancel)];
-    tap.delegate = self;
-    [self.view addGestureRecognizer:tap];
-    [tap release];
-    
+-(void)commonInitialisation{
     //if we are in a geography we have an app present it
     if([[self appstoreURLForCurrentLocale] length]){
         btnYellAppLink.hidden = NO;
         [btnYellAppLink setTitle:NSLocalizedString(@"Yell and Find",@"Yell tag line button Link to appstore") forState:UIControlStateNormal];
     }
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-}
 
--(void)didTapCancel{
-    MEXWavingViewController* waveController = (MEXWavingViewController*)self.parentViewController;
-    [waveController resume];
-    [self dismissModalViewControllerAnimated:YES];
-}
-- (void)viewDidUnload
-{
-    [self setTable:nil];
-    [self setBtnYellAppLink:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark TableView Delegates
@@ -112,7 +79,7 @@
         [switchControl addTarget:self action:@selector(didChangeTableSwitch:) forControlEvents:UIControlEventValueChanged];
         [cell addSubview:switchControl];
     }
-
+    
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     
     //get the switch for row and update the  labels and switch from userdefaults
@@ -137,34 +104,36 @@
     
     [defaults synchronize];
 }
-#pragma mark gestureRecognizer 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    
-    // Disallow recognition of tap gestures in the yell button.
-    if (touch.view == btnYellAppLink) {
-        return NO;
-    }
-    return YES;
-}
+
 - (IBAction)didTapYellLink:(id)sender {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self appstoreURLForCurrentLocale]]];
 }
+
 -(NSString*)appstoreURLForCurrentLocale{
     NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
     NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode]; //get current locale as code.
-
+    
     //compare codes to get correct url for app store.
     if([countryCode isEqualToString:kNSLocaleKeyUK]){
-       return @"http://itunes.apple.com/gb/app/yell-search-find-local-uk/id329334877?mt=8";
+        return @"http://itunes.apple.com/gb/app/yell-search-find-local-uk/id329334877?mt=8";
     }
     else if([countryCode isEqualToString:kNSLocaleKeyUS]){
         return @"http://itunes.apple.com/us/app/us-yellow-pages/id306599340?mt=8";
     }
     else if([countryCode isEqualToString:kNSLocaleKeyES]){
-        return @"http://itunes.apple.com/es/app/paginas-amarillas-de-peru/id341220443?mt=8";
+        return @"http://itunes.apple.com/es/app/paginasamarillas.es-cerca/id303686830?mt=8";
     }
     
     return nil;
 }
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect
+{
+    // Drawing code
+}
+*/
 
 @end
