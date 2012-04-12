@@ -198,8 +198,10 @@
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
+    //prevent the phone from auto-locking and dimming
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+        
     [[OmnitureLogging sharedInstance] postEventAppFinishedLaunching];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
@@ -219,6 +221,7 @@
     [swipeRight release];
     
     [self bounceAnimation];
+    [super viewDidLoad];
 
     
 }
