@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00359A7815370D0700BE5D31 /* OmnitureLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 00359A7715370D0700BE5D31 /* OmnitureLogging.m */; };
 		00D26F361535BE85004BC8ED /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F351535BE85004BC8ED /* SettingsView.m */; };
 		00D26F3E1535C7BB004BC8ED /* tab.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3C1535C7BB004BC8ED /* tab.png */; };
 		00D26F3F1535C7BB004BC8ED /* tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3D1535C7BB004BC8ED /* tab@2x.png */; };
@@ -76,6 +77,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00359A7615370D0700BE5D31 /* OmnitureLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OmnitureLogging.h; path = Omniture/OmnitureLogging.h; sourceTree = "<group>"; };
+		00359A7715370D0700BE5D31 /* OmnitureLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OmnitureLogging.m; path = Omniture/OmnitureLogging.m; sourceTree = "<group>"; };
 		00D26F341535BE85004BC8ED /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		00D26F351535BE85004BC8ED /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		00D26F3C1535C7BB004BC8ED /* tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab.png; sourceTree = "<group>"; };
@@ -188,9 +191,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00359A7415370C1C00BE5D31 /* Omniture */ = {
+			isa = PBXGroup;
+			children = (
+				00359A7615370D0700BE5D31 /* OmnitureLogging.h */,
+				00359A7715370D0700BE5D31 /* OmnitureLogging.m */,
+			);
+			name = Omniture;
+			sourceTree = "<group>";
+		};
 		00813F08152DE72A00262289 /* Settings / Config */ = {
 			isa = PBXGroup;
 			children = (
+				00359A7415370C1C00BE5D31 /* Omniture */,
 				00D26F5F1536CAD3004BC8ED /* JSON */,
 				00D26F491536C886004BC8ED /* DeprecationAPI */,
 				00D26F341535BE85004BC8ED /* SettingsView.h */,
@@ -527,6 +540,7 @@
 				00D26F701536CAD3004BC8ED /* SBJsonBase.m in Sources */,
 				00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */,
 				00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */,
+				00359A7815370D0700BE5D31 /* OmnitureLogging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

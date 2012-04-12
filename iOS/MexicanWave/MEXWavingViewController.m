@@ -13,6 +13,7 @@
 #import "MEXLegacyTorchController.h"            // TODO: Remove this once support for iOS 4.x is not a concern.
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "OmnitureLogging.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
@@ -198,6 +199,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[OmnitureLogging sharedInstance] postEventAppFinishedLaunching];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:kSettingsDidChange object:nil];
     
@@ -215,6 +219,7 @@
     [swipeRight release];
     
     [self bounceAnimation];
+
     
 }
 
@@ -233,15 +238,20 @@
     self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
        
     if(recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled){
-        self.viewIsAnimating = NO;
+
         //if the velocity is high we can assue it was a flick and animate all the way across its minus because we are going left
         if(velocity<-1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            [[OmnitureLogging sharedInstance] postEventSettingsViewVisible];
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
         offset = (offset> -160) ? 0 : -320;
+        
+        //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view d
+        (offset == -320) ? [[OmnitureLogging sharedInstance] postEventSettingsViewVisible] : [self setViewIsAnimating:NO];
+        
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
     }       
@@ -322,21 +332,21 @@
 -(void)bounceAnimation{
    
     //animate the conatiner view left - and create a bounce like effect  
-    CATransform3D shiftedOnScreenTransform = CATransform3DMakeTranslation(0, 0, 0);
+    CATransform3D resetTransform = CATransform3DMakeTranslation(0, 0, 0);
     
-    CATransform3D startTransfom = CATransform3DMakeTranslation(-20, 0, 0);
+    CATransform3D startTransfom = CATransform3DMakeTranslation(-24, 0, 0);
 
-    CATransform3D middleTransfom = CATransform3DMakeTranslation(-10, 0, 0);
+    CATransform3D middleTransfom = CATransform3DMakeTranslation(-12, 0, 0);
 
-    CATransform3D endTransform = CATransform3DMakeTranslation(-5, 0, 0);
+    CATransform3D endTransform = CATransform3DMakeTranslation(-6, 0, 0);
 
     CAKeyframeAnimation* opacityAnim = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
     opacityAnim.values = [NSArray arrayWithObjects:[NSValue valueWithCATransform3D:startTransfom],
-                          [NSValue valueWithCATransform3D:shiftedOnScreenTransform],
+                          [NSValue valueWithCATransform3D:resetTransform],
                           [NSValue valueWithCATransform3D:middleTransfom],
-                          [NSValue valueWithCATransform3D:shiftedOnScreenTransform],
+                          [NSValue valueWithCATransform3D:resetTransform],
                           [NSValue valueWithCATransform3D:endTransform],
-                          [NSValue valueWithCATransform3D:shiftedOnScreenTransform],nil];
+                          [NSValue valueWithCATransform3D:resetTransform],nil];
     
     opacityAnim.keyTimes = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.16667],[NSNumber numberWithFloat:0.33],[NSNumber numberWithFloat:0.50],[NSNumber numberWithFloat:0.666],[NSNumber numberWithFloat:0.8333],[NSNumber numberWithFloat:1],nil];
     opacityAnim.duration = 1.0;
