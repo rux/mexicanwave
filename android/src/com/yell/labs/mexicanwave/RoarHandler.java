@@ -13,13 +13,12 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.LinearLayout;
 
 class RoarHandler {
 	private Vibrator vibrator;
 	private Camera camera;
 	private Parameters p;
-	private LinearLayout theLayout;
+	private View theLayout;
 	private SurfaceView dummy;
 	
 	private boolean currentlyRoaring;
@@ -49,7 +48,7 @@ class RoarHandler {
         
         
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
-        theLayout = (LinearLayout) v;
+        theLayout = (View) v;
         currentlyRoaring = false;
 	}
 	
@@ -87,10 +86,9 @@ class RoarHandler {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("ss.SSS");
 		float seconds = Float.parseFloat(dateFormat.format(new Date()));
-		Log.i("info", String.valueOf(seconds));
 		
 		float offset = seconds * 6 * (60/wavelength);
-		return (float) 0.0;
+		return (float) offset;
 	}
 	
     void check(float azimuth) {
@@ -102,7 +100,7 @@ class RoarHandler {
 		Log.i("info", String.valueOf(averageAzimuth) + " and absolute is " + String.valueOf(azimuth) + " and currentlyRoaring is " + String.valueOf(currentlyRoaring));
 		
 
-		if (averageAzimuth < -1 || averageAzimuth > 2.5) {
+		if (averageAzimuth < -160 || averageAzimuth > 160) {
 			goWild();
 		} else {
 			calmDown();
@@ -130,12 +128,12 @@ class RoarHandler {
 	
 
 	public void calmDown() {
-		if (currentlyRoaring == true) {
+	//	if (currentlyRoaring == true) {
 			p.setFlashMode(Parameters.FLASH_MODE_OFF);
 			camera.setParameters(p);
 			camera.stopPreview();
 			theLayout.setBackgroundColor(Color.BLACK);
-		}
+	//	}
 		currentlyRoaring = false;
 	}
 }

@@ -4,4 +4,5 @@
     <string name="app_name">Mexicanwave</string>
 
     <string name="Torch">Torch</string>
+    <string name="RadarImageDescription">Radar</string>
 </resources>
