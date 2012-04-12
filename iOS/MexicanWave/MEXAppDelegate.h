@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AppUpgradeController.h"
+#import "SettingsModel.h"
 @class MEXWavingViewController;
 
 @interface MEXAppDelegate : UIResponder <UIApplicationDelegate>
@@ -15,5 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIWindow *window;
 
 @property (strong, nonatomic) IBOutlet MEXWavingViewController* viewController;
+
+
 
 @end
