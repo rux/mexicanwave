@@ -237,7 +237,7 @@
 
     self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
        
-    if(recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled){
+    if(recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed){
 
         //if the velocity is high we can assue it was a flick and animate all the way across its minus because we are going left
         if(velocity<-1000){
@@ -268,7 +268,7 @@
     //move the view with the correct offset - we want to start at minus the size of view so that
     self.containerView.frame = CGRectMake(-320+offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
     
-    if(recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled){
+    if(recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed){
         self.viewIsAnimating = NO;
         //if the velocity is high we can assue it was a flick and animate all the way across
         if(velocity>1000){
