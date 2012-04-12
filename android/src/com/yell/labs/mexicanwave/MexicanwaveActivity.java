@@ -113,7 +113,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			if (success) {
 				// transpose to a coordinate system where the x axis goes front-to-back through the screen rather than bottom to top parallel with it
 				
-				SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, augmentedR);
+				// SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, augmentedR);
 				
 				//float orientation[] = new float[3];
 				//SensorManager.getOrientation(augmentedR, orientation);
