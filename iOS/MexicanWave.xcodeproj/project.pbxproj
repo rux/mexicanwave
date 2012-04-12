@@ -12,6 +12,18 @@
 		00D26F3F1535C7BB004BC8ED /* tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3D1535C7BB004BC8ED /* tab@2x.png */; };
 		00D26F471535E591004BC8ED /* button-whole.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F451535E591004BC8ED /* button-whole.png */; };
 		00D26F481535E591004BC8ED /* button-whole@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F461535E591004BC8ED /* button-whole@2x.png */; };
+		00D26F551536C886004BC8ED /* AppUpgradeConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F4A1536C886004BC8ED /* AppUpgradeConfiguration.plist */; };
+		00D26F561536C886004BC8ED /* AppUpgradeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F4C1536C886004BC8ED /* AppUpgradeController.m */; };
+		00D26F571536C886004BC8ED /* AppUpgradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F4E1536C886004BC8ED /* AppUpgradeModel.m */; };
+		00D26F581536C886004BC8ED /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F501536C886004BC8ED /* NSString+URLEncoding.m */; };
+		00D26F591536C886004BC8ED /* SettingsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F521536C886004BC8ED /* SettingsModel.m */; };
+		00D26F5A1536C886004BC8ED /* UIDevice+DetailedModelName.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F541536C886004BC8ED /* UIDevice+DetailedModelName.m */; };
+		00D26F6D1536CAD3004BC8ED /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F621536CAD3004BC8ED /* NSObject+SBJSON.m */; };
+		00D26F6E1536CAD3004BC8ED /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F641536CAD3004BC8ED /* NSString+SBJSON.m */; };
+		00D26F6F1536CAD3004BC8ED /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F661536CAD3004BC8ED /* SBJSON.m */; };
+		00D26F701536CAD3004BC8ED /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F681536CAD3004BC8ED /* SBJsonBase.m */; };
+		00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F6A1536CAD3004BC8ED /* SBJsonParser.m */; };
+		00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F6C1536CAD3004BC8ED /* SBJsonWriter.m */; };
 		1903F3CD1510F23A00807542 /* MEXWaveFxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3CC1510F23A00807542 /* MEXWaveFxView.m */; };
 		1903F3D01510F50C00807542 /* MEXLampView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3CF1510F50B00807542 /* MEXLampView.m */; };
 		1903F3D8151236BB00807542 /* MEXCrowdTypeSelectionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */; };
@@ -70,6 +82,30 @@
 		00D26F3D1535C7BB004BC8ED /* tab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab@2x.png"; sourceTree = "<group>"; };
 		00D26F451535E591004BC8ED /* button-whole.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-whole.png"; sourceTree = "<group>"; };
 		00D26F461535E591004BC8ED /* button-whole@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-whole@2x.png"; sourceTree = "<group>"; };
+		00D26F4A1536C886004BC8ED /* AppUpgradeConfiguration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppUpgradeConfiguration.plist; sourceTree = "<group>"; };
+		00D26F4B1536C886004BC8ED /* AppUpgradeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUpgradeController.h; sourceTree = "<group>"; };
+		00D26F4C1536C886004BC8ED /* AppUpgradeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUpgradeController.m; sourceTree = "<group>"; };
+		00D26F4D1536C886004BC8ED /* AppUpgradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUpgradeModel.h; sourceTree = "<group>"; };
+		00D26F4E1536C886004BC8ED /* AppUpgradeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUpgradeModel.m; sourceTree = "<group>"; };
+		00D26F4F1536C886004BC8ED /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		00D26F501536C886004BC8ED /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		00D26F511536C886004BC8ED /* SettingsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsModel.h; sourceTree = "<group>"; };
+		00D26F521536C886004BC8ED /* SettingsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsModel.m; sourceTree = "<group>"; };
+		00D26F531536C886004BC8ED /* UIDevice+DetailedModelName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+DetailedModelName.h"; sourceTree = "<group>"; };
+		00D26F541536C886004BC8ED /* UIDevice+DetailedModelName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+DetailedModelName.m"; sourceTree = "<group>"; };
+		00D26F601536CAD3004BC8ED /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		00D26F611536CAD3004BC8ED /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		00D26F621536CAD3004BC8ED /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		00D26F631536CAD3004BC8ED /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		00D26F641536CAD3004BC8ED /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		00D26F651536CAD3004BC8ED /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		00D26F661536CAD3004BC8ED /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		00D26F671536CAD3004BC8ED /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		00D26F681536CAD3004BC8ED /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		00D26F691536CAD3004BC8ED /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		00D26F6A1536CAD3004BC8ED /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		00D26F6B1536CAD3004BC8ED /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		00D26F6C1536CAD3004BC8ED /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		1903F3CB1510F23900807542 /* MEXWaveFxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXWaveFxView.h; sourceTree = "<group>"; };
 		1903F3CC1510F23A00807542 /* MEXWaveFxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveFxView.m; sourceTree = "<group>"; };
 		1903F3CE1510F50A00807542 /* MEXLampView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXLampView.h; sourceTree = "<group>"; };
@@ -152,13 +188,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00813F08152DE72A00262289 /* Settings */ = {
+		00813F08152DE72A00262289 /* Settings / Config */ = {
 			isa = PBXGroup;
 			children = (
+				00D26F5F1536CAD3004BC8ED /* JSON */,
+				00D26F491536C886004BC8ED /* DeprecationAPI */,
 				00D26F341535BE85004BC8ED /* SettingsView.h */,
 				00D26F351535BE85004BC8ED /* SettingsView.m */,
 			);
-			name = Settings;
+			name = "Settings / Config";
+			sourceTree = "<group>";
+		};
+		00D26F491536C886004BC8ED /* DeprecationAPI */ = {
+			isa = PBXGroup;
+			children = (
+				00D26F4A1536C886004BC8ED /* AppUpgradeConfiguration.plist */,
+				00D26F4B1536C886004BC8ED /* AppUpgradeController.h */,
+				00D26F4C1536C886004BC8ED /* AppUpgradeController.m */,
+				00D26F4D1536C886004BC8ED /* AppUpgradeModel.h */,
+				00D26F4E1536C886004BC8ED /* AppUpgradeModel.m */,
+				00D26F4F1536C886004BC8ED /* NSString+URLEncoding.h */,
+				00D26F501536C886004BC8ED /* NSString+URLEncoding.m */,
+				00D26F511536C886004BC8ED /* SettingsModel.h */,
+				00D26F521536C886004BC8ED /* SettingsModel.m */,
+				00D26F531536C886004BC8ED /* UIDevice+DetailedModelName.h */,
+				00D26F541536C886004BC8ED /* UIDevice+DetailedModelName.m */,
+			);
+			path = DeprecationAPI;
+			sourceTree = "<group>";
+		};
+		00D26F5F1536CAD3004BC8ED /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				00D26F601536CAD3004BC8ED /* JSON.h */,
+				00D26F611536CAD3004BC8ED /* NSObject+SBJSON.h */,
+				00D26F621536CAD3004BC8ED /* NSObject+SBJSON.m */,
+				00D26F631536CAD3004BC8ED /* NSString+SBJSON.h */,
+				00D26F641536CAD3004BC8ED /* NSString+SBJSON.m */,
+				00D26F651536CAD3004BC8ED /* SBJSON.h */,
+				00D26F661536CAD3004BC8ED /* SBJSON.m */,
+				00D26F671536CAD3004BC8ED /* SBJsonBase.h */,
+				00D26F681536CAD3004BC8ED /* SBJsonBase.m */,
+				00D26F691536CAD3004BC8ED /* SBJsonParser.h */,
+				00D26F6A1536CAD3004BC8ED /* SBJsonParser.m */,
+				00D26F6B1536CAD3004BC8ED /* SBJsonWriter.h */,
+				00D26F6C1536CAD3004BC8ED /* SBJsonWriter.m */,
+			);
+			path = JSON;
 			sourceTree = "<group>";
 		};
 		1903F3E11517717800807542 /* Views */ = {
@@ -290,7 +366,7 @@
 		199CB60A14FEA3CA00A16A97 /* MexicanWave */ = {
 			isa = PBXGroup;
 			children = (
-				00813F08152DE72A00262289 /* Settings */,
+				00813F08152DE72A00262289 /* Settings / Config */,
 				199CB61314FEA3CA00A16A97 /* MEXAppDelegate.h */,
 				199CB61414FEA3CA00A16A97 /* MEXAppDelegate.m */,
 				199CB63814FF851C00A16A97 /* Waving */,
@@ -418,6 +494,7 @@
 				00D26F3F1535C7BB004BC8ED /* tab@2x.png in Resources */,
 				00D26F471535E591004BC8ED /* button-whole.png in Resources */,
 				00D26F481535E591004BC8ED /* button-whole@2x.png in Resources */,
+				00D26F551536C886004BC8ED /* AppUpgradeConfiguration.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +516,17 @@
 				196B8E331518937400DAD14A /* MEXSegmentButtonControl.m in Sources */,
 				1967B91E152311C100A924D5 /* MEXLegacyTorchController.m in Sources */,
 				00D26F361535BE85004BC8ED /* SettingsView.m in Sources */,
+				00D26F561536C886004BC8ED /* AppUpgradeController.m in Sources */,
+				00D26F571536C886004BC8ED /* AppUpgradeModel.m in Sources */,
+				00D26F581536C886004BC8ED /* NSString+URLEncoding.m in Sources */,
+				00D26F591536C886004BC8ED /* SettingsModel.m in Sources */,
+				00D26F5A1536C886004BC8ED /* UIDevice+DetailedModelName.m in Sources */,
+				00D26F6D1536CAD3004BC8ED /* NSObject+SBJSON.m in Sources */,
+				00D26F6E1536CAD3004BC8ED /* NSString+SBJSON.m in Sources */,
+				00D26F6F1536CAD3004BC8ED /* SBJSON.m in Sources */,
+				00D26F701536CAD3004BC8ED /* SBJsonBase.m in Sources */,
+				00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */,
+				00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
