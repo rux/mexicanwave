@@ -4548,7 +4548,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="451868215"/>
+								<reference key="NSNextKeyView" ref="805234120"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MSAwAA</bytes>
@@ -4573,7 +4573,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIView" id="451868215">
+							<object class="IBUIView" id="805234120">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{320, 460}</string>
@@ -4670,7 +4670,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">whiteFlashView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="451868215"/>
+						<reference key="destination" ref="805234120"/>
 					</object>
 					<int key="connectionID">38</int>
 				</object>
@@ -4761,7 +4761,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="576328331"/>
 							<reference ref="957085552"/>
 							<reference ref="777623617"/>
-							<reference ref="451868215"/>
+							<reference ref="805234120"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 					</object>
@@ -4806,7 +4806,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">37</int>
-						<reference key="object" ref="451868215"/>
+						<reference key="object" ref="805234120"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>

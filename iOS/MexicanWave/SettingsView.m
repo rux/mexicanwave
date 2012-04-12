@@ -19,6 +19,8 @@
 #define kNSLocaleKeyUS @"US"
 #define kSwitchWidthOffset 20.0f
 
+NSString* const kSettingsDidChange = @"kSettingsDidChange";
+
 @interface SettingsView ()
 -(NSString*)appstoreURLForCurrentLocale;
 -(void)commonInitialisation;
@@ -130,6 +132,7 @@
     }
     
     [defaults synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSettingsDidChange object:nil];
 }
 
 - (IBAction)didTapYellLink:(id)sender {

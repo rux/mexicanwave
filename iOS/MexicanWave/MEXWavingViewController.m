@@ -199,6 +199,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:kSettingsDidChange object:nil];
     
     // Set crowd type on view from model
     self.crowdTypeSelectionControl.selectedSegment = (MEXCrowdTypeSelectionSegment)self.waveModel.crowdType;
