@@ -243,6 +243,8 @@ static NSString* const kUpgradeModelDictionaryFilename = @"LastUpgrade";
 		if([responseData length]) {
             NSString* responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
 			NSObject* parsedResponse = [responseString JSONValue];
+            [responseString release];
+            
 			if([parsedResponse isKindOfClass:[NSDictionary class]]) {
 				NSObject* parsedVersionUpdateInfo = [(NSDictionary*)parsedResponse valueForKey:kVersionUpdateKey];
 				if([parsedVersionUpdateInfo isKindOfClass:[NSDictionary class]]) {

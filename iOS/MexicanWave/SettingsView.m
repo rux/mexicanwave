@@ -7,6 +7,8 @@
 //
 
 #import "SettingsView.h"
+#import "OmnitureLogging.h"
+
 #define kNumberOfSettings 2
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")
@@ -18,6 +20,8 @@
 #define kNSLocaleKeyES @"ES"
 #define kNSLocaleKeyUS @"US"
 #define kSwitchWidthOffset 20.0f
+
+NSString* const kSettingsDidChange = @"kSettingsDidChange";
 
 @interface SettingsView ()
 -(NSString*)appstoreURLForCurrentLocale;
@@ -55,9 +59,9 @@
     [btnYellAppLink setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btnYellAppLink setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
 
-    
     //if we are in a geography we have an app present it
     if([[self appstoreURLForCurrentLocale] length]){
+        [[OmnitureLogging sharedInstance] postEventLinkIsVisible];
         btnYellAppLink.hidden = NO;
         [btnYellAppLink setTitle:NSLocalizedString(@"Download The Yell App\n to start finding",@"Yell tag line button Link to appstore") forState:UIControlStateNormal];
     }
@@ -130,9 +134,11 @@
     }
     
     [defaults synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSettingsDidChange object:nil];
 }
 
 - (IBAction)didTapYellLink:(id)sender {
+    [[OmnitureLogging sharedInstance] postEventLinkPressed];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self appstoreURLForCurrentLocale]]];
 }
 

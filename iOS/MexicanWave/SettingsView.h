@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+NSString* const kSettingsDidChange;
+
 @interface SettingsView : UIView <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *table;
 @property (retain, nonatomic) IBOutlet UIButton *btnYellAppLink;

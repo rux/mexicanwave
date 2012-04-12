@@ -18,12 +18,14 @@
 @property (nonatomic,retain) MEXWaveModel* waveModel;
 @property (nonatomic,getter=isVibrationOnWaveEnabled) BOOL vibrationOnWaveEnabled;
 @property (nonatomic,getter=isSoundOnWaveEnabled) BOOL soundOnWaveEnabled;
+@property (nonatomic,getter=isViewAnimating) BOOL viewIsAnimating;
 @property (retain, nonatomic) IBOutlet UIView *containerView;
 
 @property (nonatomic,retain) IBOutlet MEXWaveFxView* waveView;
 @property (nonatomic,retain) IBOutlet MEXCrowdTypeSelectionControl* crowdTypeSelectionControl;
 @property (retain, nonatomic) IBOutlet SettingsView *settingView;
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
+@property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
 
 - (IBAction)didChangeCrowdType:(id)sender;
 - (void)pause;

@@ -13,6 +13,7 @@
 #import "MEXLegacyTorchController.h"            // TODO: Remove this once support for iOS 4.x is not a concern.
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "OmnitureLogging.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
@@ -24,7 +25,6 @@
 @property (nonatomic,retain) MEXLegacyTorchController* legacyTorchController;
 @property (nonatomic) SystemSoundID waveSoundID;
 -(void)bounceAnimation;
--(void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 @end
 
@@ -36,10 +36,11 @@
 @synthesize crowdTypeSelectionControl;
 @synthesize settingView;
 @synthesize tabImageView;
+@synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize legacyTorchController;
-@synthesize waveSoundID;
+@synthesize waveSoundID,viewIsAnimating;
 
 - (MEXWaveModel*)waveModel {
     if(!waveModel) {
@@ -149,6 +150,19 @@
     if(self.isSoundOnWaveEnabled) {
         AudioServicesPlaySystemSound(self.waveSoundID);
     }
+
+    if(!self.isViewAnimating){
+        
+        const float duration = (crowdTypeSelectionControl.selectedSegment == MEXCrowdTypeSelectionSegmentRight) ? 0.5 : 0.2;
+        //animate the screen flash
+        [UIView animateWithDuration:duration animations:^{
+            self.whiteFlashView.alpha = 1; 
+        }completion:^(BOOL finished) {
+            [UIView animateWithDuration:duration animations:^{
+                self.whiteFlashView.alpha = 0;            
+            }];
+        }];
+    }
 }
 
 #pragma mark - Controller lifecycle
@@ -177,18 +191,24 @@
     [containerView release];
     [settingView release];
     [tabImageView release];
+    [whiteFlashView release];
     [super dealloc];
 }
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    
+    //prevent the phone from auto-locking and dimming
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+        
+    [[OmnitureLogging sharedInstance] postEventAppFinishedLaunching];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:kSettingsDidChange object:nil];
     
     // Set crowd type on view from model
     self.crowdTypeSelectionControl.selectedSegment = (MEXCrowdTypeSelectionSegment)self.waveModel.crowdType;
-    
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
@@ -201,11 +221,14 @@
     [swipeRight release];
     
     [self bounceAnimation];
-    
+    [super viewDidLoad];
 
+    
 }
 
 -(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
+
+    self.viewIsAnimating = YES;
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
@@ -217,20 +240,27 @@
 
     self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
        
-    if(recognizer.state == UIGestureRecognizerStateEnded){
+    if(recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed){
+
         //if the velocity is high we can assue it was a flick and animate all the way across its minus because we are going left
         if(velocity<-1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            [[OmnitureLogging sharedInstance] postEventSettingsViewVisible];
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
         offset = (offset> -160) ? 0 : -320;
+        
+        //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view d
+        (offset == -320) ? [[OmnitureLogging sharedInstance] postEventSettingsViewVisible] : [self setViewIsAnimating:NO];
+        
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
     }       
 }
 -(void)didRecievePanGestureRight:(UIPanGestureRecognizer*)recognizer{
+    self.viewIsAnimating = YES;
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
@@ -241,7 +271,8 @@
     //move the view with the correct offset - we want to start at minus the size of view so that
     self.containerView.frame = CGRectMake(-320+offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
     
-    if(recognizer.state == UIGestureRecognizerStateEnded){
+    if(recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed){
+        self.viewIsAnimating = NO;
         //if the velocity is high we can assue it was a flick and animate all the way across
         if(velocity>1000){
             [UIView animateWithDuration:0.2 animations:^{
@@ -259,6 +290,7 @@
     [self setContainerView:nil];
     [self setSettingView:nil];
     [self setTabImageView:nil];
+    [self setWhiteFlashView:nil];
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MEXWaveModelDidWaveNotification object:nil];
 
@@ -299,46 +331,25 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
 }
--(void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view
-{
-    //take the new anchor point and set it - reset the postion back to its original place. 
-    //(changing the anchor point also changed the location of the view.)
-    CGPoint newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x, view.bounds.size.height * anchorPoint.y);
-    CGPoint oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x, view.bounds.size.height * view.layer.anchorPoint.y);
-    
-    newPoint = CGPointApplyAffineTransform(newPoint, view.transform);
-    oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform);
-    
-    CGPoint position = view.layer.position;
-    
-    position.x -= oldPoint.x;
-    position.x += newPoint.x;
-    
-    position.y -= oldPoint.y;
-    position.y += newPoint.y;
-    
-    view.layer.position = position;
-    view.layer.anchorPoint = anchorPoint;
-}
 
 -(void)bounceAnimation{
    
     //animate the conatiner view left - and create a bounce like effect  
-    CATransform3D shiftedOnScreenTransform = CATransform3DMakeTranslation(0, 0, 0);
+    CATransform3D resetTransform = CATransform3DMakeTranslation(0, 0, 0);
     
-    CATransform3D startTransfom = CATransform3DMakeTranslation(-20, 0, 0);
+    CATransform3D startTransfom = CATransform3DMakeTranslation(-24, 0, 0);
 
-    CATransform3D middleTransfom = CATransform3DMakeTranslation(-10, 0, 0);
+    CATransform3D middleTransfom = CATransform3DMakeTranslation(-12, 0, 0);
 
-    CATransform3D endTransform = CATransform3DMakeTranslation(-5, 0, 0);
+    CATransform3D endTransform = CATransform3DMakeTranslation(-6, 0, 0);
 
     CAKeyframeAnimation* opacityAnim = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
     opacityAnim.values = [NSArray arrayWithObjects:[NSValue valueWithCATransform3D:startTransfom],
-                          [NSValue valueWithCATransform3D:shiftedOnScreenTransform],
+                          [NSValue valueWithCATransform3D:resetTransform],
                           [NSValue valueWithCATransform3D:middleTransfom],
-                          [NSValue valueWithCATransform3D:shiftedOnScreenTransform],
+                          [NSValue valueWithCATransform3D:resetTransform],
                           [NSValue valueWithCATransform3D:endTransform],
-                          [NSValue valueWithCATransform3D:shiftedOnScreenTransform],nil];
+                          [NSValue valueWithCATransform3D:resetTransform],nil];
     
     opacityAnim.keyTimes = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.16667],[NSNumber numberWithFloat:0.33],[NSNumber numberWithFloat:0.50],[NSNumber numberWithFloat:0.666],[NSNumber numberWithFloat:0.8333],[NSNumber numberWithFloat:1],nil];
     opacityAnim.duration = 1.0;
