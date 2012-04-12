@@ -88,8 +88,9 @@ NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotificat
 #pragma mark - Waving
 
 - (void)waveDidPassOurBearing {
-    [self scheduleWave];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:MEXWaveModelDidWaveNotification object:[NSNumber numberWithBool:YES]]];
+    [self scheduleWave];
+
 }
 
 - (void)cancelWave {
@@ -104,11 +105,7 @@ NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotificat
         return;
     }
     
-    // Check our activity status
-    if([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
-        return;
-    }
-    const float timeToNextWave = self.wavePeriodInSeconds * (1.0f - self.wavePhase);
+    const float timeToNextWave = self.wavePeriodInSeconds * (0.99 - self.wavePhase);
     [self performSelector:@selector(waveDidPassOurBearing) withObject:nil afterDelay:timeToNextWave];
 }
 
@@ -134,9 +131,12 @@ NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotificat
     }
     crowdType = kMEXCrowdTypeStageBased;
     compassModel = [[MEXCompassModel alloc] init];
-        
+
+   
     NSNotificationCenter* noteCenter = [NSNotificationCenter defaultCenter];
     [noteCenter addObserver:self selector:@selector(scheduleWave) name:UIApplicationSignificantTimeChangeNotification object:nil];        
+    [noteCenter addObserver:self selector:@selector(scheduleWave) name:UIApplicationDidFinishLaunchingNotification object:nil];        
+
     return self;
 }
 
