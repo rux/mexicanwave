@@ -1,0 +1,135 @@
+package com.yell.labs.mexicanwave;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.RotateAnimation;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
+
+public class MexicanwaveActivity extends Activity implements SensorEventListener {
+    
+	private Button button;
+	private RoarHandler roarHandler;
+	private Context context;
+	private LinearLayout view;
+	private SensorManager mySensorManager;
+	private Sensor accelerometer;
+	private Sensor magnetometer;
+	private float[] myGravities;
+	private float[] myMagnetics;
+	private float azimuth;
+	
+	WaveCompass waveCompass;
+	
+	private RotateAnimation rotateAnimation;
+	
+	@Override
+    protected void onStop() {
+		super.onStop();
+		roarHandler.calmDown();
+	}
+	
+
+    
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        setContentView(R.layout.main);
+        context = this;
+        view = (LinearLayout) findViewById(R.id.overallLayout);
+        button = (Button) findViewById(R.id.buttonForWave);
+        roarHandler = new RoarHandler(context, view);
+        
+        mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetometer = mySensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        
+        waveCompass = new WaveCompass(this);
+        setContentView(waveCompass);
+        
+        button.setOnClickListener(new OnClickListener() {
+        	@Override
+        	public void onClick(View arg0) {
+
+        	}
+        	
+        });
+               
+    }
+    
+    
+    
+    protected void onResume() {
+    	super.onResume();
+    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST );
+    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_FASTEST );
+    }
+ 
+    protected void onPause() {
+    	super.onPause();
+    	mySensorManager.unregisterListener(this);
+    	roarHandler.calmDown();
+    }
+    
+    
+
+
+
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+	}
+
+
+	
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+			myGravities = event.values;
+		}
+		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+			myMagnetics = event.values;
+		}
+		
+		if (myGravities != null && myMagnetics != null) {
+			float R[] = new float[9];
+			float augmentedR[] = new float[9];
+			float I[] = new float[9];
+			boolean success = SensorManager.getRotationMatrix(R, I, myGravities, myMagnetics);
+			if (success) {
+				// transpose to a coordinate system where the x axis goes front-to-back through the screen rather than bottom to top parallel with it
+				
+				SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, augmentedR);
+				
+				//float orientation[] = new float[3];
+				//SensorManager.getOrientation(augmentedR, orientation);
+				//azimuth = orientation[0];
+				
+				// retired code, but a reminder that we could do the coordinate mapping this way later on...
+				azimuth = (float) Math.atan2(-R[2], -R[5]);
+				
+				roarHandler.check(azimuth);
+				
+				
+				waveCompass.setDirection((float) (-roarHandler.getAzimuthInDegrees()) + roarHandler.getWaveOffestFromAzimuthInDegrees());
+
+			}
+			
+		}
+		
+	}
+}
