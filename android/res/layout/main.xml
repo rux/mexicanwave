@@ -26,5 +26,12 @@
         android:layout_centerInParent="true"
         android:src="@drawable/wave_disc"
         android:contentDescription="@string/RadarImageDescription" />
+    
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/background" />
 
 </RelativeLayout>
