@@ -58,7 +58,6 @@ class RoarHandler {
 	
 	private void setAzimuth(float a) {
 		double oldAzimuth = (double) azimuth;
-		// azimuth = (a + 19*oldAzimuth) / 20;
 		double newAzimuth = (double) a;
 		
 		double oldx = Math.sin(oldAzimuth);
@@ -74,7 +73,6 @@ class RoarHandler {
 	}
 	
 	public float getAzimuth() {
-		// TODO Auto-generated method stub
 		return azimuth;
 	}
 	public float getAzimuthInDegrees() {

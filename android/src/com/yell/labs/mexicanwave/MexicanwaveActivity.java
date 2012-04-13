@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,11 +46,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        
-        
-        //waveCompass = new WaveCompass(this);
-        //setContentView(waveCompass);
-        
         setContentView(R.layout.main);
         context = this;
         view = (RelativeLayout) findViewById(R.id.overallLayout);
@@ -82,8 +75,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     
     protected void onResume() {
     	super.onResume();
-    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST );
-    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_FASTEST );
+    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME );
+    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME );
     }
  
     protected void onPause() {
@@ -116,33 +109,20 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		
 		if (myGravities != null && myMagnetics != null) {
 			float Ro[] = new float[9];
-			// float augmentedR[] = new float[9];
 			float I[] = new float[9];
 			boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 			if (success) {
-				// transpose to a coordinate system where the x axis goes front-to-back through the screen rather than bottom to top parallel with it
+																// 
+				azimuth = (float) Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
+																// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
+																// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
+																// held up to do a mexican wave, we don't really care about this state.
 				
-				// SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_X, SensorManager.AXIS_Z, augmentedR);
+				float oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smooths the rotation animation
 				
-				//float orientation[] = new float[3];
-				//SensorManager.getOrientation(augmentedR, orientation);
-				//azimuth = orientation[0];
-				
-				// retired code, but a reminder that we could do the coordinate mapping this way later on...
-				azimuth = (float) Math.atan2(-Ro[2], -Ro[5]);
-				
-				float oldAzimuth = roarHandler.getAzimuthInDegrees();
-				
-				roarHandler.check(azimuth);
-				
-				// TODO: animation here?
-				// waveCompass.setDirection((float) (-roarHandler.getAzimuthInDegrees()) + roarHandler.getWaveOffestFromAzimuthInDegrees());
-				// rotateAnimation = (Animation) AnimationUtils.loadAnimation(this, R.anim.rotation);
+				roarHandler.check(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 				
 				rotateAnimation = new RotateAnimation(oldAzimuth + roarHandler.getWaveOffestFromAzimuthInDegrees(), roarHandler.getAzimuthInDegrees() + roarHandler.getWaveOffestFromAzimuthInDegrees(), Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
-				
-				
-				
 				waveCompass.startAnimation(rotateAnimation);
 			}
 			
