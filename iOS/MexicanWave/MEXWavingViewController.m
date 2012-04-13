@@ -244,6 +244,7 @@
 
         //if the velocity is high we can assue it was a flick and animate all the way across its minus because we are going left
         if(velocity<-1000){
+            [self.settingView animateWave];
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
             [[OmnitureLogging sharedInstance] postEventSettingsViewVisible];
@@ -253,7 +254,13 @@
         offset = (offset> -160) ? 0 : -320;
         
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view d
-        (offset == -320) ? [[OmnitureLogging sharedInstance] postEventSettingsViewVisible] : [self setViewIsAnimating:NO];
+        if (offset == -320) 
+        { 
+            [[OmnitureLogging sharedInstance] postEventSettingsViewVisible];  [self.settingView animateWave]; 
+        } 
+        else{ 
+            [self setViewIsAnimating:NO];
+        };
         
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
@@ -261,6 +268,7 @@
 }
 -(void)didRecievePanGestureRight:(UIPanGestureRecognizer*)recognizer{
     self.viewIsAnimating = YES;
+    [settingView.yellAnimation stopAnimating];
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
@@ -281,6 +289,8 @@
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
         offset = (offset> 160) ? 0 : -320;
+        (offset == -320) ? [settingView.yellAnimation startAnimating] : [settingView.yellAnimation stopAnimating];
+      
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
     }   
