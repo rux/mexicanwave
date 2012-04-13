@@ -89,24 +89,26 @@ class RoarHandler {
 		return (float) offset;
 	}
 	
-    void check(float azimuth) {
-		this.setAzimuth(azimuth);
+    void update(float azimuth) {
+		this.setAzimuth(azimuth);  // we do the maths for smoothing in here
 		
 		float averageAzimuth = this.getAzimuthInDegrees();
     	float waveOffset = this.getWaveOffestFromAzimuthInDegrees();
+		Log.i("info", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
 		
-		Log.i("info", String.valueOf(averageAzimuth) + " and absolute is " + String.valueOf(azimuth) + " and currentlyRoaring is " + String.valueOf(currentlyRoaring));
-		
+		this.check();
 
-		if (averageAzimuth < -160 || averageAzimuth > 160) {
+    }	
+	
+	
+	public void check() {
+		float angle = (-this.getAzimuthInDegrees() + getWaveOffestFromAzimuthInDegrees()) % 360;
+		if (angle > 160 && angle < 200) {
 			goWild();
 		} else {
 			calmDown();
 		}
-    }	
-	
-	
-	
+	}
 
 
 	public void goWild() {

@@ -49,26 +49,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         setContentView(R.layout.main);
         context = this;
         view = (RelativeLayout) findViewById(R.id.overallLayout);
-        button = (Button) findViewById(R.id.buttonForWave);
         waveCompass = (ImageView) findViewById(R.id.spinningDisc);
-        
-        
-                
+  
         roarHandler = new RoarHandler(context, view);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mySensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-
-        
-//        button.setOnClickListener(new OnClickListener() {
- //       	@Override
-   //     	public void onClick(View arg0) {
-
-     //   	}
-        	
-       // });
-               
     }
     
     
@@ -120,9 +107,12 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				
 				float oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smooths the rotation animation
 				
-				roarHandler.check(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
+				roarHandler.update(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 				
-				rotateAnimation = new RotateAnimation(oldAzimuth + roarHandler.getWaveOffestFromAzimuthInDegrees(), roarHandler.getAzimuthInDegrees() + roarHandler.getWaveOffestFromAzimuthInDegrees(), Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
+				float newAzimuth = roarHandler.getAzimuthInDegrees();
+				float offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
+				
+				rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
 				waveCompass.startAnimation(rotateAnimation);
 			}
 			
