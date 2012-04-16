@@ -9,8 +9,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.hardware.Camera.Size;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
@@ -20,6 +22,7 @@ class RoarHandler {
 	private Parameters p;
 	private View theLayout;
 	private SurfaceView dummy;
+	private SurfaceHolder dummyholder;
 	
 	public boolean currentlyRoaring;
 	
@@ -39,6 +42,7 @@ class RoarHandler {
         theLayout = (View) v;
 
 		dummy=new SurfaceView(c);
+		dummyholder = dummy.getHolder();
 		
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
@@ -119,13 +123,19 @@ class RoarHandler {
 	public void goWild() {
 		if (currentlyRoaring != true) {
 			p.setFlashMode(Parameters.FLASH_MODE_TORCH);
-			camera.setParameters(p);
 	        try {
-				camera.setPreviewDisplay(dummy.getHolder());
+				camera.setPreviewDisplay(dummyholder);
 			} catch (IOException e) {
+
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
+	        
+	        
+	        Size s = p.getPreviewSize();
+	        p.setPreviewSize(s.width, s.height);
+			
+	        camera.setParameters(p);
 	        camera.startPreview();
 			
 
@@ -148,4 +158,8 @@ class RoarHandler {
 		}
 		currentlyRoaring = false;
 	}
+
+	
+	
+	
 }

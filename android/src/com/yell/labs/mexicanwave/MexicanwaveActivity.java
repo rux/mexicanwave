@@ -70,8 +70,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
     protected void onPause() {
     	super.onPause();
-    	roarHandler.calmDown();
     	mySensorManager.unregisterListener(this);
+    	
+    	roarHandler.calmDown();
 
     	if (roarHandler.currentlyRoaring == false) {
     		roarHandler.releaseCamera();
