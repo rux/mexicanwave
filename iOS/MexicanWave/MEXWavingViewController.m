@@ -14,6 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "OmnitureLogging.h"
+#import "SharePhotoViewController.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
@@ -53,6 +54,20 @@
 }
 
 #pragma mark - UI actions
+
+- (IBAction)didTapTakePhoto:(id)sender {
+    
+    [self.videoView capturePhotoWithCompletion:^{
+        SharePhotoViewController* photoView = [[SharePhotoViewController alloc]init];
+        photoView.takenphoto = self.videoView.capturedImage;
+        UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:photoView];
+        [self presentModalViewController:navController animated:YES];
+        [navController release];
+        [photoView release];
+    }];
+  
+    
+}
 
 - (IBAction)didChangeCrowdType:(id)sender {
     switch ([(MEXCrowdTypeSelectionControl*)sender selectedSegment]) {

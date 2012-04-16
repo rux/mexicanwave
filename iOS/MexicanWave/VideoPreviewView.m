@@ -93,7 +93,9 @@
     [session stopRunning];
 }
 
--(void)capturePhoto{
+
+
+-(void)capturePhotoWithCompletion:(void(^)(void))completion{
     AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in stillImageOutput.connections)
 	{
@@ -116,13 +118,15 @@
 		 
          NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
          //we have a new image so clear out the old and set the new image.
-         if(imageData){
-             self.capturedImage = nil;
-             capturedImage = [[UIImage alloc] initWithData:imageData];
+         self.capturedImage = nil;
+         capturedImage = [[UIImage alloc] initWithData:imageData];
+         if(completion){
+             completion();
          }
+         
 	 }];
-}
 
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -47,7 +47,7 @@
 								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="310183317"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="798026463"/>
+								<reference key="NSNextKeyView" ref="800266986"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">10</int>
 									<object class="NSImage" key="NSImage">
@@ -4470,7 +4470,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<double key="IBUITitleEdgeInsets.left">10</double>
 								<double key="IBUITitleEdgeInsets.right">10</double>
 								<string key="IBUINormalTitle">Download the Yell app to start finding</string>
-								<object class="NSColor" key="IBUIHighlightedTitleColor">
+								<object class="NSColor" key="IBUIHighlightedTitleColor" id="737297024">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
@@ -4478,7 +4478,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
 								</object>
-								<object class="NSColor" key="IBUINormalTitleShadowColor">
+								<object class="NSColor" key="IBUINormalTitleShadowColor" id="873027926">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
@@ -4486,17 +4486,17 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">button-whole.png</string>
 								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription">
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="998865892">
 									<int key="type">2</int>
 									<double key="pointSize">15</double>
 								</object>
-								<object class="NSFont" key="IBUIFont">
+								<object class="NSFont" key="IBUIFont" id="281190609">
 									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">15</double>
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
-							<object class="IBUIImageView" id="798026463">
+							<object class="IBUIImageView" id="800266986">
 								<reference key="NSNextResponder" ref="310183317"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{125, 300}, {70, 67}}</string>
@@ -4530,7 +4530,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<reference key="NSNextResponder" ref="1002267159"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="264805238">
+							<object class="IBUIView" id="1041226851">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">274</int>
 								<string key="NSFrameSize">{320, 460}</string>
@@ -4552,7 +4552,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="NSFrame">{{320, 150}, {21, 47}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="824582980"/>
+								<reference key="NSNextKeyView" ref="888426051"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
@@ -4603,6 +4603,30 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
+							<object class="IBUIButton" id="888426051">
+								<reference key="NSNextResponder" ref="191373211"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{10, 8}, {50, 38}}</string>
+								<reference key="NSSuperview" ref="191373211"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="824582980"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<int key="IBUIContentHorizontalAlignment">0</int>
+								<int key="IBUIContentVerticalAlignment">0</int>
+								<reference key="IBUIHighlightedTitleColor" ref="737297024"/>
+								<object class="NSColor" key="IBUINormalTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="873027926"/>
+								<object class="NSCustomResource" key="IBUINormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">camera.png</string>
+								</object>
+								<reference key="IBUIFontDescription" ref="998865892"/>
+								<reference key="IBUIFont" ref="281190609"/>
+							</object>
 							<object class="IBUIView" id="805234120">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
@@ -4623,7 +4647,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="NSFrameSize">{341, 460}</string>
 						<reference key="NSSuperview" ref="1002267159"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="264805238"/>
+						<reference key="NSNextKeyView" ref="1041226851"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MSAwAA</bytes>
@@ -4709,7 +4733,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">videoView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="264805238"/>
+						<reference key="destination" ref="1041226851"/>
 					</object>
 					<int key="connectionID">42</int>
 				</object>
@@ -4763,6 +4787,15 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<int key="connectionID">29</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">didTapTakePhoto:</string>
+						<reference key="source" ref="888426051"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">45</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -4798,7 +4831,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<array class="NSMutableArray" key="children">
 							<reference ref="437127057"/>
 							<reference ref="498059517"/>
-							<reference ref="798026463"/>
+							<reference ref="800266986"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 					</object>
@@ -4822,7 +4855,8 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="957085552"/>
 							<reference ref="777623617"/>
 							<reference ref="805234120"/>
-							<reference ref="264805238"/>
+							<reference ref="1041226851"/>
+							<reference ref="888426051"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 					</object>
@@ -4854,13 +4888,18 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">41</int>
-						<reference key="object" ref="264805238"/>
+						<reference key="object" ref="1041226851"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">43</int>
-						<reference key="object" ref="798026463"/>
+						<reference key="object" ref="800266986"/>
 						<reference key="parent" ref="310183317"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">44</int>
+						<reference key="object" ref="888426051"/>
+						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
 			</object>
@@ -4883,6 +4922,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				<string key="41.CustomClassName">VideoPreviewView</string>
 				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="43.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.CustomClassName">MEXWaveFxView</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -4891,7 +4931,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">43</int>
+			<int key="maxID">45</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4914,17 +4954,20 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">MEXWavingViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">didChangeCrowdType:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">didChangeCrowdType:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="didChangeCrowdType:">id</string>
+						<string key="didTapTakePhoto:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="didChangeCrowdType:">
 							<string key="name">didChangeCrowdType:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+						<object class="IBActionInfo" key="didTapTakePhoto:">
+							<string key="name">didTapTakePhoto:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="containerView">UIView</string>
 						<string key="crowdTypeSelectionControl">MEXCrowdTypeSelectionControl</string>
@@ -5019,6 +5062,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="background_Camera.png">{320, 460}</string>
 			<string key="button-whole.png">{200, 78}</string>
+			<string key="camera.png">{55, 41}</string>
 			<string key="tab.png">{21, 47}</string>
 			<string key="yell_icon.png">{70, 75}</string>
 		</dictionary>

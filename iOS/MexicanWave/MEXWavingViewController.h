@@ -28,6 +28,7 @@
 @property (retain, nonatomic) IBOutlet SettingsView *settingView;
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
 @property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
+- (IBAction)didTapTakePhoto:(id)sender;
 
 - (IBAction)didChangeCrowdType:(id)sender;
 - (void)pause;

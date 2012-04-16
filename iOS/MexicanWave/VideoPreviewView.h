@@ -16,5 +16,5 @@
 
 -(void)startVideo;
 -(void)stopVideo;
--(void)capturePhoto;
+-(void)capturePhotoWithCompletion:(void(^)(void))completion;
 @end
