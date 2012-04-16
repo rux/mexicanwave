@@ -33,5 +33,13 @@
         android:layout_centerInParent="true"
         android:src="@drawable/background"
         android:contentDescription="@string/backgroundImageDescription" />
+    
+    <Button 
+        android:id="@+id/buttonForWave"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@+id/preferences_button"
+        />
 
 </RelativeLayout>

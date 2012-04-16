@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string-array name="pref_color_entries">       
+        <item>White (Default)</item>
+        <item>Red</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Blue</item>
+    </string-array>
+
+    <string-array name="pref_color_values">       
+        <item>Color.WHITE</item>       
+        <item>Color.RED</item>       
+        <item>Color.YELLOW</item>       
+        <item>Color.GREEN</item>       
+        <item>Color.BLUE</item>
+	</string-array>
+
+    <string-array name="pref_group_size_entries">       
+        <item>Small</item>
+        <item>Gig</item>
+        <item>Stadium</item>
+    </string-array>
+    <string-array name="pref_group_size_values">       
+        <item>5</item>
+        <item>15</item>
+        <item>30</item>
+    </string-array>
+</resources>

@@ -3,11 +3,13 @@ package com.yell.labs.mexicanwave;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +22,7 @@ import android.widget.RelativeLayout;
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback {
     
-	private Button button;
+	private Button settingsButton;
 	private RoarHandler roarHandler;
 	private Context context;
 	private RelativeLayout view;
@@ -43,10 +45,15 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+
+       
+        
         setContentView(R.layout.main);
         context = this;
         view = (RelativeLayout) findViewById(R.id.overallLayout);
         waveCompass = (ImageView) findViewById(R.id.spinningDisc);
+        
+        settingsButton = (Button) findViewById(R.id.buttonForWave);
   
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
@@ -56,6 +63,17 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mySensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        
+        
+        settingsButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.i("info", "jumping to settings activity");
+				Intent k = new Intent(context, SettingsActivity.class);
+				startActivity(k);
+			}
+		});
     }
     
 	@Override

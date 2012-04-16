@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
+    <PreferenceCategory 
+        android:title="Crowd size">
+        <ListPreference 
+            android:title="How large a group are you in?"
+            android:summary="This preference allows you to choose your favourite colour for the wave flash on your screen"
+            android:key="pref_group_size"
+            android:entries="@array/pref_group_size_entries"
+            android:entryValues="@array/pref_group_size_values"/>
+    </PreferenceCategory>    
     
+    <PreferenceCategory 
+        android:title="Appearance">
+        <ListPreference 
+            android:title="Favourite Color"
+            android:summary="This preference allows you to choose your favourite colour for the wave flash on your screen"
+            android:key="pref_color"
+            android:entries="@array/pref_color_entries"
+            android:entryValues="@array/pref_color_values"/>
+    </PreferenceCategory>
     
 </PreferenceScreen>
