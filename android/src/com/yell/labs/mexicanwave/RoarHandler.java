@@ -16,46 +16,18 @@ import android.view.View;
 
 class RoarHandler {
 	private Vibrator vibrator;
-	private Camera camera;
-	private Parameters p;
 	private View theLayout;
-	private SurfaceView dummy;
-	
-	public boolean currentlyRoaring;
-	
-	private float azimuth;
-	
-	
-	
+	private PreviewSurface mSurface;
+	private boolean cameraReady;	
+	public boolean currentlyRoaring;	
+	private float azimuth;	
 
-	RoarHandler(Context c, View v) {
-        PackageManager pm = c.getPackageManager();
-        if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-        	Log.e("err", "This device has no flash");
-        	return;
-        }
-        
+	RoarHandler(Context c, View v) {        
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         theLayout = (View) v;
-
-		dummy=new SurfaceView(c);
 		
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
-	
-	
-	public void grabCamera() {
-		camera = Camera.open();
-		p = camera.getParameters();
-
-		Log.i("info", "The Camera is initialised!");
-	}
-	public void releaseCamera() {
-		this.calmDown();
-		camera.release();
-		camera = null;
-	}
-	
 	
 	public boolean getCurrentlyRoaring() {
 		return currentlyRoaring;
@@ -93,8 +65,6 @@ class RoarHandler {
 		float offset = seconds * 6 * (60/wavelength);
 		return (float) offset;
 	}
-
-
 	
     void update(float azimuth) {
 		this.setAzimuth(azimuth);  // we do the maths for smoothing in here
@@ -104,8 +74,7 @@ class RoarHandler {
 		Log.i("info", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
 		this.check();
     }	
-	
-	
+		
 	public void check() {
 		float angle = (-this.getAzimuthInDegrees() + getWaveOffestFromAzimuthInDegrees()) % 360;
 		if (angle > 160 && angle < 200) {
@@ -115,37 +84,28 @@ class RoarHandler {
 		}
 	}
 
-
+	public void setReady(boolean ready) {
+		cameraReady = ready;
+	}
+	
 	public void goWild() {
-		if (currentlyRoaring != true) {
-			p.setFlashMode(Parameters.FLASH_MODE_TORCH);
-			camera.setParameters(p);
-	        try {
-				camera.setPreviewDisplay(dummy.getHolder());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-	        camera.startPreview();
-			
-
-			
+		if (currentlyRoaring != true && cameraReady) {			
+			mSurface.lightOn();
 			vibrator.vibrate(1000);
 			theLayout.setBackgroundColor(Color.WHITE);
-			
+		} else {
+			// Log.i("info", "already roaring");
 		}
-		Log.i("info", "camera info " + String.valueOf(camera) + "  :  " + String.valueOf(p.getFlashMode()));
-		currentlyRoaring = true;
+		
+		currentlyRoaring = true;		
 	}	
 	
-
 	public void calmDown() {
-		if (currentlyRoaring == true) {
-			p.setFlashMode(Parameters.FLASH_MODE_OFF);
-			camera.setParameters(p);
-			camera.stopPreview();
+		if(cameraReady) {
+			mSurface.lightOff();
 			theLayout.setBackgroundColor(Color.BLACK);
 		}
+		
 		currentlyRoaring = false;
 	}
 }

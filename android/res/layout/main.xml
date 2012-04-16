@@ -6,7 +6,14 @@
     android:background="@color/red"
     android:orientation="vertical" >
 
-    <ImageView
+    <com.yell.labs.mexicanwave.PreviewSurface
+        android:id="@+id/surface"
+        android:layout_width="1dp"
+        android:layout_height="1dp"/>
+
+    <!-- The following is a view to simply cover the preview surface -->
+
+    <View
         android:id="@+id/spinningDisc"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
