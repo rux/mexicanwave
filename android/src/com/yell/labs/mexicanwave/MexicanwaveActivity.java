@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
-public class MexicanwaveActivity extends Activity implements SensorEventListener {
+public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback {
     
 	private Button button;
 	private RoarHandler roarHandler;
@@ -30,7 +30,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private float[] myGravities;
 	private float[] myMagnetics;
 	private float azimuth;
-	
+	private PreviewSurface mSurface;
+		
 	ImageView waveCompass;
 	
 	private Animation rotateAnimation;
@@ -47,7 +48,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         view = (RelativeLayout) findViewById(R.id.overallLayout);
         waveCompass = (ImageView) findViewById(R.id.spinningDisc);
   
-        roarHandler = new RoarHandler(context, view);
+        mSurface = (PreviewSurface) findViewById(R.id.surface);
+        mSurface.setCallback(this);
+
+        roarHandler = new RoarHandler(context, view, mSurface);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -64,21 +68,25 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     	super.onResume();
     	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI );
     	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI );
-    	roarHandler.grabCamera();
     }
  
 	@Override
     protected void onPause() {
     	super.onPause();
     	mySensorManager.unregisterListener(this);
-    	
     	roarHandler.calmDown();
-
-    	if (roarHandler.currentlyRoaring == false) {
-    		roarHandler.releaseCamera();
-    	}
+        mSurface.releaseCamera();
     }
 
+	@Override
+	public void cameraReady() {
+		roarHandler.setReady(true);
+	}
+
+	@Override
+	public void cameraNotAvailable() {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
