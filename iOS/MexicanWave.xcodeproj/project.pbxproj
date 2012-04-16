@@ -14,6 +14,8 @@
 		005F6076153C25DA00999B47 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6075153C25DA00999B47 /* CoreVideo.framework */; };
 		005F6078153C25E700999B47 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6077153C25E700999B47 /* ImageIO.framework */; };
 		005F607A153C260000999B47 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6079153C260000999B47 /* CoreMedia.framework */; };
+		005F607D153C3C1400999B47 /* yell_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F607B153C3C1400999B47 /* yell_icon.png */; };
+		005F607E153C3C1400999B47 /* yell_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F607C153C3C1400999B47 /* yell_icon@2x.png */; };
 		00D26F361535BE85004BC8ED /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F351535BE85004BC8ED /* SettingsView.m */; };
 		00D26F3E1535C7BB004BC8ED /* tab.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3C1535C7BB004BC8ED /* tab.png */; };
 		00D26F3F1535C7BB004BC8ED /* tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3D1535C7BB004BC8ED /* tab@2x.png */; };
@@ -92,6 +94,8 @@
 		005F6075153C25DA00999B47 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		005F6077153C25E700999B47 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		005F6079153C260000999B47 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		005F607B153C3C1400999B47 /* yell_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yell_icon.png; sourceTree = "<group>"; };
+		005F607C153C3C1400999B47 /* yell_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yell_icon@2x.png"; sourceTree = "<group>"; };
 		00D26F341535BE85004BC8ED /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		00D26F351535BE85004BC8ED /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		00D26F3C1535C7BB004BC8ED /* tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab.png; sourceTree = "<group>"; };
@@ -314,6 +318,8 @@
 		196B8DF51517B58700DAD14A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				005F607B153C3C1400999B47 /* yell_icon.png */,
+				005F607C153C3C1400999B47 /* yell_icon@2x.png */,
 				005F606D153C1EF400999B47 /* background_Camera.png */,
 				005F606E153C1EF400999B47 /* background_Camera@2x.png */,
 				00D26F451535E591004BC8ED /* button-whole.png */,
@@ -533,6 +539,8 @@
 				00D26F551536C886004BC8ED /* AppUpgradeConfiguration.plist in Resources */,
 				005F606F153C1EF400999B47 /* background_Camera.png in Resources */,
 				005F6070153C1EF400999B47 /* background_Camera@2x.png in Resources */,
+				005F607D153C3C1400999B47 /* yell_icon.png in Resources */,
+				005F607E153C3C1400999B47 /* yell_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -287,12 +287,11 @@
         //if not compare the current offset in relation to the view - if over half way snap to the side
         offset = (offset> -160) ? 0 : -320;
         
-        //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view d
-        (offset == -320) ?  [[OmnitureLogging sharedInstance] postEventSettingsViewVisible] :  [self resume];
-
-        
+        //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view        
         [UIView animateWithDuration:0.2 animations:^{
-            self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
+                (offset == -320) ?  [[OmnitureLogging sharedInstance] postEventSettingsViewVisible] :  [self resume];
+            }];
     }       
 }
 -(void)didRecievePanGestureRight:(UIPanGestureRecognizer*)recognizer{
