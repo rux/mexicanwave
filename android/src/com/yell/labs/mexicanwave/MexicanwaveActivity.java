@@ -35,14 +35,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	private Animation rotateAnimation;
 	
-	@Override
-    protected void onStop() {
-		super.onStop();
-		roarHandler.calmDown();
-	}
+
 	
 
-    
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
@@ -58,32 +54,35 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         magnetometer = mySensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
     }
     
-    
-    
+	@Override
+    protected void onStop() {
+		super.onStop();
+	}
+	
+	@Override
     protected void onResume() {
     	super.onResume();
     	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME );
     	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME );
+    	roarHandler.grabCamera();
     }
  
+	@Override
     protected void onPause() {
     	super.onPause();
-    	mySensorManager.unregisterListener(this);
     	roarHandler.calmDown();
+    	mySensorManager.unregisterListener(this);
+
+    	if (roarHandler.currentlyRoaring == false) {
+    		roarHandler.releaseCamera();
+    	}
     }
-    
-    
-
-
 
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 	}
-
-
-	
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {

@@ -15,13 +15,14 @@ import android.view.SurfaceView;
 import android.view.View;
 
 class RoarHandler {
+	private Context context;
 	private Vibrator vibrator;
 	private Camera camera;
 	private Parameters p;
 	private View theLayout;
 	private SurfaceView dummy;
 	
-	private boolean currentlyRoaring;
+	public boolean currentlyRoaring;
 	
 	private float azimuth;
 	
@@ -34,23 +35,32 @@ class RoarHandler {
         	Log.e("err", "This device has no flash");
         	return;
         }
-        if (camera == null) {
-        	camera = Camera.open();
-            dummy = new SurfaceView(c);
-            try {
-            	camera.setPreviewDisplay(dummy.getHolder());
-            } catch (IOException e) {
-				e.printStackTrace();
-			} 
-            
-        }
-        p = camera.getParameters();
-        
         
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         theLayout = (View) v;
-        currentlyRoaring = false;
+
+		dummy=new SurfaceView(c);
+		
+        currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
+	
+	
+	public void grabCamera() {
+		camera = Camera.open();
+		p = camera.getParameters();
+        try {
+			camera.setPreviewDisplay(dummy.getHolder());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		Log.i("info", "The Camera is initialised!");
+	}
+	public void releaseCamera() {
+		this.calmDown();
+		camera.release();
+	}
+	
 	
 	public boolean getCurrentlyRoaring() {
 		return currentlyRoaring;
@@ -69,7 +79,7 @@ class RoarHandler {
 		double x = 39*oldx + newx;
 		double y = 39*oldy + newy;
 		
-		azimuth = (float) Math.atan2(x, y);  // upside down x and y.  do not be afraid.
+		azimuth = (float) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
 	}
 	
 	public float getAzimuth() {
@@ -88,6 +98,8 @@ class RoarHandler {
 		float offset = seconds * 6 * (60/wavelength);
 		return (float) offset;
 	}
+
+
 	
     void update(float azimuth) {
 		this.setAzimuth(azimuth);  // we do the maths for smoothing in here
@@ -95,9 +107,7 @@ class RoarHandler {
 		float averageAzimuth = this.getAzimuthInDegrees();
     	float waveOffset = this.getWaveOffestFromAzimuthInDegrees();
 		Log.i("info", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
-		
 		this.check();
-
     }	
 	
 	
@@ -118,22 +128,19 @@ class RoarHandler {
 			camera.startPreview();
 			vibrator.vibrate(1000);
 			theLayout.setBackgroundColor(Color.WHITE);
-			Log.i("info", "roaring ssss " + String.valueOf(currentlyRoaring));
-		} else {
-			// Log.i("info", "already roaring");
+			Log.i("info", "camera info " + String.valueOf(camera) + "  :  " + String.valueOf(p.getFlashMode()));
 		}
-		
 		currentlyRoaring = true;
 	}	
 	
 
 	public void calmDown() {
-	//	if (currentlyRoaring == true) {
+		if (currentlyRoaring == true) {
 			p.setFlashMode(Parameters.FLASH_MODE_OFF);
 			camera.setParameters(p);
 			camera.stopPreview();
 			theLayout.setBackgroundColor(Color.BLACK);
-	//	}
+		}
 		currentlyRoaring = false;
 	}
 }
