@@ -51,7 +51,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
 
-        roarHandler = new RoarHandler(context, view);
+        roarHandler = new RoarHandler(context, view, mSurface);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

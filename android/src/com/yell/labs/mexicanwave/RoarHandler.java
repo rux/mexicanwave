@@ -22,9 +22,12 @@ class RoarHandler {
 	public boolean currentlyRoaring;	
 	private float azimuth;	
 
-	RoarHandler(Context c, View v) {        
+	RoarHandler(Context c, View v, PreviewSurface previewSurface) {        
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         theLayout = (View) v;
+        
+        mSurface = previewSurface;
+        
 		
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
@@ -93,19 +96,21 @@ class RoarHandler {
 			mSurface.lightOn();
 			vibrator.vibrate(1000);
 			theLayout.setBackgroundColor(Color.WHITE);
+			currentlyRoaring = true;		
 		} else {
 			// Log.i("info", "already roaring");
 		}
 		
-		currentlyRoaring = true;		
+		
 	}	
 	
 	public void calmDown() {
 		if(cameraReady) {
 			mSurface.lightOff();
 			theLayout.setBackgroundColor(Color.BLACK);
+			currentlyRoaring = false;
 		}
 		
-		currentlyRoaring = false;
+		
 	}
 }
