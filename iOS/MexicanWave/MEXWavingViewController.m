@@ -30,7 +30,7 @@
 
 
 @implementation MEXWavingViewController
-
+@synthesize videoView;
 @synthesize containerView;
 @synthesize waveView;
 @synthesize crowdTypeSelectionControl;
@@ -40,7 +40,7 @@
 @synthesize waveModel;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize legacyTorchController;
-@synthesize waveSoundID,viewIsAnimating;
+@synthesize waveSoundID,paused;
 
 - (MEXWaveModel*)waveModel {
     if(!waveModel) {
@@ -114,13 +114,17 @@
 #pragma mark - App lifecycle
 
 - (void)pause {
+    self.paused = YES;
     // Turn off the torch (just in case)
     [self torchOff];
     // Suspend the model
     [self.waveModel pause];
+    //stop filming
+    [self.videoView stopVideo];
 }
 
 - (void)resume {
+    self.paused = NO;
     // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:@"vibration_preference"];    
@@ -128,6 +132,9 @@
     
     // Start running again
     [self.waveModel resume];
+    
+    //resume filming
+    [self.videoView startVideo];
 }
 
 #pragma mark - Notifications
@@ -151,7 +158,7 @@
         AudioServicesPlaySystemSound(self.waveSoundID);
     }
 
-    if(!self.isViewAnimating){
+    if(!self.isPaused){
         
         const float duration = (crowdTypeSelectionControl.selectedSegment == MEXCrowdTypeSelectionSegmentRight) ? 0.5 : 0.2;
         //animate the screen flash
@@ -179,6 +186,8 @@
 
 - (void)dealloc {
     [waveModel pause];
+    [videoView stopVideo];
+    [videoView release];
     [waveModel removeObserver:self forKeyPath:kModelKeyPathForPhase];
     [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeriod];
     [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeaks];
@@ -194,8 +203,34 @@
     [whiteFlashView release];
     [super dealloc];
 }
+- (void)viewDidUnload {
+    [self setContainerView:nil];
+    [self setSettingView:nil];
+    [self setTabImageView:nil];
+    [self setWhiteFlashView:nil];
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MEXWaveModelDidWaveNotification object:nil];
+    
+    [self torchOff];
+    
+    AudioServicesDisposeSystemSoundID(waveSoundID);
+    self.waveSoundID = 0;
+    
+    self.waveView = nil;
+    self.crowdTypeSelectionControl = nil;
+}
 
-#pragma mark - View lifecycle
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self torchOff];
+    [self pause];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self resume];
+    
+}
 
 - (void)viewDidLoad {
     
@@ -226,9 +261,9 @@
     
 }
 
+#pragma mark Gesture Recognizer callbacks
 -(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
-
-    self.viewIsAnimating = YES;
+    [self pause];
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
@@ -244,7 +279,6 @@
 
         //if the velocity is high we can assue it was a flick and animate all the way across its minus because we are going left
         if(velocity<-1000){
-            [self.settingView animateWave];
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
             [[OmnitureLogging sharedInstance] postEventSettingsViewVisible];
@@ -254,21 +288,15 @@
         offset = (offset> -160) ? 0 : -320;
         
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view d
-        if (offset == -320) 
-        { 
-            [[OmnitureLogging sharedInstance] postEventSettingsViewVisible];  [self.settingView animateWave]; 
-        } 
-        else{ 
-            [self setViewIsAnimating:NO];
-        };
+        (offset == -320) ?  [[OmnitureLogging sharedInstance] postEventSettingsViewVisible] :  [self resume];
+
         
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
     }       
 }
 -(void)didRecievePanGestureRight:(UIPanGestureRecognizer*)recognizer{
-    self.viewIsAnimating = YES;
-    [settingView.yellAnimation stopAnimating];
+    [self pause];
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
@@ -280,50 +308,25 @@
     self.containerView.frame = CGRectMake(-320+offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
     
     if(recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled || recognizer.state == UIGestureRecognizerStateFailed){
-        self.viewIsAnimating = NO;
         //if the velocity is high we can assue it was a flick and animate all the way across
         if(velocity>1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
             return;
         }
-        //if not compare the current offset in relation to the view - if over half way snap to the side
+        //if not compare the current offset in relation to the view - if over half way snap to the side- continues animation occordetly
         offset = (offset> 160) ? 0 : -320;
-        (offset == -320) ? [settingView.yellAnimation startAnimating] : [settingView.yellAnimation stopAnimating];
-      
+        
         [UIView animateWithDuration:0.2 animations:^{
-            self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);} completion:^(BOOL finished) {
+                if(offset == 0) { 
+                    [self resume];
+                }
+            }];
     }   
 }
 
-- (void)viewDidUnload {
-    [self setContainerView:nil];
-    [self setSettingView:nil];
-    [self setTabImageView:nil];
-    [self setWhiteFlashView:nil];
-    [super viewDidUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MEXWaveModelDidWaveNotification object:nil];
 
-    [self torchOff];
-
-    AudioServicesDisposeSystemSoundID(waveSoundID);
-    self.waveSoundID = 0;
-
-    self.waveView = nil;
-    self.crowdTypeSelectionControl = nil;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self torchOff];
-    [self pause];
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self resume];
-    
-}
 #pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

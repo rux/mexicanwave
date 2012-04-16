@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SettingsView.h"
+#import "VideoPreviewView.h"
 
 @class MEXCrowdTypeSelectionControl;
 @class MEXWaveFxView;
@@ -18,8 +19,9 @@
 @property (nonatomic,retain) MEXWaveModel* waveModel;
 @property (nonatomic,getter=isVibrationOnWaveEnabled) BOOL vibrationOnWaveEnabled;
 @property (nonatomic,getter=isSoundOnWaveEnabled) BOOL soundOnWaveEnabled;
-@property (nonatomic,getter=isViewAnimating) BOOL viewIsAnimating;
+@property (nonatomic,getter=isPaused) BOOL paused;
 @property (retain, nonatomic) IBOutlet UIView *containerView;
+@property (retain, nonatomic) IBOutlet VideoPreviewView *videoView;
 
 @property (nonatomic,retain) IBOutlet MEXWaveFxView* waveView;
 @property (nonatomic,retain) IBOutlet MEXCrowdTypeSelectionControl* crowdTypeSelectionControl;
