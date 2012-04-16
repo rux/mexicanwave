@@ -13,8 +13,6 @@ NSString* const kSettingsDidChange;
 @interface SettingsView : UIView <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *table;
 @property (retain, nonatomic) IBOutlet UIButton *btnYellAppLink;
-@property (retain, nonatomic) IBOutlet UIImageView *yellAnimation;
 
-- (IBAction)didTapYellLink:(id)sender;
--(void)animateWave;
+-(IBAction)didTapYellLink:(id)sender;
 @end

@@ -31,9 +31,8 @@ NSString* const kSettingsDidChange = @"kSettingsDidChange";
 @implementation SettingsView
 
 @synthesize btnYellAppLink;
-@synthesize table,yellAnimation;
+@synthesize table;
 - (void)dealloc {
-    [yellAnimation release];
     [table release];
     [btnYellAppLink release];
     [super dealloc];
@@ -62,8 +61,6 @@ NSString* const kSettingsDidChange = @"kSettingsDidChange";
 
     //if we are in a geography we have an app present it
     if([[self appstoreURLForCurrentLocale] length]){
-        yellAnimation.hidden = NO;
-        yellAnimation.image = [UIImage imageNamed:@"crowd_12"];
         [[OmnitureLogging sharedInstance] postEventLinkIsVisible];
         btnYellAppLink.hidden = NO;
         [btnYellAppLink setTitle:NSLocalizedString(@"Download and Find",@"Yell tag line button Link to appstore") forState:UIControlStateNormal];
@@ -163,24 +160,6 @@ NSString* const kSettingsDidChange = @"kSettingsDidChange";
     return nil;
 }
 
--(void)animateWave{
-    NSMutableArray* images = [[NSMutableArray alloc]init];
-    
-    
-    for (NSInteger i =0; i<25; i++) {
-        [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"crowd_%d",i]]];
-    }
-    [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"crowd_24"]]];
-    [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"crowd_24"]]];
-    [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"crowd_24"]]];
-
-
-    yellAnimation.animationImages = images;
-    yellAnimation.animationDuration = 4.0;
-    yellAnimation.animationRepeatCount = HUGE_VAL;
-    [yellAnimation startAnimating];
-    
-}
 
 /*
 // Only override drawRect: if you perform custom drawing.
