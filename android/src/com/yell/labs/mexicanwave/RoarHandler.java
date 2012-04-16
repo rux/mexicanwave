@@ -15,7 +15,6 @@ import android.view.SurfaceView;
 import android.view.View;
 
 class RoarHandler {
-	private Context context;
 	private Vibrator vibrator;
 	private Camera camera;
 	private Parameters p;
@@ -48,17 +47,13 @@ class RoarHandler {
 	public void grabCamera() {
 		camera = Camera.open();
 		p = camera.getParameters();
-        try {
-			camera.setPreviewDisplay(dummy.getHolder());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+
 		Log.i("info", "The Camera is initialised!");
 	}
 	public void releaseCamera() {
 		this.calmDown();
 		camera.release();
+		camera = null;
 	}
 	
 	
@@ -125,11 +120,21 @@ class RoarHandler {
 		if (currentlyRoaring != true) {
 			p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 			camera.setParameters(p);
-			camera.startPreview();
+	        try {
+				camera.setPreviewDisplay(dummy.getHolder());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+	        camera.startPreview();
+			
+
+			
 			vibrator.vibrate(1000);
 			theLayout.setBackgroundColor(Color.WHITE);
-			Log.i("info", "camera info " + String.valueOf(camera) + "  :  " + String.valueOf(p.getFlashMode()));
+			
 		}
+		Log.i("info", "camera info " + String.valueOf(camera) + "  :  " + String.valueOf(p.getFlashMode()));
 		currentlyRoaring = true;
 	}	
 	

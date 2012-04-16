@@ -62,8 +62,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
     protected void onResume() {
     	super.onResume();
-    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME );
-    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME );
+    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI );
+    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI );
     	roarHandler.grabCamera();
     }
  
