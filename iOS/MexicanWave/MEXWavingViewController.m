@@ -145,7 +145,6 @@
 }
 
 - (void)resume {
-    self.paused = NO;
     // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
@@ -154,7 +153,10 @@
     // Start running again
     [self.waveModel resume];
     
-    [self.videoView startVideo];
+   // [self.videoView startVideo];
+  
+    self.paused = NO;
+
 }
 
 #pragma mark - Notifications

@@ -165,7 +165,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
     NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode]; //get current locale as code.
     
-    //compare codes to get correct url for app store.
+       //compare codes to get correct url for app store.
     if([countryCode isEqualToString:kNSLocaleKeyUK]){
         return @"http://itunes.apple.com/gb/app/yell-search-find-local-uk/id329334877?mt=8";
     }
