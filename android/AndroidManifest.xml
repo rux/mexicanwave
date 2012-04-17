@@ -38,7 +38,6 @@
        		android:name=".AboutActivity"
         	android:label="@string/app_about">
 		</activity>
-        
     </application>
 
 </manifest>
