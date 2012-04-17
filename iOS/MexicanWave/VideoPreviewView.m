@@ -96,6 +96,9 @@
 
 
 -(void)capturePhotoWithCompletion:(void(^)(void))completion{
+    //double check the video is started
+    [self startVideo];
+    
     AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in stillImageOutput.connections)
 	{
