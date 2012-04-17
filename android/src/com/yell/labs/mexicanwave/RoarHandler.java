@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 class RoarHandler {
 	private Vibrator vibrator;
