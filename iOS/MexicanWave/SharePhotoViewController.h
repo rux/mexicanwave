@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SharePhotoViewController : UIViewController
+@interface SharePhotoViewController : UIViewController <UIAlertViewDelegate>
 @property (retain, nonatomic) IBOutlet UIImageView *snapshotImageView;
 @property (retain, nonatomic) UIImage* takenphoto;
 @end

@@ -44,7 +44,7 @@
     
     //create a session which can be accessed throughout.
 	session = [[AVCaptureSession alloc] init];
-	session.sessionPreset = AVCaptureSessionPresetHigh;
+	session.sessionPreset = AVCaptureSessionPresetMedium;
     
     //create the creview layer and attach it to self (as we inheirt from UIVIEW)
     //set the frame to match ours - and ratio appropriately 
@@ -80,8 +80,9 @@
     if(self.isVideoRunning){
         return;
     }
-    self.videoRunning = YES;
     [session startRunning];
+    self.videoRunning = YES;
+
 }
 
 -(void)stopVideo{
@@ -89,13 +90,17 @@
     if(!self.isVideoRunning){
         return;
     }
-    self.videoRunning = NO;
     [session stopRunning];
+    self.videoRunning = NO;
+
 }
 
 
 
 -(void)capturePhotoWithCompletion:(void(^)(void))completion{
+    //double check the video is started
+    [self startVideo];
+    
     AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in stillImageOutput.connections)
 	{
@@ -110,6 +115,8 @@
 		if (videoConnection) { break; }
 	}
     
+
+
 	[stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
 		 CFDictionaryRef exifAttachments = CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);

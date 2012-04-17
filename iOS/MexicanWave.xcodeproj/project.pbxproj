@@ -104,7 +104,7 @@
 		005F6088153C6BB600999B47 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		005F608B153C6C6500999B47 /* SharePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharePhotoViewController.h; sourceTree = "<group>"; };
 		005F608C153C6C6500999B47 /* SharePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharePhotoViewController.m; sourceTree = "<group>"; };
-		005F608D153C6C6500999B47 /* SharePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SharePhotoViewController.xib; sourceTree = "<group>"; };
+		005F608D153C6C6500999B47 /* SharePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SharePhotoViewController.xib; path = ../SharePhotoViewController.xib; sourceTree = "<group>"; };
 		00D26F341535BE85004BC8ED /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		00D26F351535BE85004BC8ED /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		00D26F3C1535C7BB004BC8ED /* tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab.png; sourceTree = "<group>"; };
@@ -282,8 +282,8 @@
 		1903F3E11517717800807542 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				005F6072153C1F4F00999B47 /* VideoPreviewView.m */,
 				005F6073153C1F4F00999B47 /* VideoPreviewView.h */,
+				005F6072153C1F4F00999B47 /* VideoPreviewView.m */,
 				1903F3CB1510F23900807542 /* MEXWaveFxView.h */,
 				1903F3CC1510F23A00807542 /* MEXWaveFxView.m */,
 				1903F3CE1510F50A00807542 /* MEXLampView.h */,
@@ -375,6 +375,7 @@
 				196B8E451518A00100DAD14A /* InfoPlist.strings */,
 				196B8E471518A00100DAD14A /* MainWindow.xib */,
 				196B8E491518A00100DAD14A /* MEXWavingViewController.xib */,
+				005F608D153C6C6500999B47 /* SharePhotoViewController.xib */,
 			);
 			name = en.lproj;
 			path = MexicanWave/en.lproj;
@@ -459,7 +460,6 @@
 				199CB62A14FEA47C00A16A97 /* MEXWavingViewController.m */,
 				005F608B153C6C6500999B47 /* SharePhotoViewController.h */,
 				005F608C153C6C6500999B47 /* SharePhotoViewController.m */,
-				005F608D153C6C6500999B47 /* SharePhotoViewController.xib */,
 			);
 			name = Waving;
 			sourceTree = "<group>";
