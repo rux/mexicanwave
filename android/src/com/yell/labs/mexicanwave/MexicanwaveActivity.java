@@ -4,12 +4,15 @@ package com.yell.labs.mexicanwave;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
-public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback {
+public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
     
 	private Button settingsButton;
 	private RoarHandler roarHandler;
@@ -35,9 +38,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private PreviewSurface mSurface;
 		
 	ImageView waveCompass;
-	
 	private Animation rotateAnimation;
 	
+	private SharedPreferences prefs;
+	private int waveDuration;
 
 	
 
@@ -45,8 +49,12 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
        
+        prefs.registerOnSharedPreferenceChangeListener(this);
+        
+        waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
+        
         
         setContentView(R.layout.main);
         context = this;
@@ -58,7 +66,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
 
-        roarHandler = new RoarHandler(context, view, mSurface);
+        roarHandler = new RoarHandler(context, view, mSurface, waveDuration);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -144,5 +152,12 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			
 		}
 		
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		if (key.equals("pref_group_size_values")) {
+			waveDuration = Integer.parseInt(prefs.getString("pref_group_size", "15"));
+		}
 	}
 }

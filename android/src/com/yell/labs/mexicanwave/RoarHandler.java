@@ -22,17 +22,23 @@ class RoarHandler {
 	private PreviewSurface mSurface;
 	private boolean cameraReady;	
 	public boolean currentlyRoaring;	
-	private float azimuth;	
+	private float azimuth;
+	private int waveDuration;
 
-	RoarHandler(Context c, View v, PreviewSurface previewSurface) {        
+	RoarHandler(Context c, View v, PreviewSurface previewSurface, int w) {        
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         theLayout = (View) v;
         mSurface = previewSurface;
+        this.setWaveDuration(w);
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
 	
 	public boolean getCurrentlyRoaring() {
 		return currentlyRoaring;
+	}
+	
+	public void setWaveDuration(int w) {
+		waveDuration = w;
 	}
 	
 	private void setAzimuth(float a) {
@@ -59,12 +65,11 @@ class RoarHandler {
 	}
 	
 	public float getWaveOffestFromAzimuthInDegrees() {
-		int wavelength = 15;  // in seconds please
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("ss.SSS");
 		float seconds = Float.parseFloat(dateFormat.format(new Date()));
 		
-		float offset = seconds * 6 * (60/wavelength);
+		float offset = seconds * 6 * (60/this.waveDuration);
 		return (float) offset;
 	}
 	

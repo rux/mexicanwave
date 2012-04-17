@@ -9,36 +9,10 @@ import android.preference.PreferenceActivity;
 import android.provider.Settings;
 
 
-public class SettingsActivity extends PreferenceActivity  implements OnPreferenceChangeListener {
-
-	private static final String PREF_GROUP_SIZE = "pref_group_size";
-	private static final String PREF_COLOR = "pref_color";
-
-	ListPreference pref_color;
-	
+public class SettingsActivity extends PreferenceActivity  {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-			
+		addPreferencesFromResource(R.xml.preferences);
 	}
-	
-	
-	@Override
-	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		if (preference == pref_color) {
-
-            int colorValue = Color.parseColor(String.valueOf(newValue)) ;
-            Settings.System.putInt(getContentResolver(), "", colorValue);
-    
-
-            return true;
-
-		}
-
-		
-		return false;
-	}
-	
-	
 }
