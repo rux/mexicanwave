@@ -135,12 +135,13 @@
 
 - (void)pause {
     self.paused = YES;
+    //stop filming
+    [self.videoView stopVideo];
     // Turn off the torch (just in case)
     [self torchOff];
     // Suspend the model
     [self.waveModel pause];
-    //stop filming
-    [self.videoView stopVideo];
+   
 }
 
 - (void)resume {
@@ -153,12 +154,7 @@
     // Start running again
     [self.waveModel resume];
     
-    //the slight delay allows for the view to be fully reloaded before trying to show the video.
-    double delayInSeconds = 0.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.videoView startVideo];
-    });
+    [self.videoView startVideo];
 }
 
 #pragma mark - Notifications

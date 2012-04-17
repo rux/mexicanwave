@@ -32,6 +32,7 @@
 
 - (void)viewDidLoad
 {
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.snapshotImageView.image = takenphoto;
     UIBarButtonItem* cancel = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didTapCancel:)];
     self.navigationItem.leftBarButtonItem = cancel;
