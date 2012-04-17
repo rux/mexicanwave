@@ -18,9 +18,10 @@
 @end
 
 @implementation VideoPreviewView
-@synthesize session,videoRunning,stillImageOutput,capturedImage;
+@synthesize session,videoRunning,stillImageOutput,capturedImage,caputureQueue;
 
 -(void)dealloc{
+    dispatch_release(caputureQueue);
     [capturedImage release];
     [stillImageOutput release];
     [session release];
@@ -41,6 +42,8 @@
 }
 
 -(void)commonInitialisation{
+    caputureQueue =  dispatch_queue_create("com.yell.mexican.capture", NULL);
+
     
     //create a session which can be accessed throughout.
 	session = [[AVCaptureSession alloc] init];
@@ -72,7 +75,9 @@
 	NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
 	[stillImageOutput setOutputSettings:outputSettings];
 	[session addOutput:stillImageOutput];
-    
+    //make sure its not runnin
+    self.videoRunning = NO;
+
 }
 
 -(void)startVideo{
@@ -80,8 +85,13 @@
     if(self.isVideoRunning){
         return;
     }
-    [session startRunning];
-    self.videoRunning = YES;
+    dispatch_async(caputureQueue, ^{
+        if(!self.isVideoRunning){
+            [session startRunning];
+            self.videoRunning = YES;
+        }
+
+    });
 
 }
 
@@ -90,8 +100,13 @@
     if(!self.isVideoRunning){
         return;
     }
-    [session stopRunning];
-    self.videoRunning = NO;
+    dispatch_async(caputureQueue, ^{
+        if(self.isVideoRunning){
+            [session stopRunning];
+            self.videoRunning = NO;
+        }
+        
+    });
 
 }
 
