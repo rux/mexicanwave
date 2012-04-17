@@ -1,19 +1,12 @@
 package com.yell.labs.mexicanwave;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.hardware.Camera;
-import android.hardware.Camera.Parameters;
-import android.hardware.Camera.Size;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 
 class RoarHandler {
@@ -76,9 +69,9 @@ class RoarHandler {
     void update(float azimuth) {
 		this.setAzimuth(azimuth);  // we do the maths for smoothing in here
 		
-		float averageAzimuth = this.getAzimuthInDegrees();
-    	float waveOffset = this.getWaveOffestFromAzimuthInDegrees();
-		Log.i("info", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
+		// float averageAzimuth = this.getAzimuthInDegrees();
+    	//float waveOffset = this.getWaveOffestFromAzimuthInDegrees();
+		//Log.i("info", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
 		this.check();
     }	
 		
