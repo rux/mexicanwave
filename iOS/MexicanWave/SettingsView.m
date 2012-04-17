@@ -19,25 +19,19 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
 
 #define kSettingsVibrationTag 0
 #define kSettingsSoundsTag 1
-#define kNSLocaleKeyUK @"GB"
-#define kNSLocaleKeyES @"ES"
-#define kNSLocaleKeyUS @"US"
+
 #define kSwitchWidthOffset 20.0f
 
 NSString* const kSettingsDidChange = @"kSettingsDidChange";
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 @interface SettingsView ()
--(NSString*)appstoreURLForCurrentLocale;
--(void)commonInitialisation;
 @end
 
 @implementation SettingsView
 
-@synthesize btnYellAppLink;
 @synthesize table;
 - (void)dealloc {
     [table release];
-    [btnYellAppLink release];
     [super dealloc];
 }
 
@@ -51,26 +45,8 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 }
 
 -(void)awakeFromNib{
-    [self commonInitialisation];
+    [self.table reloadData];
 }
-
--(void)commonInitialisation{
-
-    btnYellAppLink.titleLabel.numberOfLines = 2;
-    btnYellAppLink.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-    btnYellAppLink.titleLabel.textAlignment = UITextAlignmentCenter;
-    [btnYellAppLink setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btnYellAppLink setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
-
-    //if we are in a geography we have an app present it
-    if([[self appstoreURLForCurrentLocale] length]){
-        [[OmnitureLogging sharedInstance] postEventLinkIsVisible];
-        btnYellAppLink.hidden = NO;
-        [btnYellAppLink setTitle:NSLocalizedString(@"Download and Find",@"Yell tag line button Link to appstore") forState:UIControlStateNormal];
-    }
-
-}
-
 #pragma mark TableView Delegates
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -156,28 +132,6 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     [[NSNotificationCenter defaultCenter] postNotificationName:kSettingsDidChange object:nil];
 }
 
-- (IBAction)didTapYellLink:(id)sender {
-    [[OmnitureLogging sharedInstance] postEventLinkPressed];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self appstoreURLForCurrentLocale]]];
-}
-
--(NSString*)appstoreURLForCurrentLocale{
-    NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
-    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode]; //get current locale as code.
-    
-       //compare codes to get correct url for app store.
-    if([countryCode isEqualToString:kNSLocaleKeyUK]){
-        return @"http://itunes.apple.com/gb/app/yell-search-find-local-uk/id329334877?mt=8";
-    }
-    else if([countryCode isEqualToString:kNSLocaleKeyUS]){
-        return @"http://itunes.apple.com/us/app/us-yellow-pages/id306599340?mt=8";
-    }
-    else if([countryCode isEqualToString:kNSLocaleKeyES]){
-        return @"http://itunes.apple.com/es/app/paginasamarillas.es-cerca/id303686830?mt=8";
-    }
-    
-    return nil;
-}
 
 
 /*

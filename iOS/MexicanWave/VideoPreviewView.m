@@ -81,6 +81,7 @@
 }
 
 -(void)startVideo{
+    NSLog(@"called");
     //check if video is allready running - if not start the camera session
     if(self.isVideoRunning){
         return;
@@ -114,7 +115,10 @@
 
 -(void)capturePhotoWithCompletion:(void(^)(void))completion{
     //double check the video is started
-    [self startVideo];
+    if(![session isRunning]){
+        [self startVideo];
+        return;
+    }
     
     AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in stillImageOutput.connections)

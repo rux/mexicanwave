@@ -114,7 +114,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 - (void)pause {
     if(!self.isRunning) return;
     [self.compassModel stopCompass];
-    [self cancelWave];    
+    [self cancelWave]; 
     self.running = NO;
 }
 

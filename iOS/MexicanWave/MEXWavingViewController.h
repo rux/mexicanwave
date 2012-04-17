@@ -19,7 +19,7 @@
 @property (nonatomic,getter=isVibrationOnWaveEnabled) BOOL vibrationOnWaveEnabled;
 @property (nonatomic,getter=isSoundOnWaveEnabled) BOOL soundOnWaveEnabled;
 @property (nonatomic,getter=isPaused) BOOL paused;
-
+@property (retain, nonatomic) IBOutlet UIImageView *yellAdvert;
 @property (retain, nonatomic) IBOutlet UIView *containerView;
 @property (retain, nonatomic) IBOutlet VideoPreviewView *videoView;
 @property (nonatomic,retain) IBOutlet MEXWaveFxView* waveView;
@@ -27,7 +27,7 @@
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
 @property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
 - (IBAction)didTapTakePhoto:(id)sender;
-
+- (IBAction)didTapGrabber:(id)sender;
 - (void)didChangeCrowdType:(NSNotification*)note;
 - (void)pause;
 - (void)resume;
