@@ -55,10 +55,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         prefs.registerOnSharedPreferenceChangeListener(this);
         
         waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
-        Log.i("info", "************** " + prefs.getString("pref_coloring", "red"));
-
-        
-        waveColor = Color.parseColor("#FFFFFFFF");
+        Log.i("info", "************** " + prefs.getString("pref_coloring", "#FFFFFFFF"));
+        waveColor = Color.parseColor(prefs.getString("pref_coloring", "#FFFFFFFF"));
         
         setContentView(R.layout.main);
         context = this;
@@ -70,7 +68,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
 
-        roarHandler = new RoarHandler(context, view, mSurface, waveDuration);
+        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
