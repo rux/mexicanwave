@@ -115,11 +115,7 @@ class RoarHandler {
 			theLayout.setBackgroundColor(Color.BLACK);
 			currentlyRoaring = false;
 		}
-		
-		
+	
 	}
 
-	
-	
-	
 }

@@ -6,15 +6,13 @@
         <item>Red</item>
         <item>Yellow</item>
         <item>Green</item>
-        <item>Blue</item>
     </string-array>
 
     <string-array name="pref_color_values">       
-        <item>Color.WHITE</item>       
-        <item>Color.RED</item>       
-        <item>Color.YELLOW</item>       
-        <item>Color.GREEN</item>       
-        <item>Color.BLUE</item>
+        <item>#FFFFFFFF</item>       
+        <item>#FFFF0000</item>       
+        <item>#FFFFFF00</item>       
+        <item>#FF00FF00</item>
 	</string-array>
 
     <string-array name="pref_wave_duration_entries">       

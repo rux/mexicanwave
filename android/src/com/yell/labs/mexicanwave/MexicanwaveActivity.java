@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -21,6 +22,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
@@ -42,6 +44,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	private SharedPreferences prefs;
 	private int waveDuration;
+	private int waveColor;
 
 	
 
@@ -54,7 +57,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         prefs.registerOnSharedPreferenceChangeListener(this);
         
         waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
+        Log.i("info", "************** " + prefs.getString("pref_coloring", "red"));
+
         
+        waveColor = Color.parseColor("#FFFFFFFF");
         
         setContentView(R.layout.main);
         context = this;
@@ -158,6 +164,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if (key.equals("pref_group_size_values")) {
 			waveDuration = Integer.parseInt(prefs.getString("pref_group_size", "15"));
+		}
+		if (key.equals("pref_color_values")) {
+			waveColor = Color.parseColor(prefs.getString("pref_color", "Color.WHITE"));
 		}
 	}
 }
