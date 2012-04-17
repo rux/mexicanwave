@@ -34,7 +34,6 @@
 @synthesize videoView;
 @synthesize containerView;
 @synthesize waveView;
-@synthesize crowdTypeSelectionControl;
 @synthesize settingView;
 @synthesize tabImageView;
 @synthesize whiteFlashView;
@@ -69,17 +68,23 @@
     
 }
 
-- (IBAction)didChangeCrowdType:(id)sender {
-    switch ([(MEXCrowdTypeSelectionControl*)sender selectedSegment]) {
-        case MEXCrowdTypeSelectionSegmentLeft:
+- (void)didChangeCrowdType:(NSNotification*)note{
+    if(![note object]){
+        return;
+    }
+    NSNumber* newSelection = (NSNumber*)[note object];
+    const NSInteger selection = [newSelection integerValue];
+    
+    switch (selection) {
+        case 0:
             self.waveModel.crowdType = kMEXCrowdTypeSmallGroup;
             break;
             
-        case MEXCrowdTypeSelectionSegmentMiddle:
+        case 1:
             self.waveModel.crowdType = kMEXCrowdTypeStageBased;    
             break;
 
-        case MEXCrowdTypeSelectionSegmentRight:
+        case 2:
             self.waveModel.crowdType = kMEXCrowdTypeStadium;
             break;
         default:
@@ -142,14 +147,18 @@
     self.paused = NO;
     // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-	self.vibrationOnWaveEnabled = [defaults boolForKey:@"vibration_preference"];    
-    self.soundOnWaveEnabled = [defaults boolForKey:@"sound_preference"];
-    
+	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
+    self.soundOnWaveEnabled = [defaults boolForKey:kUserDefaultKeySound];
+    self.waveModel.crowdType = [defaults integerForKey:MEXWaveSpeedSettingsKey];
     // Start running again
     [self.waveModel resume];
     
-    //resume filming
-    [self.videoView startVideo];
+    //the slight delay allows for the view to be fully reloaded before trying to show the video.
+    double delayInSeconds = 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.videoView startVideo];
+    });
 }
 
 #pragma mark - Notifications
@@ -175,7 +184,7 @@
 
     if(!self.isPaused){
         
-        const float duration = (crowdTypeSelectionControl.selectedSegment == MEXCrowdTypeSelectionSegmentRight) ? 0.5 : 0.2;
+        const float duration = (self.waveModel.crowdType == MEXCrowdTypeSelectionSegmentRight) ? 0.5 : 0.2;
         //animate the screen flash
         [UIView animateWithDuration:duration animations:^{
             self.whiteFlashView.alpha = 1; 
@@ -206,11 +215,10 @@
     [waveModel removeObserver:self forKeyPath:kModelKeyPathForPhase];
     [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeriod];
     [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeaks];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MEXWaveModelDidWaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     AudioServicesDisposeSystemSoundID(waveSoundID);
     [waveModel release];
     [waveView release];
-    [crowdTypeSelectionControl release];
     [legacyTorchController release];
     [containerView release];
     [settingView release];
@@ -224,7 +232,7 @@
     [self setTabImageView:nil];
     [self setWhiteFlashView:nil];
     [super viewDidUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MEXWaveModelDidWaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [self torchOff];
     
@@ -232,7 +240,6 @@
     self.waveSoundID = 0;
     
     self.waveView = nil;
-    self.crowdTypeSelectionControl = nil;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -256,9 +263,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:kSettingsDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
     
-    // Set crowd type on view from model
-    self.crowdTypeSelectionControl.selectedSegment = (MEXCrowdTypeSelectionSegment)self.waveModel.crowdType;
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
@@ -284,6 +290,7 @@
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
     //we only want the view to move left
     if(offset>0){
+        [self resume];
         return;
     }
     //move the view with the correct offset - we want to start at minus the size of view so that
@@ -316,6 +323,7 @@
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
     //we only want the view to move Right
     if(offset<0){
+        [self resume];
         return;
     }
     //move the view with the correct offset - we want to start at minus the size of view so that
@@ -325,7 +333,9 @@
         //if the velocity is high we can assue it was a flick and animate all the way across
         if(velocity>1000){
             [UIView animateWithDuration:0.2 animations:^{
-                self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+                self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
+                    [self resume];
+                }];
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side- continues animation occordetly

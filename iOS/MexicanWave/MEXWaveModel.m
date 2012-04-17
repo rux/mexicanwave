@@ -14,6 +14,7 @@
 #define MAX_WAVE_PERIOD 10.0
 
 NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotification";
+NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 
 @interface MEXWaveModel ()
 @property (nonatomic,retain) MEXCompassModel* compassModel;
@@ -76,12 +77,13 @@ NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotificat
     return ((float)fmod([correctedDate timeIntervalSinceReferenceDate] - (self.compassModel.headingInDegreesEastOfNorth / 360.0)*self.wavePeriodInSeconds, self.wavePeriodInSeconds))/self.wavePeriodInSeconds;
 }
 
-- (void)setCrowdType:(MEXCrowdType)newValue {
+- (void)setCrowdType:(NSInteger)newValue {
     if(crowdType != newValue) {
         [self willChangeValueForKey:@"crowdType"];
         crowdType = newValue;
         [self didChangeValueForKey:@"crowdType"];
         [self scheduleWave];
+        [[NSUserDefaults standardUserDefaults] setInteger:newValue forKey:MEXWaveSpeedSettingsKey];
     }
 }
 

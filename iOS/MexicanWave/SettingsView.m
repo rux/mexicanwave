@@ -8,12 +8,15 @@
 
 #import "SettingsView.h"
 #import "OmnitureLogging.h"
-
-#define kNumberOfSettings 2
+#import "MEXWaveModel.h"
+#define kNumberOfSettings 3
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")
-#define kUserDefaultKeySound @"sound_preference"
-#define kUserDefaultKeyVibration @"vibration_preference"
+#define kSettingsKeySpeed NSLocalizedString(@"Style", @"Settings Table row title Style")
+
+NSString* const kUserDefaultKeyVibration= @"sound_preference";
+NSString* const kUserDefaultKeySound =@"vibration_preference";
+
 #define kSettingsVibrationTag 0
 #define kSettingsSoundsTag 1
 #define kNSLocaleKeyUK @"GB"
@@ -22,7 +25,7 @@
 #define kSwitchWidthOffset 20.0f
 
 NSString* const kSettingsDidChange = @"kSettingsDidChange";
-
+NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 @interface SettingsView ()
 -(NSString*)appstoreURLForCurrentLocale;
 -(void)commonInitialisation;
@@ -111,8 +114,19 @@ NSString* const kSettingsDidChange = @"kSettingsDidChange";
         [cell addSubview:switchControl];
     }
     
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    if(indexPath.row ==2){
+        cell.textLabel.text = kSettingsKeySpeed;
+        UISegmentedControl* speedControl = [[[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects: NSLocalizedString(@"Fun",@"MEXSegement button title for Fun"),NSLocalizedString(@"Gig",@"MEXSegement button title for Gig"),NSLocalizedString(@"Stadium",@"MEXSegement button title for Stadium"), nil]]autorelease];
+        speedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        speedControl.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey];
+        [speedControl sizeToFit];
+        [speedControl addTarget:self action:@selector(didTapSegment:) forControlEvents:UIControlEventValueChanged];
+        speedControl.center = CGPointMake(300 - 0.5f*speedControl.frame.size.width, cell.frame.size.height*0.5f);
+        [cell addSubview:speedControl];
+        return cell;
+    }
     
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     //get the switch for row and update the  labels and switch from userdefaults
     UISwitch* currentSwitch = (UISwitch*)[cell viewWithTag:99];
     currentSwitch.tag = indexPath.row;
@@ -120,7 +134,12 @@ NSString* const kSettingsDidChange = @"kSettingsDidChange";
     cell.textLabel.text = (indexPath.row == kSettingsVibrationTag) ? kSettingsKeyVibration : kSettingsKeySounds;
     return cell;
 }
-
+- (void)didTapSegment:(id)sender {
+    const NSUInteger indexOfSegment = ((UISegmentedControl*)sender).selectedSegmentIndex;
+    if(indexOfSegment != NSNotFound) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:indexOfSegment]];
+    }
+}
 -(void)didChangeTableSwitch:(UISwitch*)currentSwitch{
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     

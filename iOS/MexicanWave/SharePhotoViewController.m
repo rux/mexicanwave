@@ -37,7 +37,7 @@
     self.navigationItem.leftBarButtonItem = cancel;
     [cancel release];
     
-    UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(didTapShare:)];
+    UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(didTapSave:)];
     self.navigationItem.rightBarButtonItem = share;
     [share release];
     
@@ -49,8 +49,30 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
--(void)didTapShare:(id)sender{
-
+-(void)didTapSave:(id)sender{
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Save Photo" message:@"Would you like to save this photo to the camera roll" delegate:self cancelButtonTitle:@"No Thanks" otherButtonTitles:@"Yes", nil];
+    [alert show];
+    [alert release];
+}
+-(void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if(buttonIndex != alertView.cancelButtonIndex){
+        UIImageWriteToSavedPhotosAlbum(self.takenphoto, self, 
+                                       @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
+}
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error 
+  contextInfo:(void *)contextInfo
+{
+    // Was there an error?
+    if (error)
+    {
+        // Show error message...
+        
+    }
+    else  // No errors
+    {
+        [self didTapCancel:nil];
+    }
 }
 - (void)viewDidUnload
 {
