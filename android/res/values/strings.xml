@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name">Mexican Wave</string>
     
-    <string name="set_preferences">Preferences</string>
+    <string name="app_about">About Mexican Wave</string>
+    <string name="app_preferences">Preferences</string>
     <string name="preferences_button">Preferences</string>
 
     <string name="radarImageDescription">Radar</string>

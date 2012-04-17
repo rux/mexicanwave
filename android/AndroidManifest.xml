@@ -32,7 +32,11 @@
         
         <activity
        		android:name=".SettingsActivity"
-        	android:label="@string/set_preferences">
+        	android:label="@string/app_preferences">
+		</activity>
+        <activity
+       		android:name=".AboutActivity"
+        	android:label="@string/app_about">
 		</activity>
         
     </application>

@@ -16,18 +16,17 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
     
-	private Button settingsButton;
 	private RoarHandler roarHandler;
 	private Context context;
 	private RelativeLayout view;
@@ -65,7 +64,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         view = (RelativeLayout) findViewById(R.id.overallLayout);
         waveCompass = (ImageView) findViewById(R.id.spinningDisc);
         
-        settingsButton = (Button) findViewById(R.id.buttonForWave);
   
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
@@ -76,16 +74,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mySensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         
-        
-        settingsButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Log.i("info", "jumping to settings activity");
-				Intent k = new Intent(context, SettingsActivity.class);
-				startActivity(k);
-			}
-		});
     }
     
 	@Override
@@ -158,12 +146,27 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		
 	}
 
-	
+	// make the menu, and respond to clicks
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
 		return true;
+	}
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
+		case R.id.about:
+			startActivity(new Intent(this, AboutActivity.class));
+			return true;
+			
+			
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		
 	}
 	
 	
