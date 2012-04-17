@@ -152,8 +152,8 @@
     self.waveModel.crowdType = [defaults integerForKey:MEXWaveSpeedSettingsKey];
     // Start running again
     [self.waveModel resume];
-    
-   // [self.videoView startVideo];
+
+    [self.videoView startVideo];
   
     self.paused = NO;
 
