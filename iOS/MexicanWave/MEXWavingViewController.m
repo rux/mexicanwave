@@ -150,6 +150,10 @@
 }
 
 - (void)resume {
+    
+    if(self.isPaused){
+        return;
+    }
     // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
