@@ -20,23 +20,17 @@
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
 #define kModelKeyPathForPhase @"wavePhase"
 #define kModelKeyPathForPeaks @"numberOfPeaks"
-#define kNSLocaleKeyUK @"GB"
-#define kNSLocaleKeyES @"ES"
-#define kNSLocaleKeyUS @"US"
 
 @interface MEXWavingViewController ()
 @property (nonatomic,retain) MEXLegacyTorchController* legacyTorchController;
 @property (nonatomic) SystemSoundID waveSoundID;
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
--(NSString*)appstoreURLForCurrentLocale;
-- (void)didTapYellLink:(id)sender;
 @end
 
 
 @implementation MEXWavingViewController
 @synthesize videoView;
-@synthesize yellAdvert;
 @synthesize containerView;
 @synthesize waveView;
 @synthesize settingView;
@@ -228,7 +222,6 @@
     [settingView release];
     [tabImageView release];
     [whiteFlashView release];
-    [yellAdvert release];
     [super dealloc];
 }
 - (void)viewDidUnload {
@@ -236,7 +229,6 @@
     [self setSettingView:nil];
     [self setTabImageView:nil];
     [self setWhiteFlashView:nil];
-    [self setYellAdvert:nil];
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -285,16 +277,6 @@
     
     [super viewDidLoad];
 
-    //if we are in a country to show an advert - set up the advert
-    if([[self appstoreURLForCurrentLocale] length]){
-        [[OmnitureLogging sharedInstance] postEventLinkIsVisible];
-        yellAdvert.hidden = NO;
-        yellAdvert.userInteractionEnabled = YES;
-        UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapYellLink:)];
-        [yellAdvert addGestureRecognizer:tap];
-        [tap release];
-    }
-       
 }
 
 #pragma mark Gesture Recognizer callbacks
@@ -413,27 +395,7 @@
 
 }
 #pragma mark Yell Advert 
--(NSString*)appstoreURLForCurrentLocale{
-    NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
-    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode]; //get current locale as code.
-    
-    //compare codes to get correct url for app store.
-    if([countryCode isEqualToString:kNSLocaleKeyUK]){
-        return @"http://itunes.apple.com/gb/app/yell-search-find-local-uk/id329334877?mt=8";
-    }
-    else if([countryCode isEqualToString:kNSLocaleKeyUS]){
-        return @"http://itunes.apple.com/us/app/us-yellow-pages/id306599340?mt=8";
-    }
-    else if([countryCode isEqualToString:kNSLocaleKeyES]){
-        return @"http://itunes.apple.com/es/app/paginasamarillas.es-cerca/id303686830?mt=8";
-    }
-    
-    return nil;
-}
-- (void)didTapYellLink:(id)sender {
-    [[OmnitureLogging sharedInstance] postEventLinkPressed];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self appstoreURLForCurrentLocale]]];
-}
+
 
 - (IBAction)didTapGrabber:(id)sender {
     [self bounceAnimation];

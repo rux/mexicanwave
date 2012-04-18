@@ -26,6 +26,7 @@
 		005F608F153C6C6500999B47 /* SharePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005F608D153C6C6500999B47 /* SharePhotoViewController.xib */; };
 		00C6FE68153F0AA100420E4B /* about_hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE66153F0AA100420E4B /* about_hand.png */; };
 		00C6FE69153F0AA100420E4B /* about_hand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE67153F0AA100420E4B /* about_hand@2x.png */; };
+		00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6FE7A153F16AC00420E4B /* YellAdvertView.m */; };
 		00D26F361535BE85004BC8ED /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F351535BE85004BC8ED /* SettingsView.m */; };
 		00D26F3E1535C7BB004BC8ED /* tab.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3C1535C7BB004BC8ED /* tab.png */; };
 		00D26F3F1535C7BB004BC8ED /* tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3D1535C7BB004BC8ED /* tab@2x.png */; };
@@ -117,6 +118,8 @@
 		005F608D153C6C6500999B47 /* SharePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SharePhotoViewController.xib; path = ../SharePhotoViewController.xib; sourceTree = "<group>"; };
 		00C6FE66153F0AA100420E4B /* about_hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_hand.png; sourceTree = "<group>"; };
 		00C6FE67153F0AA100420E4B /* about_hand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_hand@2x.png"; sourceTree = "<group>"; };
+		00C6FE79153F16AC00420E4B /* YellAdvertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YellAdvertView.h; sourceTree = "<group>"; };
+		00C6FE7A153F16AC00420E4B /* YellAdvertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YellAdvertView.m; sourceTree = "<group>"; };
 		00D26F341535BE85004BC8ED /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		00D26F351535BE85004BC8ED /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		00D26F3C1535C7BB004BC8ED /* tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab.png; sourceTree = "<group>"; };
@@ -304,6 +307,8 @@
 				1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */,
 				196B8E311518937400DAD14A /* MEXSegmentButtonControl.h */,
 				196B8E321518937400DAD14A /* MEXSegmentButtonControl.m */,
+				00C6FE79153F16AC00420E4B /* YellAdvertView.h */,
+				00C6FE7A153F16AC00420E4B /* YellAdvertView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -617,6 +622,7 @@
 				00359A7815370D0700BE5D31 /* OmnitureLogging.m in Sources */,
 				005F6074153C1F4F00999B47 /* VideoPreviewView.m in Sources */,
 				005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */,
+				00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

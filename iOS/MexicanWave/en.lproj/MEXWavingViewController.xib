@@ -48,7 +48,7 @@
 								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="310183317"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="407595893"/>
+								<reference key="NSNextKeyView" ref="426846592"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">10</int>
 									<object class="NSImage" key="NSImage">
@@ -4455,7 +4455,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<float key="IBUISectionHeaderHeight">10</float>
 								<float key="IBUISectionFooterHeight">10</float>
 							</object>
-							<object class="IBUIImageView" id="929767111">
+							<object class="IBUIImageView" id="484996479">
 								<reference key="NSNextResponder" ref="310183317"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{100, 189}, {134, 88}}</string>
@@ -4470,13 +4470,13 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 									<string key="NSResourceName">about_hand.png</string>
 								</object>
 							</object>
-							<object class="IBUILabel" id="407595893">
+							<object class="IBUILabel" id="426846592">
 								<reference key="NSNextResponder" ref="310183317"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 275}, {280, 174}}</string>
 								<reference key="NSSuperview" ref="310183317"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="929767111"/>
+								<reference key="NSNextKeyView" ref="484996479"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -4565,7 +4565,7 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 								<string key="NSFrame">{{320, 206}, {21, 47}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="38817859"/>
+								<reference key="NSNextKeyView" ref="55262818"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
@@ -4592,7 +4592,7 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="805234120"/>
+								<reference key="NSNextKeyView" ref="888426051"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MSAwAA</bytes>
@@ -4602,20 +4602,19 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIImageView" id="38817859">
+							<object class="IBUIView" id="55262818">
 								<reference key="NSNextResponder" ref="191373211"/>
-								<int key="NSvFlags">-2147483356</int>
+								<int key="NSvFlags">274</int>
 								<string key="NSFrame">{{35, 380}, {250, 54}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
-								<int key="IBUIContentMode">2</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">Yell-Advert.png</string>
+								<reference key="NSNextKeyView" ref="805234120"/>
+								<object class="NSColor" key="IBUIBackgroundColor">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MQA</bytes>
+									<reference key="NSCustomColorSpace" ref="811220512"/>
 								</object>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 							<object class="IBUIButton" id="5844338">
 								<reference key="NSNextResponder" ref="191373211"/>
@@ -4684,7 +4683,7 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="888426051"/>
+								<reference key="NSNextKeyView"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEAA</bytes>
@@ -4773,14 +4772,6 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">yellAdvert</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="38817859"/>
-					</object>
-					<int key="connectionID">49</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">whiteFlashView</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="805234120"/>
@@ -4863,8 +4854,8 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 						<reference key="object" ref="310183317"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="437127057"/>
-							<reference ref="407595893"/>
-							<reference ref="929767111"/>
+							<reference ref="426846592"/>
+							<reference ref="484996479"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 					</object>
@@ -4884,9 +4875,9 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 							<reference ref="777623617"/>
 							<reference ref="5844338"/>
 							<reference ref="888426051"/>
-							<reference ref="38817859"/>
 							<reference ref="805234120"/>
 							<reference ref="595236571"/>
+							<reference ref="55262818"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 					</object>
@@ -4923,11 +4914,6 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">47</int>
-						<reference key="object" ref="38817859"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">37</int>
 						<reference key="object" ref="805234120"/>
 						<reference key="parent" ref="191373211"/>
@@ -4939,13 +4925,18 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">57</int>
-						<reference key="object" ref="929767111"/>
+						<reference key="object" ref="484996479"/>
 						<reference key="parent" ref="310183317"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">59</int>
-						<reference key="object" ref="407595893"/>
+						<reference key="object" ref="426846592"/>
 						<reference key="parent" ref="310183317"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">60</int>
+						<reference key="object" ref="55262818"/>
+						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
 			</object>
@@ -4964,12 +4955,13 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 				<string key="41.CustomClassName">VideoPreviewView</string>
 				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="47.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="54.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="54.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="59.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="60.CustomClassName">YellAdvertView</string>
+				<string key="60.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.CustomClassName">MEXWaveFxView</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -4978,7 +4970,7 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">59</int>
+			<int key="maxID">60</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5078,6 +5070,14 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 						<string key="minorKey">./Classes/VideoPreviewView.h</string>
 					</object>
 				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">YellAdvertView</string>
+					<string key="superclassName">UIControl</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/YellAdvertView.h</string>
+					</object>
+				</object>
 			</array>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
@@ -5085,7 +5085,6 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="Yell-Advert.png">{250, 52}</string>
 			<string key="about_hand.png">{93, 128}</string>
 			<string key="background.png">{320, 460}</string>
 			<string key="background_Camera.png">{320, 460}</string>
