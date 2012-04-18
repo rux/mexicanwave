@@ -18,10 +18,9 @@
 @end
 
 @implementation VideoPreviewView
-@synthesize session,videoRunning,stillImageOutput,capturedImage,caputureQueue;
+@synthesize session,videoRunning,stillImageOutput,capturedImage;
 
 -(void)dealloc{
-    dispatch_release(caputureQueue);
     [capturedImage release];
     [stillImageOutput release];
     [session release];
@@ -42,8 +41,6 @@
 }
 
 -(void)commonInitialisation{
-    caputureQueue =  dispatch_queue_create("com.yell.mexican.capture", NULL);
-
     
     //create a session which can be accessed throughout.
 	session = [[AVCaptureSession alloc] init];
@@ -51,7 +48,7 @@
     
     //create the creview layer and attach it to self (as we inheirt from UIVIEW)
     //set the frame to match ours - and ratio appropriately 
-	AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
+	AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
     captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 	captureVideoPreviewLayer.frame = self.frame;
 
@@ -72,27 +69,20 @@
     //set up still photo capture - (For Future)
     // We retain a handle to the still image output and use this when we capture an image.
     stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-	NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
+	NSDictionary *outputSettings = [NSDictionary dictionaryWithObject:AVVideoCodecJPEG forKey:AVVideoCodecKey];
 	[stillImageOutput setOutputSettings:outputSettings];
 	[session addOutput:stillImageOutput];
-    //make sure its not runnin
-    self.videoRunning = NO;
-
 }
 
 -(void)startVideo{
-    NSLog(@"called");
     //check if video is allready running - if not start the camera session
     if(self.isVideoRunning){
         return;
     }
-    dispatch_async(caputureQueue, ^{
-        if(!self.isVideoRunning){
+    dispatch_async(dispatch_get_main_queue(), ^{
             [session startRunning];
             self.videoRunning = YES;
-        }
-
-    });
+        });
 
 }
 
@@ -101,12 +91,9 @@
     if(!self.isVideoRunning){
         return;
     }
-    dispatch_async(caputureQueue, ^{
-        if(self.isVideoRunning){
+    dispatch_async(dispatch_get_main_queue(), ^{
             [session stopRunning];
             self.videoRunning = NO;
-        }
-        
     });
 
 }

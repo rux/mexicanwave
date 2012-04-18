@@ -58,7 +58,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [self.viewController resume];
+   
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -157,7 +157,8 @@
     self.waveModel.crowdType = [defaults integerForKey:MEXWaveSpeedSettingsKey];
     // Start running again
     [self.waveModel resume];
-    
+
+    //restart video capture
     [self.videoView startVideo];
   
     self.paused = NO;
@@ -186,8 +187,7 @@
     }
 
     if(!self.isPaused){
-        
-        const float duration = (self.waveModel.crowdType == MEXCrowdTypeSelectionSegmentRight) ? 0.5 : 0.2;
+        const float duration = (self.waveModel.crowdType == 2) ? 0.5 : 0.2;
         //animate the screen flash
         [UIView animateWithDuration:duration animations:^{
             self.whiteFlashView.alpha = 1; 
@@ -255,15 +255,13 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self resume];
-    
+    [self resume];    
 }
 
 - (void)viewDidLoad {
     //animate in to hint to the user whats behind the main view
     [self bounceAnimation];
 
-    
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
         

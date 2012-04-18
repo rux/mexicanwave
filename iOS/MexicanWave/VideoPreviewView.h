@@ -13,7 +13,6 @@
 
 @property(nonatomic,getter = isVideoRunning) BOOL videoRunning;
 @property(nonatomic,retain) UIImage* capturedImage;
-@property (nonatomic) dispatch_queue_t caputureQueue;
 
 -(void)startVideo;
 -(void)stopVideo;
