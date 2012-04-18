@@ -12,15 +12,17 @@
 
 @property(nonatomic,retain) AVCaptureSession *session;
 @property(nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
-
+@property(nonatomic, retain) AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
 -(void)commonInitialisation;
 
 @end
 
 @implementation VideoPreviewView
-@synthesize session,videoRunning,stillImageOutput,capturedImage;
-
+@synthesize session,videoRunning,stillImageOutput,capturedImage,captureVideoPreviewLayer;
+@synthesize caputureQueue;
 -(void)dealloc{
+    dispatch_release(caputureQueue);
+    [captureVideoPreviewLayer release];
     [capturedImage release];
     [stillImageOutput release];
     [session release];
@@ -42,23 +44,25 @@
 
 -(void)commonInitialisation{
     
+    caputureQueue = dispatch_queue_create("com.yell.mexican.capture", NULL);
+    
     //create a session which can be accessed throughout.
 	session = [[AVCaptureSession alloc] init];
 	session.sessionPreset = AVCaptureSessionPresetMedium;
     
     //create the creview layer and attach it to self (as we inheirt from UIVIEW)
     //set the frame to match ours - and ratio appropriately 
-	AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
+    captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc]initWithSession:session];
     captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 	captureVideoPreviewLayer.frame = self.frame;
 
-	[self.layer addSublayer:captureVideoPreviewLayer];
     
     //get the default device and set it as the device input.
 	AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     
 	NSError *error = nil;
 	AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+
 	if (!input) {
 		// Handle the error appropriately.
 		NSLog(@"ERROR: trying to open camera: %@", error);
@@ -66,7 +70,7 @@
 	[session addInput:input];
     
     
-    //set up still photo capture - (For Future)
+    //set up still photo capture
     // We retain a handle to the still image output and use this when we capture an image.
     stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
 	NSDictionary *outputSettings = [NSDictionary dictionaryWithObject:AVVideoCodecJPEG forKey:AVVideoCodecKey];
@@ -80,6 +84,7 @@
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
+            [self.layer addSublayer:captureVideoPreviewLayer];
             [session startRunning];
             self.videoRunning = YES;
         });
@@ -91,7 +96,9 @@
     if(!self.isVideoRunning){
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [captureVideoPreviewLayer removeFromSuperlayer];
+
+    dispatch_async(caputureQueue, ^{
             [session stopRunning];
             self.videoRunning = NO;
     });
@@ -104,7 +111,6 @@
     //double check the video is started
     if(![session isRunning]){
         [self startVideo];
-        return;
     }
     
     AVCaptureConnection *videoConnection = nil;

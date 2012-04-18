@@ -13,6 +13,7 @@
 
 @property(nonatomic,getter = isVideoRunning) BOOL videoRunning;
 @property(nonatomic,retain) UIImage* capturedImage;
+@property (nonatomic) dispatch_queue_t caputureQueue; //< prevent main thread being blocked whilst starting and stoping the camera session
 
 -(void)startVideo;
 -(void)stopVideo;

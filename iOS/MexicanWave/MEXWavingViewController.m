@@ -270,7 +270,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:kSettingsDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:UIApplicationDidBecomeActiveNotification object:nil];
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
@@ -298,7 +298,6 @@
 
 #pragma mark Gesture Recognizer callbacks
 -(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
-    [self pause];
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
@@ -307,6 +306,9 @@
         [self resume];
         return;
     }
+    
+    [self pause];
+
     //move the view with the correct offset - we want to start at minus the size of view so that
 
     self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
@@ -331,7 +333,6 @@
     }       
 }
 -(void)didRecievePanGestureRight:(UIPanGestureRecognizer*)recognizer{
-    [self pause];
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
@@ -340,6 +341,10 @@
         [self resume];
         return;
     }
+    
+    [self pause];
+
+    
     //move the view with the correct offset - we want to start at minus the size of view so that
     self.containerView.frame = CGRectMake(-320+offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
     
