@@ -76,6 +76,9 @@
 	NSDictionary *outputSettings = [NSDictionary dictionaryWithObject:AVVideoCodecJPEG forKey:AVVideoCodecKey];
 	[stillImageOutput setOutputSettings:outputSettings];
 	[session addOutput:stillImageOutput];
+    
+    [self.layer addSublayer:captureVideoPreviewLayer];
+
 }
 
 -(void)startVideo{
@@ -83,11 +86,15 @@
     if(self.isVideoRunning){
         return;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-            [self.layer addSublayer:captureVideoPreviewLayer];
+    self.videoRunning = YES;
+
+    dispatch_async(caputureQueue, ^{
+        if(self.isVideoRunning){
+            NSLog(@"start");
             [session startRunning];
-            self.videoRunning = YES;
-        });
+        }
+
+    });
 
 }
 
@@ -96,16 +103,18 @@
     if(!self.isVideoRunning){
         return;
     }
-    [captureVideoPreviewLayer removeFromSuperlayer];
 
+    //[captureVideoPreviewLayer removeFromSuperlayer];
+    self.videoRunning = NO;
     dispatch_async(caputureQueue, ^{
+        if(!self.isVideoRunning){
+            NSLog(@"stopped");
             [session stopRunning];
-            self.videoRunning = NO;
+        }
+        
     });
 
 }
-
-
 
 -(void)capturePhotoWithCompletion:(void(^)(void))completion{
     //double check the video is started

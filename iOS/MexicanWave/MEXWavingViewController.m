@@ -151,8 +151,7 @@
 
 - (void)resume {
     
-   
-    // Refetch our settings preferences, they may have changed while we were in the background.
+   // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
     self.soundOnWaveEnabled = [defaults boolForKey:kUserDefaultKeySound];
@@ -305,7 +304,6 @@
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
     //we only want the view to move left
     if(offset>0){
-        [self resume];
         return;
     }
     
@@ -340,7 +338,6 @@
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
     //we only want the view to move Right
     if(offset<0){
-        [self resume];
         return;
     }
     
