@@ -44,6 +44,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private SharedPreferences prefs;
 	private int waveDuration;
 	private int waveColor;
+	private boolean soundEnabled;
 
 	
 
@@ -52,12 +53,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         super.onCreate(savedInstanceState);
         
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-       
         prefs.registerOnSharedPreferenceChangeListener(this);
-        
         waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
-        Log.i("info", "************** " + prefs.getString("pref_coloring", "#FFFFFFFF"));
         waveColor = Color.parseColor(prefs.getString("pref_coloring", "#FFFFFFFF"));
+        soundEnabled = prefs.getBoolean("pref_sound", false);
         
         setContentView(R.layout.main);
         context = this;
@@ -68,7 +67,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
 
-        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor);
+        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor, soundEnabled);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -171,12 +170,21 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		if (key.equals("pref_group_size_values")) {
 			waveDuration = Integer.parseInt(prefs.getString("pref_group_size", "15"));
+			roarHandler.setWaveDuration(waveDuration);
 		}
 		if (key.equals("pref_color_values")) {
-			waveColor = Color.parseColor(prefs.getString("pref_color", "Color.WHITE"));
+			waveColor = Color.parseColor(prefs.getString("pref_coloring", "Color.WHITE"));
+			roarHandler.setWaveColor(waveColor);
+		}
+		
+
+		if (key.equals("pref_sound")) {
+			Log.i("info", "innit  " + key);
+			soundEnabled = prefs.getBoolean(key, false);
+			roarHandler.setSound(soundEnabled);
 		}
 	}
 }
