@@ -3,7 +3,7 @@
     android:id="@+id/overallLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/red"
+    android:background="@color/black"
     android:orientation="vertical" >
 
     <com.yell.labs.mexicanwave.PreviewSurface
@@ -34,5 +34,11 @@
         android:src="@drawable/background"
         android:contentDescription="@string/backgroundImageDescription" />
 
+    <View
+        android:id="@+id/screenFlash"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#66992277"
+        />
 
 </RelativeLayout>

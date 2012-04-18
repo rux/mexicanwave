@@ -5,6 +5,9 @@ import java.util.Date;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
@@ -13,10 +16,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 
 class RoarHandler {
 	private Vibrator vibrator;
-	private View theLayout;
+	private View screenFlash;
 	private PreviewSurface mSurface;
 	private boolean cameraReady;	
 	public boolean currentlyRoaring;	
@@ -29,10 +35,15 @@ class RoarHandler {
 	private int soundId;
 	private boolean soundLoaded;
 	
+	private Animation fadeInAnim;
+	private Animation fadeOutAnim;
+	private Animation flashAnim;
+	
+	
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE) {        
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
-        theLayout = (View) v;
+        screenFlash = (View) v;
         mSurface = previewSurface;
         this.setWaveDuration(wD);
         this.setWaveColor(wC);
@@ -48,6 +59,22 @@ class RoarHandler {
         soundId = soundPool.load(c, R.raw.cheer, 1);
         audioManager = (AudioManager) c.getSystemService(c.AUDIO_SERVICE);
         
+        flashAnim = AnimationUtils.loadAnimation(c, R.anim.flash);
+        flashAnim.setAnimationListener(new AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {}
+			@Override
+			public void onAnimationRepeat(Animation animation) {}
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				screenFlash.setBackgroundColor(Color.TRANSPARENT);
+			}
+		});
+        
+        fadeInAnim = AnimationUtils.loadAnimation(c, android.R.anim.fade_in);
+        fadeInAnim.setDuration(1000);
+        fadeOutAnim = AnimationUtils.loadAnimation(c, android.R.anim.fade_out);
+        fadeOutAnim.setDuration(1000);
         
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
@@ -126,32 +153,35 @@ class RoarHandler {
 		if (currentlyRoaring != true && cameraReady) {			
 			mSurface.lightOn();
 			vibrator.vibrate(1000);
-			theLayout.setBackgroundColor(this.waveColor);
-			currentlyRoaring = true;
+			screenFlash.setBackgroundColor(this.waveColor);
+			screenFlash.startAnimation(flashAnim);
 			
-			Log.i("info", "sound flags are " + String.valueOf(soundEnabled) + " : " + String.valueOf(soundLoaded));
+			
 			if(soundEnabled && soundLoaded) {
-				Log.i("info", "playing");
 				float actualVolume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 				float maxVolume = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 				float volume = actualVolume / maxVolume;
 				soundPool.play(soundId, volume, volume, 1, 0, 1f);
 			}
 			
-		} else {
-			// Log.i("info", "already roaring");
+			currentlyRoaring = true;
+			
 		}
-		
-		
 	}	
 	
 	public void calmDown() {
+		//if (currentlyRoaring == true ) {
+	//		screenFlash.startAnimation(fadeOutAnim);
+		//}
+			
 		if(cameraReady) {
 			mSurface.lightOff();
-			theLayout.setBackgroundColor(Color.BLACK);
-			currentlyRoaring = false;
+			// screenFlash.setBackgroundColor(Color.TRANSPARENT);
 		}
+		currentlyRoaring = false;
+
 	
 	}
 
 }
+

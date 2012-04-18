@@ -29,7 +29,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     
 	private RoarHandler roarHandler;
 	private Context context;
-	private RelativeLayout view;
+	private View view;
 	private SensorManager mySensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
@@ -60,7 +60,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         setContentView(R.layout.main);
         context = this;
-        view = (RelativeLayout) findViewById(R.id.overallLayout);
+        view = (View) findViewById(R.id.screenFlash);
         waveCompass = (ImageView) findViewById(R.id.spinningDisc);
         
   
