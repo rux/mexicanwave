@@ -90,7 +90,6 @@
 
     dispatch_async(caputureQueue, ^{
         if(self.isVideoRunning){
-            NSLog(@"start");
             [session startRunning];
         }
 
@@ -108,7 +107,6 @@
     self.videoRunning = NO;
     dispatch_async(caputureQueue, ^{
         if(!self.isVideoRunning){
-            NSLog(@"stopped");
             [session stopRunning];
         }
         
