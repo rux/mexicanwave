@@ -131,7 +131,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				azimuth = (float) Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
 																// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
 																// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
-																// held up to do a mexican wave, we don't really care about this state.
+																// held up to do a Mexican wave, we don't really care about this state.
 				
 				float oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
 				
@@ -150,11 +150,11 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				
 				// The way we calculate the vector for direction does not work well when the phone is flat,
 				// so we first check to make sure that we've not got the z-axis of the device aligned 
-				// to the gravity of Earth.  I have made the assumption, as is evicenced by my choice
+				// to the gravity of Earth.  I have made the assumption, as is evidenced by my choice
 				// of 9.80665m/s^2, that we won't be using this app on any other planets.
 				// TODO - make this work on other planets.
 				
-				averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;
+				averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loved to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
 
 				// Log.i("info", " ##### Z Gravity is " + String.valueOf(averageZGravity) + " raw is " + String.valueOf( Math.min(Math.abs(myGravities[2]), 9.80665f)));
 				if (Math.abs(averageZGravity) > 9 ) {
