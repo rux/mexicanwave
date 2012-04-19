@@ -5,9 +5,6 @@ import java.util.Date;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
@@ -35,8 +32,6 @@ class RoarHandler {
 	private int soundId;
 	private boolean soundLoaded;
 	
-	private Animation fadeInAnim;
-	private Animation fadeOutAnim;
 	private Animation flashAnim;
 	
 	
@@ -60,7 +55,7 @@ class RoarHandler {
         audioManager = (AudioManager) c.getSystemService(c.AUDIO_SERVICE);
         
         flashAnim = AnimationUtils.loadAnimation(c, R.anim.flash);
-        flashAnim.setAnimationListener(new AnimationListener() {
+        flashAnim.setAnimationListener(new AnimationListener() {  // this is a workaround for a bug that means we can't define the last frame stay put afterh the animation's finished
 			@Override
 			public void onAnimationStart(Animation animation) {}
 			@Override
@@ -70,12 +65,7 @@ class RoarHandler {
 				screenFlash.setBackgroundColor(Color.TRANSPARENT);
 			}
 		});
-        
-        fadeInAnim = AnimationUtils.loadAnimation(c, android.R.anim.fade_in);
-        fadeInAnim.setDuration(1000);
-        fadeOutAnim = AnimationUtils.loadAnimation(c, android.R.anim.fade_out);
-        fadeOutAnim.setDuration(1000);
-        
+ 
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
 	

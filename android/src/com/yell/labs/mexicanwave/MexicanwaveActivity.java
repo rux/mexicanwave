@@ -18,11 +18,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
@@ -52,10 +50,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
         waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
-        waveColor = Color.parseColor(prefs.getString("pref_coloring", "#FFFFFFFF"));
+        waveColor = Color.parseColor(prefs.getString("pref_coloring", "#EEFFFFFF"));
         soundEnabled = prefs.getBoolean("pref_sound", false);
         
         setContentView(R.layout.main);
