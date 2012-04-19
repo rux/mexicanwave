@@ -94,6 +94,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
         cell.textLabel.text = kSettingsKeySpeed;
         UISegmentedControl* speedControl = [[[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects: NSLocalizedString(@"Fun",@"MEXSegement button title for Fun"),NSLocalizedString(@"Gig",@"MEXSegement button title for Gig"),NSLocalizedString(@"Stadium",@"MEXSegement button title for Stadium"), nil]]autorelease];
         speedControl.segmentedControlStyle = UISegmentedControlStyleBar;
+        speedControl.tintColor = [UIColor colorWithWhite:0.45 alpha:1];
         speedControl.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey];
         [speedControl sizeToFit];
         [speedControl addTarget:self action:@selector(didTapSegment:) forControlEvents:UIControlEventValueChanged];
