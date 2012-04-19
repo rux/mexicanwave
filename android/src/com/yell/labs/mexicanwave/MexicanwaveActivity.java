@@ -11,6 +11,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -28,11 +29,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private RoarHandler roarHandler;
 	private Context context;
 	private View view;
+	private View warning;
 	private SensorManager mySensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
 	private float[] myGravities;
 	private float[] myMagnetics;
+	private float averageZGravity;
 	private float azimuth;
 	private PreviewSurface mSurface;
 		
@@ -59,6 +62,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         setContentView(R.layout.main);
         context = this;
         view = (View) findViewById(R.id.screenFlash);
+        warning = (View) findViewById(R.id.holdThePhone);
         waveCompass = (ImageView) findViewById(R.id.spinningDisc);
         
   
@@ -81,8 +85,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
     protected void onResume() {
     	super.onResume();
-    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI );
-    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI );
+    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST );
+    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_FASTEST );
     }
  
 	@Override
@@ -122,13 +126,14 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			float I[] = new float[9];
 			boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 			if (success) {
-																// 
+
+											// 
 				azimuth = (float) Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
 																// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
 																// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
 																// held up to do a mexican wave, we don't really care about this state.
 				
-				float oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smooths the rotation animation
+				float oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
 				
 				roarHandler.update(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 				
@@ -137,6 +142,30 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				
 				rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
 				waveCompass.startAnimation(rotateAnimation);
+				
+
+
+				
+				
+				
+				// The way we calculate the vector for direction does not work well when the phone is flat,
+				// so we first check to make sure that we've not got the z-axis of the device aligned 
+				// to the gravity of Earth.  I have made the assumption, as is evicenced by my choice
+				// of 9.80665m/s^2, that we won't be using this app on any other planets.
+				// TODO - make this work on other planets.
+				
+				averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;
+
+				// Log.i("info", " ##### Z Gravity is " + String.valueOf(averageZGravity) + " raw is " + String.valueOf( Math.min(Math.abs(myGravities[2]), 9.80665f)));
+				if (Math.abs(averageZGravity) > 9 ) {
+					// device is too flat
+					warning.setVisibility(View.VISIBLE);
+				}
+				if (Math.abs(averageZGravity) < 8 ) {
+					// device is now OK
+					warning.setVisibility(View.INVISIBLE);
+				}
+
 			}
 			
 		}

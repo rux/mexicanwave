@@ -40,5 +40,13 @@
         android:layout_height="fill_parent"
         android:background="#66992277"
         />
+    
+    <TextView
+        android:id="@+id/holdThePhone"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#AA888888"
+        android:gravity="center"
+        android:text="Please hold the phone up towards the middle" />
 
 </RelativeLayout>
