@@ -18,6 +18,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
 class RoarHandler {
+	private Context context;
 	private Vibrator vibrator;
 	private View screenFlash;
 	private PreviewSurface mSurface;
@@ -36,11 +37,13 @@ class RoarHandler {
 	
 	
 
-	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE) {        
+	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE) {
+		context = c;
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         screenFlash = (View) v;
         mSurface = previewSurface;
         this.setWaveDuration(wD);
+        this.setFlash(wD);
         this.setWaveColor(wC);
         this.setSound(sE);
         
@@ -51,10 +54,10 @@ class RoarHandler {
 				soundLoaded = true;
 			}
 		});
-        soundId = soundPool.load(c, R.raw.cheer, 1);
-        audioManager = (AudioManager) c.getSystemService(c.AUDIO_SERVICE);
+        soundId = soundPool.load(context, R.raw.cheer, 1);
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         
-        flashAnim = AnimationUtils.loadAnimation(c, R.anim.flash);
+        
         flashAnim.setAnimationListener(new AnimationListener() {  // this is a workaround for a bug that means we can't define the last frame stay put afterh the animation's finished
 			@Override
 			public void onAnimationStart(Animation animation) {}
@@ -79,9 +82,19 @@ class RoarHandler {
 	
 	public void setWaveDuration(int w) {
 		waveDuration = w;
+		this.setFlash(w);
 	}
 	public void setWaveColor(int c) {
 		waveColor = c;
+	}
+	public void setFlash(int w) {
+		if (w < 20) {
+			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash);
+			Log.i("info", "setting short flash");
+		} else {
+			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash_long);
+			Log.i("info", "setting Long flash");
+		}
 	}
 	
 	private void setAzimuth(float a) {
@@ -142,7 +155,7 @@ class RoarHandler {
 
 		if (currentlyRoaring != true && cameraReady) {			
 			mSurface.lightOn();
-			vibrator.vibrate(1000);
+			vibrator.vibrate(100 * waveDuration);
 			screenFlash.setBackgroundColor(this.waveColor);
 			screenFlash.startAnimation(flashAnim);
 			
