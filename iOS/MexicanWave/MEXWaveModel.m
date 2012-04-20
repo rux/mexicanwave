@@ -10,8 +10,9 @@
 #import "MEXCompassModel.h"
 #import "ios-ntp/ios-ntp.h"
 
-#define MIN_WAVE_PERIOD 0.5
-#define MAX_WAVE_PERIOD 10.0
+#define PERIOD_IN_SECONDS_FOR_SMALL_GROUP 5.0
+#define PERIOD_IN_SECONDS_FOR_STAGE 15.0
+#define PERIOD_IN_SECONDS_FOR_STADIUM 30.0
 
 NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotification";
 
@@ -47,25 +48,21 @@ NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotificat
 }
 
 - (NSTimeInterval)wavePeriodInSeconds {
-    float crowdSizeFactor = 1.0f;
     switch (self.crowdType) {
         case kMEXCrowdTypeSmallGroup:
-            crowdSizeFactor = 0.1;
-            break;
+            return PERIOD_IN_SECONDS_FOR_SMALL_GROUP;
             
         case kMEXCrowdTypeStageBased:
-            crowdSizeFactor = 0.3;
-            break;
+            return PERIOD_IN_SECONDS_FOR_STAGE;
             
         case kMEXCrowdTypeStadium:
-            crowdSizeFactor = 1.0;
-            break;
+            return PERIOD_IN_SECONDS_FOR_STAGE;
             
         default:
             NSAssert(NO, @"Unhandled crowd size enum value %d", self.crowdType);
             break;
     }
-    return MIN_WAVE_PERIOD + (MAX_WAVE_PERIOD - MIN_WAVE_PERIOD) * crowdSizeFactor;
+    return PERIOD_IN_SECONDS_FOR_STADIUM;
 }
 
 - (float)wavePhase {
