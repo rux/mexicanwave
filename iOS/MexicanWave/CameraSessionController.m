@@ -7,6 +7,7 @@
 //
 
 #import "CameraSessionController.h"
+#import <ImageIO/CGImageProperties.h>
 
 #if (TARGET_IPHONE_SIMULATOR)			
 // The AVFoundation frameworks related to video capture and display are not available when compiling for simulator and are removed using preprocessor directives.
@@ -18,11 +19,10 @@
 @class AVCaptureSession;
 #endif
 #endif
-#import <ImageIO/CGImageProperties.h>
 
-#define kSessionDispatchQueueName "com.yell.loyalty.captureSessionQueue"
-#define kDispatchQueueName "com.yell.loyalty.frameQueue"
-#define kDeliveryDispatchQueueName "com.yell.loyalty.deliveryQueue"
+#define kSessionDispatchQueueName "com.yell.mexican.captureSessionQueue"
+#define kDispatchQueueName "com.yell.mexican.frameQueue"
+#define kDeliveryDispatchQueueName "com.yell.mexican.deliveryQueue"
 
 @interface CameraSessionController ()
 @property (nonatomic, retain) AVCaptureVideoPreviewLayer* videoLayer;	/// The layer responsible for displaying the camera output.
@@ -34,7 +34,7 @@
 @property (assign) BOOL shouldAttach;	// Used to avoid a situation where rapid-fire calling of attach and detach causes substantial queues of delegate changes to form.
 
 @property (retain) UIImage* frameBeingProcessed;
-@property(nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput;
+@property(nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput; //Used to capture still images whilst video is still playing.
 
 
 - (BOOL)configureCaptureChain;	/// If a device is available, tie it into the capture session if necessary and start the session running if possible.
@@ -541,6 +541,8 @@
     return self.capturedImage ? YES : NO;
 }
 -(void)capturePhotoWithCompletion:(void(^)(void))completion{
+#if !(TARGET_IPHONE_SIMULATOR)
+
     //double check the video is started
     if(![captureSession isRunning]){
         [self resumeDisplay];
@@ -576,6 +578,7 @@
          }
          
 	 }];
+#endif
     
 }
 

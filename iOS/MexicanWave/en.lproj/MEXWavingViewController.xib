@@ -4531,11 +4531,11 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUIImageView" id="595236571">
 								<reference key="NSNextResponder" ref="191373211"/>
-								<int key="NSvFlags">274</int>
-								<string key="NSFrame">{{-1, 0}, {320, 460}}</string>
+								<int key="NSvFlags">-2147483374</int>
+								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="957085552"/>
+								<reference key="NSNextKeyView" ref="1041226851"/>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
@@ -4551,11 +4551,8 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="576328331"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MSAwAA</bytes>
-									<object class="NSColorSpace" key="NSCustomColorSpace" id="811220512">
-										<int key="NSID">2</int>
-									</object>
+									<int key="NSColorSpace">2</int>
+									<bytes key="NSRGB">MC4xOTYwNzg0NDk1IDAuMjUwOTgwNDA3IDAuMzQ1MDk4MDQ4NCAwAA</bytes>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -4592,11 +4589,13 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 								<string key="NSFrame">{{-1, 0}, {320, 460}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1041226851"/>
+								<reference key="NSNextKeyView" ref="595236571"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MSAwAA</bytes>
-									<reference key="NSCustomColorSpace" ref="811220512"/>
+									<object class="NSColorSpace" key="NSCustomColorSpace" id="811220512">
+										<int key="NSID">2</int>
+									</object>
 								</object>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -4608,7 +4607,6 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 								<string key="NSFrame">{{35, 380}, {250, 54}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -4696,7 +4694,7 @@ bmcgCmEgTWV4aWNhbiBXYXZlA</string>
 						<string key="NSFrameSize">{341, 460}</string>
 						<reference key="NSSuperview" ref="1002267159"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="595236571"/>
+						<reference key="NSNextKeyView" ref="957085552"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MSAwAA</bytes>

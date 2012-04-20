@@ -518,7 +518,7 @@
 		199CB5F714FEA3CA00A16A97 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Yell Group Plc";
 			};
 			buildConfigurationList = 199CB5FA14FEA3CA00A16A97 /* Build configuration list for PBXProject "MexicanWave" */;

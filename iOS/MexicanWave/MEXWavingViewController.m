@@ -146,9 +146,8 @@
 }
 
 - (void)resume {
-    
-       
-   // Refetch our settings preferences, they may have changed while we were in the background.
+           
+    // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
     self.soundOnWaveEnabled = [defaults boolForKey:kUserDefaultKeySound];
@@ -252,10 +251,9 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    //restart video capture
-    if(![[CameraSessionController sharedCameraController]cameraView]){
-        [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
-    }
+    //sets up for video capture sessions. Gives the controller the correct view and setttings
+    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
     [[CameraSessionController sharedCameraController] resumeDisplay];
 }
 
