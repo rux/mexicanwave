@@ -56,7 +56,7 @@ NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotificat
             return PERIOD_IN_SECONDS_FOR_STAGE;
             
         case kMEXCrowdTypeStadium:
-            return PERIOD_IN_SECONDS_FOR_STAGE;
+            return PERIOD_IN_SECONDS_FOR_STADIUM;
             
         default:
             NSAssert(NO, @"Unhandled crowd size enum value %d", self.crowdType);
