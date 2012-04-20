@@ -45,7 +45,7 @@
         android:id="@+id/holdThePhone"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#AA888888"
+        android:background="#AA000000"
         android:gravity="center"
         android:text="Please hold the phone up towards the middle" />
 
