@@ -17,6 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
+
+
 class RoarHandler {
 	private Context context;
 	private Vibrator vibrator;
@@ -35,6 +37,7 @@ class RoarHandler {
 	
 	private Animation flashAnim;
 	
+	private SntpClient sntpClient;
 	
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE) {
@@ -46,6 +49,17 @@ class RoarHandler {
         this.setFlash(wD);
         this.setWaveColor(wC);
         this.setSound(sE);
+        
+        sntpClient = new SntpClient();
+        if (sntpClient.requestTime("0.pool.ntp.org", 30000) ) {
+        	Long time = sntpClient.getNtpTime();
+            Long newTime = time;
+            Log.i("info ", String.valueOf(newTime) + ".... newTime");
+
+        } else {
+        	Log.i("info", "no NTP time");
+        }
+        
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -122,9 +136,14 @@ class RoarHandler {
 	
 	public float getWaveOffestFromAzimuthInDegrees() {
 		
+		
+		
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("ss.SSS");
 		float seconds = Float.parseFloat(dateFormat.format(new Date()));
 		
+		
+		 
 		float offset = seconds * 6 * (60/this.waveDuration);
 		return (float) offset;
 	}
