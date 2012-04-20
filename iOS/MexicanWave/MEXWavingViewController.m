@@ -20,7 +20,7 @@
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
 #define kModelKeyPathForPhase @"wavePhase"
 #define kModelKeyPathForPeaks @"numberOfPeaks"
-
+#define kShownHintToUser @"kShownHintToUser"
 @interface MEXWavingViewController ()
 @property (nonatomic,retain) MEXLegacyTorchController* legacyTorchController;
 @property (nonatomic) SystemSoundID waveSoundID;
@@ -250,16 +250,24 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+    
     //sets up for video capture sessions. Gives the controller the correct view and setttings
     [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
     [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
     [[CameraSessionController sharedCameraController] resumeDisplay];
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
+        //animate in to hint to the user whats behind the main view
+        [self bounceAnimation];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShownHintToUser];
+    }
+    
+    [super viewDidAppear:animated];
+
 }
 
 - (void)viewDidLoad {
-    //animate in to hint to the user whats behind the main view
-    [self bounceAnimation];
+   
 
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
