@@ -38,14 +38,17 @@
         android:id="@+id/screenFlash"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#66992277"
+        android:background="#FF000000"
         />
+    <!--  the colour set for the background of the above view is black so the first few seconds are blanked out - the camera
+          is initialising and the movement is insanely jerky, so I've decided that it's better to just obscure it
+          completely. -->
     
     <TextView
         android:id="@+id/holdThePhone"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#AA888888"
+        android:background="#AA000000"
         android:gravity="center"
         android:text="Please hold the phone up towards the middle" />
 
