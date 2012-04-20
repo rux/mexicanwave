@@ -24,7 +24,7 @@ class RoarHandler {
 	private PreviewSurface mSurface;
 	private boolean cameraReady;	
 	public boolean currentlyRoaring;	
-	private float azimuth;
+	public float azimuth;
 	private int waveDuration;
 	private int waveColor;
 	private boolean soundEnabled;
@@ -90,10 +90,8 @@ class RoarHandler {
 	public void setFlash(int w) {
 		if (w < 20) {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash);
-			Log.i("info", "setting short flash");
 		} else {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash_long);
-			Log.i("info", "setting Long flash");
 		}
 	}
 	
@@ -116,17 +114,17 @@ class RoarHandler {
 	public float getAzimuth() {
 		return azimuth;
 	}
-	public float getAzimuthInDegrees() {
-		return (float) (this.getAzimuth()*180/Math.PI);
+	public int getAzimuthInDegrees() {
+		return (int) (this.azimuth*180/Math.PI);
 	}
 	
-	public float getWaveOffestFromAzimuthInDegrees() {
+	public int getWaveOffestFromAzimuthInDegrees() {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("ss.SSS");
 		float seconds = Float.parseFloat(dateFormat.format(new Date()));
 		
-		float offset = seconds * 6 * (60/this.waveDuration);
-		return (float) offset;
+		int offset = (int) (seconds * 6 * (60/this.waveDuration));
+		return (int) offset;
 	}
 	
     void update(float azimuth) {
@@ -139,7 +137,7 @@ class RoarHandler {
     }	
 		
 	public void check() {
-		float angle = (-this.getAzimuthInDegrees() + getWaveOffestFromAzimuthInDegrees()) % 360;
+		int angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
 		if (angle > 160 && angle < 200) {
 			goWild();
 		} else {
@@ -156,7 +154,7 @@ class RoarHandler {
 		if (currentlyRoaring != true && cameraReady) {			
 			mSurface.lightOn();
 			vibrator.vibrate(100 * waveDuration);
-			screenFlash.setBackgroundColor(this.waveColor);
+			screenFlash.setBackgroundColor(waveColor);
 			screenFlash.startAnimation(flashAnim);
 			
 			
@@ -173,18 +171,10 @@ class RoarHandler {
 	}	
 	
 	public void calmDown() {
-		//if (currentlyRoaring == true ) {
-	//		screenFlash.startAnimation(fadeOutAnim);
-		//}
-			
 		if(cameraReady) {
 			mSurface.lightOff();
-			// screenFlash.setBackgroundColor(Color.TRANSPARENT);
 		}
 		currentlyRoaring = false;
-
-	
 	}
-
 }
 

@@ -85,8 +85,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
     protected void onResume() {
     	super.onResume();
-    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST );
-    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_FASTEST );
+    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME  );
+    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME );
     }
  
 	@Override
@@ -133,14 +133,15 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 																// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
 																// held up to do a Mexican wave, we don't really care about this state.
 				
-				float oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
+				int oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
 				
 				roarHandler.update(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 				
-				float newAzimuth = roarHandler.getAzimuthInDegrees();
-				float offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
+				int newAzimuth = roarHandler.getAzimuthInDegrees();
+				int offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
 				
 				rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
+				rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
 				waveCompass.startAnimation(rotateAnimation);
 				
 
