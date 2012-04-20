@@ -198,6 +198,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+		roarHandler.calmDown();
 		if (key.equals("pref_group_size_values")) {
 			waveDuration = Integer.parseInt(prefs.getString("pref_group_size", "15"));
 			roarHandler.setWaveDuration(waveDuration);
