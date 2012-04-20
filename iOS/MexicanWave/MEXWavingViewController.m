@@ -55,16 +55,18 @@
 
 - (IBAction)didTapTakePhoto:(id)sender {
     
-    [self.videoView capturePhotoWithCompletion:^{
+    [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^{
+        if(![[CameraSessionController sharedCameraController] isCapturedImage]){
+            return;
+        }
         SharePhotoViewController* photoView = [[SharePhotoViewController alloc]init];
-        photoView.takenphoto = self.videoView.capturedImage;
+        photoView.takenphoto = [[CameraSessionController sharedCameraController] capturedImage];
         UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:photoView];
         [self presentModalViewController:navController animated:YES];
         [navController release];
         [photoView release];
     }];
   
-    
 }
 
 - (void)didChangeCrowdType:(NSNotification*)note{
@@ -135,7 +137,7 @@
 - (void)pause {
     self.paused = YES;
     //stop filming
-    [self.videoView stopVideo];
+    [[CameraSessionController sharedCameraController] pauseDisplay];    
     // Turn off the torch (just in case)
     [self torchOff];
     // Suspend the model
@@ -145,6 +147,7 @@
 
 - (void)resume {
     
+       
    // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
@@ -153,9 +156,6 @@
     // Start running again
     [self.waveModel resume];
 
-    //restart video capture
-    [self.videoView startVideo];
-  
     self.paused = NO;
 
 }
@@ -208,7 +208,6 @@
 
 - (void)dealloc {
     [waveModel pause];
-    [videoView stopVideo];
     [videoView release];
     [waveModel removeObserver:self forKeyPath:kModelKeyPathForPhase];
     [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeriod];
@@ -251,6 +250,15 @@
     [self resume];    
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    //restart video capture
+    if(![[CameraSessionController sharedCameraController]cameraView]){
+        [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    }
+    [[CameraSessionController sharedCameraController] resumeDisplay];
+}
+
 - (void)viewDidLoad {
     //animate in to hint to the user whats behind the main view
     [self bounceAnimation];
@@ -268,13 +276,15 @@
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
     UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
-    [self.containerView addGestureRecognizer:swipeLeft];
-    [swipeLeft release];
 
     UIPanGestureRecognizer* swipeRight = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureRight:)];
-    [self.tabImageView addGestureRecognizer:swipeRight];
-    [swipeRight release];
     
+    [self.tabImageView addGestureRecognizer:swipeRight];
+    [self.containerView addGestureRecognizer:swipeLeft];
+      
+    [swipeRight release];
+    [swipeLeft release];
+
     [super viewDidLoad];
 
 }
@@ -284,9 +294,13 @@
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
+   
     //we only want the view to move left
+    //there was an occasion where if the user gestured too last we got stuck on the view. to fix that we just animate back
     if(offset>0){
-        return;
+        [UIView animateWithDuration:0.2 animations:^{
+            self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            return;
     }
     
     [self pause];
@@ -310,7 +324,13 @@
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view        
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
-                (offset == -320) ?  [[OmnitureLogging sharedInstance] postEventSettingsViewVisible] :  [self resume];
+                if(offset == -320){
+                    [[OmnitureLogging sharedInstance]postEventSettingsViewVisible];
+                }
+                else{  
+                    [self resume];
+                    [[CameraSessionController sharedCameraController] resumeDisplay];
+                }
             }];
     }       
 }
@@ -325,7 +345,7 @@
     
     [self pause];
 
-    
+      NSLog(@"*RIGHT**");
     //move the view with the correct offset - we want to start at minus the size of view so that
     self.containerView.frame = CGRectMake(-320+offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
     
@@ -335,16 +355,21 @@
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
                     [self resume];
+                    [[CameraSessionController sharedCameraController] resumeDisplay];
+
                 }];
+          
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side- continues animation occordetly
         offset = (offset> 160) ? 0 : -320;
-        
+
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);} completion:^(BOOL finished) {
                 if(offset == 0) { 
                     [self resume];
+                    [[CameraSessionController sharedCameraController] resumeDisplay];
+
                 }
             }];
     }   

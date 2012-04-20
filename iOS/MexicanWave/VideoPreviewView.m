@@ -48,7 +48,26 @@
     
     //create a session which can be accessed throughout.
 	session = [[AVCaptureSession alloc] init];
-	session.sessionPreset = AVCaptureSessionPresetMedium;
+
+    
+    AVCaptureDevice* device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];	
+	if(!device) {
+		return;
+	}
+    
+    NSString* qualityPreset = nil;
+	if([self.session canSetSessionPreset:AVCaptureSessionPresetMedium] && [device supportsAVCaptureSessionPreset:AVCaptureSessionPresetMedium]) {
+		// Configure the session at medium quality.
+		qualityPreset = AVCaptureSessionPresetMedium;
+	}
+	else if([self.session canSetSessionPreset:AVCaptureSessionPresetLow] && [device supportsAVCaptureSessionPreset:AVCaptureSessionPresetLow]) {
+		// Fall back to low quality
+		qualityPreset = AVCaptureSessionPresetLow;
+	}
+	
+	if(!qualityPreset) {
+		return;
+	}
     
     //create the creview layer and attach it to self (as we inheirt from UIVIEW)
     //set the frame to match ours - and ratio appropriately 
@@ -56,10 +75,7 @@
     captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
 	captureVideoPreviewLayer.frame = self.frame;
 
-    
-    //get the default device and set it as the device input.
-	AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    
+       
 	NSError *error = nil;
 	AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
 

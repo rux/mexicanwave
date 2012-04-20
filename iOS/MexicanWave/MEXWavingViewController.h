@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SettingsView.h"
 #import "VideoPreviewView.h"
-
+#import "CameraSessionController.h"
 @class MEXWaveFxView;
 @class MEXWaveModel;
 
@@ -20,7 +20,7 @@
 @property (nonatomic,getter=isSoundOnWaveEnabled) BOOL soundOnWaveEnabled;
 @property (nonatomic,getter=isPaused) BOOL paused;
 @property (retain, nonatomic) IBOutlet UIView *containerView;
-@property (retain, nonatomic) IBOutlet VideoPreviewView *videoView;
+@property (retain, nonatomic) IBOutlet UIView *videoView;
 @property (nonatomic,retain) IBOutlet MEXWaveFxView* waveView;
 @property (retain, nonatomic) IBOutlet SettingsView *settingView;
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
