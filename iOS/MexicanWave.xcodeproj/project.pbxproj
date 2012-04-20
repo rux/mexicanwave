@@ -8,6 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		00359A7815370D0700BE5D31 /* OmnitureLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 00359A7715370D0700BE5D31 /* OmnitureLogging.m */; };
+		0056D384153D85B7004C2BE3 /* tab_lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D382153D85B7004C2BE3 /* tab_lines.png */; };
+		0056D385153D85B7004C2BE3 /* tab_lines@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D383153D85B7004C2BE3 /* tab_lines@2x.png */; };
+		0056D388153D85D6004C2BE3 /* background_Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D386153D85D6004C2BE3 /* background_Camera.png */; };
+		0056D389153D85D6004C2BE3 /* background_Camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D387153D85D6004C2BE3 /* background_Camera@2x.png */; };
+		0056D38B153DA812004C2BE3 /* Yell-Advert@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D38A153DA812004C2BE3 /* Yell-Advert@2x.png */; };
+		0056D397153DC3AA004C2BE3 /* Yell-Advert.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D396153DC3A9004C2BE3 /* Yell-Advert.png */; };
+		005F6074153C1F4F00999B47 /* VideoPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 005F6072153C1F4F00999B47 /* VideoPreviewView.m */; };
+		005F6076153C25DA00999B47 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6075153C25DA00999B47 /* CoreVideo.framework */; };
+		005F6078153C25E700999B47 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6077153C25E700999B47 /* ImageIO.framework */; };
+		005F607A153C260000999B47 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6079153C260000999B47 /* CoreMedia.framework */; };
+		005F607D153C3C1400999B47 /* yell_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F607B153C3C1400999B47 /* yell_icon.png */; };
+		005F607E153C3C1400999B47 /* yell_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F607C153C3C1400999B47 /* yell_icon@2x.png */; };
+		005F6089153C6BB600999B47 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F6087153C6BB600999B47 /* camera@2x.png */; };
+		005F608A153C6BB600999B47 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F6088153C6BB600999B47 /* camera.png */; };
+		005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 005F608C153C6C6500999B47 /* SharePhotoViewController.m */; };
+		005F608F153C6C6500999B47 /* SharePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005F608D153C6C6500999B47 /* SharePhotoViewController.xib */; };
+		00C6FE68153F0AA100420E4B /* about_hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE66153F0AA100420E4B /* about_hand.png */; };
+		00C6FE69153F0AA100420E4B /* about_hand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE67153F0AA100420E4B /* about_hand@2x.png */; };
+		00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6FE7A153F16AC00420E4B /* YellAdvertView.m */; };
+		00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6FEE31541663400420E4B /* CameraSessionController.m */; };
 		00D26F361535BE85004BC8ED /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F351535BE85004BC8ED /* SettingsView.m */; };
 		00D26F3E1535C7BB004BC8ED /* tab.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3C1535C7BB004BC8ED /* tab.png */; };
 		00D26F3F1535C7BB004BC8ED /* tab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3D1535C7BB004BC8ED /* tab@2x.png */; };
@@ -79,6 +99,30 @@
 /* Begin PBXFileReference section */
 		00359A7615370D0700BE5D31 /* OmnitureLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OmnitureLogging.h; path = Omniture/OmnitureLogging.h; sourceTree = "<group>"; };
 		00359A7715370D0700BE5D31 /* OmnitureLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OmnitureLogging.m; path = Omniture/OmnitureLogging.m; sourceTree = "<group>"; };
+		0056D382153D85B7004C2BE3 /* tab_lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_lines.png; sourceTree = "<group>"; };
+		0056D383153D85B7004C2BE3 /* tab_lines@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_lines@2x.png"; sourceTree = "<group>"; };
+		0056D386153D85D6004C2BE3 /* background_Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_Camera.png; sourceTree = "<group>"; };
+		0056D387153D85D6004C2BE3 /* background_Camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background_Camera@2x.png"; sourceTree = "<group>"; };
+		0056D38A153DA812004C2BE3 /* Yell-Advert@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yell-Advert@2x.png"; sourceTree = "<group>"; };
+		0056D396153DC3A9004C2BE3 /* Yell-Advert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yell-Advert.png"; sourceTree = "<group>"; };
+		005F6072153C1F4F00999B47 /* VideoPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPreviewView.m; sourceTree = "<group>"; };
+		005F6073153C1F4F00999B47 /* VideoPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPreviewView.h; sourceTree = "<group>"; };
+		005F6075153C25DA00999B47 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		005F6077153C25E700999B47 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		005F6079153C260000999B47 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		005F607B153C3C1400999B47 /* yell_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yell_icon.png; sourceTree = "<group>"; };
+		005F607C153C3C1400999B47 /* yell_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yell_icon@2x.png"; sourceTree = "<group>"; };
+		005F6087153C6BB600999B47 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
+		005F6088153C6BB600999B47 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		005F608B153C6C6500999B47 /* SharePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharePhotoViewController.h; sourceTree = "<group>"; };
+		005F608C153C6C6500999B47 /* SharePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharePhotoViewController.m; sourceTree = "<group>"; };
+		005F608D153C6C6500999B47 /* SharePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SharePhotoViewController.xib; path = ../SharePhotoViewController.xib; sourceTree = "<group>"; };
+		00C6FE66153F0AA100420E4B /* about_hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_hand.png; sourceTree = "<group>"; };
+		00C6FE67153F0AA100420E4B /* about_hand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_hand@2x.png"; sourceTree = "<group>"; };
+		00C6FE79153F16AC00420E4B /* YellAdvertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YellAdvertView.h; sourceTree = "<group>"; };
+		00C6FE7A153F16AC00420E4B /* YellAdvertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YellAdvertView.m; sourceTree = "<group>"; };
+		00C6FEE31541663400420E4B /* CameraSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraSessionController.m; sourceTree = "<group>"; };
+		00C6FEE41541663400420E4B /* CameraSessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraSessionController.h; sourceTree = "<group>"; };
 		00D26F341535BE85004BC8ED /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		00D26F351535BE85004BC8ED /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		00D26F3C1535C7BB004BC8ED /* tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab.png; sourceTree = "<group>"; };
@@ -177,6 +221,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				005F607A153C260000999B47 /* CoreMedia.framework in Frameworks */,
+				005F6078153C25E700999B47 /* ImageIO.framework in Frameworks */,
+				005F6076153C25DA00999B47 /* CoreVideo.framework in Frameworks */,
 				1967B90F1523044B00A924D5 /* AudioToolbox.framework in Frameworks */,
 				E254CA261513A49400DAB66E /* AVFoundation.framework in Frameworks */,
 				E254CA241513995100DAB66E /* QuartzCore.framework in Frameworks */,
@@ -253,6 +300,10 @@
 		1903F3E11517717800807542 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				00C6FEE41541663400420E4B /* CameraSessionController.h */,
+				00C6FEE31541663400420E4B /* CameraSessionController.m */,
+				005F6073153C1F4F00999B47 /* VideoPreviewView.h */,
+				005F6072153C1F4F00999B47 /* VideoPreviewView.m */,
 				1903F3CB1510F23900807542 /* MEXWaveFxView.h */,
 				1903F3CC1510F23A00807542 /* MEXWaveFxView.m */,
 				1903F3CE1510F50A00807542 /* MEXLampView.h */,
@@ -261,6 +312,8 @@
 				1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */,
 				196B8E311518937400DAD14A /* MEXSegmentButtonControl.h */,
 				196B8E321518937400DAD14A /* MEXSegmentButtonControl.m */,
+				00C6FE79153F16AC00420E4B /* YellAdvertView.h */,
+				00C6FE7A153F16AC00420E4B /* YellAdvertView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -296,6 +349,18 @@
 		196B8DF51517B58700DAD14A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				00C6FE66153F0AA100420E4B /* about_hand.png */,
+				00C6FE67153F0AA100420E4B /* about_hand@2x.png */,
+				0056D38A153DA812004C2BE3 /* Yell-Advert@2x.png */,
+				0056D396153DC3A9004C2BE3 /* Yell-Advert.png */,
+				0056D382153D85B7004C2BE3 /* tab_lines.png */,
+				0056D383153D85B7004C2BE3 /* tab_lines@2x.png */,
+				005F607B153C3C1400999B47 /* yell_icon.png */,
+				005F607C153C3C1400999B47 /* yell_icon@2x.png */,
+				005F6087153C6BB600999B47 /* camera@2x.png */,
+				005F6088153C6BB600999B47 /* camera.png */,
+				0056D386153D85D6004C2BE3 /* background_Camera.png */,
+				0056D387153D85D6004C2BE3 /* background_Camera@2x.png */,
 				00D26F451535E591004BC8ED /* button-whole.png */,
 				00D26F461535E591004BC8ED /* button-whole@2x.png */,
 				00D26F3C1535C7BB004BC8ED /* tab.png */,
@@ -338,6 +403,7 @@
 				196B8E451518A00100DAD14A /* InfoPlist.strings */,
 				196B8E471518A00100DAD14A /* MainWindow.xib */,
 				196B8E491518A00100DAD14A /* MEXWavingViewController.xib */,
+				005F608D153C6C6500999B47 /* SharePhotoViewController.xib */,
 			);
 			name = en.lproj;
 			path = MexicanWave/en.lproj;
@@ -364,6 +430,9 @@
 		199CB60314FEA3CA00A16A97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				005F6079153C260000999B47 /* CoreMedia.framework */,
+				005F6077153C25E700999B47 /* ImageIO.framework */,
+				005F6075153C25DA00999B47 /* CoreVideo.framework */,
 				1967B90E1523044B00A924D5 /* AudioToolbox.framework */,
 				199B575F151CDFB200155281 /* ios-ntp.framework */,
 				E254CA251513A49400DAB66E /* AVFoundation.framework */,
@@ -417,6 +486,8 @@
 				199CB63114FEAABF00A16A97 /* MEXWaveModel.m */,
 				199CB62914FEA47B00A16A97 /* MEXWavingViewController.h */,
 				199CB62A14FEA47C00A16A97 /* MEXWavingViewController.m */,
+				005F608B153C6C6500999B47 /* SharePhotoViewController.h */,
+				005F608C153C6C6500999B47 /* SharePhotoViewController.m */,
 			);
 			name = Waving;
 			sourceTree = "<group>";
@@ -508,6 +579,19 @@
 				00D26F471535E591004BC8ED /* button-whole.png in Resources */,
 				00D26F481535E591004BC8ED /* button-whole@2x.png in Resources */,
 				00D26F551536C886004BC8ED /* AppUpgradeConfiguration.plist in Resources */,
+				005F607D153C3C1400999B47 /* yell_icon.png in Resources */,
+				005F607E153C3C1400999B47 /* yell_icon@2x.png in Resources */,
+				005F6089153C6BB600999B47 /* camera@2x.png in Resources */,
+				005F608A153C6BB600999B47 /* camera.png in Resources */,
+				005F608F153C6C6500999B47 /* SharePhotoViewController.xib in Resources */,
+				0056D384153D85B7004C2BE3 /* tab_lines.png in Resources */,
+				0056D385153D85B7004C2BE3 /* tab_lines@2x.png in Resources */,
+				0056D388153D85D6004C2BE3 /* background_Camera.png in Resources */,
+				0056D389153D85D6004C2BE3 /* background_Camera@2x.png in Resources */,
+				0056D38B153DA812004C2BE3 /* Yell-Advert@2x.png in Resources */,
+				0056D397153DC3AA004C2BE3 /* Yell-Advert.png in Resources */,
+				00C6FE68153F0AA100420E4B /* about_hand.png in Resources */,
+				00C6FE69153F0AA100420E4B /* about_hand@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +625,10 @@
 				00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */,
 				00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */,
 				00359A7815370D0700BE5D31 /* OmnitureLogging.m in Sources */,
+				005F6074153C1F4F00999B47 /* VideoPreviewView.m in Sources */,
+				005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */,
+				00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */,
+				00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +704,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -631,6 +720,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -640,6 +730,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -649,6 +740,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -657,6 +749,7 @@
 		199CB61F14FEA3CA00A16A97 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ios-ntp\"",
@@ -666,6 +759,7 @@
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -673,6 +767,7 @@
 		199CB62014FEA3CA00A16A97 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -683,6 +778,7 @@
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -693,7 +789,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -702,6 +799,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -710,6 +809,7 @@
 		E254CA1D151338DE00DAB66E /* InHouseDistribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -720,6 +820,7 @@
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
