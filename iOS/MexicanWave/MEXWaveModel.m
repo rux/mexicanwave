@@ -15,6 +15,7 @@
 #define PERIOD_IN_SECONDS_FOR_STADIUM 30.0
 
 NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotification";
+NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 
 @interface MEXWaveModel ()
 @property (nonatomic,retain) MEXCompassModel* compassModel;
@@ -73,12 +74,13 @@ NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotificat
     return ((float)fmod([correctedDate timeIntervalSinceReferenceDate] - (self.compassModel.headingInDegreesEastOfNorth / 360.0)*self.wavePeriodInSeconds, self.wavePeriodInSeconds))/self.wavePeriodInSeconds;
 }
 
-- (void)setCrowdType:(MEXCrowdType)newValue {
+- (void)setCrowdType:(NSInteger)newValue {
     if(crowdType != newValue) {
         [self willChangeValueForKey:@"crowdType"];
         crowdType = newValue;
         [self didChangeValueForKey:@"crowdType"];
         [self scheduleWave];
+        [[NSUserDefaults standardUserDefaults] setInteger:newValue forKey:MEXWaveSpeedSettingsKey];
     }
 }
 
@@ -109,7 +111,7 @@ NSString* const MEXWaveModelDidWaveNotification = @"MEXWaveModelDidWaveNotificat
 - (void)pause {
     if(!self.isRunning) return;
     [self.compassModel stopCompass];
-    [self cancelWave];    
+    [self cancelWave]; 
     self.running = NO;
 }
 
