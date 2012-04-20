@@ -345,7 +345,6 @@
     
     [self pause];
 
-      NSLog(@"*RIGHT**");
     //move the view with the correct offset - we want to start at minus the size of view so that
     self.containerView.frame = CGRectMake(-320+offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);
     
