@@ -246,7 +246,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self resume];    
+    //[self resume];    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -396,11 +396,11 @@
     //animate the conatiner view left - and create a bounce like effect  
     CATransform3D resetTransform = CATransform3DMakeTranslation(0, 0, 0);
     
-    CATransform3D startTransfom = CATransform3DMakeTranslation(-24, 0, 0);
+    CATransform3D startTransfom = CATransform3DMakeTranslation(-60, 0, 0);
 
-    CATransform3D middleTransfom = CATransform3DMakeTranslation(-12, 0, 0);
+    CATransform3D middleTransfom = CATransform3DMakeTranslation(-30, 0, 0);
 
-    CATransform3D endTransform = CATransform3DMakeTranslation(-6, 0, 0);
+    CATransform3D endTransform = CATransform3DMakeTranslation(-15, 0, 0);
 
     CAKeyframeAnimation* opacityAnim = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
     opacityAnim.values = [NSArray arrayWithObjects:[NSValue valueWithCATransform3D:startTransfom],
@@ -420,6 +420,9 @@
 
 
 - (IBAction)didTapGrabber:(id)sender {
+    if(self.isPaused){
+        return;
+    }
     [self bounceAnimation];
 }
 @end
