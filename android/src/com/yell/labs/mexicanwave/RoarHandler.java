@@ -23,7 +23,8 @@ class RoarHandler {
 	private View screenFlash;
 	private PreviewSurface mSurface;
 	private boolean cameraReady;	
-	public boolean currentlyRoaring;	
+	public boolean currentlyRoaring;
+	public int waveCount;
 	public float azimuth;
 	private int waveDuration;
 	private int waveColor;
@@ -82,6 +83,7 @@ class RoarHandler {
 	
 	public void setWaveDuration(int w) {
 		waveDuration = w;
+		waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
 		this.setFlash(w);
 	}
 	public void setWaveColor(int c) {
@@ -119,12 +121,12 @@ class RoarHandler {
 	}
 	
 	public int getWaveOffestFromAzimuthInDegrees() {
+		int milliseconds = (int) (System.currentTimeMillis() % 60000);
+		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("ss.SSS");
-		float seconds = Float.parseFloat(dateFormat.format(new Date()));
-		
-		int offset = (int) (seconds * 6 * (60/this.waveDuration));
-		return (int) offset;
+		int offset = (int) ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
+		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
+		return offset;
 	}
 	
     void update(float azimuth) {
@@ -171,7 +173,7 @@ class RoarHandler {
 	}	
 	
 	public void calmDown() {
-		if(cameraReady) {
+		if(cameraReady && (currentlyRoaring == true)) {
 			mSurface.lightOff();
 		}
 		currentlyRoaring = false;

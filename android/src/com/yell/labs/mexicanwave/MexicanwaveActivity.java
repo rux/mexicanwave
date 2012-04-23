@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -87,10 +88,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     	super.onResume();
     	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME  );
     	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME );
+    	// Debug.startMethodTracing("mexicanwave");
     }
  
 	@Override
     protected void onPause() {
+
+    	// Debug.stopMethodTracing();
     	super.onPause();
     	mySensorManager.unregisterListener(this);
     	roarHandler.calmDown();
