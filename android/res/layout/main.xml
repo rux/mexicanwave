@@ -50,6 +50,6 @@
         android:layout_height="fill_parent"
         android:background="#AA000000"
         android:gravity="center"
-        android:text="Please hold the phone up towards the middle" />
+        android:text="@string/pleaseHoldUpThePhone" />
 
 </RelativeLayout>
