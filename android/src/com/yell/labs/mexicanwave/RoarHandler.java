@@ -23,7 +23,8 @@ class RoarHandler {
 	private View screenFlash;
 	private PreviewSurface mSurface;
 	private boolean cameraReady;	
-	public boolean currentlyRoaring;	
+	public boolean currentlyRoaring;
+	public int waveCount;
 	public float azimuth;
 	private int waveDuration;
 	private int waveColor;
@@ -82,6 +83,7 @@ class RoarHandler {
 	
 	public void setWaveDuration(int w) {
 		waveDuration = w;
+		waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
 		this.setFlash(w);
 	}
 	public void setWaveColor(int c) {
