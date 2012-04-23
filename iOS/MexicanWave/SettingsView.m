@@ -13,17 +13,17 @@
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")
 #define kSettingsKeySpeed NSLocalizedString(@"Style", @"Settings Table row title Style")
+#define kSettingsVibrationTag 0
+#define kSettingsSoundsTag 1
+#define kSwitchWidthOffset 20.0f
 
 NSString* const kUserDefaultKeyVibration= @"sound_preference";
 NSString* const kUserDefaultKeySound =@"vibration_preference";
-
-#define kSettingsVibrationTag 0
-#define kSettingsSoundsTag 1
-
-#define kSwitchWidthOffset 20.0f
-
 NSString* const kSettingsDidChange = @"kSettingsDidChange";
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
+
+
+
 @interface SettingsView ()
 @end
 

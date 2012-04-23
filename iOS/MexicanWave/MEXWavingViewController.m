@@ -246,7 +246,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //[self resume];    
+    [self resume];    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
