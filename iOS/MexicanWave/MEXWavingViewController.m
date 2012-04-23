@@ -151,7 +151,6 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
     self.soundOnWaveEnabled = [defaults boolForKey:kUserDefaultKeySound];
-    self.waveModel.crowdType = [defaults integerForKey:MEXWaveSpeedSettingsKey];
     // Start running again
     [self.waveModel resume];
 
