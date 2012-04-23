@@ -173,7 +173,7 @@ class RoarHandler {
 	}	
 	
 	public void calmDown() {
-		if(cameraReady) {
+		if(cameraReady && (currentlyRoaring == true)) {
 			mSurface.lightOff();
 		}
 		currentlyRoaring = false;
