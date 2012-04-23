@@ -1,8 +1,5 @@
 package com.yell.labs.mexicanwave;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
