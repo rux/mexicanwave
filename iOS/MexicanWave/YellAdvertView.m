@@ -7,7 +7,7 @@
 //
 
 #import "YellAdvertView.h"
-#import "OmnitureLogging.h"
+#import "UsageMetrics.h"
 #define kScaleFactor 0.92f
 
 #define kNSLocaleKeyUK @"GB"
@@ -38,7 +38,7 @@
     
     //hide oursleves if we are not in an area where the advert is usefull - i.e outside UK, US, ES
     self.hidden = [[self appstoreURLForCurrentLocale]length] ? NO : YES;   
-    !self.hidden ? [[OmnitureLogging sharedInstance] postEventLinkIsVisible] : nil;
+    !self.hidden ? [[UsageMetrics sharedInstance] postEventLinkIsVisible] : nil;
     [self addTarget:self action:@selector(didTapYellLink:) forControlEvents:UIControlEventTouchUpInside];
     
 }
@@ -80,7 +80,7 @@
     return nil;
 }
 - (void)didTapYellLink:(id)sender {
-    [[OmnitureLogging sharedInstance] postEventLinkPressed];
+    [[UsageMetrics sharedInstance] postEventLinkPressed];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self appstoreURLForCurrentLocale]]];
 }
 @end

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00359A7815370D0700BE5D31 /* OmnitureLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 00359A7715370D0700BE5D31 /* OmnitureLogging.m */; };
+		00359A7815370D0700BE5D31 /* UsageMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 00359A7715370D0700BE5D31 /* UsageMetrics.m */; };
 		0056D384153D85B7004C2BE3 /* tab_lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D382153D85B7004C2BE3 /* tab_lines.png */; };
 		0056D385153D85B7004C2BE3 /* tab_lines@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D383153D85B7004C2BE3 /* tab_lines@2x.png */; };
 		0056D388153D85D6004C2BE3 /* background_Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D386153D85D6004C2BE3 /* background_Camera.png */; };
@@ -82,6 +82,7 @@
 		196B8E4B1518A00100DAD14A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E451518A00100DAD14A /* InfoPlist.strings */; };
 		196B8E4C1518A00100DAD14A /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E471518A00100DAD14A /* MainWindow.xib */; };
 		196B8E4D1518A00100DAD14A /* MEXWavingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E491518A00100DAD14A /* MEXWavingViewController.xib */; };
+		198F4DCD1546FFCE00BEAF2D /* libAppMeasurement.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F4DCC1546FFCE00BEAF2D /* libAppMeasurement.a */; };
 		199B5760151CDFB200155281 /* ios-ntp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199B575F151CDFB200155281 /* ios-ntp.framework */; };
 		199CB60514FEA3CA00A16A97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199CB60414FEA3CA00A16A97 /* UIKit.framework */; };
 		199CB60714FEA3CA00A16A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199CB60614FEA3CA00A16A97 /* Foundation.framework */; };
@@ -97,8 +98,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00359A7615370D0700BE5D31 /* OmnitureLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OmnitureLogging.h; path = Omniture/OmnitureLogging.h; sourceTree = "<group>"; };
-		00359A7715370D0700BE5D31 /* OmnitureLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OmnitureLogging.m; path = Omniture/OmnitureLogging.m; sourceTree = "<group>"; };
+		00359A7615370D0700BE5D31 /* UsageMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; name = UsageMetrics.h; path = Omniture/UsageMetrics.h; sourceTree = "<group>"; };
+		00359A7715370D0700BE5D31 /* UsageMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UsageMetrics.m; path = Omniture/UsageMetrics.m; sourceTree = "<group>"; };
 		0056D382153D85B7004C2BE3 /* tab_lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_lines.png; sourceTree = "<group>"; };
 		0056D383153D85B7004C2BE3 /* tab_lines@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_lines@2x.png"; sourceTree = "<group>"; };
 		0056D386153D85D6004C2BE3 /* background_Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_Camera.png; sourceTree = "<group>"; };
@@ -195,6 +196,10 @@
 		196B8E461518A00100DAD14A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		196B8E481518A00100DAD14A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainWindow.xib; sourceTree = "<group>"; };
 		196B8E4A1518A00100DAD14A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MEXWavingViewController.xib; sourceTree = "<group>"; };
+		198F4DBF1546FF3800BEAF2D /* AppMeasurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMeasurement.h; sourceTree = "<group>"; };
+		198F4DC41546FF3800BEAF2D /* UsageMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsageMetrics.h; sourceTree = "<group>"; };
+		198F4DC51546FF3800BEAF2D /* UsageMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsageMetrics.m; sourceTree = "<group>"; };
+		198F4DCC1546FFCE00BEAF2D /* libAppMeasurement.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAppMeasurement.a; path = MexicanWave/Omniture/Library/libAppMeasurement.a; sourceTree = "<group>"; };
 		199B575F151CDFB200155281 /* ios-ntp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ios-ntp.framework"; path = "ios-ntp/ios-ntp.framework"; sourceTree = "<group>"; };
 		199CB60014FEA3CA00A16A97 /* MexicanWave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MexicanWave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		199CB60414FEA3CA00A16A97 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -231,6 +236,7 @@
 				199CB60514FEA3CA00A16A97 /* UIKit.framework in Frameworks */,
 				199CB60714FEA3CA00A16A97 /* Foundation.framework in Frameworks */,
 				199CB60914FEA3CA00A16A97 /* CoreGraphics.framework in Frameworks */,
+				198F4DCD1546FFCE00BEAF2D /* libAppMeasurement.a in Frameworks */,
 				199B5760151CDFB200155281 /* ios-ntp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,8 +247,8 @@
 		00359A7415370C1C00BE5D31 /* Omniture */ = {
 			isa = PBXGroup;
 			children = (
-				00359A7615370D0700BE5D31 /* OmnitureLogging.h */,
-				00359A7715370D0700BE5D31 /* OmnitureLogging.m */,
+				00359A7615370D0700BE5D31 /* UsageMetrics.h */,
+				00359A7715370D0700BE5D31 /* UsageMetrics.m */,
 			);
 			name = Omniture;
 			sourceTree = "<group>";
@@ -409,6 +415,24 @@
 			path = MexicanWave/en.lproj;
 			sourceTree = "<group>";
 		};
+		198F4DBD1546FF3800BEAF2D /* Omniture */ = {
+			isa = PBXGroup;
+			children = (
+				198F4DBE1546FF3800BEAF2D /* Library */,
+				198F4DC41546FF3800BEAF2D /* UsageMetrics.h */,
+				198F4DC51546FF3800BEAF2D /* UsageMetrics.m */,
+			);
+			path = Omniture;
+			sourceTree = "<group>";
+		};
+		198F4DBE1546FF3800BEAF2D /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				198F4DBF1546FF3800BEAF2D /* AppMeasurement.h */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		199CB5F514FEA3CA00A16A97 = {
 			isa = PBXGroup;
 			children = (
@@ -430,6 +454,7 @@
 		199CB60314FEA3CA00A16A97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				198F4DCC1546FFCE00BEAF2D /* libAppMeasurement.a */,
 				005F6079153C260000999B47 /* CoreMedia.framework */,
 				005F6077153C25E700999B47 /* ImageIO.framework */,
 				005F6075153C25DA00999B47 /* CoreVideo.framework */,
@@ -448,6 +473,7 @@
 		199CB60A14FEA3CA00A16A97 /* MexicanWave */ = {
 			isa = PBXGroup;
 			children = (
+				198F4DBD1546FF3800BEAF2D /* Omniture */,
 				00813F08152DE72A00262289 /* Settings / Config */,
 				199CB61314FEA3CA00A16A97 /* MEXAppDelegate.h */,
 				199CB61414FEA3CA00A16A97 /* MEXAppDelegate.m */,
@@ -624,7 +650,7 @@
 				00D26F701536CAD3004BC8ED /* SBJsonBase.m in Sources */,
 				00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */,
 				00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */,
-				00359A7815370D0700BE5D31 /* OmnitureLogging.m in Sources */,
+				00359A7815370D0700BE5D31 /* UsageMetrics.m in Sources */,
 				005F6074153C1F4F00999B47 /* VideoPreviewView.m in Sources */,
 				005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */,
 				00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */,
@@ -693,6 +719,10 @@
 				GCC_PREFIX_HEADER = "MexicanWave/MexicanWave-Prefix.pch";
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/MexicanWave/Omniture/Library\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -758,6 +788,10 @@
 				GCC_PREFIX_HEADER = "MexicanWave/MexicanWave-Prefix.pch";
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/MexicanWave/Omniture/Library\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -777,6 +811,10 @@
 				GCC_PREFIX_HEADER = "MexicanWave/MexicanWave-Prefix.pch";
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/MexicanWave/Omniture/Library\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -819,6 +857,10 @@
 				GCC_PREFIX_HEADER = "MexicanWave/MexicanWave-Prefix.pch";
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/MexicanWave/Omniture/Library\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

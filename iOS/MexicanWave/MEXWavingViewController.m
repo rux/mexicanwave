@@ -13,7 +13,7 @@
 #import "MEXLegacyTorchController.h"            // TODO: Remove this once support for iOS 4.x is not a concern.
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "OmnitureLogging.h"
+#import "UsageMetrics.h"
 #import "SharePhotoViewController.h"
 
 #define kTorchOnTime 0.25f
@@ -271,7 +271,7 @@
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
         
-    [[OmnitureLogging sharedInstance] postEventAppFinishedLaunching];
+    [[UsageMetrics sharedInstance] postEventAppFinishedLaunching];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:kSettingsDidChange object:nil];
@@ -320,7 +320,7 @@
         if(velocity<-1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
-            [[OmnitureLogging sharedInstance] postEventSettingsViewVisible];
+            [[UsageMetrics sharedInstance] postEventSettingsViewVisible];
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
@@ -330,7 +330,7 @@
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
                 if(offset == -320){
-                    [[OmnitureLogging sharedInstance]postEventSettingsViewVisible];
+                    [[UsageMetrics sharedInstance]postEventSettingsViewVisible];
                 }
                 else{  
                     [self resume];

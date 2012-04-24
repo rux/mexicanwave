@@ -7,7 +7,7 @@
 //
 
 #import "SettingsView.h"
-#import "OmnitureLogging.h"
+#import "UsageMetrics.h"
 #import "MEXWaveModel.h"
 #define kNumberOfSettings 3
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
