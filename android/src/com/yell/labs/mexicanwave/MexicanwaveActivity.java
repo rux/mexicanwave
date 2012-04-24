@@ -57,7 +57,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        waveDuration = prefs.getInt("pref_wave_duration", 15);
+        waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
         waveColor = Color.parseColor(prefs.getString("pref_coloring", "#EEFFFFFF"));
         soundEnabled = prefs.getBoolean("pref_sound", false);
         
@@ -213,7 +213,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		roarHandler.calmDown();
 		if (key.equals("pref_group_size_values")) {
-			waveDuration = prefs.getInt("pref_group_size", 15);
+			waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
 			roarHandler.setWaveDuration(waveDuration);
 		}
 		if (key.equals("pref_color_values")) {
