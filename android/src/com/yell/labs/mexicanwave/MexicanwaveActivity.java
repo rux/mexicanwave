@@ -11,7 +11,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.opengl.Visibility;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Debug;
 import android.preference.PreferenceManager;
@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
@@ -48,6 +49,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private int waveColor;
 	private boolean soundEnabled;
 
+	private boolean cameraIsInitialised;
 	
 
     @Override
@@ -148,6 +150,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
 				waveCompass.startAnimation(rotateAnimation);
 				
+				if (cameraIsInitialised != true ) {
+					if (roarHandler.getWhetherCameraIsReady() == true) {
+						view.setBackgroundColor(Color.TRANSPARENT);
+						cameraIsInitialised = true;
+					}
+				}
+				
 
 
 				
@@ -205,7 +214,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		roarHandler.calmDown();
 		if (key.equals("pref_group_size_values")) {
-			waveDuration = Integer.parseInt(prefs.getString("pref_group_size", "15"));
+			waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
 			roarHandler.setWaveDuration(waveDuration);
 		}
 		if (key.equals("pref_color_values")) {
@@ -220,4 +229,5 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			roarHandler.setSound(soundEnabled);
 		}
 	}
+
 }

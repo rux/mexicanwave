@@ -132,7 +132,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
     if(!(self = [super init])) {
         return nil;
     }
-    crowdType = kMEXCrowdTypeStageBased;
+    crowdType =  [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey];
     compassModel = [[MEXCompassModel alloc] init];
 
     // Read out our saved settings

@@ -1,8 +1,5 @@
 package com.yell.labs.mexicanwave;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -22,7 +19,7 @@ class RoarHandler {
 	private Vibrator vibrator;
 	private View screenFlash;
 	private PreviewSurface mSurface;
-	private boolean cameraReady;	
+	public boolean cameraReady;	
 	public boolean currentlyRoaring;
 	public int waveCount;
 	public float azimuth;
@@ -150,9 +147,12 @@ class RoarHandler {
 	public void setReady(boolean ready) {
 		cameraReady = ready;
 	}
+	public boolean getWhetherCameraIsReady() {
+		return (mSurface.hasCamera && mSurface.hasSurface) ? true : false;
+	}
 	
 	public void goWild() {
-
+		
 		if (currentlyRoaring != true && cameraReady) {			
 			mSurface.lightOn();
 			vibrator.vibrate(100 * waveDuration);
