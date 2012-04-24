@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-NSString* const kSettingsDidChange;
 NSString* const kSpeedSegementDidChange;
 NSString* const kUserDefaultKeyVibration;
 NSString* const kUserDefaultKeySound;

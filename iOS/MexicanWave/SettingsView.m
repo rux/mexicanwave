@@ -19,7 +19,6 @@
 
 NSString* const kUserDefaultKeyVibration= @"sound_preference";
 NSString* const kUserDefaultKeySound =@"vibration_preference";
-NSString* const kSettingsDidChange = @"kSettingsDidChange";
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 
@@ -130,7 +129,6 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     }
         
     [defaults synchronize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSettingsDidChange object:nil];
 }
 
 
