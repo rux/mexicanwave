@@ -11,6 +11,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Debug;
 import android.preference.PreferenceManager;
@@ -228,4 +229,5 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			roarHandler.setSound(soundEnabled);
 		}
 	}
+
 }
