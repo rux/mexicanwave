@@ -838,7 +838,7 @@
 				197E45691541B2E20089CCCD /* AppStoreDistribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = InHouseDistribution;
 		};
 		199CB61E14FEA3CA00A16A97 /* Build configuration list for PBXNativeTarget "MexicanWave" */ = {
 			isa = XCConfigurationList;
@@ -849,7 +849,7 @@
 				197E456A1541B2E20089CCCD /* AppStoreDistribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = InHouseDistribution;
 		};
 /* End XCConfigurationList section */
 	};

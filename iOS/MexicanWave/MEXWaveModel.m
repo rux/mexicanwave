@@ -78,10 +78,9 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
     if(crowdType != newValue) {
         [self willChangeValueForKey:@"crowdType"];
         crowdType = newValue;
+        [[NSUserDefaults standardUserDefaults] setInteger:newValue forKey:MEXWaveSpeedSettingsKey];
         [self didChangeValueForKey:@"crowdType"];
         [self scheduleWave];
-        [[NSUserDefaults standardUserDefaults] setInteger:newValue forKey:MEXWaveSpeedSettingsKey];
-
     }
 }
 
@@ -118,6 +117,10 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 
 - (void)resume {
     if(self.isRunning) return;
+
+    // Read out our saved settings
+    self.crowdType = (MEXCrowdType)[[[NSUserDefaults standardUserDefaults] valueForKey:MEXWaveSpeedSettingsKey] integerValue];    
+
     [self.compassModel startCompass];
     [self scheduleWave];    
     self.running = YES;
@@ -132,7 +135,10 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
     crowdType =  [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey];
     compassModel = [[MEXCompassModel alloc] init];
 
+    // Read out our saved settings
+    self.crowdType = (MEXCrowdType)[[[NSUserDefaults standardUserDefaults] valueForKey:MEXWaveSpeedSettingsKey] integerValue];    
    
+    // TODO: observe the network clock
     NSNotificationCenter* noteCenter = [NSNotificationCenter defaultCenter];
     [noteCenter addObserver:self selector:@selector(scheduleWave) name:UIApplicationSignificantTimeChangeNotification object:nil];        
     [noteCenter addObserver:self selector:@selector(scheduleWave) name:UIApplicationDidFinishLaunchingNotification object:nil];        

@@ -8,11 +8,19 @@
 
     <string name="radarImageDescription">Radar</string>
     <string name="backgroundImageDescription">Background Image</string>
+
+    
+    
+    <string name="pleaseHoldUpThePhone">Please hold the phone up and point the flash towards the middle of the gathering</string>
     
     
     
-    <string name="about_text_1">Everyone loves a Mexican wave.  This app turns mexican waves into dynamic light shows.</string>
+    
+    
+    <string name="about_text_1">Everyone loves a Mexican wave.  This app makes mexican waves out of the flashes on
+        you and your friends\' phones.</string>
     <string name="about_image_hand_description">Picture of a hand holding a phone in portrait orientation</string>
-    <string name="about_text_2">Hold your phone as shown, and point the flash towards the center of wherever you are 
-        having a Mexican Wave</string>
+    <string name="about_text_2">All participants need to select the same wave size from the settings screen.  Then
+        hold the phones as shown above, and point all flashes towards the center of wherever you are 
+        having a Mexican Wave (or at the band if you\'re at a gig).</string>
 </resources>
