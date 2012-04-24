@@ -4,8 +4,9 @@
     <PreferenceCategory 
         android:title="Crowd size">
         <ListPreference 
-            android:title="How large a group are you in?"
-            android:summary="Choose how many people you are making waves with"
+            android:title="Wave size"
+            android:summary="Depending on how many people you are with, the wave should move at different
+                speeds better suited to the group.  Pick where you are to get a sensibly-paced wave"
             android:key="pref_wave_duration"
             android:entries="@array/pref_wave_duration_entries"
             android:entryValues="@array/pref_wave_duration_values"
