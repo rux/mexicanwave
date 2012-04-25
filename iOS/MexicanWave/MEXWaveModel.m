@@ -77,7 +77,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
         return 0.0f;
     }
     NSDate* correctedDate = [NSDate networkDate];
-    return ((float)fmod([correctedDate timeIntervalSinceReferenceDate] - (self.compassModel.headingInDegreesEastOfNorth / 360.0)*self.wavePeriodInSeconds, self.wavePeriodInSeconds))/self.wavePeriodInSeconds;
+    return ((float)fmod([correctedDate timeIntervalSince1970] - (self.compassModel.headingInDegreesEastOfNorth / 360.0)*self.wavePeriodInSeconds, self.wavePeriodInSeconds))/self.wavePeriodInSeconds;
 }
 
 - (void)setCrowdType:(MEXCrowdType)newValue {
