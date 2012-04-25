@@ -11,7 +11,6 @@
 
 NSString* const MetricsChannel = @"iOS/MexicanWave";
 NSString* const MetricsMainPageName = @"iOS/MexicanWave";
-NSString* const MetricsAdvertPageName = @"iOS/MexicanWave";
 NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 
 @implementation UsageMetrics
