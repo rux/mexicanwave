@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SettingsView.h"
-#import "VideoPreviewView.h"
 #import "CameraSessionController.h"
+
 @class MEXWaveFxView;
 @class MEXWaveModel;
 

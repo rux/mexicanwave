@@ -14,7 +14,6 @@
 @interface UsageMetrics : NSObject
 
 + (UsageMetrics*)sharedInstance;                                    //!< Singleton for easy access.
-- (void)didFinishLaunching;                                         //!< Event is posted when the app screen is visable
+- (void)didShowMainPageWithDownloadLink:(BOOL)showsDownloadLink;    //!< Event is posted when the app screen is visable
 - (void)didFollowDownloadLinkForAppStore:(NSString*)appStore;       //!< Event is posted when the user taps the download link for the Yell store
-- (void)didShowDownloadLink;                                        //!< Event is posted when the user can see the download link for the Yell store (not shown if not in the UK)
 @end

@@ -156,6 +156,9 @@
 
     self.paused = NO;
 
+    //sets up for video capture sessions. Gives the controller the correct view and setttings
+    [[CameraSessionController sharedCameraController] resumeDisplay];
+    
 }
 
 #pragma mark - Notifications
@@ -231,9 +234,9 @@
     
     [self torchOff];
     
+    [[CameraSessionController sharedCameraController] setCameraView:nil];
     AudioServicesDisposeSystemSoundID(waveSoundID);
     self.waveSoundID = 0;
-    
     self.waveView = nil;
 }
 
@@ -243,18 +246,9 @@
     [self pause];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self resume];    
-}
-
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-    //sets up for video capture sessions. Gives the controller the correct view and setttings
-    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
-    [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
-    [[CameraSessionController sharedCameraController] resumeDisplay];
+    [self resume];    
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
         //animate in to hint to the user whats behind the main view
@@ -287,11 +281,7 @@
       
     [swipeRight release];
     [swipeLeft release];
-
-    
-    [[UsageMetrics sharedInstance] didFinishLaunching];
-
-
+    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
 }
 
 #pragma mark Gesture Recognizer callbacks

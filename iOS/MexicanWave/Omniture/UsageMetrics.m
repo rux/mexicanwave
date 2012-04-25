@@ -11,7 +11,6 @@
 
 NSString* const MetricsChannel = @"iOS/MexicanWave";
 NSString* const MetricsMainPageName = @"iOS/MexicanWave";
-NSString* const MetricsAdvertPageName = @"iOS/MexicanWave";
 NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 
 @implementation UsageMetrics
@@ -88,11 +87,12 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 #pragma mark - Events
 
 //post event when the has just appeared
-- (void)didFinishLaunching {
+- (void)didShowMainPageWithDownloadLink:(BOOL)showsDownloadLink {
     AppMeasurement* measurement = [AppMeasurement getInstance];
     [measurement clearVars];
     measurement.channel = MetricsChannel;
     measurement.pageName = MetricsMainPageName;
+    measurement.prop6 = showsDownloadLink ? @"Link-Displayed" : @"Link-Not-Displayed";
     [measurement track];
 }
 
@@ -104,15 +104,6 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
     measurement.pageName = MetricsMainPageName;
     NSString* appStoreLink = [NSString stringWithFormat:@"%@/%@", MetricsAppStoreLinkName, appStore];
     [measurement trackLink:nil linkType:@"e" linkName:appStoreLink];
-}
-
-//post event that the user was in a country where the button was Visible
-- (void)didShowDownloadLink {
-    AppMeasurement* measurement = [AppMeasurement getInstance];
-    [measurement clearVars];
-    measurement.channel = MetricsChannel;
-    measurement.pageName = MetricsAdvertPageName;
-    [measurement track];
 }
 
 

@@ -40,15 +40,10 @@
     
     //hide oursleves if we are not in an area where the advert is usefull - i.e outside UK, US, ES
     NSString* appStoreURL = [self appstoreURLForCountryCode:[self countryCodeForCurrentLocale]];
-    if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:appStoreURL]]) {
-        self.hidden = NO;
-        [[UsageMetrics sharedInstance] didShowDownloadLink];
-    }
-    else {
-        self.hidden = YES;        
-    }
-    [self addTarget:self action:@selector(didTapYellLink:) forControlEvents:UIControlEventTouchUpInside];
-    
+    const BOOL showLink = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:appStoreURL]];
+    self.hidden = !showLink;    
+    [[UsageMetrics sharedInstance] didShowMainPageWithDownloadLink:showLink];
+    [self addTarget:self action:@selector(didTapYellLink:) forControlEvents:UIControlEventTouchUpInside];    
 }
 
 - (void)setHighlighted:(BOOL)highlighted {

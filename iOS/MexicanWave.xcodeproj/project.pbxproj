@@ -13,7 +13,6 @@
 		0056D389153D85D6004C2BE3 /* background_Camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D387153D85D6004C2BE3 /* background_Camera@2x.png */; };
 		0056D38B153DA812004C2BE3 /* Yell-Advert@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D38A153DA812004C2BE3 /* Yell-Advert@2x.png */; };
 		0056D397153DC3AA004C2BE3 /* Yell-Advert.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D396153DC3A9004C2BE3 /* Yell-Advert.png */; };
-		005F6074153C1F4F00999B47 /* VideoPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 005F6072153C1F4F00999B47 /* VideoPreviewView.m */; };
 		005F6076153C25DA00999B47 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6075153C25DA00999B47 /* CoreVideo.framework */; };
 		005F6078153C25E700999B47 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6077153C25E700999B47 /* ImageIO.framework */; };
 		005F607A153C260000999B47 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005F6079153C260000999B47 /* CoreMedia.framework */; };
@@ -104,8 +103,6 @@
 		0056D387153D85D6004C2BE3 /* background_Camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background_Camera@2x.png"; sourceTree = "<group>"; };
 		0056D38A153DA812004C2BE3 /* Yell-Advert@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yell-Advert@2x.png"; sourceTree = "<group>"; };
 		0056D396153DC3A9004C2BE3 /* Yell-Advert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yell-Advert.png"; sourceTree = "<group>"; };
-		005F6072153C1F4F00999B47 /* VideoPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPreviewView.m; sourceTree = "<group>"; };
-		005F6073153C1F4F00999B47 /* VideoPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPreviewView.h; sourceTree = "<group>"; };
 		005F6075153C25DA00999B47 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		005F6077153C25E700999B47 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		005F6079153C260000999B47 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -294,8 +291,6 @@
 			children = (
 				00C6FEE41541663400420E4B /* CameraSessionController.h */,
 				00C6FEE31541663400420E4B /* CameraSessionController.m */,
-				005F6073153C1F4F00999B47 /* VideoPreviewView.h */,
-				005F6072153C1F4F00999B47 /* VideoPreviewView.m */,
 				1903F3CB1510F23900807542 /* MEXWaveFxView.h */,
 				1903F3CC1510F23A00807542 /* MEXWaveFxView.m */,
 				1903F3CE1510F50A00807542 /* MEXLampView.h */,
@@ -638,7 +633,6 @@
 				00D26F701536CAD3004BC8ED /* SBJsonBase.m in Sources */,
 				00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */,
 				00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */,
-				005F6074153C1F4F00999B47 /* VideoPreviewView.m in Sources */,
 				005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */,
 				00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */,
 				00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */,
