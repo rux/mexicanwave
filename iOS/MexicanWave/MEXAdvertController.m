@@ -27,6 +27,11 @@
 
 
 - (void)awakeFromNib {
+    // Some button setup
+    UIImage* background = [self.advertButton backgroundImageForState:UIControlStateNormal];
+    UIImage* stretchyBackground = [background stretchableImageWithLeftCapWidth:0.5*background.size.width topCapHeight:0];
+    [self.advertButton setBackgroundImage:stretchyBackground forState:UIControlStateNormal];
+    
     // Hide the button if we are not in an area where the advert is useful - i.e outside UK, US, ES
     NSString* appStoreURL = [self appstoreURLForCountryCode:[self countryCodeForCurrentLocale]];
     const BOOL showLink = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:appStoreURL]];
