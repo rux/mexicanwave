@@ -45,7 +45,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private Animation rotateAnimation;
 	
 	private SharedPreferences prefs;
-	private int waveDuration;
+	private float waveDuration;
 	private int waveColor;
 	private boolean soundEnabled;
 
@@ -58,7 +58,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
+        waveDuration = Float.parseFloat(prefs.getString("pref_wave_duration", "15"));
         waveColor = Color.parseColor(prefs.getString("pref_coloring", "#EEFFFFFF"));
         soundEnabled = prefs.getBoolean("pref_sound", false);
         

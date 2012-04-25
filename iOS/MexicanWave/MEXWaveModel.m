@@ -10,7 +10,7 @@
 #import "MEXCompassModel.h"
 #import "ios-ntp/ios-ntp.h"
 
-#define PERIOD_IN_SECONDS_FOR_SMALL_GROUP 5.0
+#define PERIOD_IN_SECONDS_FOR_SMALL_GROUP 7.5
 #define PERIOD_IN_SECONDS_FOR_STAGE 15.0
 #define PERIOD_IN_SECONDS_FOR_STADIUM 30.0
 
