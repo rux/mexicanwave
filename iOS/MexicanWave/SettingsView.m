@@ -9,7 +9,7 @@
 #import "SettingsView.h"
 #import "OmnitureLogging.h"
 #import "MEXWaveModel.h"
-#define kNumberOfSettings 3
+#define kNumberOfSettings 2
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")
 #define kSettingsKeySpeed NSLocalizedString(@"Style", @"Settings Table row title Style")
@@ -19,7 +19,6 @@
 
 NSString* const kUserDefaultKeyVibration= @"sound_preference";
 NSString* const kUserDefaultKeySound =@"vibration_preference";
-NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 
 
@@ -28,8 +27,9 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 @implementation SettingsView
 
-@synthesize table;
+@synthesize table,userGuide;
 - (void)dealloc {
+    [userGuide release];
     [table release];
     [super dealloc];
 }
@@ -89,19 +89,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
         [cell addSubview:switchControl];
     }
     
-    if(indexPath.row ==2){
-        cell.textLabel.text = kSettingsKeySpeed;
-        UISegmentedControl* speedControl = [[[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects: NSLocalizedString(@"Fun",@"MEXSegement button title for Fun"),NSLocalizedString(@"Gig",@"MEXSegement button title for Gig"),NSLocalizedString(@"Stadium",@"MEXSegement button title for Stadium"), nil]]autorelease];
-        speedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-        speedControl.tintColor = [UIColor colorWithWhite:0.45 alpha:1];
-        speedControl.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey];
-        [speedControl sizeToFit];
-        [speedControl addTarget:self action:@selector(didTapSegment:) forControlEvents:UIControlEventValueChanged];
-        speedControl.center = CGPointMake(300 - 0.5f*speedControl.frame.size.width, cell.frame.size.height*0.5f);
-        [cell addSubview:speedControl];
-        return cell;
-    }
-    
+        
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     //get the switch for row and update the  labels and switch from userdefaults
     UISwitch* currentSwitch = (UISwitch*)[cell viewWithTag:99];
