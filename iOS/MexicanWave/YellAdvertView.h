@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface YellAdvertView : UIControl
-
--(void)commonInitialisation;
--(NSString*)appstoreURLForCurrentLocale;
+- (NSString*)countryCodeForCurrentLocale;
+- (NSString*)appstoreURLForCountryCode:(NSString*)countryCode;
+- (void)commonInitialisation;
 @end
