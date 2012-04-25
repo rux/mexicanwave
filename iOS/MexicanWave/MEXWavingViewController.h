@@ -12,6 +12,7 @@
 
 @class MEXWaveFxView;
 @class MEXWaveModel;
+@class MEXAdvertController;
 
 @interface MEXWavingViewController : UIViewController
 
@@ -25,6 +26,8 @@
 @property (retain, nonatomic) IBOutlet SettingsView *settingView;
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
 @property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
+@property (retain, nonatomic) IBOutlet MEXAdvertController* advertController;
+
 - (IBAction)didTapTakePhoto:(id)sender;
 - (IBAction)didTapGrabber:(id)sender;
 - (void)didChangeCrowdType:(NSNotification*)note;
