@@ -1,8 +1,5 @@
 package com.yell.labs.mexicanwave;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -24,9 +21,10 @@ class RoarHandler {
 	private Vibrator vibrator;
 	private View screenFlash;
 	private PreviewSurface mSurface;
-	private boolean cameraReady;	
-	public boolean currentlyRoaring;	
-	private float azimuth;
+	public boolean cameraReady;	
+	public boolean currentlyRoaring;
+	public int waveCount;
+	public float azimuth;
 	private int waveDuration;
 	private int waveColor;
 	private boolean soundEnabled;
@@ -96,6 +94,7 @@ class RoarHandler {
 	
 	public void setWaveDuration(int w) {
 		waveDuration = w;
+		waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
 		this.setFlash(w);
 	}
 	public void setWaveColor(int c) {
@@ -104,10 +103,8 @@ class RoarHandler {
 	public void setFlash(int w) {
 		if (w < 20) {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash);
-			Log.i("info", "setting short flash");
 		} else {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash_long);
-			Log.i("info", "setting Long flash");
 		}
 	}
 	
@@ -130,22 +127,18 @@ class RoarHandler {
 	public float getAzimuth() {
 		return azimuth;
 	}
-	public float getAzimuthInDegrees() {
-		return (float) (this.getAzimuth()*180/Math.PI);
+	public int getAzimuthInDegrees() {
+		return (int) (this.azimuth*180/Math.PI);
 	}
 	
-	public float getWaveOffestFromAzimuthInDegrees() {
+
+	public int getWaveOffestFromAzimuthInDegrees() {
+		int milliseconds = (int) (System.currentTimeMillis() % 60000);
+		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
-		
-		
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("ss.SSS");
-		float seconds = Float.parseFloat(dateFormat.format(new Date()));
-		
-		
-		 
-		float offset = seconds * 6 * (60/this.waveDuration);
-		return (float) offset;
+		int offset = (int) ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
+		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
+		return offset;
 	}
 	
     void update(float azimuth) {
@@ -158,7 +151,7 @@ class RoarHandler {
     }	
 		
 	public void check() {
-		float angle = (-this.getAzimuthInDegrees() + getWaveOffestFromAzimuthInDegrees()) % 360;
+		int angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
 		if (angle > 160 && angle < 200) {
 			goWild();
 		} else {
@@ -169,13 +162,16 @@ class RoarHandler {
 	public void setReady(boolean ready) {
 		cameraReady = ready;
 	}
+	public boolean getWhetherCameraIsReady() {
+		return (mSurface.hasCamera && mSurface.hasSurface) ? true : false;
+	}
 	
 	public void goWild() {
-
+		
 		if (currentlyRoaring != true && cameraReady) {			
 			mSurface.lightOn();
 			vibrator.vibrate(100 * waveDuration);
-			screenFlash.setBackgroundColor(this.waveColor);
+			screenFlash.setBackgroundColor(waveColor);
 			screenFlash.startAnimation(flashAnim);
 			
 			
@@ -192,18 +188,10 @@ class RoarHandler {
 	}	
 	
 	public void calmDown() {
-		//if (currentlyRoaring == true ) {
-	//		screenFlash.startAnimation(fadeOutAnim);
-		//}
-			
-		if(cameraReady) {
+		if(cameraReady && (currentlyRoaring == true)) {
 			mSurface.lightOff();
-			// screenFlash.setBackgroundColor(Color.TRANSPARENT);
 		}
 		currentlyRoaring = false;
-
-	
 	}
-
 }
 

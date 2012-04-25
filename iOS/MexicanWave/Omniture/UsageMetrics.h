@@ -1,5 +1,5 @@
 //
-//  OmnitureLogging.h
+//  Metrics.h
 //  MexicanWave
 //
 //  Created by Daniel Anderton on 12/04/2012.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OmnitureLogging : NSObject
+@interface UsageMetrics : NSObject
 
-+(OmnitureLogging*)sharedInstance;      //<< Singleton for easy access.
++(UsageMetrics*)sharedInstance;      //<< Singleton for easy access.
 -(void)postEventAppFinishedLaunching;   //<< Event is posted when the app screen is visable
 -(void)postEventSettingsViewVisible;    //<< Event is posted when the user can 'fully' see the settings view
 -(void)postEventLinkPressed;            //<< Event is posted when the user taps the download link for the Yell store

@@ -11,8 +11,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.opengl.Visibility;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
@@ -47,6 +49,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private int waveColor;
 	private boolean soundEnabled;
 
+	private boolean cameraIsInitialised;
 	
 
     @Override
@@ -85,12 +88,15 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
     protected void onResume() {
     	super.onResume();
-    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST );
-    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_FASTEST );
+    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME  );
+    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME );
+    	// Debug.startMethodTracing("mexicanwave");
     }
  
 	@Override
     protected void onPause() {
+
+    	// Debug.stopMethodTracing();
     	super.onPause();
     	mySensorManager.unregisterListener(this);
     	roarHandler.calmDown();
@@ -133,15 +139,23 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 																// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
 																// held up to do a Mexican wave, we don't really care about this state.
 				
-				float oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
+				int oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
 				
 				roarHandler.update(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 				
-				float newAzimuth = roarHandler.getAzimuthInDegrees();
-				float offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
+				int newAzimuth = roarHandler.getAzimuthInDegrees();
+				int offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
 				
 				rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
+				rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
 				waveCompass.startAnimation(rotateAnimation);
+				
+				if (cameraIsInitialised != true ) {
+					if (roarHandler.getWhetherCameraIsReady() == true) {
+						view.setBackgroundColor(Color.TRANSPARENT);
+						cameraIsInitialised = true;
+					}
+				}
 				
 
 
@@ -200,7 +214,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		roarHandler.calmDown();
 		if (key.equals("pref_group_size_values")) {
-			waveDuration = Integer.parseInt(prefs.getString("pref_group_size", "15"));
+			waveDuration = Integer.parseInt(prefs.getString("pref_wave_duration", "15"));
 			roarHandler.setWaveDuration(waveDuration);
 		}
 		if (key.equals("pref_color_values")) {
@@ -215,4 +229,5 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			roarHandler.setSound(soundEnabled);
 		}
 	}
+
 }

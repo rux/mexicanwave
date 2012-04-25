@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/aboutLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center|top"
-    android:orientation="vertical" >
-    
-    <TextView 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/about_text_1"
-        />
-    
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/about_image_hand_description"
-        android:src="@drawable/about_hand" />
-    
-    <TextView 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/about_text_2"
-        />
-    
-</LinearLayout>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/scroll"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+    >
+
+	<LinearLayout 
+	    android:id="@+id/aboutLayout"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="center|top"
+	    android:padding="10dp"
+	    android:orientation="vertical" >
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/about_text_1"
+	        />
+	    
+	    <ImageView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:contentDescription="@string/about_image_hand_description"
+	        android:src="@drawable/about_hand" />
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/about_text_2"
+	        />
+	    
+	    
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingTop="25dp"
+	        android:text="@string/about_text_3"
+	        />
+	
+	    <ImageButton
+	        android:id="@+id/yell_app_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="installYellApp"
+	        android:contentDescription="@string/about_install_yell_app_button"
+	        android:src="@drawable/yell_advert" />
+	    
+	</LinearLayout>
+
+</ScrollView>
