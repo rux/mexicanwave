@@ -4,17 +4,21 @@
     <string-array name="pref_color_entries">       
         <item>White (Default)</item>
         <item>Red</item>
+        <item>Orange</item>
         <item>Yellow</item>
         <item>Green</item>
         <item>Blue</item>
+        <item>Purple</item>
     </string-array>
 
     <string-array name="pref_color_values">       
         <item>#EEFFFFFF</item>       
         <item>#EEFF0000</item>       
+        <item>#EEFF8800</item>       
         <item>#EEFFFF00</item>       
         <item>#EE00FF00</item>       
-        <item>#EE0000FF</item>
+        <item>#EE0000FF</item>       
+        <item>#EE880088</item>
 	</string-array>
 
     <string-array name="pref_wave_duration_entries">       
@@ -23,7 +27,7 @@
         <item>A huge crowd at a stadium</item>
     </string-array>
     <string-array name="pref_wave_duration_values">       
-        <item>5</item>
+        <item>7.5</item>
         <item>15</item>
         <item>30</item>
     </string-array>

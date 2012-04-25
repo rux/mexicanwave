@@ -13,7 +13,7 @@
 #import "MEXLegacyTorchController.h"            // TODO: Remove this once support for iOS 4.x is not a concern.
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "OmnitureLogging.h"
+#import "UsageMetrics.h"
 #import "SharePhotoViewController.h"
 
 #define kTorchOnTime 0.25f
@@ -154,6 +154,9 @@
 
     self.paused = NO;
 
+    //sets up for video capture sessions. Gives the controller the correct view and setttings
+    [[CameraSessionController sharedCameraController] resumeDisplay];
+    
 }
 
 #pragma mark - Notifications
@@ -232,9 +235,9 @@
     
     [self torchOff];
     
+    [[CameraSessionController sharedCameraController] setCameraView:nil];
     AudioServicesDisposeSystemSoundID(waveSoundID);
     self.waveSoundID = 0;
-    
     self.waveView = nil;
 }
 
@@ -251,11 +254,8 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    
-    //sets up for video capture sessions. Gives the controller the correct view and setttings
-    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
-    [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
-    [[CameraSessionController sharedCameraController] resumeDisplay];
+    [super viewDidAppear:animated];
+    [self resume];    
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
         //animate in to hint to the user whats behind the main view
@@ -263,18 +263,15 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShownHintToUser];
     }
     
-    [super viewDidAppear:animated];
-
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
    
 
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
-        
-    [[OmnitureLogging sharedInstance] postEventAppFinishedLaunching];
-    
+            
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -290,9 +287,7 @@
       
     [swipeRight release];
     [swipeLeft release];
-
-    [super viewDidLoad];
-
+    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
 }
 
 #pragma mark Gesture Recognizer callbacks
@@ -322,7 +317,6 @@
         if(velocity<-1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
-            [[OmnitureLogging sharedInstance] postEventSettingsViewVisible];
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side

@@ -19,7 +19,9 @@ NSString* const MEXWaveSpeedSettingsKey;
 
 @interface MEXWaveModel : NSObject
 
-@property (nonatomic) NSInteger crowdType;
++ (NSTimeInterval)wavePeriodInSecondsForCrowdType:(MEXCrowdType)crowd;
+
+@property (nonatomic) MEXCrowdType crowdType;
 @property (nonatomic,readonly) NSTimeInterval wavePeriodInSeconds;
 @property (nonatomic,readonly) NSUInteger numberOfPeaks;
 @property (nonatomic,readonly) float wavePhase;

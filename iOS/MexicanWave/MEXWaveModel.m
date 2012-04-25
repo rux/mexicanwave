@@ -10,7 +10,7 @@
 #import "MEXCompassModel.h"
 #import "ios-ntp/ios-ntp.h"
 
-#define PERIOD_IN_SECONDS_FOR_SMALL_GROUP 5.0
+#define PERIOD_IN_SECONDS_FOR_SMALL_GROUP 7.5
 #define PERIOD_IN_SECONDS_FOR_STAGE 15.0
 #define PERIOD_IN_SECONDS_FOR_STADIUM 30.0
 
@@ -32,6 +32,25 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 @synthesize compassModel;
 @synthesize running;
 
++ (NSTimeInterval)wavePeriodInSecondsForCrowdType:(MEXCrowdType)crowd {
+    switch (crowd) {
+        case kMEXCrowdTypeSmallGroup:
+            return PERIOD_IN_SECONDS_FOR_SMALL_GROUP;
+            
+        case kMEXCrowdTypeStageBased:
+            return PERIOD_IN_SECONDS_FOR_STAGE;
+            
+        case kMEXCrowdTypeStadium:
+            return PERIOD_IN_SECONDS_FOR_STADIUM;
+            
+        default:
+            NSAssert(NO, @"Unhandled crowd size enum value %d", crowd);
+            break;
+    }
+    return PERIOD_IN_SECONDS_FOR_STADIUM;
+}
+
+
 + (NSSet*)keyPathsForValuesAffectingNumberOfPeaks {
     return [NSSet setWithObject:@"crowdType"];
 }
@@ -45,25 +64,12 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 }
 
 - (NSUInteger)numberOfPeaks {
-    return (self.crowdType == kMEXCrowdTypeStageBased) ? 2 : 1;
+    //return (self.crowdType == kMEXCrowdTypeStageBased) ? 2 : 1;
+    return 1; // For now, we've agreed to just always use one peak to keep the UI simple.
 }
 
 - (NSTimeInterval)wavePeriodInSeconds {
-    switch (self.crowdType) {
-        case kMEXCrowdTypeSmallGroup:
-            return PERIOD_IN_SECONDS_FOR_SMALL_GROUP;
-            
-        case kMEXCrowdTypeStageBased:
-            return PERIOD_IN_SECONDS_FOR_STAGE;
-            
-        case kMEXCrowdTypeStadium:
-            return PERIOD_IN_SECONDS_FOR_STADIUM;
-            
-        default:
-            NSAssert(NO, @"Unhandled crowd size enum value %d", self.crowdType);
-            break;
-    }
-    return PERIOD_IN_SECONDS_FOR_STADIUM;
+    return [[self class] wavePeriodInSecondsForCrowdType:self.crowdType];
 }
 
 - (float)wavePhase {
@@ -74,7 +80,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
     return ((float)fmod([correctedDate timeIntervalSinceReferenceDate] - (self.compassModel.headingInDegreesEastOfNorth / 360.0)*self.wavePeriodInSeconds, self.wavePeriodInSeconds))/self.wavePeriodInSeconds;
 }
 
-- (void)setCrowdType:(NSInteger)newValue {
+- (void)setCrowdType:(MEXCrowdType)newValue {
     if(crowdType != newValue) {
         [self willChangeValueForKey:@"crowdType"];
         crowdType = newValue;

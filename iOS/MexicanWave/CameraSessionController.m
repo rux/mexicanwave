@@ -9,17 +9,6 @@
 #import "CameraSessionController.h"
 #import <ImageIO/CGImageProperties.h>
 
-#if (TARGET_IPHONE_SIMULATOR)			
-// The AVFoundation frameworks related to video capture and display are not available when compiling for simulator and are removed using preprocessor directives.
-// The missing classes are forward declared here on simulator. 
-#ifndef AVCaptureVideoPreviewLayer 
-@class AVCaptureVideoPreviewLayer;
-#endif
-#ifndef AVCaptureSession
-@class AVCaptureSession;
-#endif
-#endif
-
 #define kSessionDispatchQueueName "com.yell.mexican.captureSessionQueue"
 #define kDispatchQueueName "com.yell.mexican.frameQueue"
 #define kDeliveryDispatchQueueName "com.yell.mexican.deliveryQueue"
@@ -34,7 +23,10 @@
 @property (assign) BOOL shouldAttach;	// Used to avoid a situation where rapid-fire calling of attach and detach causes substantial queues of delegate changes to form.
 
 @property (retain) UIImage* frameBeingProcessed;
-@property(nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput; //Used to capture still images whilst video is still playing.
+@property (nonatomic, retain) AVCaptureStillImageOutput *stillImageOutput; //Used to capture still images whilst video is still playing.
+
+@property (nonatomic) dispatch_queue_t queueForSessionControl;	// Used internally to avoid blocking the main thread when starting or stopping the capture session.
+@property (nonatomic) dispatch_queue_t queueForFrameDelivery;     // Used to deliver frames to outputDelegate.
 
 
 - (BOOL)configureCaptureChain;	/// If a device is available, tie it into the capture session if necessary and start the session running if possible.
@@ -55,13 +47,13 @@
 @synthesize videoLayer, captureSession;
 @synthesize outputDelegate, outputClipRect, frameSize, frameBeingProcessed;
 @synthesize shouldStart, shouldAttach, cameraView,stillImageOutput,capturedImage;
+@synthesize queueForSessionControl, queueForFrameDelivery;
 
 - (void)setCameraView:(UIView *)newView {
 	if(cameraView != newView) {
 		[videoLayer removeFromSuperlayer];
 		[cameraView release];
 		cameraView = [newView retain];
-#if !(TARGET_IPHONE_SIMULATOR)
 		if(cameraView) {
 			if(!videoLayer) {
 				self.videoLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.captureSession];
@@ -71,7 +63,6 @@
 			[cameraView.layer addSublayer:videoLayer];
 			self.videoLayer.frame = cameraView.layer.bounds;
 		}
-#endif
 	}
 }
 
@@ -158,15 +149,11 @@
 }
 
 - (BOOL)isTorchAvailable {
-#if !(TARGET_IPHONE_SIMULATOR)
 	AVCaptureDevice* device = [[self.captureSession.inputs lastObject] device];
 	if(!device) {
 		return NO;
 	}
 	return [device isTorchModeSupported:AVCaptureTorchModeOn];
-#else
-	return NO;
-#endif
 }
 
 #pragma mark -
@@ -179,7 +166,6 @@
 
 
 - (void)pauseDisplay {
-#if !(TARGET_IPHONE_SIMULATOR)	
 	if(!self.shouldStart) {
 		// We've already been asked to stop the session.
 		return;
@@ -188,13 +174,15 @@
 	// The task blocks that we schedule will check this when they get executed on our session management queue.
 	self.shouldStart = NO;
 	// Dispatch a task to stop the session. If, when executed, the session has meanwhile been asked to start,
-	// the task will effectively cancel itself.
-	dispatch_async(queueForSessionControl, ^{ if(!self.shouldStart) { [self.captureSession stopRunning]; } } );	
-#endif
+	// the task will do nothing.
+	dispatch_async(queueForSessionControl, ^{ 
+        if(!self.shouldStart) { 
+            [self.captureSession stopRunning]; 
+        } 
+    });	
 }
 
 - (void)resumeDisplay {
-#if !(TARGET_IPHONE_SIMULATOR)
 	if(self.shouldStart) { 
 		// We've already been asked to start the session.
 		return;
@@ -203,9 +191,18 @@
 	// The task blocks that we schedule will check this when they get executed on our session management queue.
 	self.shouldStart = YES;
 	// Dispatch a task to start the session. If, when executed, the session has meanwhile been asked to stop,
-	// the task will effectively cancel itself.
-	dispatch_async(queueForSessionControl, ^{ if(self.shouldStart) { [self.captureSession startRunning]; } } );
-#endif
+	// the task will do nothing.
+	dispatch_async(queueForSessionControl, ^{ 
+        if(self.shouldStart) { 
+            // Try and start capture running.
+            if(!cameraViewAvailable) {
+                cameraViewAvailable = [self configureCaptureChain];        
+            }
+            if(cameraViewAvailable) {
+                [self.captureSession startRunning]; 
+            }
+        } 
+    });
 }
 
 - (CGRect)convertToVideoFrameCoordinates:(CGRect)rect {
@@ -225,9 +222,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Lifecycle
-
+#pragma mark - Lifecycle
 
 + (id)sharedCameraController {
 	static dispatch_once_t token;
@@ -241,6 +236,12 @@
 		return nil;
 	}
 	
+	if(![[self class] isSupported]) {
+		// Nothing else to be done.
+		[self release], self = nil;
+		return nil;
+	}
+    
 	// Common ivars
 	// Setup default device preferences.
 	autoFocusEnabled = YES;
@@ -249,19 +250,10 @@
 	queueForSessionControl = dispatch_queue_create(kSessionDispatchQueueName, NULL);
     queueForFrameDelivery = dispatch_queue_create(kDeliveryDispatchQueueName, NULL);	
 
-	if(![[self class] isSupported]) {
-		// Nothing else to be done.
-		[self release], self = nil;
-		return nil;
-	}
-	
 	// Even if a device isn't currently connected the AVFoundation
 	// is supported on this platform.	
-#if !(TARGET_IPHONE_SIMULATOR)	
 	// Create a capture session.
-	AVCaptureSession* session = [[AVCaptureSession alloc] init];
-	self.captureSession = session;
-	[session release];
+	captureSession = [[AVCaptureSession alloc] init];
 		
 	// We're interested to know if device availability changes.
 	NSNotificationCenter* notifyCenter = [NSNotificationCenter defaultCenter];
@@ -285,12 +277,10 @@
     [capturedImage release];
     [stillImageOutput release];
 	
-#if !(TARGET_IPHONE_SIMULATOR) 	
 	AVCaptureDevice* device = [[self.captureSession.inputs lastObject] device];
 	[device removeObserver:self forKeyPath:@"adjustingFocus"];
 	[device removeObserver:self forKeyPath:@"adjustingExposure"];
 	[device removeObserver:self forKeyPath:@"adjustingWhiteBalance"];
-#endif
 	
     [frameBeingProcessed release];
 	[captureSession release];
@@ -304,7 +294,6 @@
 
 
 - (BOOL)configureCaptureChain {
-#if !(TARGET_IPHONE_SIMULATOR)		
 	// If the session is running we assume there's nothing to be done.
 	if([self.captureSession isRunning] && [self.captureSession.inputs count] > 0) {
 		// Camera is available and running.
@@ -383,13 +372,9 @@
 	[device addObserver:self forKeyPath:@"adjustingWhiteBalance" options:NSKeyValueObservingOptionNew context:NULL];
 	
 	return YES;
-#else
-	return NO;
-#endif
 }
 
 - (void)configureDevicePreferences {
-#if !(TARGET_IPHONE_SIMULATOR)
 	AVCaptureDevice* device = [[self.captureSession.inputs lastObject] device];
 	if(![device lockForConfiguration:nil]) {
 		return;
@@ -411,23 +396,19 @@
 	}
 	
 	[device unlockForConfiguration];
-#endif
 }
 
 #pragma mark -
 #pragma mark Add and remove frame observer
 
 - (void)detachFrameDelegate {
-#if !(TARGET_IPHONE_SIMULATOR)
 	// No delegate any more, remove video capture output.
 	if([[self.captureSession outputs] count]) {
 		[self.captureSession removeOutput:[[self.captureSession outputs] lastObject]];
 	}	
-#endif
 }
 
 - (void)attachFrameDelegate {
-#if !(TARGET_IPHONE_SIMULATOR)
 	// Delegate created, attach us if necessary.
 	if([[self.captureSession outputs] count]) {
 		return;
@@ -444,12 +425,10 @@
 	dispatch_release(queueForFrames);
 	[self.captureSession addOutput:captureOutput];
 	[captureOutput release];	
-#endif
 }
 
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 
-#if !(TARGET_IPHONE_SIMULATOR)
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     if(self.frameBeingProcessed) {
         // We're already busy
@@ -516,20 +495,19 @@
         self.frameBeingProcessed = nil; 
     });
 }
-#endif
 
 #pragma mark - Notifications for device/session
 
 - (void)deviceAvailabilityDidChange:(NSNotification*)notification {
-#if !(TARGET_IPHONE_SIMULATOR)
-	if([[notification name] isEqualToString:AVCaptureDeviceWasConnectedNotification] || [[notification name] isEqualToString:AVCaptureDeviceWasDisconnectedNotification]) {
-		self.cameraViewAvailable = [self configureCaptureChain];
+	if([notification.name isEqualToString:AVCaptureDeviceWasConnectedNotification] || [notification.name isEqualToString:AVCaptureDeviceWasDisconnectedNotification]) {
+        NSLog(@"%@", notification.name);
+        dispatch_async(self.queueForSessionControl, ^{
+            self.cameraViewAvailable = [self configureCaptureChain];            
+        });
 	}
-#endif
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-#if !(TARGET_IPHONE_SIMULATOR)
 	AVCaptureDevice* device = [[self.captureSession.inputs lastObject] device];
 	if(!device) {
 		self.adjustingDeviceSettings = NO;
@@ -537,18 +515,13 @@
 	}
 	
 	self.adjustingDeviceSettings = device.adjustingFocus || device.adjustingWhiteBalance || device.adjustingExposure;
-#endif
 }
 -(BOOL)isCapturedImage{
     return self.capturedImage ? YES : NO;
 }
 -(void)capturePhotoWithCompletion:(void(^)(void))completion{
-#if !(TARGET_IPHONE_SIMULATOR)
-
     //double check the video is started
-    if(![captureSession isRunning]){
-        [self resumeDisplay];
-    }
+    [self resumeDisplay];
     
     AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in stillImageOutput.connections)
@@ -569,8 +542,7 @@
      {
 		 CFDictionaryRef exifAttachments = CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
 		 // Do something with the attachments. 
-         NSLog(@"attachements: %@", exifAttachments);
-		 
+         DLog(@"attachements: %@", exifAttachments);		 
          NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
          //we have a new image so clear out the old and set the new image.
          self.capturedImage = nil;
@@ -579,9 +551,7 @@
              completion();
          }
          
-	 }];
-#endif
-    
+	 }];    
 }
 
 @end

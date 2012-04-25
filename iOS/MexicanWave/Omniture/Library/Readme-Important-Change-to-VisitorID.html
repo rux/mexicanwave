@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <style>
+    html { background-color:#f4f4f4; }
+    body { color:#333333; font:12px/145% Arial, Helvetica, sans-serif; text-align:left; }
+    pre, .code { font-family:"Courier New", Courier, monospace; }
+    #content { border:1px solid #d9d9d9; border-top:0; padding:28px 20px 18px 20px; background-color:white; width:90%; margin:auto}
+    #content h1 { margin-bottom:15px; font-weight:normal; line-height:100%; }
+    #content p { margin:7px 0; }
+    a { color:#45719a; text-decoration:none; }
+    a img { border:0; }
+    a:hover { text-decoration:underline; }
+    </style>
+    <title></title>
+</head>
+<body>
+<div id="content">
+<h1>Important Change to the Default visitorID Value</h1>
+<p>AppMeasurement for iOS was updated to no longer use the deprecated UDID value as the default value for visitorID. If you set a custom visitorID in your application (for example, <span class="code">s.visitorID = @12345</span>), then you are unaffected by this change.</p>
+
+ <p>If you do not set a custom visitorID, instead of using the UDID as the value for visitorID, a random UUID is generated on initial launch and then stored in a user defaults key. This key is used by AppMeasurement from that point forward. This key is also saved and restored during the standard application backup process.</p>
+
+    <p>See the following for additional information:</p>
+
+    <ul>
+        <li><a href="http://blogs.omniture.com/2011/09/13/what-do-ios-5-udid-changes-mean-to-app-measurement/" target="_blank">What Do iOS 5 UDID Changes Mean to App Measurement?</a></li>
+
+    </ul>
+    </div>
+</body>
+</html>
