@@ -45,7 +45,8 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 }
 
 - (NSUInteger)numberOfPeaks {
-    return (self.crowdType == kMEXCrowdTypeStageBased) ? 2 : 1;
+    //return (self.crowdType == kMEXCrowdTypeStageBased) ? 2 : 1;
+    return 1; // For now, we've agreed to just always use one peak to keep the UI simple.
 }
 
 - (NSTimeInterval)wavePeriodInSeconds {
