@@ -35,7 +35,7 @@ class RoarHandler {
 	
 	
 
-	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE) {
+	RoarHandler(Context c, View v, PreviewSurface previewSurface, float wD, int wC, boolean sE) {
 		context = c;
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         screenFlash = (View) v;
