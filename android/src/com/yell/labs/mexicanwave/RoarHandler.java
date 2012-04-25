@@ -104,7 +104,9 @@ class RoarHandler {
 		@Override
 		protected void onPostExecute(Long result) {
 			timeOffset = result;
-			// Log.i("MexicanWave", "** now in postexecute " + String.valueOf(timeOffset));
+			Long correctedTime = System.currentTimeMillis() + timeOffset;
+			
+			Log.i("MexicanWave", "** now in postexecute " + String.valueOf(timeOffset));
 		}
 	}
 	
