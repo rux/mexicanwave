@@ -36,6 +36,7 @@ class RoarHandler {
 	private Animation flashAnim;
 	
 	private SntpClient sntpClient;
+	private final String timeServer;
 	
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE) {
@@ -49,13 +50,16 @@ class RoarHandler {
         this.setSound(sE);
         
         sntpClient = new SntpClient();
-        if (sntpClient.requestTime("0.pool.ntp.org", 30000) ) {
+        timeServer = "0.pool.ntp.org";
+        if (sntpClient.requestTime(timeServer, 30000) ) {
         	Long time = sntpClient.getNtpTime();
             Long newTime = time;
             Log.i("info ", String.valueOf(newTime) + ".... newTime");
 
         } else {
-        	Log.i("info", "no NTP time");
+        	Log.i("info", "***** **** *** ** * no NTP time " + timeServer);
+        	
+        	
         }
         
         
