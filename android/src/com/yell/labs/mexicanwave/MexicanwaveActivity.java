@@ -170,7 +170,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				
 				averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loved to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
 
-				// Log.i("info", " ##### Z Gravity is " + String.valueOf(averageZGravity) + " raw is " + String.valueOf( Math.min(Math.abs(myGravities[2]), 9.80665f)));
+				// Log.i("MexicanWave", " ##### Z Gravity is " + String.valueOf(averageZGravity) + " raw is " + String.valueOf( Math.min(Math.abs(myGravities[2]), 9.80665f)));
 				if (Math.abs(averageZGravity) > 9 ) {
 					// device is too flat
 					warning.setVisibility(View.VISIBLE);
@@ -224,7 +224,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		
 
 		if (key.equals("pref_sound")) {
-			Log.i("info", "innit  " + key);
 			soundEnabled = prefs.getBoolean(key, false);
 			roarHandler.setSound(soundEnabled);
 		}

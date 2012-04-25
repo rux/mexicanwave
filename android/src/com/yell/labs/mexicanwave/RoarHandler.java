@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
+import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,7 @@ class RoarHandler {
 	
 	private SntpClient sntpClient;
 	private final String timeServer;
+	private long timeOffset;
 	
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE) {
@@ -48,20 +50,6 @@ class RoarHandler {
         this.setFlash(wD);
         this.setWaveColor(wC);
         this.setSound(sE);
-        
-        sntpClient = new SntpClient();
-        timeServer = "0.pool.ntp.org";
-        if (sntpClient.requestTime(timeServer, 30000) ) {
-        	Long time = sntpClient.getNtpTime();
-            Long newTime = time;
-            Log.i("info ", String.valueOf(newTime) + ".... newTime");
-
-        } else {
-        	Log.i("info", "***** **** *** ** * no NTP time " + timeServer);
-        	
-        	
-        }
-        
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -84,8 +72,40 @@ class RoarHandler {
 				screenFlash.setBackgroundColor(Color.TRANSPARENT);
 			}
 		});
- 
+
+        timeOffset = 0;
+        timeServer = "0.pool.ntp.org";
+        getNtpTime ntpTime = new getNtpTime();
+        ntpTime.execute(timeServer);
+        
+        
+        
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
+	}
+	
+
+	private class getNtpTime extends AsyncTask<String, Void, Long> {
+		@Override
+		protected Long doInBackground(String... params) {
+	        sntpClient = new SntpClient();
+	        Long ntpTime = (long) 0;
+	        Long timeDifference = (long) 0;
+	        if (sntpClient.requestTime(timeServer, 5000) ) {
+	        	ntpTime = sntpClient.getNtpTime();
+	            // Log.i("MexicanWave", String.valueOf(System.currentTimeMillis()) + ".... System Time");
+	            // Log.i("MexicanWave", String.valueOf(ntpTime) + ".... new Time");
+	            timeDifference = ntpTime - System.currentTimeMillis();
+	        } else {
+	        	// Log.i("MexicanWave", "***** **** *** ** * no NTP time from " + timeServer);
+	        }
+			return timeDifference;
+		}
+		
+		@Override
+		protected void onPostExecute(Long result) {
+			timeOffset = result;
+			// Log.i("MexicanWave", "** now in postexecute " + String.valueOf(timeOffset));
+		}
 	}
 	
 	public void setSound(boolean s) {
@@ -140,9 +160,11 @@ class RoarHandler {
 		int milliseconds = (int) (System.currentTimeMillis() % 60000);
 		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
-		int offset = (int) ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
+		float offsetDegrees =  (((milliseconds + timeOffset) * 6 * (60/this.waveDuration) ) / 1000);
 		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
-		return offset;
+		Log.i("MexicanWave", "**()()** making with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
+
+		return (int) offsetDegrees;
 	}
 	
     void update(float azimuth) {
@@ -150,12 +172,13 @@ class RoarHandler {
 		
 		// float averageAzimuth = this.getAzimuthInDegrees();
     	//float waveOffset = this.getWaveOffestFromAzimuthInDegrees();
-		//Log.i("info", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
+		//Log.i("MexicanWave", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
 		this.check();
     }	
 		
 	public void check() {
 		int angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
+		Log.i("MexicanWave", "**()()** angle " + String.valueOf(angle));
 		if (angle > 160 && angle < 200) {
 			goWild();
 		} else {
