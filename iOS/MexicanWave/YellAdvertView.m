@@ -8,18 +8,20 @@
 
 #import "YellAdvertView.h"
 #import "UsageMetrics.h"
+
 #define kScaleFactor 0.92f
 
 #define kNSLocaleKeyUK @"GB"
 #define kNSLocaleKeyES @"ES"
 #define kNSLocaleKeyUS @"US"
+
 @implementation YellAdvertView
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self commonInitialisation];
     }
     return self;
 }
@@ -37,20 +39,18 @@
     [advertImage release];
     
     //hide oursleves if we are not in an area where the advert is usefull - i.e outside UK, US, ES
-    self.hidden = [[self appstoreURLForCurrentLocale]length] ? NO : YES;   
-    !self.hidden ? [[UsageMetrics sharedInstance] postEventLinkIsVisible] : nil;
+    NSString* appStoreURL = [self appstoreURLForCountryCode:[self countryCodeForCurrentLocale]];
+    if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:appStoreURL]]) {
+        self.hidden = NO;
+        [[UsageMetrics sharedInstance] didShowDownloadLink];
+    }
+    else {
+        self.hidden = YES;        
+    }
     [self addTarget:self action:@selector(didTapYellLink:) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 - (void)setHighlighted:(BOOL)highlighted {
     [super setHighlighted:highlighted];
     
@@ -62,10 +62,12 @@
     }
 }
 
--(NSString*)appstoreURLForCurrentLocale{
+- (NSString*)countryCodeForCurrentLocale {
     NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
-    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode]; //get current locale as code.
-    
+    return [currentLocale objectForKey:NSLocaleCountryCode]; //get current locale as code.    
+}
+
+-(NSString*)appstoreURLForCountryCode:(NSString*)countryCode {    
     //compare codes to get correct url for app store.
     if([countryCode isEqualToString:kNSLocaleKeyUK]){
         return @"http://itunes.apple.com/gb/app/yell-search-find-local-uk/id329334877?mt=8";
@@ -79,8 +81,10 @@
     
     return nil;
 }
+
 - (void)didTapYellLink:(id)sender {
-    [[UsageMetrics sharedInstance] postEventLinkPressed];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self appstoreURLForCurrentLocale]]];
+    NSString* countryCode = [self countryCodeForCurrentLocale];
+    [[UsageMetrics sharedInstance] didFollowDownloadLinkForAppStore:countryCode];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self appstoreURLForCountryCode:countryCode]]];
 }
 @end

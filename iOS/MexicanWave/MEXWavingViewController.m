@@ -249,6 +249,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     
     //sets up for video capture sessions. Gives the controller the correct view and setttings
     [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
@@ -261,18 +262,15 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShownHintToUser];
     }
     
-    [super viewDidAppear:animated];
-
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
    
 
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
-        
-    [[UsageMetrics sharedInstance] postEventAppFinishedLaunching];
-    
+            
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:kSettingsDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
@@ -290,7 +288,9 @@
     [swipeRight release];
     [swipeLeft release];
 
-    [super viewDidLoad];
+    
+    [[UsageMetrics sharedInstance] didFinishLaunching];
+
 
 }
 
@@ -320,7 +320,6 @@
         if(velocity<-1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
-            [[UsageMetrics sharedInstance] postEventSettingsViewVisible];
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
@@ -329,10 +328,7 @@
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view        
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
-                if(offset == -320){
-                    [[UsageMetrics sharedInstance]postEventSettingsViewVisible];
-                }
-                else{  
+                if(offset != -320){
                     [self resume];
                     [[CameraSessionController sharedCameraController] resumeDisplay];
                 }
