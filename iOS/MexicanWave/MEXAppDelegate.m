@@ -8,8 +8,8 @@
 
 #import "MEXAppDelegate.h"
 #import "MEXWavingViewController.h"
-#import "SettingsModel.h"
 #import "AppUpgradeModel.h"
+#import "UsageMetrics.h"
 
 @interface MEXAppDelegate ()
 // -- App upgrade model (upgrade encouragement support) --
@@ -39,7 +39,7 @@
     // Upgrade controller shows an alert if the app is deprecated or end-of-lifed.
 	self.upgradeController = [[[AppUpgradeController alloc] init] autorelease];	
     
-    [self.window makeKeyAndVisible];
+    [self.window makeKeyAndVisible];    
     return YES;
 }
 

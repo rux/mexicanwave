@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00359A7815370D0700BE5D31 /* UsageMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 00359A7715370D0700BE5D31 /* UsageMetrics.m */; };
 		0056D384153D85B7004C2BE3 /* tab_lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D382153D85B7004C2BE3 /* tab_lines.png */; };
 		0056D385153D85B7004C2BE3 /* tab_lines@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D383153D85B7004C2BE3 /* tab_lines@2x.png */; };
 		0056D388153D85D6004C2BE3 /* background_Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D386153D85D6004C2BE3 /* background_Camera.png */; };
@@ -83,6 +82,7 @@
 		196B8E4C1518A00100DAD14A /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E471518A00100DAD14A /* MainWindow.xib */; };
 		196B8E4D1518A00100DAD14A /* MEXWavingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E491518A00100DAD14A /* MEXWavingViewController.xib */; };
 		198F4DCD1546FFCE00BEAF2D /* libAppMeasurement.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F4DCC1546FFCE00BEAF2D /* libAppMeasurement.a */; };
+		198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DC51546FF3800BEAF2D /* UsageMetrics.m */; };
 		199B5760151CDFB200155281 /* ios-ntp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199B575F151CDFB200155281 /* ios-ntp.framework */; };
 		199CB60514FEA3CA00A16A97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199CB60414FEA3CA00A16A97 /* UIKit.framework */; };
 		199CB60714FEA3CA00A16A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199CB60614FEA3CA00A16A97 /* Foundation.framework */; };
@@ -98,8 +98,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00359A7615370D0700BE5D31 /* UsageMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; name = UsageMetrics.h; path = Omniture/UsageMetrics.h; sourceTree = "<group>"; };
-		00359A7715370D0700BE5D31 /* UsageMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UsageMetrics.m; path = Omniture/UsageMetrics.m; sourceTree = "<group>"; };
 		0056D382153D85B7004C2BE3 /* tab_lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_lines.png; sourceTree = "<group>"; };
 		0056D383153D85B7004C2BE3 /* tab_lines@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_lines@2x.png"; sourceTree = "<group>"; };
 		0056D386153D85D6004C2BE3 /* background_Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_Camera.png; sourceTree = "<group>"; };
@@ -244,21 +242,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00359A7415370C1C00BE5D31 /* Omniture */ = {
-			isa = PBXGroup;
-			children = (
-				00359A7615370D0700BE5D31 /* UsageMetrics.h */,
-				00359A7715370D0700BE5D31 /* UsageMetrics.m */,
-			);
-			name = Omniture;
-			sourceTree = "<group>";
-		};
 		00813F08152DE72A00262289 /* Settings / Config */ = {
 			isa = PBXGroup;
 			children = (
-				00359A7415370C1C00BE5D31 /* Omniture */,
-				00D26F5F1536CAD3004BC8ED /* JSON */,
-				00D26F491536C886004BC8ED /* DeprecationAPI */,
 				00D26F341535BE85004BC8ED /* SettingsView.h */,
 				00D26F351535BE85004BC8ED /* SettingsView.m */,
 			);
@@ -474,6 +460,8 @@
 			isa = PBXGroup;
 			children = (
 				198F4DBD1546FF3800BEAF2D /* Omniture */,
+				00D26F491536C886004BC8ED /* DeprecationAPI */,
+				00D26F5F1536CAD3004BC8ED /* JSON */,
 				00813F08152DE72A00262289 /* Settings / Config */,
 				199CB61314FEA3CA00A16A97 /* MEXAppDelegate.h */,
 				199CB61414FEA3CA00A16A97 /* MEXAppDelegate.m */,
@@ -650,11 +638,11 @@
 				00D26F701536CAD3004BC8ED /* SBJsonBase.m in Sources */,
 				00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */,
 				00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */,
-				00359A7815370D0700BE5D31 /* UsageMetrics.m in Sources */,
 				005F6074153C1F4F00999B47 /* VideoPreviewView.m in Sources */,
 				005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */,
 				00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */,
 				00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */,
+				198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,6 +684,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = APPSTORERELEASE;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
