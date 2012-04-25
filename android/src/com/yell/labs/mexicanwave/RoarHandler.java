@@ -25,7 +25,7 @@ class RoarHandler {
 	public boolean currentlyRoaring;
 	public int waveCount;
 	public float azimuth;
-	private int waveDuration;
+	private float waveDuration;
 	private int waveColor;
 	private boolean soundEnabled;
 	private AudioManager audioManager;
@@ -92,7 +92,7 @@ class RoarHandler {
 		return currentlyRoaring;
 	}
 	
-	public void setWaveDuration(int w) {
+	public void setWaveDuration(float w) {
 		waveDuration = w;
 		waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
 		this.setFlash(w);
@@ -100,7 +100,7 @@ class RoarHandler {
 	public void setWaveColor(int c) {
 		waveColor = c;
 	}
-	public void setFlash(int w) {
+	public void setFlash(float w) {
 		if (w < 20) {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash);
 		} else {
@@ -170,7 +170,7 @@ class RoarHandler {
 		
 		if (currentlyRoaring != true && cameraReady) {			
 			mSurface.lightOn();
-			vibrator.vibrate(100 * waveDuration);
+			vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
 			screenFlash.setBackgroundColor(waveColor);
 			screenFlash.startAnimation(flashAnim);
 			
