@@ -19,13 +19,7 @@
  The camera used is the default device. Currently this is the rear-facing camera on iPhone.
  AVFoundation should be weakly linked for some class messages to return correctly on targets lacking it.
  **/
-#if !(TARGET_IPHONE_SIMULATOR)
 @interface CameraSessionController : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate> {
-#else
-@interface CameraSessionController : NSObject {	
-#endif
-	dispatch_queue_t queueForSessionControl;	// Used internally to avoid blocking the main thread when starting or stopping the capture session.
-    dispatch_queue_t queueForFrameDelivery;     // Used to deliver frames to outputDelegate.
 }
 	
 /**
