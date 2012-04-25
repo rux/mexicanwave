@@ -19,13 +19,16 @@
     
     <string name="about_text_1">Everyone loves a Mexican Wave.  This app makes mexican waves out of the flashes on
         you and your friends\' phones.</string>
+        
     <string name="about_image_hand_description">Picture of a hand holding a phone in portrait orientation</string>
+    
     <string name="about_text_2">All participants need to select the same wave size from the settings screen.  Then
         hold the phones as shown above, and point all flashes towards the center of wherever you are 
         having a Mexican Wave (or at the band if you\'re at a gig).</string>
 
     <string name="about_install_yell_app_button">Go to the google play store to install the yell.com app</string>
-    <string name="about_text_3">Thanks for trying our Mexican Wave app.  It was put together by the friendly
+    
+    <string name="about_text_3">Thanks for trying our app.  It was put together by the friendly
         guys at yell.com labs as a bit of fun.  We hope you enjoy it.  If you\'d like to try a somewhat more useful
-        service, please try out <a>Yell Search</a></string>
+        service, please try out the Yell app.</string>
 </resources>
