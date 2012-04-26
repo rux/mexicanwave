@@ -32,7 +32,8 @@ class RoarHandler {
 	public float azimuth;
 	private float waveDuration;
 	private int waveColor;
-	private boolean soundEnabled;
+	public boolean vibrationEnabled;
+	public boolean soundEnabled;
 	private AudioManager audioManager;
 	private SoundPool soundPool;
 	private int soundId;
@@ -45,7 +46,7 @@ class RoarHandler {
 	private long timeOffset;
 	
 
-	RoarHandler(Context c, View v, PreviewSurface previewSurface, float wD, int wC, boolean sE) {
+	RoarHandler(Context c, View v, PreviewSurface previewSurface, float wD, int wC, boolean sE, boolean vE) {
 		context = c;
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         screenFlash = (View) v;
@@ -53,7 +54,8 @@ class RoarHandler {
         this.setWaveDuration(wD);
         this.setFlash(wD);
         this.setWaveColor(wC);
-        this.setSound(sE);
+        soundEnabled = sE;
+        vibrationEnabled =vE;
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -87,6 +89,7 @@ class RoarHandler {
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
 	
+<<<<<<< HEAD
 
 	private class getNtpTime extends AsyncTask<String, Void, Long> {
 		@Override
@@ -115,11 +118,9 @@ class RoarHandler {
 	public void setSound(boolean s) {
 		soundEnabled = s;
 	}
+=======
+>>>>>>> master
 
-	public boolean getCurrentlyRoaring() {
-		return currentlyRoaring;
-	}
-	
 	public void setWaveDuration(float w) {
 		waveDuration = w;
 		// waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
@@ -160,6 +161,7 @@ class RoarHandler {
 		return (int) (this.azimuth*180/Math.PI);
 	}
 	
+<<<<<<< HEAD
 
 	public int getWaveOffestFromAzimuthInDegrees() {
 
@@ -172,6 +174,13 @@ class RoarHandler {
 		
 		
 		float offsetDegrees =  ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
+=======
+	public long getWaveOffestFromAzimuthInDegrees() {
+		long milliseconds = (long) (System.currentTimeMillis() % 60000);
+		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
+		
+		long offset = (long) ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
+>>>>>>> master
 		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
 		 // Log.i("MexicanWave", "**()()** making with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
 		return (int) 0;
@@ -188,9 +197,9 @@ class RoarHandler {
     }	
 		
 	public void check() {
-		int angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
-		//  Log.i("MexicanWave", "**()()** angle " + String.valueOf(angle));
+		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
 		if (angle > 175 && angle < 185) {
+
 			goWild();
 		} else {
 			calmDown();
@@ -215,7 +224,9 @@ class RoarHandler {
 		
 		if (currentlyRoaring != true && cameraReady) {			
 			mSurface.lightOn();
-			vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
+			if (vibrationEnabled) {
+				vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
+			}
 			screenFlash.setBackgroundColor(waveColor);
 			screenFlash.startAnimation(flashAnim);
 			

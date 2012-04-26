@@ -11,7 +11,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Debug;
 import android.preference.PreferenceManager;
@@ -23,7 +22,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
@@ -48,6 +46,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private float waveDuration;
 	private int waveColor;
 	private boolean soundEnabled;
+	private boolean vibrationEnabled;
 
 	private boolean cameraIsInitialised;
 	
@@ -61,6 +60,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         waveDuration = Float.parseFloat(prefs.getString("pref_wave_duration", "15"));
         waveColor = Color.parseColor(prefs.getString("pref_coloring", "#EEFFFFFF"));
         soundEnabled = prefs.getBoolean("pref_sound", false);
+        vibrationEnabled = prefs.getBoolean("pref_vibration", true);
         
         setContentView(R.layout.main);
         context = this;
@@ -72,7 +72,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
 
-        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor, soundEnabled);
+        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor, soundEnabled, vibrationEnabled);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -144,7 +144,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				roarHandler.update((float) Math.PI);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 				
 				int newAzimuth = roarHandler.getAzimuthInDegrees();
-				int offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
+				long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
 				
 				rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
 				rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
@@ -221,11 +221,16 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			waveColor = Color.parseColor(prefs.getString("pref_coloring", "Color.WHITE"));
 			roarHandler.setWaveColor(waveColor);
 		}
-		
+
 
 		if (key.equals("pref_sound")) {
 			soundEnabled = prefs.getBoolean(key, false);
-			roarHandler.setSound(soundEnabled);
+			roarHandler.soundEnabled = soundEnabled;
+		}
+
+		if (key.equals("pref_vibration")) {
+			vibrationEnabled = prefs.getBoolean(key, true);
+			roarHandler.vibrationEnabled = vibrationEnabled;
 		}
 	}
 
