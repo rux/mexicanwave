@@ -89,7 +89,6 @@ class RoarHandler {
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
 	
-<<<<<<< HEAD
 
 	private class getNtpTime extends AsyncTask<String, Void, Long> {
 		@Override
@@ -111,15 +110,12 @@ class RoarHandler {
 		@Override
 		protected void onPostExecute(Long result) {
 			timeOffset = result;
-			
 		}
 	}
 	
 	public void setSound(boolean s) {
 		soundEnabled = s;
 	}
-=======
->>>>>>> master
 
 	public void setWaveDuration(float w) {
 		waveDuration = w;
@@ -161,12 +157,9 @@ class RoarHandler {
 		return (int) (this.azimuth*180/Math.PI);
 	}
 	
-<<<<<<< HEAD
 
-	public int getWaveOffestFromAzimuthInDegrees() {
-
-		
-		int milliseconds = (int) ((System.currentTimeMillis() + timeOffset) % 60000);
+	public long getWaveOffestFromAzimuthInDegrees() {
+		long milliseconds = (long) ((System.currentTimeMillis() + timeOffset) % 60000);
 		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
 		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
@@ -174,13 +167,7 @@ class RoarHandler {
 		
 		
 		float offsetDegrees =  ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
-=======
-	public long getWaveOffestFromAzimuthInDegrees() {
-		long milliseconds = (long) (System.currentTimeMillis() % 60000);
-		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
-		
-		long offset = (long) ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
->>>>>>> master
+
 		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
 		 // Log.i("MexicanWave", "**()()** making with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
 		return (int) 0;
