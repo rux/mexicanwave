@@ -16,4 +16,7 @@
 - (void)animateGlowWithCycleTime:(NSTimeInterval)cycleTime activeTime:(NSTimeInterval)activeTime phase:(float)phase;
 - (void)cancelGlowAnimation;
 
+- (void)pauseAnimation;
+- (void)resumeAnimation;
+
 @end

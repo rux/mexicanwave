@@ -7,22 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MEXWaveFxView.h"
 typedef enum{
-    kBtnFunTag = 200,
-    kBtnGigTag = 201,
-    kBtnStaduimTag = 202,
-} kBtnTags;
+    kWaveFunTag = 200,
+    kWaveGigTag = 201,
+    kWaveStaduimTag = 202,
+} kWaveSelection;
 NSString* const kSpeedSegementDidChange;
 
 @interface UserGuideView : UIView
 
-@property(nonatomic, getter = isPaused) BOOL pause;
 
 
-@property(nonatomic,retain) IBOutlet UIView* funContainer;
-@property(nonatomic,retain) IBOutlet UIView* gigContainer;
-@property(nonatomic,retain) IBOutlet UIView* stadiumContainer;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* funContainer;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* gigContainer;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* stadiumContainer;
 
 @property(nonatomic,retain) IBOutlet UIButton* btnFun;
 @property(nonatomic,retain) IBOutlet UIButton* btnGig;
@@ -32,7 +31,10 @@ NSString* const kSpeedSegementDidChange;
 @property(nonatomic,retain) IBOutlet UILabel* lblStepTwo;
 @property(nonatomic,retain) IBOutlet UILabel* lblStepThree;
 
+@property(nonatomic,retain) IBOutlet UILabel* lblFun;
+@property(nonatomic,retain) IBOutlet UILabel* lblGig;
+@property(nonatomic,retain) IBOutlet UILabel* lblStadium;
 
 -(IBAction)didSelectWaveSpeed:(id)sender;
-
+-(void)startWaveWithTag:(kWaveSelection)newSelection;
 @end

@@ -101,7 +101,7 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
 - (void)didTapSegment:(id)sender {
     const NSUInteger indexOfSegment = ((UISegmentedControl*)sender).selectedSegmentIndex;
     if(indexOfSegment != NSNotFound) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:indexOfSegment]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:[NSNumber numberWithInteger:indexOfSegment]];
     }
 }
 -(void)didChangeTableSwitch:(UISwitch*)currentSwitch{

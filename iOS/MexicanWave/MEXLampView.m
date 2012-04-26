@@ -32,6 +32,21 @@
     [self.layer removeAnimationForKey:@"glow"];
 }
 
+- (void)pauseAnimation {
+    const CFTimeInterval timeAtPause = CACurrentMediaTime();
+    self.layer.speed = 0;
+    self.layer.timeOffset = timeAtPause;
+}
+
+- (void)resumeAnimation {
+    CFTimeInterval pausedTime = [self.layer timeOffset];
+    self.layer.speed = 1.0;
+    self.layer.timeOffset = 0.0;
+    self.layer.beginTime = 0.0;
+    CFTimeInterval timeSincePause = [self.layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+    self.layer.beginTime = timeSincePause;
+
+}
 
 - (void)setBulbScale:(float)newScale {
     NSAssert(self.subviews.count == 2, @"Bulb view or glow view or both not present in a lamp");

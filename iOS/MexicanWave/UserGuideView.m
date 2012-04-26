@@ -8,7 +8,9 @@
 
 #import "UserGuideView.h"
 #import "QuartzCore/QuartzCore.h"
-
+#import "MEXWaveModel.h"
+#define kSelectionOffset 200
+#define kUnselectedAlpha 0.4;
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 @interface UserGuideView()
@@ -18,11 +20,15 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 @end
 
 @implementation UserGuideView
-@synthesize pause,currentSelection;
+@synthesize currentSelection;
 @synthesize gigContainer,funContainer,stadiumContainer;
 @synthesize btnFun,btnGig,btnStadium;
 @synthesize lblStepOne,lblStepThree,lblStepTwo;
+@synthesize lblFun,lblGig,lblStadium;
 -(void)dealloc{
+    [lblFun release];
+    [lblGig release];
+    [lblStadium release];
     [lblStepOne release];
     [lblStepThree release];
     [lblStepTwo release];
@@ -39,96 +45,107 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     self = [super initWithFrame:frame];
     if (self) {
         [self commonInitialisation];
-
+        
     }
     return self;
 }
 
 -(void)awakeFromNib{
-   
         
-    
     [self commonInitialisation];
 }
 
 -(void)commonInitialisation{
+    
+    funContainer.alpha = kUnselectedAlpha;
+    gigContainer.alpha = kUnselectedAlpha;
+    stadiumContainer.alpha = kUnselectedAlpha;
+    
+    lblGig.alpha = kUnselectedAlpha;
+    lblFun.alpha = kUnselectedAlpha;
+    lblStadium.alpha = kUnselectedAlpha;
+    
+    [self startWaveWithTag:kSelectionOffset +[[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
 }
 
 -(IBAction)didSelectWaveSpeed:(id)sender{
     if(!sender){
         return;
     }
+    
     UIButton *selected = (UIButton*)sender;
-    if(self.currentSelection != selected.tag){
-        float animationSpeed;
-        switch (selected.tag) {
-            case kBtnFunTag:
-                animationSpeed = 1.0;
+    [self startWaveWithTag:selected.tag];
+               
+} 
+
+-(void)startWaveWithTag:(kWaveSelection)newSelection{
+   
+    if(self.currentSelection != newSelection){
+        
+        switch (currentSelection) {
+            case kWaveFunTag:
+                [funContainer pauseAnimations];
+                lblFun.alpha = kUnselectedAlpha;
+                funContainer.alpha = kUnselectedAlpha;
                 break;
-            case kBtnGigTag:
-                animationSpeed = 1.5;
+            case kWaveGigTag:
+                [gigContainer pauseAnimations];
+                lblGig.alpha = kUnselectedAlpha;
+                gigContainer.alpha = kUnselectedAlpha;
                 break;
-            case kBtnStaduimTag:
-                animationSpeed = 2.0;
+            case kWaveStaduimTag:
+                [stadiumContainer pauseAnimations];
+                lblStadium.alpha = kUnselectedAlpha;
+                stadiumContainer.alpha = kUnselectedAlpha;
                 break;
             default:
                 break;
         }
-           
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:200-selected.tag]];
-
-
-        UIButton* currentBtn = (UIButton*)[self viewWithTag:self.currentSelection];
-        [currentBtn.layer removeAllAnimations];
-
-        CABasicAnimation* spinAnimation = [CABasicAnimation
-                                           animationWithKeyPath:@"transform.rotation"];
-        spinAnimation.toValue = [NSNumber numberWithFloat:2*M_PI];
-        spinAnimation.repeatCount = HUGE_VAL;
-        spinAnimation.duration = animationSpeed;
-        [selected.layer addAnimation:spinAnimation forKey:@"spinAnimation"];
-
-        
-        
-        CAKeyframeAnimation* fadeInAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
-        fadeInAnimation.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:1.0],
-                              [NSNumber numberWithFloat:0.6],
-                              [NSNumber numberWithFloat:1.0],nil];
-        
-        fadeInAnimation.duration = animationSpeed;
-        fadeInAnimation.repeatCount = HUGE_VAL;
-        [selected.layer addAnimation:fadeInAnimation forKey:@"fadeAnimation"];
         
         
         
-        //i.e the first time this has been selected
-        if(self.currentSelection==0){
-            [UIView animateWithDuration:1.2 animations:^{
-                lblStepTwo.alpha = 1;                   
-            } completion:^(BOOL finished) {
-            
-                   [UIView animateWithDuration:1.2 delay:1.5 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-                       lblStepThree.alpha = 1; 
-                   }completion:nil];
-              
-            }];
+        switch (newSelection) {
+            case kWaveFunTag:
+                (!funContainer.isPaused) ? [funContainer animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1] : [funContainer resumeAnimations];
+                lblFun.alpha = 1.0f;
+                funContainer.alpha = 1.0f;
+                break;
+            case kWaveGigTag:
+                (!gigContainer.isPaused) ? [gigContainer animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStageBased] startingPhase:0 numberOfPeaks:1] :[gigContainer resumeAnimations];
+                lblGig.alpha = 1.0f;
+                gigContainer.alpha = 1.0f;
+                break;
+            case kWaveStaduimTag:
+                (!stadiumContainer.isPaused) ? [stadiumContainer animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStadium] startingPhase:0 numberOfPeaks:1] : [stadiumContainer resumeAnimations];
+                lblStadium.alpha = 1.0;
+                stadiumContainer.alpha = 1.0f;
+                break;
+            default:
+                break;
         }
-        
-        self.currentSelection = selected.tag; 
+        self.currentSelection = newSelection; 
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:currentSelection-kSelectionOffset]];
 
     }
+
 }
-
-
 
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
 
 @end
+
+
+
+
+
+
+
