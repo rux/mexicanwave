@@ -143,6 +143,8 @@
     [self torchOff];
     // Suspend the model
     [self.waveModel pause];
+    //As the settings view is about to become visible start animating the current speed selection
+    [self.settingView.userGuide startAnimatingCurrentSelection];
    
 }
 
@@ -159,6 +161,10 @@
 
     //sets up for video capture sessions. Gives the controller the correct view and setttings
     [[CameraSessionController sharedCameraController] resumeDisplay];
+    
+    //as the main view is now visable stop animating the help guide on the settings view
+    [self.settingView.userGuide stopAnimating];
+
     
 }
 

@@ -57,6 +57,8 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 -(void)commonInitialisation{
     
+    //set the user guice subview to default alpha - these help the current selection to stand out
+    
     funContainer.alpha = kUnselectedAlpha;
     gigContainer.alpha = kUnselectedAlpha;
     stadiumContainer.alpha = kUnselectedAlpha;
@@ -65,10 +67,19 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     lblFun.alpha = kUnselectedAlpha;
     lblStadium.alpha = kUnselectedAlpha;
     
-    [self startWaveWithTag:kSelectionOffset +[[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
+}
+
+-(void)startAnimatingCurrentSelection{
+    //start animating the selected views wave from user defaults
+    [self startWaveWithTag:kSelectionOffset+ [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
+}
+-(void)stopAnimating{
+    //We are going off view so lets stop the current selection
+    [self stopWaveWithTag:currentSelection];
 }
 
 -(IBAction)didSelectWaveSpeed:(id)sender{
+    //make sure this has come from a button.
     if(!sender){
         return;
     }
@@ -79,30 +90,14 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 } 
 
 -(void)startWaveWithTag:(kWaveSelection)newSelection{
-   
+
+    //make sure we are a new selection
     if(self.currentSelection != newSelection){
         
-        switch (currentSelection) {
-            case kWaveFunTag:
-                [funContainer pauseAnimations];
-                lblFun.alpha = kUnselectedAlpha;
-                funContainer.alpha = kUnselectedAlpha;
-                break;
-            case kWaveGigTag:
-                [gigContainer pauseAnimations];
-                lblGig.alpha = kUnselectedAlpha;
-                gigContainer.alpha = kUnselectedAlpha;
-                break;
-            case kWaveStaduimTag:
-                [stadiumContainer pauseAnimations];
-                lblStadium.alpha = kUnselectedAlpha;
-                stadiumContainer.alpha = kUnselectedAlpha;
-                break;
-            default:
-                break;
-        }
+        //stop the current wave and reset it to default values
+        [self stopWaveWithTag:currentSelection];
         
-        
+        //find the correct selection using the kWaveSelection. If the current view is paused then resume it - else start a new wave form
         
         switch (newSelection) {
             case kWaveFunTag:
@@ -123,6 +118,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
             default:
                 break;
         }
+        //save locally the new selection and broadcast to all listening that the user has changed the speed.
         self.currentSelection = newSelection; 
 
         [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:currentSelection-kSelectionOffset]];
@@ -131,6 +127,29 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 }
 
+-(void)stopWaveWithTag:(kWaveSelection)selection{
+    //find the current view that is animating and fade out the labels and wave view.
+    switch (currentSelection) {
+        case kWaveFunTag:
+            [funContainer pauseAnimations];
+            lblFun.alpha = kUnselectedAlpha;
+            funContainer.alpha = kUnselectedAlpha;
+            break;
+        case kWaveGigTag:
+            [gigContainer pauseAnimations];
+            lblGig.alpha = kUnselectedAlpha;
+            gigContainer.alpha = kUnselectedAlpha;
+            break;
+        case kWaveStaduimTag:
+            [stadiumContainer pauseAnimations];
+            lblStadium.alpha = kUnselectedAlpha;
+            stadiumContainer.alpha = kUnselectedAlpha;
+            break;
+        default:
+            break;
+    }
+
+}
 
 /*
  // Only override drawRect: if you perform custom drawing.
