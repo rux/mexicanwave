@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		001A660C15493D8A008B00E3 /* MEXWaveSpeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */; };
 		001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */; };
+		001A663C15499E53008B00E3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 001A663B15499E53008B00E3 /* Settings.bundle */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
 		0046F0BA1548140C006A5683 /* userBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0B81548140B006A5683 /* userBackground.png */; };
@@ -104,6 +105,7 @@
 /* Begin PBXFileReference section */
 		001A660A15493D8A008B00E3 /* MEXWaveSpeedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXWaveSpeedView.h; sourceTree = "<group>"; };
 		001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveSpeedView.m; sourceTree = "<group>"; };
+		001A663B15499E53008B00E3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0046F0AA154705E4006A5683 /* circleBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circleBackground@2x.png"; sourceTree = "<group>"; };
 		0046F0AC15470610006A5683 /* circleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleBackground.png; sourceTree = "<group>"; };
 		0046F0B81548140B006A5683 /* userBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBackground.png; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				196B8E441518A00100DAD14A /* en.lproj */,
 				196B8DF51517B58700DAD14A /* Images */,
 				1967B91F152320B700A924D5 /* Sounds */,
+				001A663B15499E53008B00E3 /* Settings.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				0046F0AD15470610006A5683 /* circleBackground.png in Resources */,
 				0046F0BA1548140C006A5683 /* userBackground.png in Resources */,
 				0046F0BB1548140C006A5683 /* userBackground@2x.png in Resources */,
+				001A663C15499E53008B00E3 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
