@@ -120,7 +120,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
                 stadiumContainer.alpha = 1.0f;
                 break;
             default:
-                NSLog(@"DEFAULT");
+                NSLog(@"not recongised selection");
                 break;
         }
         //save locally the new selection and broadcast to all listening that the user has changed the speed.

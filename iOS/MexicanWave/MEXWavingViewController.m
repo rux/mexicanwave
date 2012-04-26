@@ -345,7 +345,7 @@
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view        
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(finalOffset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
-                if(offset != -320){
+                if(finalOffset != -320){
                     [self resume];
                 }
             }];
