@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		001A660C15493D8A008B00E3 /* UserGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A660B15493D8A008B00E3 /* UserGuideView.m */; };
+		001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
 		0046F0BA1548140C006A5683 /* userBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0B81548140B006A5683 /* userBackground.png */; };
@@ -86,7 +87,6 @@
 		196B8E4D1518A00100DAD14A /* MEXWavingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E491518A00100DAD14A /* MEXWavingViewController.xib */; };
 		198F4DCD1546FFCE00BEAF2D /* libAppMeasurement.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F4DCC1546FFCE00BEAF2D /* libAppMeasurement.a */; };
 		198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DC51546FF3800BEAF2D /* UsageMetrics.m */; };
-		198F4DD6154845AA00BEAF2D /* MEXAdvertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */; };
 		199B5760151CDFB200155281 /* ios-ntp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199B575F151CDFB200155281 /* ios-ntp.framework */; };
 		199CB60514FEA3CA00A16A97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199CB60414FEA3CA00A16A97 /* UIKit.framework */; };
 		199CB60714FEA3CA00A16A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199CB60614FEA3CA00A16A97 /* Foundation.framework */; };
@@ -658,6 +658,7 @@
 				00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */,
 				198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */,
 				001A660C15493D8A008B00E3 /* UserGuideView.m in Sources */,
+				001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
