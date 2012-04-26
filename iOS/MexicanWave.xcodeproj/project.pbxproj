@@ -29,7 +29,6 @@
 		005F608F153C6C6500999B47 /* SharePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005F608D153C6C6500999B47 /* SharePhotoViewController.xib */; };
 		00C6FE68153F0AA100420E4B /* about_hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE66153F0AA100420E4B /* about_hand.png */; };
 		00C6FE69153F0AA100420E4B /* about_hand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE67153F0AA100420E4B /* about_hand@2x.png */; };
-		00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6FE7A153F16AC00420E4B /* YellAdvertView.m */; };
 		00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6FEE31541663400420E4B /* CameraSessionController.m */; };
 		00D26F361535BE85004BC8ED /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F351535BE85004BC8ED /* SettingsView.m */; };
 		00D26F3E1535C7BB004BC8ED /* tab.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F3C1535C7BB004BC8ED /* tab.png */; };
@@ -87,6 +86,7 @@
 		196B8E4D1518A00100DAD14A /* MEXWavingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E491518A00100DAD14A /* MEXWavingViewController.xib */; };
 		198F4DCD1546FFCE00BEAF2D /* libAppMeasurement.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 198F4DCC1546FFCE00BEAF2D /* libAppMeasurement.a */; };
 		198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DC51546FF3800BEAF2D /* UsageMetrics.m */; };
+		198F4DD6154845AA00BEAF2D /* MEXAdvertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */; };
 		199B5760151CDFB200155281 /* ios-ntp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199B575F151CDFB200155281 /* ios-ntp.framework */; };
 		199CB60514FEA3CA00A16A97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199CB60414FEA3CA00A16A97 /* UIKit.framework */; };
 		199CB60714FEA3CA00A16A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199CB60614FEA3CA00A16A97 /* Foundation.framework */; };
@@ -126,8 +126,6 @@
 		005F608D153C6C6500999B47 /* SharePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SharePhotoViewController.xib; path = ../SharePhotoViewController.xib; sourceTree = "<group>"; };
 		00C6FE66153F0AA100420E4B /* about_hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_hand.png; sourceTree = "<group>"; };
 		00C6FE67153F0AA100420E4B /* about_hand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_hand@2x.png"; sourceTree = "<group>"; };
-		00C6FE79153F16AC00420E4B /* YellAdvertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YellAdvertView.h; sourceTree = "<group>"; };
-		00C6FE7A153F16AC00420E4B /* YellAdvertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YellAdvertView.m; sourceTree = "<group>"; };
 		00C6FEE31541663400420E4B /* CameraSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraSessionController.m; sourceTree = "<group>"; };
 		00C6FEE41541663400420E4B /* CameraSessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraSessionController.h; sourceTree = "<group>"; };
 		00D26F341535BE85004BC8ED /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
@@ -206,6 +204,8 @@
 		198F4DC41546FF3800BEAF2D /* UsageMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsageMetrics.h; sourceTree = "<group>"; };
 		198F4DC51546FF3800BEAF2D /* UsageMetrics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsageMetrics.m; sourceTree = "<group>"; };
 		198F4DCC1546FFCE00BEAF2D /* libAppMeasurement.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAppMeasurement.a; path = MexicanWave/Omniture/Library/libAppMeasurement.a; sourceTree = "<group>"; };
+		198F4DD4154845A900BEAF2D /* MEXAdvertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXAdvertController.h; sourceTree = "<group>"; };
+		198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXAdvertController.m; sourceTree = "<group>"; };
 		199B575F151CDFB200155281 /* ios-ntp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ios-ntp.framework"; path = "ios-ntp/ios-ntp.framework"; sourceTree = "<group>"; };
 		199CB60014FEA3CA00A16A97 /* MexicanWave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MexicanWave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		199CB60414FEA3CA00A16A97 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -312,8 +312,6 @@
 				1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */,
 				196B8E311518937400DAD14A /* MEXSegmentButtonControl.h */,
 				196B8E321518937400DAD14A /* MEXSegmentButtonControl.m */,
-				00C6FE79153F16AC00420E4B /* YellAdvertView.h */,
-				00C6FE7A153F16AC00420E4B /* YellAdvertView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -355,8 +353,8 @@
 				0046F0AA154705E4006A5683 /* circleBackground@2x.png */,
 				00C6FE66153F0AA100420E4B /* about_hand.png */,
 				00C6FE67153F0AA100420E4B /* about_hand@2x.png */,
-				0056D38A153DA812004C2BE3 /* Yell-Advert@2x.png */,
 				0056D396153DC3A9004C2BE3 /* Yell-Advert.png */,
+				0056D38A153DA812004C2BE3 /* Yell-Advert@2x.png */,
 				0056D382153D85B7004C2BE3 /* tab_lines.png */,
 				0056D383153D85B7004C2BE3 /* tab_lines@2x.png */,
 				005F607B153C3C1400999B47 /* yell_icon.png */,
@@ -514,6 +512,8 @@
 				199CB62A14FEA47C00A16A97 /* MEXWavingViewController.m */,
 				005F608B153C6C6500999B47 /* SharePhotoViewController.h */,
 				005F608C153C6C6500999B47 /* SharePhotoViewController.m */,
+				198F4DD4154845A900BEAF2D /* MEXAdvertController.h */,
+				198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */,
 			);
 			name = Waving;
 			sourceTree = "<group>";
@@ -655,7 +655,6 @@
 				00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */,
 				00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */,
 				005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */,
-				00C6FE7B153F16AC00420E4B /* YellAdvertView.m in Sources */,
 				00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */,
 				198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */,
 				001A660C15493D8A008B00E3 /* UserGuideView.m in Sources */,

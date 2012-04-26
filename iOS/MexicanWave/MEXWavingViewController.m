@@ -15,12 +15,14 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "UsageMetrics.h"
 #import "SharePhotoViewController.h"
+#import "MEXAdvertController.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
 #define kModelKeyPathForPhase @"wavePhase"
 #define kModelKeyPathForPeaks @"numberOfPeaks"
 #define kShownHintToUser @"kShownHintToUser"
+
 @interface MEXWavingViewController ()
 @property (nonatomic,retain) MEXLegacyTorchController* legacyTorchController;
 @property (nonatomic) SystemSoundID waveSoundID;
@@ -37,6 +39,7 @@
 @synthesize tabImageView;
 @synthesize whiteFlashView;
 @synthesize waveModel;
+@synthesize advertController;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize legacyTorchController;
 @synthesize waveSoundID,paused;
@@ -223,22 +226,8 @@
     [settingView release];
     [tabImageView release];
     [whiteFlashView release];
+    [advertController release];
     [super dealloc];
-}
-- (void)viewDidUnload {
-    [self setContainerView:nil];
-    [self setSettingView:nil];
-    [self setTabImageView:nil];
-    [self setWhiteFlashView:nil];
-    [super viewDidUnload];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    [self torchOff];
-    
-    [[CameraSessionController sharedCameraController] setCameraView:nil];
-    AudioServicesDisposeSystemSoundID(waveSoundID);
-    self.waveSoundID = 0;
-    self.waveView = nil;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -290,7 +279,26 @@
     [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
 }
 
+- (void)viewDidUnload {
+    [super viewDidUnload];
+
+    self.containerView = nil;
+    self.settingView = nil;
+    self.tabImageView = nil;
+    self.whiteFlashView = nil;
+    self.advertController = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [self torchOff];
+    
+    [[CameraSessionController sharedCameraController] setCameraView:nil];
+    AudioServicesDisposeSystemSoundID(waveSoundID);
+    self.waveSoundID = 0;
+    self.waveView = nil;
+}
+
 #pragma mark Gesture Recognizer callbacks
+
 -(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
     
     CGFloat offset = [recognizer translationInView:self.containerView].x;    
