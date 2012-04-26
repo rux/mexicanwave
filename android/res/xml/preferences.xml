@@ -27,8 +27,12 @@
 
 		<CheckBoxPreference 
             android:title="Sound effects"
-            android:summary="Enable sound"
             android:key="pref_sound"
             android:defaultValue="false"/>
+		
+		<CheckBoxPreference 
+            android:title="Vibration"
+            android:key="pref_vibration"
+            android:defaultValue="true"/>
 	</PreferenceCategory>
 </PreferenceScreen>

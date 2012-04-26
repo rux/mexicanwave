@@ -98,8 +98,8 @@ class RoarHandler {
 	        Long timeDifference = (long) 0;
 	        if (sntpClient.requestTime(timeServer, 5000) ) {
 	        	ntpTime = sntpClient.getNtpTime();
-	             Log.i("MexicanWave", String.valueOf(System.currentTimeMillis()) + ".... System Time");
-	             Log.i("MexicanWave", String.valueOf(ntpTime) + ".... new Time");
+	             //Log.i("MexicanWaveNtp", String.valueOf(System.currentTimeMillis()) + ".... System Time");
+	             //Log.i("MexicanWaveNtp", String.valueOf(ntpTime) + ".... new Time");
 	            timeDifference = ntpTime - System.currentTimeMillis();
 	        } else {
 	        	// Log.i("MexicanWave", "***** **** *** ** * no NTP time from " + timeServer);
@@ -110,6 +110,7 @@ class RoarHandler {
 		@Override
 		protected void onPostExecute(Long result) {
 			timeOffset = result;
+			// Log.i("MexicanWaveNtp", String.valueOf(timeOffset) + ".... offset");
 		}
 	}
 	
@@ -163,15 +164,15 @@ class RoarHandler {
 		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
 		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
-		Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
+		// Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
 		
 		
 		float offsetDegrees =  ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
 
 		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
 		 // Log.i("MexicanWave", "**()()** making with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
-		return (int) 0;
-		//return (int) offsetDegrees;
+		//return (int) 0;
+		return (long) offsetDegrees;
 	}
 	
     void update(float azimuth) {
@@ -196,8 +197,8 @@ class RoarHandler {
 		Long correctedTime = System.currentTimeMillis() + timeOffset;
 		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
 		
-		Log.i("MexicanWave", String.valueOf(angle));
-		Log.i("MexicanWave", "** corrected time is " + String.valueOf(dateFormatGmt.format( new Date(correctedTime))));
+		// Log.i("MexicanWave", String.valueOf(angle));
+		// Log.i("MexicanWave", "** corrected time is " + String.valueOf(dateFormatGmt.format( new Date(correctedTime))));
 	}
 
 	public void setReady(boolean ready) {
@@ -224,6 +225,9 @@ class RoarHandler {
 				float volume = actualVolume / maxVolume;
 				soundPool.play(soundId, volume, volume, 1, 0, 1f);
 			}
+			
+			//getNtpTime ntpTime = new getNtpTime();
+			//ntpTime.execute(timeServer);
 			
 			currentlyRoaring = true;
 			

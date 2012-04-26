@@ -230,6 +230,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 
 		if (key.equals("pref_vibration")) {
 			vibrationEnabled = prefs.getBoolean(key, true);
+			Log.i("Mex", String.valueOf(vibrationEnabled));
 			roarHandler.vibrationEnabled = vibrationEnabled;
 		}
 	}
