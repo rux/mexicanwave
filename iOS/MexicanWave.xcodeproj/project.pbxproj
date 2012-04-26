@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		001A660C15493D8A008B00E3 /* UserGuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A660B15493D8A008B00E3 /* UserGuideView.m */; };
+		001A660C15493D8A008B00E3 /* MEXWaveSpeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */; };
 		001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
@@ -102,8 +102,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		001A660A15493D8A008B00E3 /* UserGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserGuideView.h; sourceTree = "<group>"; };
-		001A660B15493D8A008B00E3 /* UserGuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserGuideView.m; sourceTree = "<group>"; };
+		001A660A15493D8A008B00E3 /* MEXWaveSpeedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXWaveSpeedView.h; sourceTree = "<group>"; };
+		001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveSpeedView.m; sourceTree = "<group>"; };
 		0046F0AA154705E4006A5683 /* circleBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circleBackground@2x.png"; sourceTree = "<group>"; };
 		0046F0AC15470610006A5683 /* circleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleBackground.png; sourceTree = "<group>"; };
 		0046F0B81548140B006A5683 /* userBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBackground.png; sourceTree = "<group>"; };
@@ -255,8 +255,8 @@
 			children = (
 				00D26F341535BE85004BC8ED /* SettingsView.h */,
 				00D26F351535BE85004BC8ED /* SettingsView.m */,
-				001A660A15493D8A008B00E3 /* UserGuideView.h */,
-				001A660B15493D8A008B00E3 /* UserGuideView.m */,
+				001A660A15493D8A008B00E3 /* MEXWaveSpeedView.h */,
+				001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */,
 			);
 			name = "Settings / Config";
 			sourceTree = "<group>";
@@ -657,7 +657,7 @@
 				005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */,
 				00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */,
 				198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */,
-				001A660C15493D8A008B00E3 /* UserGuideView.m in Sources */,
+				001A660C15493D8A008B00E3 /* MEXWaveSpeedView.m in Sources */,
 				001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

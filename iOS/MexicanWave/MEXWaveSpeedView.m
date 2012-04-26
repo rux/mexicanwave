@@ -6,20 +6,20 @@
 //  Copyright (c) 2012 Yell Group Plc. All rights reserved.
 //
 
-#import "UserGuideView.h"
+#import "MEXWaveSpeedView.h"
 #import "QuartzCore/QuartzCore.h"
 #import "MEXWaveModel.h"
 #define kSelectionOffset 200
 #define kUnselectedAlpha 0.4;
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
-@interface UserGuideView()
+@interface MEXWaveSpeedView()
 
 -(void)commonInitialisation;
 @property(nonatomic) NSInteger currentSelection;
 @end
 
-@implementation UserGuideView
+@implementation MEXWaveSpeedView
 @synthesize currentSelection;
 @synthesize gigContainer,funContainer,stadiumContainer;
 @synthesize btnFun,btnGig,btnStadium;
