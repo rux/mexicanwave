@@ -17,20 +17,23 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 
 #pragma mark - metrics service specific methods
 
-- (BOOL)configureMetrics {
+- (AppMeasurement*)configuredMeasurementInstance {
     AppMeasurement* measurement = [AppMeasurement getInstance];
-    
     NSAssert(measurement, @"Unable to obtain AppMeasurement instance");
     if(!measurement) {
-        return NO;
+        return nil;
     }
-    
+
+    [measurement clearVars];
     measurement.channel = MetricsChannel;
     measurement.ssl = YES;
     measurement.useBestPractices = YES;
     measurement.trackOffline = YES;
     measurement.offlineLimit = 30;
-    
+    measurement.currencyCode = @"GBP";
+    measurement.linkTrackEvents = @"";
+    measurement.linkTrackVars = @"";
+
     /* Specify the Report Suite ID(s) to track here */
 #ifndef APPSTORERELEASE
 	// All configurations except the app store release use the development suite
@@ -55,7 +58,7 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 	measurement.trackingServer = @"yellgroup.122.2o7.net";		
 	measurement.trackingServerSecure = @"syellgroup.122.2o7.net";		
 
-    return YES;
+    return measurement;
 }
 
 #pragma mark - Lifecycle
@@ -71,7 +74,7 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 	if(!(self = [super init])) {		
         return nil;
 	}
-    if(![self configureMetrics]) {
+    if(![self configuredMeasurementInstance]) {
         [self release], self = nil;
         return nil;
     }
@@ -88,9 +91,7 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 
 //post event when the has just appeared
 - (void)didShowMainPageWithDownloadLink:(BOOL)showsDownloadLink {
-    AppMeasurement* measurement = [AppMeasurement getInstance];
-    [measurement clearVars];
-    measurement.channel = MetricsChannel;
+    AppMeasurement* measurement = [self configuredMeasurementInstance];
     measurement.pageName = MetricsMainPageName;
     measurement.prop6 = showsDownloadLink ? @"Link-Displayed" : @"Link-Not-Displayed";
     [measurement track];
@@ -98,9 +99,7 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 
 //post event where the Yell download button link has been pressed
 - (void)didFollowDownloadLinkForAppStore:(NSString*)appStore {
-    AppMeasurement* measurement = [AppMeasurement getInstance];
-    [measurement clearVars];
-    measurement.channel = MetricsChannel;
+    AppMeasurement* measurement = [self configuredMeasurementInstance];
     measurement.pageName = MetricsMainPageName;
     NSString* appStoreLink = [NSString stringWithFormat:@"%@/%@", MetricsAppStoreLinkName, appStore];
     [measurement trackLink:nil linkType:@"e" linkName:appStoreLink];
