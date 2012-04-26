@@ -1,5 +1,9 @@
 package com.yell.labs.mexicanwave;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -92,8 +96,8 @@ class RoarHandler {
 	        Long timeDifference = (long) 0;
 	        if (sntpClient.requestTime(timeServer, 5000) ) {
 	        	ntpTime = sntpClient.getNtpTime();
-	            // Log.i("MexicanWave", String.valueOf(System.currentTimeMillis()) + ".... System Time");
-	            // Log.i("MexicanWave", String.valueOf(ntpTime) + ".... new Time");
+	             Log.i("MexicanWave", String.valueOf(System.currentTimeMillis()) + ".... System Time");
+	             Log.i("MexicanWave", String.valueOf(ntpTime) + ".... new Time");
 	            timeDifference = ntpTime - System.currentTimeMillis();
 	        } else {
 	        	// Log.i("MexicanWave", "***** **** *** ** * no NTP time from " + timeServer);
@@ -104,9 +108,7 @@ class RoarHandler {
 		@Override
 		protected void onPostExecute(Long result) {
 			timeOffset = result;
-			Long correctedTime = System.currentTimeMillis() + timeOffset;
 			
-			Log.i("MexicanWave", "** now in postexecute " + String.valueOf(timeOffset));
 		}
 	}
 	
@@ -120,7 +122,8 @@ class RoarHandler {
 	
 	public void setWaveDuration(float w) {
 		waveDuration = w;
-		waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
+		// waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
+		waveCount =1;
 		this.setFlash(w);
 	}
 	public void setWaveColor(int c) {
@@ -159,14 +162,20 @@ class RoarHandler {
 	
 
 	public int getWaveOffestFromAzimuthInDegrees() {
-		int milliseconds = (int) (System.currentTimeMillis() % 60000);
+
+		
+		int milliseconds = (int) ((System.currentTimeMillis() + timeOffset) % 60000);
 		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
-		float offsetDegrees =  (((milliseconds + timeOffset) * 6 * (60/this.waveDuration) ) / 1000);
+		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
+		Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
+		
+		
+		float offsetDegrees =  ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
 		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
-		Log.i("MexicanWave", "**()()** making with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
-
-		return (int) offsetDegrees;
+		 // Log.i("MexicanWave", "**()()** making with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
+		return (int) 0;
+		//return (int) offsetDegrees;
 	}
 	
     void update(float azimuth) {
@@ -180,12 +189,19 @@ class RoarHandler {
 		
 	public void check() {
 		int angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
-		Log.i("MexicanWave", "**()()** angle " + String.valueOf(angle));
-		if (angle > 160 && angle < 200) {
+		//  Log.i("MexicanWave", "**()()** angle " + String.valueOf(angle));
+		if (angle > 175 && angle < 185) {
 			goWild();
 		} else {
 			calmDown();
 		}
+		
+		
+		Long correctedTime = System.currentTimeMillis() + timeOffset;
+		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
+		
+		Log.i("MexicanWave", String.valueOf(angle));
+		Log.i("MexicanWave", "** corrected time is " + String.valueOf(dateFormatGmt.format( new Date(correctedTime))));
 	}
 
 	public void setReady(boolean ready) {

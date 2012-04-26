@@ -141,7 +141,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				
 				int oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
 				
-				roarHandler.update(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
+				roarHandler.update((float) Math.PI);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 				
 				int newAzimuth = roarHandler.getAzimuthInDegrees();
 				int offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
