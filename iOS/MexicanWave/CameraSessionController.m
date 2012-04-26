@@ -259,7 +259,6 @@
 	NSNotificationCenter* notifyCenter = [NSNotificationCenter defaultCenter];
 	[notifyCenter addObserver:self selector:@selector(deviceAvailabilityDidChange:) name:AVCaptureDeviceWasConnectedNotification object:nil];
 	[notifyCenter addObserver:self selector:@selector(deviceAvailabilityDidChange:) name:AVCaptureDeviceWasDisconnectedNotification object:nil];
-		
 	return self;
 }
 

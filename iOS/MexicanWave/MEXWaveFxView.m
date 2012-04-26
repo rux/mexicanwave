@@ -9,6 +9,8 @@
 #import "MEXWaveFxView.h"
 #import "MEXLampView.h"
 
+#define kDefaultWidth 320.0f
+
 #define kActiveTime 0.5
 
 @interface MEXWaveFxView ()
@@ -20,7 +22,7 @@
 
 @implementation MEXWaveFxView
 
-@synthesize lampViews;
+@synthesize lampViews,paused;
 
 #pragma mark - Lifecycle
 
@@ -65,13 +67,19 @@
     
     [angles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         MEXLampView* oneNewLamp = [[MEXLampView alloc] initWithFrame:CGRectZero];
-        [oneNewLamp sizeToFit];
-        const float oneAngle = [obj floatValue];
-        oneNewLamp.center = [self positionOnProjectedCircleForAngle:oneAngle center:CGPointMake(158.0f, 155.0f)];
-        oneNewLamp.bulbScale = [self scaleFactorOnProjectedCircleForAngle:oneAngle];
         [self addSubview:oneNewLamp];
         [newLamps addObject:oneNewLamp];
         [oneNewLamp release];        
+
+        const float oneAngle = [obj floatValue];
+        
+        const CGFloat scaleFactor = self.bounds.size.width / kDefaultWidth;
+        const CGAffineTransform scaleTx = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
+        oneNewLamp.center = CGPointApplyAffineTransform([self positionOnProjectedCircleForAngle:oneAngle center:CGPointMake(158.0f, 155.0f)], scaleTx);
+        oneNewLamp.transform = scaleTx;
+        oneNewLamp.bulbScale = [self scaleFactorOnProjectedCircleForAngle:oneAngle];
+        
+        
     }];
     
     self.lampViews = newLamps;
@@ -87,7 +95,32 @@
         const float phase = (float)(idx * peaksPerCycle) / (float)numberOfLamps + startingPhase;        
         [oneLamp animateGlowWithCycleTime:duration activeTime:kActiveTime/(NSTimeInterval)peaksPerCycle phase:phase];
     }];
+
 }
 
+-(void)pauseAnimations{
+    [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        MEXLampView* oneLamp = (MEXLampView*)obj;
+        [oneLamp pauseAnimation];
+    }];
+    self.paused = YES;
 
+}
+- (void)resumeAnimations{
+    if(!self.isPaused){
+        return;
+    }
+    [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        MEXLampView* oneLamp = (MEXLampView*)obj;
+        [oneLamp resumeAnimation];
+    }];
+    
+    self.paused = NO;
+}
+- (void)cancelAnimations{
+    [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        MEXLampView* oneLamp = (MEXLampView*)obj;
+        [oneLamp cancelGlowAnimation];
+    }];
+}
 @end
