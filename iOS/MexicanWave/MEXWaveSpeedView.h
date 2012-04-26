@@ -15,7 +15,7 @@ typedef enum{
 } kWaveSelection;
 NSString* const kSpeedSegementDidChange;
 
-@interface UserGuideView : UIView
+@interface MEXWaveSpeedView : UIView
 
 
 
@@ -37,4 +37,8 @@ NSString* const kSpeedSegementDidChange;
 
 -(IBAction)didSelectWaveSpeed:(id)sender;
 -(void)startWaveWithTag:(kWaveSelection)newSelection;
+-(void)stopWaveWithTag:(kWaveSelection)selection;
+
+-(void)startAnimatingCurrentSelection;
+-(void)stopAnimating;
 @end
