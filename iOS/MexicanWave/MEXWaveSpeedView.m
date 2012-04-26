@@ -10,7 +10,9 @@
 #import "QuartzCore/QuartzCore.h"
 #import "MEXWaveModel.h"
 #define kSelectionOffset 200
-#define kUnselectedAlpha 0.4;
+#define kUnselectedAlpha 0.4
+#define kResetSelection 0.0
+
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 @interface MEXWaveSpeedView()
@@ -71,11 +73,13 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 -(void)startAnimatingCurrentSelection{
     //start animating the selected views wave from user defaults
-    [self startWaveWithTag:kSelectionOffset+ [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
+    [self startWaveWithTag:kSelectionOffset + [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
+    
 }
 -(void)stopAnimating{
     //We are going off view so lets stop the current selection
     [self stopWaveWithTag:currentSelection];
+    self.currentSelection = kResetSelection;
 }
 
 -(IBAction)didSelectWaveSpeed:(id)sender{
@@ -116,6 +120,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
                 stadiumContainer.alpha = 1.0f;
                 break;
             default:
+                NSLog(@"DEFAULT");
                 break;
         }
         //save locally the new selection and broadcast to all listening that the user has changed the speed.
