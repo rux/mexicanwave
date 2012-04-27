@@ -20,16 +20,14 @@
 NSString* const kUserDefaultKeyVibration= @"sound_preference";
 NSString* const kUserDefaultKeySound =@"vibration_preference";
 
-
-
 @interface SettingsView ()
 @end
 
 @implementation SettingsView
 
-@synthesize table,userGuide;
+@synthesize table,speedView;
 - (void)dealloc {
-    [userGuide release];
+    [speedView release];
     [table release];
     [super dealloc];
 }
@@ -98,12 +96,7 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
     cell.textLabel.text = (indexPath.row == kSettingsVibrationTag) ? kSettingsKeyVibration : kSettingsKeySounds;
     return cell;
 }
-- (void)didTapSegment:(id)sender {
-    const NSUInteger indexOfSegment = ((UISegmentedControl*)sender).selectedSegmentIndex;
-    if(indexOfSegment != NSNotFound) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:[NSNumber numberWithInteger:indexOfSegment]];
-    }
-}
+
 -(void)didChangeTableSwitch:(UISwitch*)currentSwitch{
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     

@@ -40,6 +40,7 @@
 @synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize advertController;
+@synthesize btnCamera;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize legacyTorchController;
 @synthesize waveSoundID,paused;
@@ -143,6 +144,8 @@
     [self torchOff];
     // Suspend the model
     [self.waveModel pause];
+    //As the settings view is about to become visible start animating the current speed selection
+    [self.settingView.speedView startAnimatingCurrentSelection];
    
 }
 
@@ -159,6 +162,10 @@
 
     //sets up for video capture sessions. Gives the controller the correct view and setttings
     [[CameraSessionController sharedCameraController] resumeDisplay];
+    
+    //as the main view is now visable stop animating the help guide on the settings view
+    [self.settingView.speedView stopAnimating];
+
     
 }
 
@@ -227,6 +234,7 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
+    [btnCamera release];
     [super dealloc];
 }
 
@@ -245,6 +253,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self resume];    
+    
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
         //animate in to hint to the user whats behind the main view
@@ -277,9 +286,11 @@
     [swipeRight release];
     [swipeLeft release];
     [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    btnCamera.hidden = ![CameraSessionController isSupported];
 }
 
 - (void)viewDidUnload {
+    [self setBtnCamera:nil];
     [super viewDidUnload];
 
     self.containerView = nil;
@@ -325,6 +336,7 @@
         if(velocity<-1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
@@ -333,7 +345,7 @@
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view        
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(finalOffset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
-                if(offset != -320){
+                if(finalOffset != -320){
                     [self resume];
                 }
             }];
@@ -359,7 +371,6 @@
         if(velocity>1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
-                    //[[CameraSessionController sharedCameraController] resumeDisplay];
                     [self resume];
 
                 }];
@@ -372,7 +383,6 @@
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(finalOffset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);} completion:^(BOOL finished) {
                 if(finalOffset == 0) { 
-                    //[[CameraSessionController sharedCameraController] resumeDisplay];
                     [self resume];
 
                 }

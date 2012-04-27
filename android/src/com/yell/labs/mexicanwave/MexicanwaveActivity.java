@@ -23,6 +23,8 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
+import com.omniture.*;
+
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
     
@@ -49,6 +51,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private boolean vibrationEnabled;
 
 	private boolean cameraIsInitialised;
+	
+	private AppMeasurement s;
 	
 
     @Override
@@ -78,6 +82,17 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mySensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         
+        // Omniture
+        s = new AppMeasurement(getApplication());
+        s.account = "yelllabsdev";
+        s.ssl = true;
+        s.currencyCode = "GBP";
+        /* Turn on and configure debugging */
+        s.debugTracking = true;
+        /* WARNING: Changing any of the below variables will cause drastic changes
+        to how your visitor data is collected.  Changes should only be made
+        when instructed to do so by your account manager.*/
+        s.trackingServer = "yellgroup.122.2o7.net";
     }
     
 	@Override
@@ -209,7 +224,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		}
 		
 	}
-	
 	
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {

@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserGuideView.h"
+#import "MEXWaveSpeedView.h"
 
 NSString* const kUserDefaultKeyVibration;
 NSString* const kUserDefaultKeySound;
 
 @interface SettingsView : UIView <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
+
 @property (retain, nonatomic) IBOutlet UITableView *table;
-@property (retain, nonatomic) IBOutlet UserGuideView *userGuide;
+@property (retain, nonatomic) IBOutlet MEXWaveSpeedView *speedView;
 
 @end
