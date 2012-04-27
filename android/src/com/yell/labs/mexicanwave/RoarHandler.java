@@ -99,8 +99,8 @@ class RoarHandler {
 		double newx = Math.sin(newAzimuth);
 		double newy = Math.cos(newAzimuth);
 
-		double x = 39*oldx + newx;
-		double y = 39*oldy + newy;
+		double x = 69*oldx + newx;
+		double y = 69*oldy + newy;
 		
 		azimuth = (float) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
 	}
