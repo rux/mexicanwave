@@ -86,6 +86,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         s = new AppMeasurement(getApplication());
         s.account = "yelllabsdev";
         s.ssl = true;
+        s.currencyCode = "GBP";
+        /* Turn on and configure debugging */
+        s.debugTracking = true;
+        /* WARNING: Changing any of the below variables will cause drastic changes
+        to how your visitor data is collected.  Changes should only be made
+        when instructed to do so by your account manager.*/
+        s.trackingServer = "yellgroup.122.2o7.net";
     }
     
 	@Override
