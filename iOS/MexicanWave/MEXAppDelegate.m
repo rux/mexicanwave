@@ -55,7 +55,6 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [self.viewController resume]; 
     [self.viewController.settingView.speedView didBecomeActive];
 }
 

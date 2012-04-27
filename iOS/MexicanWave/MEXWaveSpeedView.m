@@ -18,9 +18,9 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 @interface MEXWaveSpeedView()
 
 -(void)commonInitialisation;
--(void)cancelWaveWithTag:(kWaveSelection)selection;
--(void)stopWaveWithTag:(kWaveSelection)selection;
--(void)startWaveWithTag:(kWaveSelection)newSelection;
+-(void)cancelWaveWithTag:(MEXWaveSelection)selection;
+-(void)pauseWaveWithTag:(MEXWaveSelection)selection;
+-(void)startWaveWithTag:(MEXWaveSelection)newSelection;
 
 
 @property(nonatomic) NSInteger currentSelection;
@@ -80,7 +80,6 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 -(void)didEnterBackground{
     [self cancelWaveWithTag:currentSelection];
-    [mediumVenueWave cancelAnimations];
 }
 
 
@@ -113,18 +112,18 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
                
 } 
 
--(void)startWaveWithTag:(kWaveSelection)newSelection{
+-(void)startWaveWithTag:(MEXWaveSelection)newSelection{
 
     //make sure we are a new selection
     if(self.currentSelection != newSelection){
         
         //stop the current wave and reset it to default values
-        [self stopWaveWithTag:currentSelection];
+        [self pauseWaveWithTag:currentSelection];
         
         //find the correct selection using the kWaveSelection. If the current view is paused then resume it - else start a new wave form
         switch (newSelection) {
             case kWaveFunTag:
-                (!smallVenueWave.isPaused) ? [smallVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1] : [smallVenueWave resumeAnimations];
+                (!smallVenueWave.isPaused) ? [smallVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1] :[smallVenueWave resumeAnimations];
                 lblFun.alpha = 1.0f;
                 smallVenueWave.alpha = 1.0f;
                 break;
@@ -139,19 +138,20 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
                 largeVenueWave.alpha = 1.0f;
                 break;
             default:
+                DLog(@"Not a selection we know about %u",newSelection);
                 return;
                 break;
         }
         self.currentSelection = newSelection;
         //save locally the new selection and broadcast to all listening that the user has changed the speed.
-
+        DLog(@"started");
         [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:currentSelection-kSelectionOffset]];
 
     }
 
 }
 
--(void)stopWaveWithTag:(kWaveSelection)selection{
+-(void)pauseWaveWithTag:(MEXWaveSelection)selection{
     //find the current view that is animating and fade out the labels and wave view.
     switch (currentSelection) {
         case kWaveFunTag:
@@ -172,31 +172,25 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
         default:
             break;
     }
-
+    DLog(@"paused");
 }
--(void)cancelWaveWithTag:(kWaveSelection)selection{
+-(void)cancelWaveWithTag:(MEXWaveSelection)selection{
     //find the current view that is animating and cancel the current animations
-    switch (currentSelection) {
-        case kWaveFunTag:
-            [smallVenueWave cancelAnimations];
-            lblFun.alpha = kUnselectedAlpha;
-            smallVenueWave.alpha = kUnselectedAlpha;
-            break;
-        case kWaveGigTag:
-            [mediumVenueWave cancelAnimations];
-            lblGig.alpha = kUnselectedAlpha;
-            mediumVenueWave.alpha = kUnselectedAlpha;
-            break;
-        case kWaveStaduimTag:
-            [largeVenueWave cancelAnimations];
-            lblStadium.alpha = kUnselectedAlpha;
-            largeVenueWave.alpha = kUnselectedAlpha;
-            break;
-        default:
-            break;
-    }
+  
+    [smallVenueWave cancelAnimations];
+    lblFun.alpha = kUnselectedAlpha;
+    smallVenueWave.alpha = kUnselectedAlpha;
     
+    [mediumVenueWave cancelAnimations];
+    lblGig.alpha = kUnselectedAlpha;
+    mediumVenueWave.alpha = kUnselectedAlpha;
+    
+    [largeVenueWave cancelAnimations];
+    lblStadium.alpha = kUnselectedAlpha;
+    largeVenueWave.alpha = kUnselectedAlpha;
+          
     currentSelection =kResetSelection;
+    DLog(@"cancelled");
 }
 /*
  // Only override drawRect: if you perform custom drawing.

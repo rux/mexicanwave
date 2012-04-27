@@ -93,7 +93,7 @@
     const NSUInteger numberOfLamps = self.lampViews.count;
     [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         MEXLampView* oneLamp = (MEXLampView*)obj;
-        const float phase = (float)(idx * peaksPerCycle) / (float)numberOfLamps + startingPhase;        
+        const float phase = (float)(idx * peaksPerCycle) / (float)numberOfLamps + startingPhase;   
         [oneLamp animateGlowWithCycleTime:duration activeTime:kActiveTime/(NSTimeInterval)peaksPerCycle phase:phase];
     }];
 
