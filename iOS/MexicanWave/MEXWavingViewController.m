@@ -150,7 +150,7 @@
 }
 
 - (void)resume {
-           
+          
     // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
@@ -272,7 +272,6 @@
             
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:UIApplicationDidBecomeActiveNotification object:nil];
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
@@ -340,7 +339,7 @@
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
-        CGFloat finalOffset = (offset> -160) ? 0 : -320;
+        const NSInteger finalOffset = (offset> -160) ? 0 : -320;
         
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view        
         [UIView animateWithDuration:0.2 animations:^{
@@ -378,7 +377,7 @@
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side- continues animation occordetly
-        CGFloat finalOffset = (offset> 160) ? 0 : -320;
+        const NSInteger finalOffset = (offset> 160) ? 0 : -320;
 
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(finalOffset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);} completion:^(BOOL finished) {
