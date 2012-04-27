@@ -18,16 +18,22 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 @interface MEXWaveSpeedView()
 
 -(void)commonInitialisation;
+-(void)cancelWaveWithTag:(kWaveSelection)selection;
+-(void)stopWaveWithTag:(kWaveSelection)selection;
+-(void)startWaveWithTag:(kWaveSelection)newSelection;
+
+
 @property(nonatomic) NSInteger currentSelection;
 @end
 
 @implementation MEXWaveSpeedView
 @synthesize currentSelection;
 @synthesize gigContainer,funContainer,stadiumContainer;
-@synthesize btnFun,btnGig,btnStadium;
+@synthesize btnFun,btnGig,btnStadium,visible;
 @synthesize lblStepOne,lblStepThree,lblStepTwo;
 @synthesize lblFun,lblGig,lblStadium;
 -(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [lblFun release];
     [lblGig release];
     [lblStadium release];
@@ -69,17 +75,31 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     lblFun.alpha = kUnselectedAlpha;
     lblStadium.alpha = kUnselectedAlpha;
     
+
+}
+
+-(void)didEnterBackground{
+    [self cancelWaveWithTag:currentSelection];
+    [gigContainer cancelAnimations];
+}
+
+
+-(void)didBecomeActive{
+    //if we are currently in view restart the animation
+    if(self.isVisible){
+        [self startWaveWithTag:kSelectionOffset + [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
+    }
 }
 
 -(void)startAnimatingCurrentSelection{
     //start animating the selected views wave from user defaults
     [self startWaveWithTag:kSelectionOffset + [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
-    
+    self.visible = YES;    
 }
 -(void)stopAnimating{
     //We are going off view so lets stop the current selection
-    [self stopWaveWithTag:currentSelection];
-    self.currentSelection = kResetSelection;
+    [self cancelWaveWithTag:currentSelection];
+    self.visible = NO;
 }
 
 -(IBAction)didSelectWaveSpeed:(id)sender{
@@ -102,7 +122,6 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
         [self stopWaveWithTag:currentSelection];
         
         //find the correct selection using the kWaveSelection. If the current view is paused then resume it - else start a new wave form
-        
         switch (newSelection) {
             case kWaveFunTag:
                 (!funContainer.isPaused) ? [funContainer animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1] : [funContainer resumeAnimations];
@@ -120,11 +139,11 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
                 stadiumContainer.alpha = 1.0f;
                 break;
             default:
-                NSLog(@"not recongised selection");
+                return;
                 break;
         }
+        self.currentSelection = newSelection;
         //save locally the new selection and broadcast to all listening that the user has changed the speed.
-        self.currentSelection = newSelection; 
 
         [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:currentSelection-kSelectionOffset]];
 
@@ -155,7 +174,30 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     }
 
 }
-
+-(void)cancelWaveWithTag:(kWaveSelection)selection{
+    //find the current view that is animating and cancel the current animations
+    switch (currentSelection) {
+        case kWaveFunTag:
+            [funContainer cancelAnimations];
+            lblFun.alpha = kUnselectedAlpha;
+            funContainer.alpha = kUnselectedAlpha;
+            break;
+        case kWaveGigTag:
+            [gigContainer cancelAnimations];
+            lblGig.alpha = kUnselectedAlpha;
+            gigContainer.alpha = kUnselectedAlpha;
+            break;
+        case kWaveStaduimTag:
+            [stadiumContainer cancelAnimations];
+            lblStadium.alpha = kUnselectedAlpha;
+            stadiumContainer.alpha = kUnselectedAlpha;
+            break;
+        default:
+            break;
+    }
+    
+    currentSelection =kResetSelection;
+}
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
