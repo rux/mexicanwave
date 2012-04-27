@@ -18,10 +18,11 @@ NSString* const kSpeedSegementDidChange;
 @interface MEXWaveSpeedView : UIView
 
 
+@property(nonatomic,getter = isVisible) BOOL visible;
 
-@property(nonatomic,retain) IBOutlet MEXWaveFxView* funContainer;
-@property(nonatomic,retain) IBOutlet MEXWaveFxView* gigContainer;
-@property(nonatomic,retain) IBOutlet MEXWaveFxView* stadiumContainer;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* smallVenueWave;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* mediumVenueWave;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* largeVenueWave;
 
 @property(nonatomic,retain) IBOutlet UIButton* btnFun;
 @property(nonatomic,retain) IBOutlet UIButton* btnGig;
@@ -36,9 +37,8 @@ NSString* const kSpeedSegementDidChange;
 @property(nonatomic,retain) IBOutlet UILabel* lblStadium;
 
 -(IBAction)didSelectWaveSpeed:(id)sender;
--(void)startWaveWithTag:(kWaveSelection)newSelection;
--(void)stopWaveWithTag:(kWaveSelection)selection;
-
+-(void)didBecomeActive;
+-(void)didEnterBackground;
 -(void)startAnimatingCurrentSelection;
 -(void)stopAnimating;
 @end
