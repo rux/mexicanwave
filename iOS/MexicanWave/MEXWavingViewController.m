@@ -40,6 +40,7 @@
 @synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize advertController;
+@synthesize btnCamera;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize legacyTorchController;
 @synthesize waveSoundID,paused;
@@ -139,12 +140,12 @@
 
 - (void)pause {
     self.paused = YES;
-    //stop filming
-    [[CameraSessionController sharedCameraController] pauseDisplay];    
     // Turn off the torch (just in case)
     [self torchOff];
     // Suspend the model
     [self.waveModel pause];
+    //As the settings view is about to become visible start animating the current speed selection
+    [self.settingView.speedView startAnimatingCurrentSelection];
    
 }
 
@@ -162,6 +163,10 @@
     //sets up for video capture sessions. Gives the controller the correct view and setttings
     [[CameraSessionController sharedCameraController] resumeDisplay];
     
+    //as the main view is now visable stop animating the help guide on the settings view
+    [self.settingView.speedView stopAnimating];
+
+    
 }
 
 #pragma mark - Notifications
@@ -169,6 +174,9 @@
 // Handles behaviour on wave trigger, i.e. wave has just passed our bearing
 - (void)didWave:(NSNotification*)note {
     if(!self.isViewLoaded) {
+        return;
+    }
+    if(self.isPaused){
         return;
     }
     
@@ -185,17 +193,17 @@
         AudioServicesPlaySystemSound(self.waveSoundID);
     }
 
-    if(!self.isPaused){
-        const float duration = (self.waveModel.crowdType == 2) ? 0.5 : 0.2;
+    
+    const float duration = (self.waveModel.crowdType == 2) ? 0.5 : 0.2;
         //animate the screen flash
-        [UIView animateWithDuration:duration animations:^{
+    [UIView animateWithDuration:duration animations:^{
             self.whiteFlashView.alpha = 1; 
-        }completion:^(BOOL finished) {
+    }completion:^(BOOL finished) {
             [UIView animateWithDuration:duration animations:^{
                 self.whiteFlashView.alpha = 0;            
             }];
-        }];
-    }
+    }];
+    
 }
 
 #pragma mark - Controller lifecycle
@@ -226,6 +234,7 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
+    [btnCamera release];
     [super dealloc];
 }
 
@@ -233,11 +242,18 @@
     [super viewWillDisappear:animated];
     [self torchOff];
     [self pause];
+    //stop filming
+    [[CameraSessionController sharedCameraController] pauseDisplay];   
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self resume];    
+    
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
         //animate in to hint to the user whats behind the main view
@@ -255,7 +271,6 @@
     [UIApplication sharedApplication].idleTimerDisabled = YES;
             
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:kSettingsDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:UIApplicationDidBecomeActiveNotification object:nil];
     // Load in the wave sound.
@@ -271,9 +286,11 @@
     [swipeRight release];
     [swipeLeft release];
     [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    btnCamera.hidden = ![CameraSessionController isSupported];
 }
 
 - (void)viewDidUnload {
+    [self setBtnCamera:nil];
     [super viewDidUnload];
 
     self.containerView = nil;
@@ -303,6 +320,7 @@
     if(offset>0){
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            [self resume];
             return;
     }
     
@@ -318,17 +336,17 @@
         if(velocity<-1000){
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}];
+            
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
-        offset = (offset> -160) ? 0 : -320;
+        CGFloat finalOffset = (offset> -160) ? 0 : -320;
         
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view        
         [UIView animateWithDuration:0.2 animations:^{
-            self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
-                if(offset != -320){
+            self.containerView.frame = CGRectMake(finalOffset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
+                if(finalOffset != -320){
                     [self resume];
-                    [[CameraSessionController sharedCameraController] resumeDisplay];
                 }
             }];
     }       
@@ -339,6 +357,7 @@
     CGFloat velocity = [recognizer velocityInView:self.containerView].x;
     //we only want the view to move Right
     if(offset<0){
+        [self resume];
         return;
     }
     
@@ -353,20 +372,18 @@
             [UIView animateWithDuration:0.2 animations:^{
                 self.containerView.frame = CGRectMake(0, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);}completion:^(BOOL finished) {
                     [self resume];
-                    [[CameraSessionController sharedCameraController] resumeDisplay];
 
                 }];
           
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side- continues animation occordetly
-        offset = (offset> 160) ? 0 : -320;
+        CGFloat finalOffset = (offset> 160) ? 0 : -320;
 
         [UIView animateWithDuration:0.2 animations:^{
-            self.containerView.frame = CGRectMake(offset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);} completion:^(BOOL finished) {
-                if(offset == 0) { 
+            self.containerView.frame = CGRectMake(finalOffset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);} completion:^(BOOL finished) {
+                if(finalOffset == 0) { 
                     [self resume];
-                    [[CameraSessionController sharedCameraController] resumeDisplay];
 
                 }
             }];
