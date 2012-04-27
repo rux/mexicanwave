@@ -47,7 +47,7 @@ typedef struct {
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {    
     // Create new heading vector by averaging with old one.
     const float latestHeadingAngle = M_PI*[newHeading magneticHeading]/180.0f;
-    MEXCompassVector latestCompassVector = { sinf(latestHeadingAngle), cosf(latestHeadingAngle) };
+    MEXCompassVector latestCompassVector = { cosf(latestHeadingAngle), sinf(latestHeadingAngle) };
     latestCompassVector.north = latestCompassVector.north * kFilterStrength + self.compassVector.north * (1.0f - kFilterStrength);
     latestCompassVector.east = latestCompassVector.east * kFilterStrength + self.compassVector.east * (1.0f - kFilterStrength);
     const float normalization = sqrtf(latestCompassVector.north*latestCompassVector.north + latestCompassVector.east*latestCompassVector.east);
