@@ -28,8 +28,6 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
     measurement.channel = MetricsChannel;
     measurement.ssl = YES;
     measurement.useBestPractices = YES;
-    measurement.trackOffline = YES;
-    measurement.offlineLimit = 30;
     measurement.currencyCode = @"GBP";
     measurement.linkTrackEvents = @"";
     measurement.linkTrackVars = @"";
@@ -54,7 +52,6 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 	/* WARNING: Changing any of the below variables will cause drastic changes
 	 to how your visitor data is collected.  Changes should only be made
 	 when instructed to do so by your account manager.*/
-    measurement.dc = @"122";
 	measurement.trackingServer = @"yellgroup.122.2o7.net";		
 	measurement.trackingServerSecure = @"syellgroup.122.2o7.net";		
 
