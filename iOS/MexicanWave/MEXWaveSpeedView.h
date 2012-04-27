@@ -12,7 +12,7 @@ typedef enum{
     kWaveFunTag = 200,
     kWaveGigTag = 201,
     kWaveStaduimTag = 202,
-} kWaveSelection;
+} MEXWaveSelection;
 NSString* const kSpeedSegementDidChange;
 
 @interface MEXWaveSpeedView : UIView
