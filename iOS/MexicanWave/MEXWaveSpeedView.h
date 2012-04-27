@@ -32,9 +32,9 @@ NSString* const kSpeedSegementDidChange;
 @property(nonatomic,retain) IBOutlet UILabel* lblStepTwo;
 @property(nonatomic,retain) IBOutlet UILabel* lblStepThree;
 
-@property(nonatomic,retain) IBOutlet UILabel* lblFun;
-@property(nonatomic,retain) IBOutlet UILabel* lblGig;
-@property(nonatomic,retain) IBOutlet UILabel* lblStadium;
+@property(nonatomic,retain) IBOutlet UILabel* lblSmall;
+@property(nonatomic,retain) IBOutlet UILabel* lblMedium;
+@property(nonatomic,retain) IBOutlet UILabel* lblLarge;
 
 -(IBAction)didSelectWaveSpeed:(id)sender;
 -(void)didBecomeActive;

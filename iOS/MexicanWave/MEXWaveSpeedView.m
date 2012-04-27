@@ -31,12 +31,12 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 @synthesize mediumVenueWave,smallVenueWave,largeVenueWave;
 @synthesize btnFun,btnGig,btnStadium,visible;
 @synthesize lblStepOne,lblStepThree,lblStepTwo;
-@synthesize lblFun,lblGig,lblStadium;
+@synthesize lblSmall,lblMedium,lblLarge;
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [lblFun release];
-    [lblGig release];
-    [lblStadium release];
+    [lblSmall release];
+    [lblMedium release];
+    [lblLarge release];
     [lblStepOne release];
     [lblStepThree release];
     [lblStepTwo release];
@@ -71,9 +71,9 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     mediumVenueWave.alpha = kUnselectedAlpha;
     largeVenueWave.alpha = kUnselectedAlpha;
     
-    lblGig.alpha = kUnselectedAlpha;
-    lblFun.alpha = kUnselectedAlpha;
-    lblStadium.alpha = kUnselectedAlpha;
+    lblMedium.alpha = kUnselectedAlpha;
+    lblSmall.alpha = kUnselectedAlpha;
+    lblLarge.alpha = kUnselectedAlpha;
     
 
 }
@@ -124,17 +124,17 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
         switch (newSelection) {
             case kWaveFunTag:
                 (!smallVenueWave.isPaused) ? [smallVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1] :[smallVenueWave resumeAnimations];
-                lblFun.alpha = 1.0f;
+                lblSmall.alpha = 1.0f;
                 smallVenueWave.alpha = 1.0f;
                 break;
             case kWaveGigTag:
                 (!mediumVenueWave.isPaused) ? [mediumVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStageBased] startingPhase:0 numberOfPeaks:1] :[mediumVenueWave resumeAnimations];
-                lblGig.alpha = 1.0f;
+                lblMedium.alpha = 1.0f;
                 mediumVenueWave.alpha = 1.0f;
                 break;
             case kWaveStaduimTag:
                 (!largeVenueWave.isPaused) ? [largeVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStadium] startingPhase:0 numberOfPeaks:1] : [largeVenueWave resumeAnimations];
-                lblStadium.alpha = 1.0;
+                lblLarge.alpha = 1.0;
                 largeVenueWave.alpha = 1.0f;
                 break;
             default:
@@ -156,17 +156,17 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     switch (currentSelection) {
         case kWaveFunTag:
             [smallVenueWave pauseAnimations];
-            lblFun.alpha = kUnselectedAlpha;
+            lblSmall.alpha = kUnselectedAlpha;
             smallVenueWave.alpha = kUnselectedAlpha;
             break;
         case kWaveGigTag:
             [mediumVenueWave pauseAnimations];
-            lblGig.alpha = kUnselectedAlpha;
+            lblMedium.alpha = kUnselectedAlpha;
             mediumVenueWave.alpha = kUnselectedAlpha;
             break;
         case kWaveStaduimTag:
             [largeVenueWave pauseAnimations];
-            lblStadium.alpha = kUnselectedAlpha;
+            lblLarge.alpha = kUnselectedAlpha;
             largeVenueWave.alpha = kUnselectedAlpha;
             break;
         default:
@@ -178,15 +178,15 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     //find the current view that is animating and cancel the current animations
   
     [smallVenueWave cancelAnimations];
-    lblFun.alpha = kUnselectedAlpha;
+    lblSmall.alpha = kUnselectedAlpha;
     smallVenueWave.alpha = kUnselectedAlpha;
     
     [mediumVenueWave cancelAnimations];
-    lblGig.alpha = kUnselectedAlpha;
+    lblMedium.alpha = kUnselectedAlpha;
     mediumVenueWave.alpha = kUnselectedAlpha;
     
     [largeVenueWave cancelAnimations];
-    lblStadium.alpha = kUnselectedAlpha;
+    lblLarge.alpha = kUnselectedAlpha;
     largeVenueWave.alpha = kUnselectedAlpha;
           
     currentSelection =kResetSelection;
