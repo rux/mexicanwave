@@ -273,19 +273,25 @@
    
     //set up camera session
     [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
     btnCamera.hidden = ![CameraSessionController isSupported];
 
-
+    //discovered users tapping camera so lets help them capture a photo
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapTakePhoto:)];
+    [self.videoView addGestureRecognizer:tap];
+    [tap release];
+    
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
             
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
+    
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
+    //gestures to allow the user to swipe to back and forth the settings screen
     UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
-
     UIPanGestureRecognizer* swipeRight = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureRight:)];
     
     [self.tabImageView addGestureRecognizer:swipeRight];
