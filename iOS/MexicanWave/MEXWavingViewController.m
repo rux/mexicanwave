@@ -59,12 +59,17 @@
 
 - (IBAction)didTapTakePhoto:(id)sender {
     
-    [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^{
-        if(![[CameraSessionController sharedCameraController] isCapturedImage]){
+    [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^(UIImage *stillPhoto, NSError *error) {
+              
+        if(error){
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Capture Error" message:@"An error capturing a photo has occured. Please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+            [alert release];
             return;
         }
+        
         SharePhotoViewController* photoView = [[SharePhotoViewController alloc]init];
-        photoView.takenphoto = [[CameraSessionController sharedCameraController] capturedImage];
+        photoView.takenphoto = stillPhoto;
         UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:photoView];
         [self presentModalViewController:navController animated:YES];
         [navController release];
@@ -266,6 +271,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
+    //set up camera session
+    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    btnCamera.hidden = ![CameraSessionController isSupported];
+
 
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
@@ -284,8 +293,6 @@
       
     [swipeRight release];
     [swipeLeft release];
-    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
-    btnCamera.hidden = ![CameraSessionController isSupported];
 }
 
 - (void)viewDidUnload {

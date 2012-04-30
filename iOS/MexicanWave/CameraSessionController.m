@@ -46,7 +46,7 @@
 @synthesize cameraViewAvailable, autoFocusEnabled, autoExposureEnabled, adjustingDeviceSettings, torchEnabled;
 @synthesize videoLayer, captureSession;
 @synthesize outputDelegate, outputClipRect, frameSize, frameBeingProcessed;
-@synthesize shouldStart, shouldAttach, cameraView,stillImageOutput,capturedImage;
+@synthesize shouldStart, shouldAttach, cameraView,stillImageOutput;
 @synthesize queueForSessionControl, queueForFrameDelivery;
 
 - (void)setCameraView:(UIView *)newView {
@@ -267,7 +267,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[videoLayer release]; 
 	[cameraView release];
-    [capturedImage release];
     [stillImageOutput release];
 	
 	AVCaptureDevice* device = [[self.captureSession.inputs lastObject] device];
@@ -509,10 +508,8 @@
 	
 	self.adjustingDeviceSettings = device.adjustingFocus || device.adjustingWhiteBalance || device.adjustingExposure;
 }
--(BOOL)isCapturedImage{
-    return self.capturedImage ? YES : NO;
-}
--(void)capturePhotoWithCompletion:(void(^)(void))completion{
+
+-(void)capturePhotoWithCompletion:(StillPhotoCallBack)completion{
     //double check the video is started
     [self resumeDisplay];
     
@@ -535,15 +532,20 @@
      {
 		 CFDictionaryRef exifAttachments = CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
 		 // Do something with the attachments. 
-         DLog(@"attachements: %@", exifAttachments);		 
-         NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
-         //we have a new image so clear out the old and set the new image.
-         self.capturedImage = nil;
-         capturedImage = [[UIImage alloc] initWithData:imageData];
-         if(completion){
-             completion();
+         DLog(@"attachements: %@", exifAttachments);	
+         
+         if(error){
+             completion(nil,error);
+             return;
          }
          
+         NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+         //we have a new image so clear out the old and set the new image.
+         UIImage *capturedImage = [[UIImage alloc] initWithData:imageData];
+         if(completion){
+             completion(capturedImage,nil);
+         }
+         [capturedImage release];
 	 }];    
 }
 
