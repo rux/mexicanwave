@@ -18,8 +18,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 @interface MEXWaveSpeedView()
 
 -(void)commonInitialisation;
--(void)cancelWaveWithTag:(MEXWaveSelection)selection;
--(void)pauseWaveWithTag:(MEXWaveSelection)selection;
+-(void)resetAllWaves;
 -(void)startWaveWithTag:(MEXWaveSelection)newSelection;
 
 
@@ -59,31 +58,22 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 }
 
 -(void)awakeFromNib{
-        
     [self commonInitialisation];
 }
 
 -(void)commonInitialisation{
     
-    //set the user guice subview to default alpha - these help the current selection to stand out
-    
-    smallVenueWave.alpha = kUnselectedAlpha;
-    mediumVenueWave.alpha = kUnselectedAlpha;
-    largeVenueWave.alpha = kUnselectedAlpha;
-    
-    lblMedium.alpha = kUnselectedAlpha;
-    lblSmall.alpha = kUnselectedAlpha;
-    lblLarge.alpha = kUnselectedAlpha;
-    
-
+    //Reset all the speed settings to default blank values 
+    [self resetAllWaves];
 }
 
 -(void)didEnterBackground{
-    [self cancelWaveWithTag:currentSelection];
+    [self resetAllWaves];
 }
 
 
 -(void)didBecomeActive{
+   
     //if we are currently in view restart the animation
     if(self.isVisible){
         [self startWaveWithTag:kSelectionOffset + [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
@@ -97,7 +87,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 }
 -(void)stopAnimating{
     //We are going off view so lets stop the current selection
-    [self cancelWaveWithTag:currentSelection];
+    [self resetAllWaves];
     self.visible = NO;
 }
 
@@ -118,22 +108,22 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     if(self.currentSelection != newSelection){
         
         //stop the current wave and reset it to default values
-        [self pauseWaveWithTag:currentSelection];
+        [self resetAllWaves];
         
         //find the correct selection using the kWaveSelection. If the current view is paused then resume it - else start a new wave form
         switch (newSelection) {
             case kWaveFunTag:
-                (!smallVenueWave.isPaused) ? [smallVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1] :[smallVenueWave resumeAnimations];
+                [smallVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1];
                 lblSmall.alpha = 1.0f;
                 smallVenueWave.alpha = 1.0f;
                 break;
             case kWaveGigTag:
-                (!mediumVenueWave.isPaused) ? [mediumVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStageBased] startingPhase:0 numberOfPeaks:1] :[mediumVenueWave resumeAnimations];
+                [mediumVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStageBased] startingPhase:0 numberOfPeaks:1];
                 lblMedium.alpha = 1.0f;
                 mediumVenueWave.alpha = 1.0f;
                 break;
             case kWaveStaduimTag:
-                (!largeVenueWave.isPaused) ? [largeVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStadium] startingPhase:0 numberOfPeaks:1] : [largeVenueWave resumeAnimations];
+                [largeVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStadium] startingPhase:0 numberOfPeaks:1];
                 lblLarge.alpha = 1.0;
                 largeVenueWave.alpha = 1.0f;
                 break;
@@ -151,31 +141,8 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 }
 
--(void)pauseWaveWithTag:(MEXWaveSelection)selection{
-    //find the current view that is animating and fade out the labels and wave view.
-    switch (currentSelection) {
-        case kWaveFunTag:
-            [smallVenueWave pauseAnimations];
-            lblSmall.alpha = kUnselectedAlpha;
-            smallVenueWave.alpha = kUnselectedAlpha;
-            break;
-        case kWaveGigTag:
-            [mediumVenueWave pauseAnimations];
-            lblMedium.alpha = kUnselectedAlpha;
-            mediumVenueWave.alpha = kUnselectedAlpha;
-            break;
-        case kWaveStaduimTag:
-            [largeVenueWave pauseAnimations];
-            lblLarge.alpha = kUnselectedAlpha;
-            largeVenueWave.alpha = kUnselectedAlpha;
-            break;
-        default:
-            break;
-    }
-    DLog(@"paused");
-}
--(void)cancelWaveWithTag:(MEXWaveSelection)selection{
-    //find the current view that is animating and cancel the current animations
+-(void)resetAllWaves{
+    //Reset all the vies to thier default values.
   
     [smallVenueWave cancelAnimations];
     lblSmall.alpha = kUnselectedAlpha;
