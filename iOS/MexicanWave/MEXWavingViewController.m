@@ -62,7 +62,7 @@
     [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^(UIImage *stillPhoto, NSError *error) {
               
         if(error){
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Capture Error" message:@"An error capturing a photo has occured. Please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Capture Error", @"Title of capture photo error")  message:NSLocalizedString(@"An error capturing a photo has occured. Please try again",@"Message body of capture photo error") delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok",@"Dismiss button of alert view") otherButtonTitles:nil];
             [alert show];
             [alert release];
             return;

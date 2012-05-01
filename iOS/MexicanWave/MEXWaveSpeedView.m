@@ -63,6 +63,10 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 -(void)commonInitialisation{
     
+    self.lblSmall.text =NSLocalizedString(@"S",@"Abrriation meaning small for venue size");
+    self.lblMedium.text =NSLocalizedString(@"M",@"Abrriation meaning Medium for venue size");
+    self.lblLarge.text =NSLocalizedString(@"L",@"Abrriation meaning Large for venue size");
+    
     self.lblStepOne.text = NSLocalizedString(@"Step 1: Choose your venue size. ", @"Step one of how to use the app - MEXWaveSpeedView");
     self.lblStepTwo.text = NSLocalizedString(@"Step 2: Point your phone at the centre of your venue.", @"Step two of how to use the app - MEXWaveSpeedView");
     self.lblStepThree.text = NSLocalizedString(@"Step 3: Take photos and encourage others to join in.", @"Step three of how to use the app - MEXWaveSpeedView");
@@ -137,7 +141,6 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
         }
         self.currentSelection = newSelection;
         //save locally the new selection and broadcast to all listening that the user has changed the speed.
-        DLog(@"started");
         [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:currentSelection-kSelectionOffset]];
 
     }
@@ -160,7 +163,6 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     largeVenueWave.alpha = kUnselectedAlpha;
           
     currentSelection =kResetSelection;
-    DLog(@"cancelled");
 }
 /*
  // Only override drawRect: if you perform custom drawing.
