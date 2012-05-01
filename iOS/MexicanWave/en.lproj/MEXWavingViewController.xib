@@ -4985,7 +4985,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<object class="IBUIButton" id="1063435461">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{35, 380}, {250, 54}}</string>
+								<string key="NSFrame">{{35, 372}, {250, 60}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -4994,10 +4994,17 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<int key="IBUILineBreakMode">0</int>
+								<string key="IBUITitleShadowOffset">{0, 1}</string>
 								<string key="IBUINormalTitle">Download the Yell.com app to start finding</string>
 								<reference key="IBUIHighlightedTitleColor" ref="737297024"/>
+								<reference key="IBUISelectedTitleColor" ref="14084161"/>
 								<reference key="IBUINormalTitleColor" ref="70361950"/>
-								<reference key="IBUINormalTitleShadowColor" ref="873027926"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="70361950"/>
+								<reference key="IBUISelectedTitleShadowColor" ref="70361950"/>
+								<object class="NSColor" key="IBUINormalTitleShadowColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC45NDExNTE0OTQ2IDAuOTQxMTUxNDk0NiAwLjk0MTE1MTQ5NDYAA</bytes>
+								</object>
 								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">Yell-Advert.png</string>
@@ -5596,6 +5603,8 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				<string key="128.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="129.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="133.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="2" key="133.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
+				<real value="2" key="133.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="134.CustomClassName">MEXAdvertController</string>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -5853,7 +5862,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="Yell-Advert.png">{36, 52}</string>
+			<string key="Yell-Advert.png">{94, 64}</string>
 			<string key="background.png">{320, 460}</string>
 			<string key="background_Camera.png">{320, 460}</string>
 			<string key="camera.png">{35, 29}</string>
