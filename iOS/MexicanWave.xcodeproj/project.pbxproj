@@ -11,6 +11,7 @@
 		001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */; };
 		001A663C15499E53008B00E3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 001A663B15499E53008B00E3 /* Settings.bundle */; };
 		002779B715512A530080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779B515512A530080BAFC /* Localizable.strings */; };
+		002779C115513B7D0080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779BF15513B7D0080BAFC /* Localizable.strings */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
 		0046F0BA1548140C006A5683 /* userBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0B81548140B006A5683 /* userBackground.png */; };
@@ -108,6 +109,7 @@
 		001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveSpeedView.m; sourceTree = "<group>"; };
 		001A663B15499E53008B00E3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		002779B615512A530080BAFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
+		002779C015513B7D0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
 		0046F0AA154705E4006A5683 /* circleBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circleBackground@2x.png"; sourceTree = "<group>"; };
 		0046F0AC15470610006A5683 /* circleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleBackground.png; sourceTree = "<group>"; };
 		0046F0B81548140B006A5683 /* userBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBackground.png; sourceTree = "<group>"; };
@@ -254,6 +256,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		002779BE15513B7D0080BAFC /* es.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				002779BF15513B7D0080BAFC /* Localizable.strings */,
+			);
+			name = es.lproj;
+			path = MexicanWave/es.lproj;
+			sourceTree = "<group>";
+		};
 		00813F08152DE72A00262289 /* Settings / Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +334,7 @@
 		1967B918152304E800A924D5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				002779BE15513B7D0080BAFC /* es.lproj */,
 				196B8E441518A00100DAD14A /* en.lproj */,
 				196B8DF51517B58700DAD14A /* Images */,
 				1967B91F152320B700A924D5 /* Sounds */,
@@ -559,6 +571,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				es,
 			);
 			mainGroup = 199CB5F514FEA3CA00A16A97;
 			productRefGroup = 199CB60114FEA3CA00A16A97 /* Products */;
@@ -630,6 +643,7 @@
 				0046F0BB1548140C006A5683 /* userBackground@2x.png in Resources */,
 				001A663C15499E53008B00E3 /* Settings.bundle in Resources */,
 				002779B715512A530080BAFC /* Localizable.strings in Resources */,
+				002779C115513B7D0080BAFC /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +691,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				002779B615512A530080BAFC /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		002779BF15513B7D0080BAFC /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				002779C015513B7D0080BAFC /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

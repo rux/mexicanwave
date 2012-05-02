@@ -38,7 +38,7 @@
     self.navigationItem.leftBarButtonItem = cancel;
     [cancel release];
     
-    UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(didTapSave:)];
+    UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(didTapSave:)];
     self.navigationItem.rightBarButtonItem = share;
     [share release];
     
