@@ -59,12 +59,17 @@
 
 - (IBAction)didTapTakePhoto:(id)sender {
     
-    [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^{
-        if(![[CameraSessionController sharedCameraController] isCapturedImage]){
+    [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^(UIImage *stillPhoto, NSError *error) {
+              
+        if(error){
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Capture Error", @"Title of capture photo error")  message:NSLocalizedString(@"An error capturing a photo has occured. Please try again",@"Message body of capture photo error") delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok",@"Dismiss button of alert view") otherButtonTitles:nil];
+            [alert show];
+            [alert release];
             return;
         }
+        
         SharePhotoViewController* photoView = [[SharePhotoViewController alloc]init];
-        photoView.takenphoto = [[CameraSessionController sharedCameraController] capturedImage];
+        photoView.takenphoto = stillPhoto;
         UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:photoView];
         [self presentModalViewController:navController animated:YES];
         [navController release];
@@ -266,17 +271,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
+    //set up camera session
+    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
+    btnCamera.hidden = ![CameraSessionController isSupported];
 
+    //discovered users tapping camera so lets help them capture a photo
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapTakePhoto:)];
+    [self.videoView addGestureRecognizer:tap];
+    [tap release];
+    
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
             
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
+    
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
+    //gestures to allow the user to swipe to back and forth the settings screen
     UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
-
     UIPanGestureRecognizer* swipeRight = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureRight:)];
     
     [self.tabImageView addGestureRecognizer:swipeRight];
@@ -284,8 +299,6 @@
       
     [swipeRight release];
     [swipeLeft release];
-    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
-    btnCamera.hidden = ![CameraSessionController isSupported];
 }
 
 - (void)viewDidUnload {

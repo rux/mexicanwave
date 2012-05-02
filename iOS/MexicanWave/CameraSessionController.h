@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
+
+typedef void(^StillPhotoCallBack)(UIImage* stillPhoto, NSError* error);
+
 /// Needs CoreVideo, CoreMedia, AVFoundation.
 
 // Forward declarations
@@ -73,11 +76,6 @@
 @property (nonatomic, retain) UIView* cameraView;	
     
 /**
- This allows the user to get access to the last captured Image - from the still camera output
- */
-@property (nonatomic, retain) UIImage* capturedImage;	
-
-/**
  Returns NO if AVFoundation is unsupported on the target. 
  If you create a camera view on an unsupported target, it will initialise but will
  only fill its frame with the backgroundColor.
@@ -109,12 +107,9 @@
  there can be delay from request to taken
  **/
    
--(void)capturePhotoWithCompletion:(void(^)(void))completion;
+-(void)capturePhotoWithCompletion:(StillPhotoCallBack)completion;
 
-/**
- This returns if there is a photo that can be used
- **/
--(BOOL)isCapturedImage;
+
 @end
 
 /**
