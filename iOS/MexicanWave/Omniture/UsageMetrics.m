@@ -26,7 +26,6 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 
     [measurement clearVars];
     measurement.channel = MetricsChannel;
-    measurement.ssl = YES;
     measurement.useBestPractices = YES;
     measurement.currencyCode = @"GBP";
     measurement.linkTrackEvents = @"";
@@ -45,9 +44,11 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 #ifdef DEBUG 
 	// DEBUG is defined for debug builds
 	measurement.debugTracking = YES;
+    measurement.ssl = NO;
 #else
 	// Not debug builds.
 	measurement.debugTracking = NO;
+    measurement.ssl = YES;
 #endif			
 	/* WARNING: Changing any of the below variables will cause drastic changes
 	 to how your visitor data is collected.  Changes should only be made
