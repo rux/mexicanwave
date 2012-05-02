@@ -8,6 +8,7 @@
 
 #import "MEXWaveFxView.h"
 #import "MEXLampView.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kDefaultWidth 320.0f
 
@@ -92,7 +93,7 @@
     const NSUInteger numberOfLamps = self.lampViews.count;
     [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         MEXLampView* oneLamp = (MEXLampView*)obj;
-        const float phase = (float)(idx * peaksPerCycle) / (float)numberOfLamps + startingPhase;        
+        const float phase = (float)(idx * peaksPerCycle) / (float)numberOfLamps + startingPhase;   
         [oneLamp animateGlowWithCycleTime:duration activeTime:kActiveTime/(NSTimeInterval)peaksPerCycle phase:phase];
     }];
 
@@ -120,7 +121,9 @@
 - (void)cancelAnimations{
     [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         MEXLampView* oneLamp = (MEXLampView*)obj;
-        [oneLamp cancelGlowAnimation];
+        [oneLamp.layer removeAllAnimations];
     }];
+    self.paused = NO;
+
 }
 @end

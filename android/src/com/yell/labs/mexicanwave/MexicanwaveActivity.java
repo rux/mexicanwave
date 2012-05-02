@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.omniture.*;
 
@@ -54,6 +55,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	private AppMeasurement s;
 	
+	private TextView debugText;
+	
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         warning = (View) findViewById(R.id.holdThePhone);
         waveCompass = (ImageView) findViewById(R.id.spinningDisc);
         
+        debugText = (TextView) findViewById(R.id.debugText1);
   
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
@@ -161,6 +165,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				
 				int newAzimuth = roarHandler.getAzimuthInDegrees();
 				long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
+				
+				debugText.setText( "Smoothed " + String.valueOf(newAzimuth));
+			
 				
 				rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
 				rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.

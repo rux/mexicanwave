@@ -12,16 +12,17 @@ typedef enum{
     kWaveFunTag = 200,
     kWaveGigTag = 201,
     kWaveStaduimTag = 202,
-} kWaveSelection;
+} MEXWaveSelection;
 NSString* const kSpeedSegementDidChange;
 
 @interface MEXWaveSpeedView : UIView
 
 
+@property(nonatomic,getter = isVisible) BOOL visible;
 
-@property(nonatomic,retain) IBOutlet MEXWaveFxView* funContainer;
-@property(nonatomic,retain) IBOutlet MEXWaveFxView* gigContainer;
-@property(nonatomic,retain) IBOutlet MEXWaveFxView* stadiumContainer;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* smallVenueWave;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* mediumVenueWave;
+@property(nonatomic,retain) IBOutlet MEXWaveFxView* largeVenueWave;
 
 @property(nonatomic,retain) IBOutlet UIButton* btnFun;
 @property(nonatomic,retain) IBOutlet UIButton* btnGig;
@@ -31,14 +32,13 @@ NSString* const kSpeedSegementDidChange;
 @property(nonatomic,retain) IBOutlet UILabel* lblStepTwo;
 @property(nonatomic,retain) IBOutlet UILabel* lblStepThree;
 
-@property(nonatomic,retain) IBOutlet UILabel* lblFun;
-@property(nonatomic,retain) IBOutlet UILabel* lblGig;
-@property(nonatomic,retain) IBOutlet UILabel* lblStadium;
+@property(nonatomic,retain) IBOutlet UILabel* lblSmall;
+@property(nonatomic,retain) IBOutlet UILabel* lblMedium;
+@property(nonatomic,retain) IBOutlet UILabel* lblLarge;
 
 -(IBAction)didSelectWaveSpeed:(id)sender;
--(void)startWaveWithTag:(kWaveSelection)newSelection;
--(void)stopWaveWithTag:(kWaveSelection)selection;
-
+-(void)didBecomeActive;
+-(void)didEnterBackground;
 -(void)startAnimatingCurrentSelection;
 -(void)stopAnimating;
 @end

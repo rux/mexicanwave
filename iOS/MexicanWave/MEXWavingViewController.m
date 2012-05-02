@@ -59,12 +59,17 @@
 
 - (IBAction)didTapTakePhoto:(id)sender {
     
-    [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^{
-        if(![[CameraSessionController sharedCameraController] isCapturedImage]){
+    [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^(UIImage *stillPhoto, NSError *error) {
+              
+        if(error){
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Capture Error", @"Title of capture photo error")  message:NSLocalizedString(@"An error capturing a photo has occured. Please try again",@"Message body of capture photo error") delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok",@"Dismiss button of alert view") otherButtonTitles:nil];
+            [alert show];
+            [alert release];
             return;
         }
+        
         SharePhotoViewController* photoView = [[SharePhotoViewController alloc]init];
-        photoView.takenphoto = [[CameraSessionController sharedCameraController] capturedImage];
+        photoView.takenphoto = stillPhoto;
         UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:photoView];
         [self presentModalViewController:navController animated:YES];
         [navController release];
@@ -150,7 +155,7 @@
 }
 
 - (void)resume {
-           
+          
     // Refetch our settings preferences, they may have changed while we were in the background.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
@@ -266,18 +271,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
+    //set up camera session
+    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
+    btnCamera.hidden = ![CameraSessionController isSupported];
 
+    //discovered users tapping camera so lets help them capture a photo
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapTakePhoto:)];
+    [self.videoView addGestureRecognizer:tap];
+    [tap release];
+    
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
             
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resume) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
 
+    //gestures to allow the user to swipe to back and forth the settings screen
     UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
-
     UIPanGestureRecognizer* swipeRight = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureRight:)];
     
     [self.tabImageView addGestureRecognizer:swipeRight];
@@ -285,8 +299,6 @@
       
     [swipeRight release];
     [swipeLeft release];
-    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
-    btnCamera.hidden = ![CameraSessionController isSupported];
 }
 
 - (void)viewDidUnload {
@@ -340,7 +352,7 @@
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side
-        CGFloat finalOffset = (offset> -160) ? 0 : -320;
+        const NSInteger finalOffset = (offset> -160) ? 0 : -320;
         
         //if the offset is off the view post that the user has seeing the settings view else we can continue flashing the view        
         [UIView animateWithDuration:0.2 animations:^{
@@ -378,7 +390,7 @@
             return;
         }
         //if not compare the current offset in relation to the view - if over half way snap to the side- continues animation occordetly
-        CGFloat finalOffset = (offset> 160) ? 0 : -320;
+        const NSInteger finalOffset = (offset> 160) ? 0 : -320;
 
         [UIView animateWithDuration:0.2 animations:^{
             self.containerView.frame = CGRectMake(finalOffset, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);} completion:^(BOOL finished) {

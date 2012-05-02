@@ -18,28 +18,33 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 @interface MEXWaveSpeedView()
 
 -(void)commonInitialisation;
+-(void)resetAllWaves;
+-(void)startWaveWithTag:(MEXWaveSelection)newSelection;
+
+
 @property(nonatomic) NSInteger currentSelection;
 @end
 
 @implementation MEXWaveSpeedView
 @synthesize currentSelection;
-@synthesize gigContainer,funContainer,stadiumContainer;
-@synthesize btnFun,btnGig,btnStadium;
+@synthesize mediumVenueWave,smallVenueWave,largeVenueWave;
+@synthesize btnFun,btnGig,btnStadium,visible;
 @synthesize lblStepOne,lblStepThree,lblStepTwo;
-@synthesize lblFun,lblGig,lblStadium;
+@synthesize lblSmall,lblMedium,lblLarge;
 -(void)dealloc{
-    [lblFun release];
-    [lblGig release];
-    [lblStadium release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [lblSmall release];
+    [lblMedium release];
+    [lblLarge release];
     [lblStepOne release];
     [lblStepThree release];
     [lblStepTwo release];
     [btnGig release];
     [btnFun release];
     [btnStadium release];
-    [stadiumContainer release];
-    [funContainer release];
-    [gigContainer release];
+    [largeVenueWave release];
+    [smallVenueWave release];
+    [mediumVenueWave release];
     [super dealloc];
 }
 - (id)initWithFrame:(CGRect)frame
@@ -53,33 +58,44 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 }
 
 -(void)awakeFromNib{
-        
     [self commonInitialisation];
 }
 
 -(void)commonInitialisation{
     
-    //set the user guice subview to default alpha - these help the current selection to stand out
+    self.lblSmall.text =NSLocalizedString(@"S",@"Abrriation meaning small for venue size");
+    self.lblMedium.text =NSLocalizedString(@"M",@"Abrriation meaning Medium for venue size");
+    self.lblLarge.text =NSLocalizedString(@"L",@"Abrriation meaning Large for venue size");
     
-    funContainer.alpha = kUnselectedAlpha;
-    gigContainer.alpha = kUnselectedAlpha;
-    stadiumContainer.alpha = kUnselectedAlpha;
-    
-    lblGig.alpha = kUnselectedAlpha;
-    lblFun.alpha = kUnselectedAlpha;
-    lblStadium.alpha = kUnselectedAlpha;
-    
+    self.lblStepOne.text = NSLocalizedString(@"Step 1: Choose your venue size. ", @"Step one of how to use the app - MEXWaveSpeedView");
+    self.lblStepTwo.text = NSLocalizedString(@"Step 2: Point your phone at the centre of your venue.", @"Step two of how to use the app - MEXWaveSpeedView");
+    self.lblStepThree.text = NSLocalizedString(@"Step 3: Take photos and encourage others to join in.", @"Step three of how to use the app - MEXWaveSpeedView");
+    //Reset all the speed settings to default blank values 
+    [self resetAllWaves];
+}
+
+-(void)didEnterBackground{
+    [self resetAllWaves];
+}
+
+
+-(void)didBecomeActive{
+   
+    //if we are currently in view restart the animation
+    if(self.isVisible){
+        [self startWaveWithTag:kSelectionOffset + [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
+    }
 }
 
 -(void)startAnimatingCurrentSelection{
     //start animating the selected views wave from user defaults
     [self startWaveWithTag:kSelectionOffset + [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey]];
-    
+    self.visible = YES;    
 }
 -(void)stopAnimating{
     //We are going off view so lets stop the current selection
-    [self stopWaveWithTag:currentSelection];
-    self.currentSelection = kResetSelection;
+    [self resetAllWaves];
+    self.visible = NO;
 }
 
 -(IBAction)didSelectWaveSpeed:(id)sender{
@@ -93,69 +109,61 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
                
 } 
 
--(void)startWaveWithTag:(kWaveSelection)newSelection{
+-(void)startWaveWithTag:(MEXWaveSelection)newSelection{
 
     //make sure we are a new selection
     if(self.currentSelection != newSelection){
         
         //stop the current wave and reset it to default values
-        [self stopWaveWithTag:currentSelection];
+        [self resetAllWaves];
         
         //find the correct selection using the kWaveSelection. If the current view is paused then resume it - else start a new wave form
-        
         switch (newSelection) {
             case kWaveFunTag:
-                (!funContainer.isPaused) ? [funContainer animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1] : [funContainer resumeAnimations];
-                lblFun.alpha = 1.0f;
-                funContainer.alpha = 1.0f;
+                [smallVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1];
+                lblSmall.alpha = 1.0f;
+                smallVenueWave.alpha = 1.0f;
                 break;
             case kWaveGigTag:
-                (!gigContainer.isPaused) ? [gigContainer animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStageBased] startingPhase:0 numberOfPeaks:1] :[gigContainer resumeAnimations];
-                lblGig.alpha = 1.0f;
-                gigContainer.alpha = 1.0f;
+                [mediumVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStageBased] startingPhase:0 numberOfPeaks:1];
+                lblMedium.alpha = 1.0f;
+                mediumVenueWave.alpha = 1.0f;
                 break;
             case kWaveStaduimTag:
-                (!stadiumContainer.isPaused) ? [stadiumContainer animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStadium] startingPhase:0 numberOfPeaks:1] : [stadiumContainer resumeAnimations];
-                lblStadium.alpha = 1.0;
-                stadiumContainer.alpha = 1.0f;
+                [largeVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStadium] startingPhase:0 numberOfPeaks:1];
+                lblLarge.alpha = 1.0;
+                largeVenueWave.alpha = 1.0f;
                 break;
             default:
-                NSLog(@"not recongised selection");
+                DLog(@"Not a selection we know about %u",newSelection);
+                return;
                 break;
         }
+        self.currentSelection = newSelection;
         //save locally the new selection and broadcast to all listening that the user has changed the speed.
-        self.currentSelection = newSelection; 
-
         [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:currentSelection-kSelectionOffset]];
 
     }
 
 }
 
--(void)stopWaveWithTag:(kWaveSelection)selection{
-    //find the current view that is animating and fade out the labels and wave view.
-    switch (currentSelection) {
-        case kWaveFunTag:
-            [funContainer pauseAnimations];
-            lblFun.alpha = kUnselectedAlpha;
-            funContainer.alpha = kUnselectedAlpha;
-            break;
-        case kWaveGigTag:
-            [gigContainer pauseAnimations];
-            lblGig.alpha = kUnselectedAlpha;
-            gigContainer.alpha = kUnselectedAlpha;
-            break;
-        case kWaveStaduimTag:
-            [stadiumContainer pauseAnimations];
-            lblStadium.alpha = kUnselectedAlpha;
-            stadiumContainer.alpha = kUnselectedAlpha;
-            break;
-        default:
-            break;
-    }
-
+-(void)resetAllWaves{
+    //Reset all the vies to thier default values.
+  
+    [smallVenueWave cancelAnimations];
+    lblSmall.alpha = kUnselectedAlpha;
+    smallVenueWave.alpha = kUnselectedAlpha;
+    
+    [mediumVenueWave cancelAnimations];
+    lblMedium.alpha = kUnselectedAlpha;
+    mediumVenueWave.alpha = kUnselectedAlpha;
+    
+    [largeVenueWave cancelAnimations];
+    lblLarge.alpha = kUnselectedAlpha;
+    largeVenueWave.alpha = kUnselectedAlpha;
+          
+    currentSelection =kResetSelection;
 }
-
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
