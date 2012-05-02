@@ -32,6 +32,9 @@
     UIImage* stretchyBackground = [background stretchableImageWithLeftCapWidth:0.5*background.size.width topCapHeight:0];
     [self.advertButton setBackgroundImage:stretchyBackground forState:UIControlStateNormal];
     
+    [self.advertButton setTitle:NSLocalizedString(@"Download the Yell.com app to start finding", @"Download Yell app Title Button") forState:UIControlStateNormal];
+    
+    
     // Hide the button if we are not in an area where the advert is useful - i.e outside UK, US, ES
     NSString* appStoreURL = [self appstoreURLForCountryCode:[self countryCodeForCurrentLocale]];
     const BOOL showLink = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:appStoreURL]];

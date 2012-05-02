@@ -38,7 +38,7 @@
     self.navigationItem.leftBarButtonItem = cancel;
     [cancel release];
     
-    UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(didTapSave:)];
+    UIBarButtonItem* share = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(didTapSave:)];
     self.navigationItem.rightBarButtonItem = share;
     [share release];
     
@@ -51,7 +51,7 @@
 }
 
 -(void)didTapSave:(id)sender{
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Save Photo" message:@"Would you like to save this photo to the camera roll" delegate:self cancelButtonTitle:@"No Thanks" otherButtonTitles:@"Yes", nil];
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Save Photo",@"Title of confirmation of sharing photo") message:NSLocalizedString(@"Would you like to save this photo to the camera roll",@"Message body for saving photo to camera roll") delegate:self cancelButtonTitle:NSLocalizedString(@"No Thanks",@"Alert button title to cancel saving photo to camera roll") otherButtonTitles:NSLocalizedString(@"Yes",@"Confirmation of saving photo to camera roll"), nil];
     [alert show];
     [alert release];
 }
