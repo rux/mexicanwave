@@ -99,7 +99,6 @@
     }
 }
 
-
 #pragma mark - Torch handling
 
 - (void)torchOff {
@@ -111,7 +110,6 @@
   
     [self setTorchMode:AVCaptureTorchModeOn];
     
-        
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kTorchOnTime * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self torchOff];
@@ -157,7 +155,6 @@
     
     //as the main view is now visable stop animating the help guide on the settings view
     [self.settingView.speedView stopAnimating];
-
     
 }
 
@@ -172,7 +169,7 @@
         return;
     }
     
-    const float duration = (self.waveModel.crowdType == 2) ? 0.5 : 0.2;
+    const float duration = (self.waveModel.crowdType == kMEXCrowdTypeStadium) ? 0.5 : 0.2;
     //animate the screen flash
     [UIView animateWithDuration:duration animations:^{
         self.whiteFlashView.alpha = 1; 
@@ -194,17 +191,11 @@
     if(self.isSoundOnWaveEnabled) {
         AudioServicesPlaySystemSound(self.waveSoundID);
     }
-
-    
-    
+   
     
 }
 
 #pragma mark - Controller lifecycle
-
-- (void)awakeFromNib {
-  
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
