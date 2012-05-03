@@ -513,21 +513,8 @@
     //double check the video is started
     [self resumeDisplay];
     
-    AVCaptureConnection *videoConnection = nil;
-	for (AVCaptureConnection *connection in stillImageOutput.connections)
-	{
-		for (AVCaptureInputPort *port in [connection inputPorts])
-		{
-			if ([[port mediaType] isEqual:AVMediaTypeVideo] )
-			{
-				videoConnection = connection;
-				break;
-			}
-		}
-		if (videoConnection) { break; }
-	}
-    
-    
+    AVCaptureConnection *videoConnection = [stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
+
 	[stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error)
      {
 		 CFDictionaryRef exifAttachments = CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);

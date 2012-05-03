@@ -11,6 +11,8 @@
 		001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */; };
 		001A663C15499E53008B00E3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 001A663B15499E53008B00E3 /* Settings.bundle */; };
 		002779B715512A530080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779B515512A530080BAFC /* Localizable.strings */; };
+		002779C115513B7D0080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779BF15513B7D0080BAFC /* Localizable.strings */; };
+		002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779CD1551747E0080BAFC /* InfoPlist.strings */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
 		0046F0BA1548140C006A5683 /* userBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0B81548140B006A5683 /* userBackground.png */; };
@@ -30,6 +32,8 @@
 		005F608A153C6BB600999B47 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F6088153C6BB600999B47 /* camera.png */; };
 		005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 005F608C153C6C6500999B47 /* SharePhotoViewController.m */; };
 		005F608F153C6C6500999B47 /* SharePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005F608D153C6C6500999B47 /* SharePhotoViewController.xib */; };
+		00C3F14415529731004252EB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14315529731004252EB /* Default.png */; };
+		00C3F14615529735004252EB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14515529735004252EB /* Default@2x.png */; };
 		00C6FE68153F0AA100420E4B /* about_hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE66153F0AA100420E4B /* about_hand.png */; };
 		00C6FE69153F0AA100420E4B /* about_hand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE67153F0AA100420E4B /* about_hand@2x.png */; };
 		00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6FEE31541663400420E4B /* CameraSessionController.m */; };
@@ -54,7 +58,6 @@
 		1903F3D01510F50C00807542 /* MEXLampView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3CF1510F50B00807542 /* MEXLampView.m */; };
 		1903F3D8151236BB00807542 /* MEXCrowdTypeSelectionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */; };
 		1967B90F1523044B00A924D5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1967B90E1523044B00A924D5 /* AudioToolbox.framework */; };
-		1967B91E152311C100A924D5 /* MEXLegacyTorchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1967B91D152311C100A924D5 /* MEXLegacyTorchController.m */; };
 		1967B923152320B700A924D5 /* clapping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1967B921152320B700A924D5 /* clapping.caf */; };
 		196B8E121517B58700DAD14A /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 196B8DF61517B58700DAD14A /* background.png */; };
 		196B8E131517B58700DAD14A /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 196B8DF71517B58700DAD14A /* background@2x.png */; };
@@ -108,6 +111,8 @@
 		001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveSpeedView.m; sourceTree = "<group>"; };
 		001A663B15499E53008B00E3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		002779B615512A530080BAFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
+		002779C015513B7D0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
+		002779CE1551747E0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = InfoPlist.strings; sourceTree = "<group>"; };
 		0046F0AA154705E4006A5683 /* circleBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circleBackground@2x.png"; sourceTree = "<group>"; };
 		0046F0AC15470610006A5683 /* circleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleBackground.png; sourceTree = "<group>"; };
 		0046F0B81548140B006A5683 /* userBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBackground.png; sourceTree = "<group>"; };
@@ -128,6 +133,8 @@
 		005F608B153C6C6500999B47 /* SharePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharePhotoViewController.h; sourceTree = "<group>"; };
 		005F608C153C6C6500999B47 /* SharePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharePhotoViewController.m; sourceTree = "<group>"; };
 		005F608D153C6C6500999B47 /* SharePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SharePhotoViewController.xib; path = ../SharePhotoViewController.xib; sourceTree = "<group>"; };
+		00C3F14315529731004252EB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
+		00C3F14515529735004252EB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
 		00C6FE66153F0AA100420E4B /* about_hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_hand.png; sourceTree = "<group>"; };
 		00C6FE67153F0AA100420E4B /* about_hand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_hand@2x.png"; sourceTree = "<group>"; };
 		00C6FEE31541663400420E4B /* CameraSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraSessionController.m; sourceTree = "<group>"; };
@@ -169,8 +176,6 @@
 		1903F3D6151236B800807542 /* MEXCrowdTypeSelectionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXCrowdTypeSelectionControl.h; sourceTree = "<group>"; };
 		1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXCrowdTypeSelectionControl.m; sourceTree = "<group>"; };
 		1967B90E1523044B00A924D5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		1967B91C152311C100A924D5 /* MEXLegacyTorchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXLegacyTorchController.h; sourceTree = "<group>"; };
-		1967B91D152311C100A924D5 /* MEXLegacyTorchController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXLegacyTorchController.m; sourceTree = "<group>"; };
 		1967B921152320B700A924D5 /* clapping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = clapping.caf; sourceTree = "<group>"; };
 		196B8DF61517B58700DAD14A /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		196B8DF71517B58700DAD14A /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
@@ -254,6 +259,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		002779BE15513B7D0080BAFC /* es.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				002779BF15513B7D0080BAFC /* Localizable.strings */,
+				002779CD1551747E0080BAFC /* InfoPlist.strings */,
+			);
+			name = es.lproj;
+			path = MexicanWave/es.lproj;
+			sourceTree = "<group>";
+		};
 		00813F08152DE72A00262289 /* Settings / Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,21 +338,13 @@
 		1967B918152304E800A924D5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				002779BE15513B7D0080BAFC /* es.lproj */,
 				196B8E441518A00100DAD14A /* en.lproj */,
 				196B8DF51517B58700DAD14A /* Images */,
 				1967B91F152320B700A924D5 /* Sounds */,
 				001A663B15499E53008B00E3 /* Settings.bundle */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		1967B91B152311A400A924D5 /* Legacy */ = {
-			isa = PBXGroup;
-			children = (
-				1967B91C152311C100A924D5 /* MEXLegacyTorchController.h */,
-				1967B91D152311C100A924D5 /* MEXLegacyTorchController.m */,
-			);
-			name = Legacy;
 			sourceTree = "<group>";
 		};
 		1967B91F152320B700A924D5 /* Sounds */ = {
@@ -352,6 +359,8 @@
 		196B8DF51517B58700DAD14A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				00C3F14515529735004252EB /* Default@2x.png */,
+				00C3F14315529731004252EB /* Default.png */,
 				0046F0B81548140B006A5683 /* userBackground.png */,
 				0046F0B91548140C006A5683 /* userBackground@2x.png */,
 				0046F0AC15470610006A5683 /* circleBackground.png */,
@@ -482,7 +491,6 @@
 				199CB61314FEA3CA00A16A97 /* MEXAppDelegate.h */,
 				199CB61414FEA3CA00A16A97 /* MEXAppDelegate.m */,
 				199CB63814FF851C00A16A97 /* Waving */,
-				1967B91B152311A400A924D5 /* Legacy */,
 				199CB63714FF850400A16A97 /* Compass */,
 				199CB60B14FEA3CA00A16A97 /* Supporting Files */,
 			);
@@ -559,6 +567,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				es,
 			);
 			mainGroup = 199CB5F514FEA3CA00A16A97;
 			productRefGroup = 199CB60114FEA3CA00A16A97 /* Products */;
@@ -630,6 +639,10 @@
 				0046F0BB1548140C006A5683 /* userBackground@2x.png in Resources */,
 				001A663C15499E53008B00E3 /* Settings.bundle in Resources */,
 				002779B715512A530080BAFC /* Localizable.strings in Resources */,
+				002779C115513B7D0080BAFC /* Localizable.strings in Resources */,
+				002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */,
+				00C3F14415529731004252EB /* Default.png in Resources */,
+				00C3F14615529735004252EB /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,7 +662,6 @@
 				1903F3D01510F50C00807542 /* MEXLampView.m in Sources */,
 				1903F3D8151236BB00807542 /* MEXCrowdTypeSelectionControl.m in Sources */,
 				196B8E331518937400DAD14A /* MEXSegmentButtonControl.m in Sources */,
-				1967B91E152311C100A924D5 /* MEXLegacyTorchController.m in Sources */,
 				00D26F361535BE85004BC8ED /* SettingsView.m in Sources */,
 				00D26F561536C886004BC8ED /* AppUpgradeController.m in Sources */,
 				00D26F571536C886004BC8ED /* AppUpgradeModel.m in Sources */,
@@ -679,6 +691,22 @@
 				002779B615512A530080BAFC /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		002779BF15513B7D0080BAFC /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				002779C015513B7D0080BAFC /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		002779CD1551747E0080BAFC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				002779CE1551747E0080BAFC /* es */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		196B8E451518A00100DAD14A /* InfoPlist.strings */ = {
@@ -739,7 +767,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MexicanWave/MexicanWave-Prefix.pch";
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/MexicanWave/Omniture/Library\"",
@@ -808,7 +836,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MexicanWave/MexicanWave-Prefix.pch";
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/MexicanWave/Omniture/Library\"",
@@ -831,7 +859,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MexicanWave/MexicanWave-Prefix.pch";
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/MexicanWave/Omniture/Library\"",
@@ -877,7 +905,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MexicanWave/MexicanWave-Prefix.pch";
 				INFOPLIST_FILE = "MexicanWave/MexicanWave-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/MexicanWave/Omniture/Library\"",

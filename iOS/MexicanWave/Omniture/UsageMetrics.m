@@ -23,38 +23,8 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
     if(!measurement) {
         return nil;
     }
-
     [measurement clearVars];
     measurement.channel = MetricsChannel;
-    measurement.ssl = YES;
-    measurement.useBestPractices = YES;
-    measurement.currencyCode = @"GBP";
-    measurement.linkTrackEvents = @"";
-    measurement.linkTrackVars = @"";
-
-    /* Specify the Report Suite ID(s) to track here */
-#ifndef APPSTORERELEASE
-	// All configurations except the app store release use the development suite
-	measurement.account = @"yelllabsdev";
-#else
-	// The app store release uses the release suite
-	measurement.account = @"yelllabs";			
-#endif
-	
-	/* Turn on and configure debugging here */
-#ifdef DEBUG 
-	// DEBUG is defined for debug builds
-	measurement.debugTracking = YES;
-#else
-	// Not debug builds.
-	measurement.debugTracking = NO;
-#endif			
-	/* WARNING: Changing any of the below variables will cause drastic changes
-	 to how your visitor data is collected.  Changes should only be made
-	 when instructed to do so by your account manager.*/
-	measurement.trackingServer = @"yellgroup.122.2o7.net";		
-	measurement.trackingServerSecure = @"syellgroup.122.2o7.net";		
-
     return measurement;
 }
 
@@ -71,10 +41,42 @@ NSString* const MetricsAppStoreLinkName = @"iOS/MexicanWave/AppStore";
 	if(!(self = [super init])) {		
         return nil;
 	}
-    if(![self configuredMeasurementInstance]) {
-        [self release], self = nil;
+    
+    AppMeasurement* measurement = [AppMeasurement getInstance];
+    NSAssert(measurement, @"Unable to obtain AppMeasurement instance");
+    if(!measurement) {
+        [measurement release], measurement = nil;
         return nil;
     }
+    measurement.useBestPractices = YES;
+    measurement.currencyCode = @"GBP";
+    measurement.linkTrackEvents = @"";
+    measurement.linkTrackVars = @"";
+    
+    /* Specify the Report Suite ID(s) to track here */
+#ifndef APPSTORERELEASE
+	// All configurations except the app store release use the development suite
+	measurement.account = @"yelllabsdev";
+#else
+	// The app store release uses the release suite
+	measurement.account = @"yelllabs";			
+#endif
+	
+	/* Turn on and configure debugging here */
+#ifdef DEBUG 
+	// DEBUG is defined for debug builds
+	measurement.debugTracking = YES;
+    measurement.ssl = NO;
+#else
+	// Not debug builds.
+	measurement.debugTracking = NO;
+    measurement.ssl = YES;
+#endif			
+	/* WARNING: Changing any of the below variables will cause drastic changes
+	 to how your visitor data is collected.  Changes should only be made
+	 when instructed to do so by your account manager.*/
+	measurement.trackingServer = @"yellgroup.122.2o7.net";		
+	measurement.trackingServerSecure = @"syellgroup.122.2o7.net";		
     
 	return self;
 }
