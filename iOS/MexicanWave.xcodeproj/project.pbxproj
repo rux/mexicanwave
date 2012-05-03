@@ -12,6 +12,7 @@
 		001A663C15499E53008B00E3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 001A663B15499E53008B00E3 /* Settings.bundle */; };
 		002779B715512A530080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779B515512A530080BAFC /* Localizable.strings */; };
 		002779C115513B7D0080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779BF15513B7D0080BAFC /* Localizable.strings */; };
+		002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779CD1551747E0080BAFC /* InfoPlist.strings */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
 		0046F0BA1548140C006A5683 /* userBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0B81548140B006A5683 /* userBackground.png */; };
@@ -110,6 +111,7 @@
 		001A663B15499E53008B00E3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		002779B615512A530080BAFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		002779C015513B7D0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
+		002779CE1551747E0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = InfoPlist.strings; sourceTree = "<group>"; };
 		0046F0AA154705E4006A5683 /* circleBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circleBackground@2x.png"; sourceTree = "<group>"; };
 		0046F0AC15470610006A5683 /* circleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleBackground.png; sourceTree = "<group>"; };
 		0046F0B81548140B006A5683 /* userBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBackground.png; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				002779BF15513B7D0080BAFC /* Localizable.strings */,
+				002779CD1551747E0080BAFC /* InfoPlist.strings */,
 			);
 			name = es.lproj;
 			path = MexicanWave/es.lproj;
@@ -644,6 +647,7 @@
 				001A663C15499E53008B00E3 /* Settings.bundle in Resources */,
 				002779B715512A530080BAFC /* Localizable.strings in Resources */,
 				002779C115513B7D0080BAFC /* Localizable.strings in Resources */,
+				002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +705,14 @@
 				002779C015513B7D0080BAFC /* es */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		002779CD1551747E0080BAFC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				002779CE1551747E0080BAFC /* es */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		196B8E451518A00100DAD14A /* InfoPlist.strings */ = {
