@@ -32,6 +32,8 @@
 		005F608A153C6BB600999B47 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F6088153C6BB600999B47 /* camera.png */; };
 		005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 005F608C153C6C6500999B47 /* SharePhotoViewController.m */; };
 		005F608F153C6C6500999B47 /* SharePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005F608D153C6C6500999B47 /* SharePhotoViewController.xib */; };
+		00C3F14415529731004252EB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14315529731004252EB /* Default.png */; };
+		00C3F14615529735004252EB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14515529735004252EB /* Default@2x.png */; };
 		00C6FE68153F0AA100420E4B /* about_hand.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE66153F0AA100420E4B /* about_hand.png */; };
 		00C6FE69153F0AA100420E4B /* about_hand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C6FE67153F0AA100420E4B /* about_hand@2x.png */; };
 		00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C6FEE31541663400420E4B /* CameraSessionController.m */; };
@@ -132,6 +134,8 @@
 		005F608B153C6C6500999B47 /* SharePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharePhotoViewController.h; sourceTree = "<group>"; };
 		005F608C153C6C6500999B47 /* SharePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharePhotoViewController.m; sourceTree = "<group>"; };
 		005F608D153C6C6500999B47 /* SharePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SharePhotoViewController.xib; path = ../SharePhotoViewController.xib; sourceTree = "<group>"; };
+		00C3F14315529731004252EB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
+		00C3F14515529735004252EB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
 		00C6FE66153F0AA100420E4B /* about_hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about_hand.png; sourceTree = "<group>"; };
 		00C6FE67153F0AA100420E4B /* about_hand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about_hand@2x.png"; sourceTree = "<group>"; };
 		00C6FEE31541663400420E4B /* CameraSessionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraSessionController.m; sourceTree = "<group>"; };
@@ -367,6 +371,8 @@
 		196B8DF51517B58700DAD14A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				00C3F14515529735004252EB /* Default@2x.png */,
+				00C3F14315529731004252EB /* Default.png */,
 				0046F0B81548140B006A5683 /* userBackground.png */,
 				0046F0B91548140C006A5683 /* userBackground@2x.png */,
 				0046F0AC15470610006A5683 /* circleBackground.png */,
@@ -648,6 +654,8 @@
 				002779B715512A530080BAFC /* Localizable.strings in Resources */,
 				002779C115513B7D0080BAFC /* Localizable.strings in Resources */,
 				002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */,
+				00C3F14415529731004252EB /* Default.png in Resources */,
+				00C3F14615529735004252EB /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
