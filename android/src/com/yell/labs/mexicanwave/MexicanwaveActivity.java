@@ -13,6 +13,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -44,6 +46,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		
 	ImageView waveCompass;
 	private Animation rotateAnimation;
+	
+	private PowerManager powerManager;
+	private WakeLock wakeLock;
 	
 	private SharedPreferences prefs;
 	private float waveDuration;
@@ -86,6 +91,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mySensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         
+        // don't let it dim whilst being used
+        powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "WakeLockTag");
+        
         // Omniture
         s = new AppMeasurement(getApplication());
         s.account = "yelllabsdev";
@@ -97,6 +106,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         to how your visitor data is collected.  Changes should only be made
         when instructed to do so by your account manager.*/
         s.trackingServer = "yellgroup.122.2o7.net";
+        
     }
     
 	@Override
@@ -110,6 +120,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME  );
     	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME );
     	// Debug.startMethodTracing("mexicanwave");
+
+        s.pageName = "android/MexicanWave";
+        s.channel = "android/MexicanWave";
+        s.track();
+        
+
+    	wakeLock.acquire();
     }
  
 	@Override
@@ -120,6 +137,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     	mySensorManager.unregisterListener(this);
     	roarHandler.calmDown();
         mSurface.releaseCamera();
+        
+        wakeLock.release();
     }
 
 	@Override

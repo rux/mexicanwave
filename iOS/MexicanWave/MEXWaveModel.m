@@ -99,6 +99,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 }
 
 - (void)cancelWave {
+    
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(waveDidPassOurBearing) object:nil];
 }
 
@@ -110,7 +111,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
         return;
     }
     
-    const float timeToNextWave = self.wavePeriodInSeconds * (0.99 - self.wavePhase);
+    const float timeToNextWave = self.wavePeriodInSeconds * (0.998 - self.wavePhase);
     [self performSelector:@selector(waveDidPassOurBearing) withObject:nil afterDelay:timeToNextWave];
 }
 

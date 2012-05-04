@@ -10,7 +10,6 @@
 #import "MEXWaveModel.h"
 #import "MEXWaveFxView.h"
 #import "MEXCrowdTypeSelectionControl.h"
-#import "MEXLegacyTorchController.h"            // TODO: Remove this once support for iOS 4.x is not a concern.
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "UsageMetrics.h"
@@ -24,7 +23,6 @@
 #define kShownHintToUser @"kShownHintToUser"
 
 @interface MEXWavingViewController ()
-@property (nonatomic,retain) MEXLegacyTorchController* legacyTorchController;
 @property (nonatomic) SystemSoundID waveSoundID;
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
@@ -42,7 +40,6 @@
 @synthesize advertController;
 @synthesize btnCamera;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
-@synthesize legacyTorchController;
 @synthesize waveSoundID,paused;
 
 - (MEXWaveModel*)waveModel {
@@ -102,29 +99,17 @@
     }
 }
 
-
 #pragma mark - Torch handling
 
 - (void)torchOff {
-    if(self.legacyTorchController) {
-        // iOS 4.x
-        [self.legacyTorchController torchOff];
-        return;        
-    }
-    // iOS 5+
+      // iOS 5+
     [self setTorchMode:AVCaptureTorchModeOff];
 }
 
 - (void)torchOn { 
-    if(self.legacyTorchController) {
-        // iOS 4.x
-        [self.legacyTorchController torchOn];
-    }
-    else {
-        // iOS 5+
-        [self setTorchMode:AVCaptureTorchModeOn];
-    }
-        
+  
+    [self setTorchMode:AVCaptureTorchModeOn];
+    
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kTorchOnTime * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self torchOff];
@@ -170,7 +155,6 @@
     
     //as the main view is now visable stop animating the help guide on the settings view
     [self.settingView.speedView stopAnimating];
-
     
 }
 
@@ -185,6 +169,16 @@
         return;
     }
     
+    const float duration = (self.waveModel.crowdType == kMEXCrowdTypeStadium) ? 0.5 : 0.2;
+    //animate the screen flash
+    [UIView animateWithDuration:duration animations:^{
+        self.whiteFlashView.alpha = 1; 
+    }completion:^(BOOL finished) {
+        [UIView animateWithDuration:duration animations:^{
+            self.whiteFlashView.alpha = 0;            
+        }];
+    }];
+    
     // Flash the torch
     [self torchOn];
 
@@ -197,27 +191,11 @@
     if(self.isSoundOnWaveEnabled) {
         AudioServicesPlaySystemSound(self.waveSoundID);
     }
-
-    
-    const float duration = (self.waveModel.crowdType == 2) ? 0.5 : 0.2;
-        //animate the screen flash
-    [UIView animateWithDuration:duration animations:^{
-            self.whiteFlashView.alpha = 1; 
-    }completion:^(BOOL finished) {
-            [UIView animateWithDuration:duration animations:^{
-                self.whiteFlashView.alpha = 0;            
-            }];
-    }];
+   
     
 }
 
 #pragma mark - Controller lifecycle
-
-- (void)awakeFromNib {
-    if(!self.legacyTorchController && [MEXLegacyTorchController isLegacySystem]) {
-        self.legacyTorchController = [[[MEXLegacyTorchController alloc] init] autorelease];
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -233,7 +211,6 @@
     AudioServicesDisposeSystemSoundID(waveSoundID);
     [waveModel release];
     [waveView release];
-    [legacyTorchController release];
     [containerView release];
     [settingView release];
     [tabImageView release];
