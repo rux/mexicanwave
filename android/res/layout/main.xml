@@ -18,14 +18,18 @@
         android:layout_height="1dp"
         android:background="#000"/>
         
+    
+    
+    
+    
     <ImageView
         android:id="@+id/spinningDisc"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_centerInParent="true"
-        android:src="@drawable/wave_disc"
-        android:contentDescription="@string/radarImageDescription" />
-    
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/debugText1"
+        android:contentDescription="@string/radarImageDescription"
+        android:src="@drawable/wave_disc" />
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="wrap_content"
@@ -33,6 +37,10 @@
         android:layout_centerInParent="true"
         android:src="@drawable/background"
         android:contentDescription="@string/backgroundImageDescription" />
+    
+    
+    
+    
 
     <View
         android:id="@+id/screenFlash"
@@ -61,4 +69,8 @@
         android:text="compass debug"
         />
 
+    
+    
+
+    
 </RelativeLayout>
