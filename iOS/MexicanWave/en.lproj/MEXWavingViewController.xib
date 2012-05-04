@@ -41,7 +41,7 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="310183317">
 						<reference key="NSNextResponder" ref="1002267159"/>
-						<int key="NSvFlags">274</int>
+						<int key="NSvFlags">-2147483374</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUITableView" id="437127057">
 								<reference key="NSNextResponder" ref="310183317"/>
@@ -4872,7 +4872,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUIImageView" id="595236571">
 								<reference key="NSNextResponder" ref="191373211"/>
-								<int key="NSvFlags">274</int>
+								<int key="NSvFlags">-2147483374</int>
 								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
@@ -4921,7 +4921,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">background_Camera.png</string>
+									<string key="NSResourceName">newBackground.png</string>
 								</object>
 							</object>
 							<object class="IBUIView" id="957085552">
@@ -5864,9 +5864,9 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="Yell-Advert.png">{36, 60}</string>
 			<string key="background.png">{320, 460}</string>
-			<string key="background_Camera.png">{320, 460}</string>
 			<string key="camera.png">{35, 29}</string>
 			<string key="circleBackground.png">{70, 70}</string>
+			<string key="newBackground.png">{320, 480}</string>
 			<string key="tab.png">{21, 47}</string>
 			<string key="tab_lines.png">{33, 33}</string>
 		</dictionary>
