@@ -102,7 +102,7 @@ class RoarHandler {
 	             //Log.i("MexicanWaveNtp", String.valueOf(ntpTime) + ".... new Time");
 	            timeDifference = ntpTime - System.currentTimeMillis();
 	        } else {
-	        	// Log.i("MexicanWave", "***** **** *** ** * no NTP time from " + timeServer);
+	        	Log.e("MexicanWaveNtp", "no NTP time from " + timeServer);
 	        }
 			return timeDifference;
 		}
@@ -145,8 +145,8 @@ class RoarHandler {
 		double newx = Math.sin(newAzimuth);
 		double newy = Math.cos(newAzimuth);
 
-		double x = 69*oldx + newx;
-		double y = 69*oldy + newy;
+		double x = 69.0*oldx + newx;
+		double y = 69.0*oldy + newy;
 		
 		azimuth = (float) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
 	}
@@ -164,7 +164,7 @@ class RoarHandler {
 		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
 		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
-		// Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
+		//Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
 		
 		
 		float offsetDegrees =  ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
@@ -226,8 +226,8 @@ class RoarHandler {
 				soundPool.play(soundId, volume, volume, 1, 0, 1f);
 			}
 			
-			//getNtpTime ntpTime = new getNtpTime();
-			//ntpTime.execute(timeServer);
+			getNtpTime ntpTime = new getNtpTime();
+			ntpTime.execute(timeServer);
 			
 			currentlyRoaring = true;
 			
