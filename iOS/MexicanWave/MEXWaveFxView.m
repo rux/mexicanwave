@@ -24,7 +24,7 @@
 @implementation MEXWaveFxView
 
 @synthesize lampViews,paused;
-
+@synthesize waveImageView;
 #pragma mark - Lifecycle
 
 - (id)initWithFrame:(CGRect)frame {
@@ -44,6 +44,7 @@
 }
 
 - (void)dealloc {
+    [waveImageView release];    
     [lampViews release];
     [super dealloc];
 }
@@ -62,48 +63,51 @@
 }
 
 - (void)configureLamps {
-    NSArray* angles = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0f],[NSNumber numberWithFloat:0.24f],[NSNumber numberWithFloat:0.48f],[NSNumber numberWithFloat:0.68f],[NSNumber numberWithFloat:0.815f],[NSNumber numberWithFloat:0.896f],[NSNumber numberWithFloat:0.945f],[NSNumber numberWithFloat:0.98f],[NSNumber numberWithFloat:0.995f],[NSNumber numberWithFloat:1.0f],[NSNumber numberWithFloat:-0.995f],[NSNumber numberWithFloat:-0.98f],[NSNumber numberWithFloat:-0.945f],[NSNumber numberWithFloat:-0.896f],[NSNumber numberWithFloat:-0.815f],[NSNumber numberWithFloat:-0.68f],[NSNumber numberWithFloat:-0.48f],[NSNumber numberWithFloat:-0.24f],nil];
-
-    NSMutableArray* newLamps = [[NSMutableArray alloc] initWithCapacity:angles.count];
+    // TEST
+    const CGSize viewSize = self.waveImageView.bounds.size;
     
-    [angles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        MEXLampView* oneNewLamp = [[MEXLampView alloc] initWithFrame:CGRectZero];
-        [self addSubview:oneNewLamp];
-        [newLamps addObject:oneNewLamp];
-        [oneNewLamp release];        
-
-        const float oneAngle = [obj floatValue];
-        
-        const CGFloat scaleFactor = self.bounds.size.width / kDefaultWidth;
-        const CGAffineTransform scaleTx = CGAffineTransformMakeScale(scaleFactor, scaleFactor);
-        oneNewLamp.center = CGPointApplyAffineTransform([self positionOnProjectedCircleForAngle:oneAngle center:CGPointMake(158.0f, 155.0f)], scaleTx);
-        oneNewLamp.transform = scaleTx;
-        oneNewLamp.bulbScale = [self scaleFactorOnProjectedCircleForAngle:oneAngle];
-        
-        
-    }];
+    const CGFloat nearPlaneDistance = viewSize.width / (2.0f * tanf(0.5f*120.0f));
+    // 120 degrees Field Of View angle
+    CATransform3D perspectiveTransform = CATransform3DIdentity;
+    perspectiveTransform.m11 = nearPlaneDistance / viewSize.width;
+    perspectiveTransform.m22 = nearPlaneDistance / viewSize.height;
+    perspectiveTransform.m33 = -1.0f;
+    perspectiveTransform.m43 = -1.0f;
+    perspectiveTransform.m34 = -2.0f*nearPlaneDistance;
     
-    self.lampViews = newLamps;
-    [newLamps release];
+    
+    CATransform3D discOrientTransform = CATransform3DMakeRotation(0.0f * M_PI/180.0f, 0.0f, 0.0f, 1.0f);
+    // Spin the image around the plane over time
+    discOrientTransform = CATransform3DRotate(discOrientTransform, 40.0f * M_PI/180.0f, 1.0f, 0.0f, 0.0f);
+    // 40 degree rotation away from face-on
+    discOrientTransform = CATransform3DConcat(perspectiveTransform, discOrientTransform);
+    
+    self.waveImageView.layer.transform = discOrientTransform;   
 
 }
 
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)startingPhase numberOfPeaks:(NSUInteger)peaksPerCycle {
-
-    const NSUInteger numberOfLamps = self.lampViews.count;
-    [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        MEXLampView* oneLamp = (MEXLampView*)obj;
-        const float phase = (float)(idx * peaksPerCycle) / (float)numberOfLamps + startingPhase;   
-        [oneLamp animateGlowWithCycleTime:duration activeTime:kActiveTime/(NSTimeInterval)peaksPerCycle phase:phase];
-    }];
-
+   
+    [self.waveImageView.layer removeAllAnimations];
+    
+    CABasicAnimation* animation;
+    animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    
+    animation.fromValue = [NSNumber numberWithFloat:0];
+    animation.toValue = [NSNumber numberWithFloat:2.0 * M_PI];
+    animation.duration = 1.0;
+    animation.removedOnCompletion = NO;
+    animation.repeatCount = HUGE_VALF;    // Repeat forever           
+    animation.speed = 1.0/duration;
+    animation.timeOffset = startingPhase;
+    [self.waveImageView.layer addAnimation:animation forKey:@"transform.rotation.z"];
+    
 }
 
 -(void)pauseAnimations{
-    [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        MEXLampView* oneLamp = (MEXLampView*)obj;
-        [oneLamp pauseAnimation];
-    }];
+    const CFTimeInterval timeAtPause = CACurrentMediaTime();
+    self.waveImageView.layer.speed = 0;
+    self.waveImageView.layer.timeOffset = timeAtPause;
     self.paused = YES;
 
 }
@@ -111,18 +115,16 @@
     if(!self.isPaused){
         return;
     }
-    [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        MEXLampView* oneLamp = (MEXLampView*)obj;
-        [oneLamp resumeAnimation];
-    }];
-    
+    CFTimeInterval pausedTime = [self.waveImageView.layer timeOffset];
+    self.waveImageView.layer.speed = 1.0;
+    self.waveImageView.layer.timeOffset = 0.0;
+    self.waveImageView.layer.beginTime = 0.0;
+    CFTimeInterval timeSincePause = [self.waveImageView.layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+    self.waveImageView.layer.beginTime = timeSincePause;
     self.paused = NO;
 }
 - (void)cancelAnimations{
-    [self.lampViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        MEXLampView* oneLamp = (MEXLampView*)obj;
-        [oneLamp.layer removeAllAnimations];
-    }];
+    [self.waveImageView.layer removeAllAnimations];
     self.paused = NO;
 
 }
