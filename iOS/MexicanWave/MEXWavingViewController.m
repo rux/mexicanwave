@@ -276,6 +276,10 @@
       
     [swipeRight release];
     [swipeLeft release];
+    
+   // self.videoView.layer.cornerRadius = 30.0f;
+    
+    
 }
 
 - (void)viewDidUnload {
