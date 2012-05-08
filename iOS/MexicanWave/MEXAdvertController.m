@@ -42,11 +42,11 @@
     self.advertButton.hidden = !showLink;    
     [[UsageMetrics sharedInstance] didShowMainPageWithDownloadLink:showLink];
     
-    
+    //animate out the text to the user and animate in the Yell advert button
   [UIView animateWithDuration:0.8 delay:7.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
       hintTextLabel.alpha = 0; 
   } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.6 animations:^{
+        [UIView animateWithDuration:0.8 animations:^{
                 advertButton.alpha = 1;
         }];
   }];
