@@ -7,7 +7,6 @@
 //
 
 #import "MEXWaveFxView.h"
-#import "MEXLampView.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define kDefaultWidth 320.0f
@@ -15,15 +14,13 @@
 #define kActiveTime 0.5
 
 @interface MEXWaveFxView ()
-@property (nonatomic,retain,readwrite) NSArray* lampViews;
-
-- (void)configureLamps;
+- (void)configureWave;
 @end
 
 
 @implementation MEXWaveFxView
 
-@synthesize lampViews,paused;
+@synthesize paused;
 @synthesize waveImageView;
 #pragma mark - Lifecycle
 
@@ -31,7 +28,7 @@
     if(!(self = [super initWithFrame:frame])) {
         return nil;
     }
-    [self configureLamps];
+    [self configureWave];
     return self;
 }
 
@@ -39,30 +36,18 @@
     if(!(self = [super initWithCoder:aDecoder])) {
         return nil;
     }
-    [self configureLamps];
+    [self configureWave];
     return self;
 }
 
 - (void)dealloc {
     [waveImageView release];    
-    [lampViews release];
     [super dealloc];
 }
 
 #pragma mark - Configuration
 
-#define SIGN(x) ((x) < 0.0f ? -1.0f : 1.0f)
-
-- (CGPoint)positionOnProjectedCircleForAngle:(float)angle center:(CGPoint)center {
-    const float y = 132.0f*2.0f*(fabsf(angle) - 0.5f);
-    return CGPointMake(center.x + SIGN(angle)*sqrtf(132.0f*132.0f - y*y), center.y - y);
-}
-
-- (CGFloat)scaleFactorOnProjectedCircleForAngle:(float)fractionalAngle {
-    return (76.0f/128.0f) * (1.0f - fabsf(fractionalAngle)*0.86);    
-}
-
-- (void)configureLamps {
+- (void)configureWave {
     // TEST
     const CGSize viewSize = self.waveImageView.bounds.size;
     
@@ -86,7 +71,7 @@
 
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)startingPhase numberOfPeaks:(NSUInteger)peaksPerCycle {
    
-    [self.waveImageView.layer removeAllAnimations];
+    [self cancelAnimations];
     
     CABasicAnimation* animation;
     animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
