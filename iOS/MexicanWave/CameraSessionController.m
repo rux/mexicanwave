@@ -28,7 +28,6 @@
 @property (nonatomic) dispatch_queue_t queueForSessionControl;	// Used internally to avoid blocking the main thread when starting or stopping the capture session.
 @property (nonatomic) dispatch_queue_t queueForFrameDelivery;     // Used to deliver frames to outputDelegate.
 
-
 - (BOOL)configureCaptureChain;	/// If a device is available, tie it into the capture session if necessary and start the session running if possible.
 - (void)configureDevicePreferences;	/// Set preferences including autofocus etc on active device.
 - (void)deviceAvailabilityDidChange:(NSNotification*)notification; /// Called when device availability changes.
@@ -58,10 +57,14 @@
 			if(!videoLayer) {
 				self.videoLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.captureSession];
 				self.videoLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-			}
-			
+       			}
+            
+            //Modify the bounds and radius of the camera view corners to match the gap in middle of application.
+			self.videoLayer.frame = cameraView.bounds;
 			[cameraView.layer addSublayer:videoLayer];
-			self.videoLayer.frame = cameraView.layer.bounds;
+            cameraView.clipsToBounds =YES;
+            cameraView.layer.cornerRadius = 94.0f;
+
 		}
 	}
 }
@@ -241,7 +244,7 @@
 		[self release], self = nil;
 		return nil;
 	}
-    
+       
 	// Common ivars
 	// Setup default device preferences.
 	autoFocusEnabled = YES;

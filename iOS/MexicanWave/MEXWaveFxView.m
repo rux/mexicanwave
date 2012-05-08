@@ -67,6 +67,8 @@
     // 40 degree rotation away from face-on
     discOrientTransform = CATransform3DConcat(perspectiveTransform, discOrientTransform);
     
+    self.waveImageView.layer.transform = discOrientTransform;   
+    
 }
 
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)startingPhase numberOfPeaks:(NSUInteger)peaksPerCycle {
@@ -84,8 +86,6 @@
     animation.speed = 1.0/duration;
     animation.timeOffset = startingPhase;
     [self.waveImageView.layer addAnimation:animation forKey:@"transform.rotation.z"];
-          
-    
 }
 
 -(void)pauseAnimations{
