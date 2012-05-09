@@ -7,8 +7,8 @@
 //
 
 #import "SharePhotoViewController.h"
-
 @implementation SharePhotoViewController
+@synthesize progressView;
 @synthesize snapshotImageView,takenphoto;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,7 +43,13 @@
     [share release];
     
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+   
+    //Set up the HUD for when the user saves a photo - this show a progress via whilst saving the photo.
+    progressView = [[ProgressView alloc]initWithFrame:CGRectMake(0, 0, 120, 120)];
+    progressView.center = CGPointMake(self.view.frame.size.width*0.5, self.view.frame.size.height*0.5);
+    progressView.customImage = [UIImage imageNamed:@"tick"];
+    [self.view addSubview:progressView];
+       
 }
 
 -(void)didTapCancel:(id)sender{
@@ -56,7 +62,10 @@
     [alert release];
 }
 -(void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+
     if(buttonIndex != alertView.cancelButtonIndex){
+        progressView.titleText = NSLocalizedString(@"Saving", @"Title Shown When saving to camera roll");
+        [progressView showWithAnimation:YES];
         UIImageWriteToSavedPhotosAlbum(self.takenphoto, self, 
                                        @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
@@ -67,17 +76,22 @@
     // Was there an error?
     if (error)
     {
-        // Show error message...
-        
+        [progressView hideWithAnimatiom:NO];
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Save Error", @"Title of saving photo error")  message:NSLocalizedString(@"An error saving your photo has occured. Please try again",@"Message body of saving photo error") delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok",@"Dismiss button of alert view") otherButtonTitles:nil];
+        [alert show];
+        [alert release];
     }
     else  // No errors
     {
-        [self didTapCancel:nil];
+        progressView.titleText = NSLocalizedString(@"Save Successful", @"Completed message shown when save was completed");
+        [progressView changeMode:kProgressModeImage];
+        [progressView hideWithAnimatiom:YES withDelay:0.8];
     }
 }
 - (void)viewDidUnload
 {
     [self setSnapshotImageView:nil];
+    [self setProgressView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -92,6 +106,7 @@
 - (void)dealloc {
     [takenphoto release];
     [snapshotImageView release];
+    [progressView release];
     [super dealloc];
 }
 @end
