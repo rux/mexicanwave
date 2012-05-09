@@ -28,6 +28,7 @@ class RoarHandler {
 	private PreviewSurface mSurface;
 	public boolean cameraReady;	
 	public boolean currentlyRoaring;
+	public boolean isFlat;
 	public int waveCount;
 	public float azimuth;
 	private float waveDuration;
@@ -56,6 +57,7 @@ class RoarHandler {
         this.setWaveColor(wC);
         soundEnabled = sE;
         vibrationEnabled =vE;
+        isFlat = false;
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -210,7 +212,9 @@ class RoarHandler {
 	
 	public void goWild() {
 		
-		if (currentlyRoaring != true && cameraReady) {			
+		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
+			
+			
 			mSurface.lightOn();
 			if (vibrationEnabled) {
 				vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.

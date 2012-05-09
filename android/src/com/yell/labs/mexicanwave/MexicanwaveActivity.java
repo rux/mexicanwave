@@ -235,10 +235,12 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					// Log.i("MexicanWave", " ##### Z Gravity is " + String.valueOf(averageZGravity) + " raw is " + String.valueOf( Math.min(Math.abs(myGravities[2]), 9.80665f)));
 					if (Math.abs(averageZGravity) > 9 ) {
 						// device is too flat
+						roarHandler.isFlat = true;
 						warning.setVisibility(View.VISIBLE);
 					}
 					if (Math.abs(averageZGravity) < 8 ) {
 						// device is now OK
+						roarHandler.isFlat = false;
 						warning.setVisibility(View.INVISIBLE);
 					}
 				}
