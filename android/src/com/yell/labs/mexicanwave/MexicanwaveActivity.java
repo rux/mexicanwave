@@ -41,7 +41,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private float[] myGravities;
 	private float[] myMagnetics;
 	private float averageZGravity;
-	private float azimuth;
+	private double azimuth;
 	private PreviewSurface mSurface;
 		
 	ImageView waveCompass;
@@ -123,9 +123,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
     protected void onResume() {
     	super.onResume();
-    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME  );
-    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME );
-    	// Debug.startMethodTracing("mexicanwave");
+    	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI  );
+    	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI );
+    	 Debug.startMethodTracing("mexicanwave");
 
         s.pageName = "android/MexicanWave";
         s.channel = "android/MexicanWave";
@@ -138,7 +138,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
     protected void onPause() {
 
-    	// Debug.stopMethodTracing();
+    	 Debug.stopMethodTracing();
     	super.onPause();
     	mySensorManager.unregisterListener(this);
     	roarHandler.calmDown();
@@ -204,7 +204,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					
 	
 												// 
-					azimuth = (float) Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
+					azimuth = (double) Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
 																	// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
 																	// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
 																	// held up to do a Mexican wave, we don't really care about this state.

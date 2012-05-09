@@ -26,7 +26,6 @@
         android:id="@+id/spinningDisc"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/debugText1"
         android:contentDescription="@string/radarImageDescription"
         android:src="@drawable/wave_disc" />

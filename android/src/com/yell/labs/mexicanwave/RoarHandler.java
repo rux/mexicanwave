@@ -30,7 +30,7 @@ class RoarHandler {
 	public boolean currentlyRoaring;
 	public boolean isFlat;
 	public int waveCount;
-	public float azimuth;
+	public double azimuth;
 	private float waveDuration;
 	private int waveColor;
 	public boolean vibrationEnabled;
@@ -137,7 +137,7 @@ class RoarHandler {
 		}
 	}
 	
-	private void setAzimuth(float a) {
+	private void setAzimuth(double a) {
 		double oldAzimuth = (double) azimuth;
 		double newAzimuth = (double) a;
 		
@@ -150,10 +150,10 @@ class RoarHandler {
 		double x = 69.0*oldx + newx;
 		double y = 69.0*oldy + newy;
 		
-		azimuth = (float) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
+		azimuth = (double) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
 	}
 	
-	public float getAzimuth() {
+	public double getAzimuth() {
 		return azimuth;
 	}
 	public int getAzimuthInDegrees() {
@@ -163,9 +163,9 @@ class RoarHandler {
 
 	public long getWaveOffestFromAzimuthInDegrees() {
 		long milliseconds = (long) ((System.currentTimeMillis() + timeOffset) % 60000);
-		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
+		// milliseconds is a long that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
-		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
+		// SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
 		//Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
 		
 		
@@ -177,7 +177,7 @@ class RoarHandler {
 		return (long) offsetDegrees;
 	}
 	
-    void update(float azimuth) {
+    void update(double azimuth) {
 		this.setAzimuth(azimuth);  // we do the maths for smoothing in here
 		
 		// float averageAzimuth = this.getAzimuthInDegrees();
