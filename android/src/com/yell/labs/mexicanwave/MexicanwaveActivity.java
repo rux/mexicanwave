@@ -179,12 +179,26 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 			if (success) {
 				
-				// check the magnitude of magnetometers - too many crazy results means we need to calibrate
+				// check the magnitude of magnetometers
 				int magneticFieldStrength = (int) (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
-				// Log.i("MexicanWaveMagnets", " magneticFieldStrength " +  magneticFieldStrength );
+				// Log.i("MexicanWaveMagnets", " magneticFieldStrength = " +  magneticFieldStrength );
 				
-				if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ages in the UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field)
-					Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference." + String.valueOf(magneticFieldStrength)  );
+				// check the magnitude of magnetometers
+				int gravityFieldStrength = (int) (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
+				// Log.i("MexicanWaveGravity", " gravityFieldStrength = " +  gravityFieldStrength );
+				
+
+				if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ranges in the UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field)
+					// it is possible to end up here thanks to bad sensor systems in the device, notably Samsung devices.
+					// Occasionally, the myMagnetics array gets filled with sensor readings from the accelerometer ( eg [0,0,9.81] ).
+					// This is clearly wrong, so if we get readings in that ballpark, ie magnitude of about 10, we can clearly
+					// just drop it.
+					Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
+				} else if (gravityFieldStrength < 5 || gravityFieldStrength > 15) {
+					// this will happen when the crazy Samsung sensors give the magnetic sensors to the gravity array.
+					// Also, this will happen if there's too much movement or if the person is in freefall, both of which mean
+					// that we shouldn't be using the values.
+					Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
 				} else {
 				
 					
