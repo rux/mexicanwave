@@ -28,8 +28,9 @@ class RoarHandler {
 	private PreviewSurface mSurface;
 	public boolean cameraReady;	
 	public boolean currentlyRoaring;
+	public boolean isFlat;
 	public int waveCount;
-	public float azimuth;
+	public double azimuth;
 	private float waveDuration;
 	private int waveColor;
 	public boolean vibrationEnabled;
@@ -56,6 +57,7 @@ class RoarHandler {
         this.setWaveColor(wC);
         soundEnabled = sE;
         vibrationEnabled =vE;
+        isFlat = false;
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -135,7 +137,7 @@ class RoarHandler {
 		}
 	}
 	
-	private void setAzimuth(float a) {
+	public void setAzimuth(double a) {
 		double oldAzimuth = (double) azimuth;
 		double newAzimuth = (double) a;
 		
@@ -148,10 +150,10 @@ class RoarHandler {
 		double x = 69.0*oldx + newx;
 		double y = 69.0*oldy + newy;
 		
-		azimuth = (float) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
+		azimuth = (double) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
 	}
 	
-	public float getAzimuth() {
+	public double getAzimuth() {
 		return azimuth;
 	}
 	public int getAzimuthInDegrees() {
@@ -161,9 +163,9 @@ class RoarHandler {
 
 	public long getWaveOffestFromAzimuthInDegrees() {
 		long milliseconds = (long) ((System.currentTimeMillis() + timeOffset) % 60000);
-		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
+		// milliseconds is a long that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
-		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
+		// SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
 		//Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
 		
 		
@@ -175,19 +177,10 @@ class RoarHandler {
 		return (long) offsetDegrees;
 	}
 	
-    void update(float azimuth) {
-		this.setAzimuth(azimuth);  // we do the maths for smoothing in here
-		
-		// float averageAzimuth = this.getAzimuthInDegrees();
-    	//float waveOffset = this.getWaveOffestFromAzimuthInDegrees();
-		//Log.i("MexicanWave", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
-		this.check();
-    }	
 		
 	public void check() {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
 		if (angle > 175 && angle < 185) {
-
 			goWild();
 		} else {
 			calmDown();
@@ -210,7 +203,9 @@ class RoarHandler {
 	
 	public void goWild() {
 		
-		if (currentlyRoaring != true && cameraReady) {			
+		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
+			
+			
 			mSurface.lightOn();
 			if (vibrationEnabled) {
 				vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
