@@ -62,10 +62,16 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	private TextView debugText;
 	
+	
+	private static boolean PRODUCTION_VERSION;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        
+        PRODUCTION_VERSION = false;
+        
         
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
@@ -158,69 +164,84 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+		int sensorType = event.sensor.getType();
+		
+		if (sensorType == Sensor.TYPE_ACCELEROMETER) {
 			myGravities = event.values;
 		}
-		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+		if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
 			myMagnetics = event.values;
 		}
 		
-		if (myGravities != null && myMagnetics != null) {
+		if ((sensorType == Sensor.TYPE_MAGNETIC_FIELD || sensorType == Sensor.TYPE_ACCELEROMETER) && myGravities != null && myMagnetics != null) {
 			float Ro[] = new float[9];
 			float I[] = new float[9];
 			boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 			if (success) {
-
-											// 
-				azimuth = (float) Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
-																// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
-																// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
-																// held up to do a Mexican wave, we don't really care about this state.
 				
-				int oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
+				// check the magnitude of magnetometers - too many crazy results means we need to calibrate
+				int magneticFieldStrength = (int) (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
+				// Log.i("MexicanWaveMagnets", " magneticFieldStrength " +  magneticFieldStrength );
 				
-				roarHandler.update(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
+				if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ages in the UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field)
+					Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference." + String.valueOf(magneticFieldStrength)  );
+				} else {
 				
-				int newAzimuth = roarHandler.getAzimuthInDegrees();
-				long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
+					
+	
+												// 
+					azimuth = (float) Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
+																	// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
+																	// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
+																	// held up to do a Mexican wave, we don't really care about this state.
+					
+					int oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
+					
+	//				roarHandler.update((float) Math.PI);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
+					roarHandler.update(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
+					
+					int newAzimuth = roarHandler.getAzimuthInDegrees();
+					long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
+					
+					debugText.setText( "Smoothed " + String.valueOf(newAzimuth) + " - Raw " + String.valueOf(azimuth * 180 / Math.PI));
 				
-				debugText.setText( "Smoothed " + String.valueOf(newAzimuth));
-			
-				
-				rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
-				rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
-				waveCompass.startAnimation(rotateAnimation);
-				
-				if (cameraIsInitialised != true ) {
-					if (roarHandler.getWhetherCameraIsReady() == true) {
-						view.setBackgroundColor(Color.TRANSPARENT);
-						cameraIsInitialised = true;
+					
+					rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
+					rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
+					waveCompass.startAnimation(rotateAnimation);
+					
+					if (cameraIsInitialised != true ) {
+						if (roarHandler.getWhetherCameraIsReady() == true) {
+							view.setBackgroundColor(Color.TRANSPARENT);
+							cameraIsInitialised = true;
+						}
+					}
+					
+	
+	
+					
+					
+					
+					
+					
+					// The way we calculate the vector for direction does not work well when the phone is flat,
+					// so we first check to make sure that we've not got the z-axis of the device aligned 
+					// to the gravity of Earth.  I have made the assumption, as is evidenced by my choice
+					// of 9.80665m/s^2, that we won't be using this app on any other planets.
+					// TODO - make this work on other planets.
+					
+					averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loved to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
+	
+					// Log.i("MexicanWave", " ##### Z Gravity is " + String.valueOf(averageZGravity) + " raw is " + String.valueOf( Math.min(Math.abs(myGravities[2]), 9.80665f)));
+					if (Math.abs(averageZGravity) > 9 ) {
+						// device is too flat
+						warning.setVisibility(View.VISIBLE);
+					}
+					if (Math.abs(averageZGravity) < 8 ) {
+						// device is now OK
+						warning.setVisibility(View.INVISIBLE);
 					}
 				}
-				
-
-
-				
-				
-				
-				// The way we calculate the vector for direction does not work well when the phone is flat,
-				// so we first check to make sure that we've not got the z-axis of the device aligned 
-				// to the gravity of Earth.  I have made the assumption, as is evidenced by my choice
-				// of 9.80665m/s^2, that we won't be using this app on any other planets.
-				// TODO - make this work on other planets.
-				
-				averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loved to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
-
-				// Log.i("info", " ##### Z Gravity is " + String.valueOf(averageZGravity) + " raw is " + String.valueOf( Math.min(Math.abs(myGravities[2]), 9.80665f)));
-				if (Math.abs(averageZGravity) > 9 ) {
-					// device is too flat
-					warning.setVisibility(View.VISIBLE);
-				}
-				if (Math.abs(averageZGravity) < 8 ) {
-					// device is now OK
-					warning.setVisibility(View.INVISIBLE);
-				}
-
 			}
 			
 		}
@@ -270,6 +291,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 
 		if (key.equals("pref_vibration")) {
 			vibrationEnabled = prefs.getBoolean(key, true);
+			Log.i("Mex", String.valueOf(vibrationEnabled));
 			roarHandler.vibrationEnabled = vibrationEnabled;
 		}
 	}

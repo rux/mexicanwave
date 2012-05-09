@@ -1,10 +1,15 @@
 package com.yell.labs.mexicanwave;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
+import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +18,8 @@ import android.view.SurfaceView;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+
+
 
 class RoarHandler {
 	private Context context;
@@ -34,6 +41,9 @@ class RoarHandler {
 	
 	private Animation flashAnim;
 	
+	private SntpClient sntpClient;
+	private final String timeServer;
+	private long timeOffset;
 	
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, float wD, int wC, boolean sE, boolean vE) {
@@ -68,14 +78,50 @@ class RoarHandler {
 				screenFlash.setBackgroundColor(Color.TRANSPARENT);
 			}
 		});
- 
+
+        timeOffset = 0;
+        timeServer = "0.pool.ntp.org";
+        getNtpTime ntpTime = new getNtpTime();
+        ntpTime.execute(timeServer);
+        
+        
+        
         currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
 	}
 	
 
+	private class getNtpTime extends AsyncTask<String, Void, Long> {
+		@Override
+		protected Long doInBackground(String... params) {
+	        sntpClient = new SntpClient();
+	        Long ntpTime = (long) 0;
+	        Long timeDifference = (long) 0;
+	        if (sntpClient.requestTime(timeServer, 5000) ) {
+	        	ntpTime = sntpClient.getNtpTime();
+	             //Log.i("MexicanWaveNtp", String.valueOf(System.currentTimeMillis()) + ".... System Time");
+	             //Log.i("MexicanWaveNtp", String.valueOf(ntpTime) + ".... new Time");
+	            timeDifference = ntpTime - System.currentTimeMillis();
+	        } else {
+	        	Log.e("MexicanWaveNtp", "no NTP time from " + timeServer);
+	        }
+			return timeDifference;
+		}
+		
+		@Override
+		protected void onPostExecute(Long result) {
+			timeOffset = result;
+			// Log.i("MexicanWaveNtp", String.valueOf(timeOffset) + ".... offset");
+		}
+	}
+	
+	public void setSound(boolean s) {
+		soundEnabled = s;
+	}
+
 	public void setWaveDuration(float w) {
 		waveDuration = w;
-		waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
+		// waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
+		waveCount =1;
 		this.setFlash(w);
 	}
 	public void setWaveColor(int c) {
@@ -99,8 +145,8 @@ class RoarHandler {
 		double newx = Math.sin(newAzimuth);
 		double newy = Math.cos(newAzimuth);
 
-		double x = 69*oldx + newx;
-		double y = 69*oldy + newy;
+		double x = 69.0*oldx + newx;
+		double y = 69.0*oldy + newy;
 		
 		azimuth = (float) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
 	}
@@ -112,13 +158,21 @@ class RoarHandler {
 		return (int) (this.azimuth*180/Math.PI);
 	}
 	
+
 	public long getWaveOffestFromAzimuthInDegrees() {
-		long milliseconds = (long) (System.currentTimeMillis() % 60000);
+		long milliseconds = (long) ((System.currentTimeMillis() + timeOffset) % 60000);
 		// milliseconds is an int that comes in the form of a number between 0 and 59999 that represents milliseconds from the last minute 'boundary'.
 		
-		long offset = (long) ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
+		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
+		//Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
+		
+		
+		float offsetDegrees =  ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
+
 		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
-		return offset;
+		 // Log.i("MexicanWave", "**()()** making with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
+		//return (int) 0;
+		return (long) offsetDegrees;
 	}
 	
     void update(float azimuth) {
@@ -126,17 +180,25 @@ class RoarHandler {
 		
 		// float averageAzimuth = this.getAzimuthInDegrees();
     	//float waveOffset = this.getWaveOffestFromAzimuthInDegrees();
-		//Log.i("info", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
+		//Log.i("MexicanWave", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
 		this.check();
     }	
 		
 	public void check() {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
-		if (angle > 160 && angle < 200) {
+		if (angle > 175 && angle < 185) {
+
 			goWild();
 		} else {
 			calmDown();
 		}
+		
+		
+		//Long correctedTime = System.currentTimeMillis() + timeOffset;
+		//SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
+		
+		// Log.i("MexicanWave", String.valueOf(angle));
+		// Log.i("MexicanWave", "** corrected time is " + String.valueOf(dateFormatGmt.format( new Date(correctedTime))));
 	}
 
 	public void setReady(boolean ready) {
@@ -163,6 +225,9 @@ class RoarHandler {
 				float volume = actualVolume / maxVolume;
 				soundPool.play(soundId, volume, volume, 1, 0, 1f);
 			}
+			
+			getNtpTime ntpTime = new getNtpTime();
+			ntpTime.execute(timeServer);
 			
 			currentlyRoaring = true;
 			
