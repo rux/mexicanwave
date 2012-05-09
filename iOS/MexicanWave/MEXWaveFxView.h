@@ -10,7 +10,6 @@
 
 @interface MEXWaveFxView : UIView
 
-@property (nonatomic,retain,readonly) NSArray* lampViews;
 @property (nonatomic,getter = isPaused) BOOL paused;
 @property (nonatomic,retain) IBOutlet UIImageView* waveImageView;
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)referenceAngle numberOfPeaks:(NSUInteger)peaksPerCycle;

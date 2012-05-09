@@ -15,8 +15,6 @@
 		002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779CD1551747E0080BAFC /* InfoPlist.strings */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
-		0046F0BA1548140C006A5683 /* userBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0B81548140B006A5683 /* userBackground.png */; };
-		0046F0BB1548140C006A5683 /* userBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0B91548140C006A5683 /* userBackground@2x.png */; };
 		0056D384153D85B7004C2BE3 /* tab_lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D382153D85B7004C2BE3 /* tab_lines.png */; };
 		0056D385153D85B7004C2BE3 /* tab_lines@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D383153D85B7004C2BE3 /* tab_lines@2x.png */; };
 		0056D388153D85D6004C2BE3 /* background_Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D386153D85D6004C2BE3 /* background_Camera.png */; };
@@ -59,8 +57,6 @@
 		00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F6A1536CAD3004BC8ED /* SBJsonParser.m */; };
 		00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F6C1536CAD3004BC8ED /* SBJsonWriter.m */; };
 		1903F3CD1510F23A00807542 /* MEXWaveFxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3CC1510F23A00807542 /* MEXWaveFxView.m */; };
-		1903F3D01510F50C00807542 /* MEXLampView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3CF1510F50B00807542 /* MEXLampView.m */; };
-		1903F3D8151236BB00807542 /* MEXCrowdTypeSelectionControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */; };
 		1967B90F1523044B00A924D5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1967B90E1523044B00A924D5 /* AudioToolbox.framework */; };
 		1967B923152320B700A924D5 /* clapping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1967B921152320B700A924D5 /* clapping.caf */; };
 		196B8E141517B58700DAD14A /* button-l.png in Resources */ = {isa = PBXBuildFile; fileRef = 196B8DF81517B58700DAD14A /* button-l.png */; };
@@ -88,7 +84,6 @@
 		196B8E2A1517B58700DAD14A /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E0E1517B58700DAD14A /* iTunesArtwork.png */; };
 		196B8E2B1517B58700DAD14A /* light-blob.png in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E0F1517B58700DAD14A /* light-blob.png */; };
 		196B8E2C1517B58700DAD14A /* light-blob@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E101517B58700DAD14A /* light-blob@2x.png */; };
-		196B8E331518937400DAD14A /* MEXSegmentButtonControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 196B8E321518937400DAD14A /* MEXSegmentButtonControl.m */; };
 		196B8E4B1518A00100DAD14A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E451518A00100DAD14A /* InfoPlist.strings */; };
 		196B8E4C1518A00100DAD14A /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E471518A00100DAD14A /* MainWindow.xib */; };
 		196B8E4D1518A00100DAD14A /* MEXWavingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 196B8E491518A00100DAD14A /* MEXWavingViewController.xib */; };
@@ -117,8 +112,6 @@
 		002779CE1551747E0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = InfoPlist.strings; sourceTree = "<group>"; };
 		0046F0AA154705E4006A5683 /* circleBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circleBackground@2x.png"; sourceTree = "<group>"; };
 		0046F0AC15470610006A5683 /* circleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleBackground.png; sourceTree = "<group>"; };
-		0046F0B81548140B006A5683 /* userBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBackground.png; sourceTree = "<group>"; };
-		0046F0B91548140C006A5683 /* userBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "userBackground@2x.png"; sourceTree = "<group>"; };
 		0056D382153D85B7004C2BE3 /* tab_lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_lines.png; sourceTree = "<group>"; };
 		0056D383153D85B7004C2BE3 /* tab_lines@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_lines@2x.png"; sourceTree = "<group>"; };
 		0056D386153D85D6004C2BE3 /* background_Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_Camera.png; sourceTree = "<group>"; };
@@ -177,10 +170,6 @@
 		00D26F6C1536CAD3004BC8ED /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		1903F3CB1510F23900807542 /* MEXWaveFxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXWaveFxView.h; sourceTree = "<group>"; };
 		1903F3CC1510F23A00807542 /* MEXWaveFxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveFxView.m; sourceTree = "<group>"; };
-		1903F3CE1510F50A00807542 /* MEXLampView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXLampView.h; sourceTree = "<group>"; };
-		1903F3CF1510F50B00807542 /* MEXLampView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXLampView.m; sourceTree = "<group>"; };
-		1903F3D6151236B800807542 /* MEXCrowdTypeSelectionControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXCrowdTypeSelectionControl.h; sourceTree = "<group>"; };
-		1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXCrowdTypeSelectionControl.m; sourceTree = "<group>"; };
 		1967B90E1523044B00A924D5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		1967B921152320B700A924D5 /* clapping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = clapping.caf; sourceTree = "<group>"; };
 		196B8DF81517B58700DAD14A /* button-l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-l.png"; sourceTree = "<group>"; };
@@ -208,8 +197,6 @@
 		196B8E0E1517B58700DAD14A /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		196B8E0F1517B58700DAD14A /* light-blob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-blob.png"; sourceTree = "<group>"; };
 		196B8E101517B58700DAD14A /* light-blob@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light-blob@2x.png"; sourceTree = "<group>"; };
-		196B8E311518937400DAD14A /* MEXSegmentButtonControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXSegmentButtonControl.h; sourceTree = "<group>"; };
-		196B8E321518937400DAD14A /* MEXSegmentButtonControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXSegmentButtonControl.m; sourceTree = "<group>"; };
 		196B8E461518A00100DAD14A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		196B8E481518A00100DAD14A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainWindow.xib; sourceTree = "<group>"; };
 		196B8E4A1518A00100DAD14A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MEXWavingViewController.xib; sourceTree = "<group>"; };
@@ -329,12 +316,6 @@
 				00C6FEE31541663400420E4B /* CameraSessionController.m */,
 				1903F3CB1510F23900807542 /* MEXWaveFxView.h */,
 				1903F3CC1510F23A00807542 /* MEXWaveFxView.m */,
-				1903F3CE1510F50A00807542 /* MEXLampView.h */,
-				1903F3CF1510F50B00807542 /* MEXLampView.m */,
-				1903F3D6151236B800807542 /* MEXCrowdTypeSelectionControl.h */,
-				1903F3D7151236B900807542 /* MEXCrowdTypeSelectionControl.m */,
-				196B8E311518937400DAD14A /* MEXSegmentButtonControl.h */,
-				196B8E321518937400DAD14A /* MEXSegmentButtonControl.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -369,8 +350,6 @@
 				00C3F15E1553DB8B004252EB /* background@2x.png */,
 				00C3F14515529735004252EB /* Default@2x.png */,
 				00C3F14315529731004252EB /* Default.png */,
-				0046F0B81548140B006A5683 /* userBackground.png */,
-				0046F0B91548140C006A5683 /* userBackground@2x.png */,
 				0046F0AC15470610006A5683 /* circleBackground.png */,
 				0046F0AA154705E4006A5683 /* circleBackground@2x.png */,
 				00C6FE66153F0AA100420E4B /* about_hand.png */,
@@ -639,8 +618,6 @@
 				00C6FE69153F0AA100420E4B /* about_hand@2x.png in Resources */,
 				0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */,
 				0046F0AD15470610006A5683 /* circleBackground.png in Resources */,
-				0046F0BA1548140C006A5683 /* userBackground.png in Resources */,
-				0046F0BB1548140C006A5683 /* userBackground@2x.png in Resources */,
 				001A663C15499E53008B00E3 /* Settings.bundle in Resources */,
 				002779B715512A530080BAFC /* Localizable.strings in Resources */,
 				002779C115513B7D0080BAFC /* Localizable.strings in Resources */,
@@ -667,9 +644,6 @@
 				199CB63214FEAAC000A16A97 /* MEXWaveModel.m in Sources */,
 				199CB63514FF84DE00A16A97 /* MEXCompassModel.m in Sources */,
 				1903F3CD1510F23A00807542 /* MEXWaveFxView.m in Sources */,
-				1903F3D01510F50C00807542 /* MEXLampView.m in Sources */,
-				1903F3D8151236BB00807542 /* MEXCrowdTypeSelectionControl.m in Sources */,
-				196B8E331518937400DAD14A /* MEXSegmentButtonControl.m in Sources */,
 				00D26F361535BE85004BC8ED /* SettingsView.m in Sources */,
 				00D26F561536C886004BC8ED /* AppUpgradeController.m in Sources */,
 				00D26F571536C886004BC8ED /* AppUpgradeModel.m in Sources */,

@@ -9,7 +9,6 @@
 #import "MEXWavingViewController.h"
 #import "MEXWaveModel.h"
 #import "MEXWaveFxView.h"
-#import "MEXCrowdTypeSelectionControl.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "UsageMetrics.h"
