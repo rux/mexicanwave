@@ -125,7 +125,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
     	super.onResume();
     	mySensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI  );
     	mySensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI );
-    	 Debug.startMethodTracing("mexicanwave");
+    	// Debug.startMethodTracing("mexicanwave");
 
         s.pageName = "android/MexicanWave";
         s.channel = "android/MexicanWave";
@@ -138,7 +138,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
     protected void onPause() {
 
-    	 Debug.stopMethodTracing();
+    	// Debug.stopMethodTracing();
     	super.onPause();
     	mySensorManager.unregisterListener(this);
     	roarHandler.calmDown();
