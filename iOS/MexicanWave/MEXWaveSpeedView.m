@@ -71,7 +71,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     self.lblLarge.text =NSLocalizedString(@"L",@"Abbreviation meaning Large for venue size");
     
     self.lblStepOne.text = NSLocalizedString(@"Step 1: Choose your venue size. ", @"Step one of how to use the app - MEXWaveSpeedView");
-    self.lblStepTwo.text = NSLocalizedString(@"Step 2: Point your phone at the centre of your venue.", @"Step two of how to use the app - MEXWaveSpeedView");
+    self.lblStepTwo.text = NSLocalizedString(@"Step 2: Point your phone at the centre of your venue and kick start the wave amongst your friends.", @"Step two of how to use the app - MEXWaveSpeedView");
     self.lblStepThree.text = NSLocalizedString(@"Step 3: Take photos and encourage others to join in.", @"Step three of how to use the app - MEXWaveSpeedView");
 
 }
