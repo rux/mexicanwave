@@ -4943,10 +4943,11 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<object class="IBUIImageView" id="777623617">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{320, 138}, {21, 47}}</string>
+								<string key="NSFrame">{{320, 138}, {36, 57}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="949464474"/>
+								<int key="IBUIContentMode">7</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
@@ -5057,7 +5058,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="NSFrame">{{35, 358}, {250, 60}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<float key="IBUIAlpha">0.0</float>
@@ -5069,13 +5069,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="IBUINormalTitle">Download the Yell.com app to start finding</string>
 								<reference key="IBUIHighlightedTitleColor" ref="737297024"/>
 								<reference key="IBUISelectedTitleColor" ref="14084161"/>
-								<reference key="IBUINormalTitleColor" ref="70361950"/>
+								<reference key="IBUINormalTitleColor" ref="737297024"/>
 								<reference key="IBUIHighlightedTitleShadowColor" ref="70361950"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="70361950"/>
-								<object class="NSColor" key="IBUINormalTitleShadowColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC45NDExNTE0OTQ2IDAuOTQxMTUxNDk0NiAwLjk0MTE1MTQ5NDYAA</bytes>
-								</object>
+								<reference key="IBUINormalTitleShadowColor" ref="70361950"/>
 								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">Yell-Advert.png</string>
@@ -5157,7 +5154,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								</object>
 							</object>
 						</array>
-						<string key="NSFrameSize">{341, 460}</string>
+						<string key="NSFrameSize">{345, 460}</string>
 						<reference key="NSSuperview" ref="1002267159"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="595236571"/>

@@ -35,7 +35,6 @@
     self.opaque = NO;
     self.alpha = 0.0;
 
-
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [activityIndicator startAnimating];
     activityIndicator.center = CGPointMake(self.frame.size.width*0.5, self.frame.size.height *0.3);
