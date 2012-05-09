@@ -137,7 +137,7 @@ class RoarHandler {
 		}
 	}
 	
-	private void setAzimuth(double a) {
+	public void setAzimuth(double a) {
 		double oldAzimuth = (double) azimuth;
 		double newAzimuth = (double) a;
 		
@@ -177,19 +177,10 @@ class RoarHandler {
 		return (long) offsetDegrees;
 	}
 	
-    void update(double azimuth) {
-		this.setAzimuth(azimuth);  // we do the maths for smoothing in here
-		
-		// float averageAzimuth = this.getAzimuthInDegrees();
-    	//float waveOffset = this.getWaveOffestFromAzimuthInDegrees();
-		//Log.i("MexicanWave", "Current smoothed azimuth is " + String.valueOf(averageAzimuth));
-		this.check();
-    }	
 		
 	public void check() {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
 		if (angle > 175 && angle < 185) {
-
 			goWild();
 		} else {
 			calmDown();

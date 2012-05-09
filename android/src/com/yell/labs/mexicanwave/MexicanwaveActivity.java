@@ -174,51 +174,51 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		}
 		
 		if ((sensorType == Sensor.TYPE_MAGNETIC_FIELD || sensorType == Sensor.TYPE_ACCELEROMETER) && myGravities != null && myMagnetics != null) {
-			float Ro[] = new float[9];
-			float I[] = new float[9];
-			boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
-			if (success) {
+			
+			
+			// check the magnitude of magnetometers
+			double magneticFieldStrength = (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
+			// Log.i("MexicanWaveMagnets", " magneticFieldStrength = " +  magneticFieldStrength );
+			
+			// check the magnitude of magnetometers
+			double gravityFieldStrength = (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
+			// Log.i("MexicanWaveGravity", " gravityFieldStrength = " +  gravityFieldStrength );
+			
+			
+			
+			if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ranges in the UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field)
+				// it is possible to end up here thanks to bad sensor systems in the device, notably Samsung devices.
+				// Occasionally, the myMagnetics array gets filled with sensor readings from the accelerometer ( eg [0,0,9.81] ).
+				// This is clearly wrong, so if we get readings in that ballpark, ie magnitude of about 10, we can clearly
+				// just drop it.
 				
-				// check the magnitude of magnetometers
-				int magneticFieldStrength = (int) (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
-				// Log.i("MexicanWaveMagnets", " magneticFieldStrength = " +  magneticFieldStrength );
-				
-				// check the magnitude of magnetometers
-				int gravityFieldStrength = (int) (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
-				// Log.i("MexicanWaveGravity", " gravityFieldStrength = " +  gravityFieldStrength );
-				
-
-				if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ranges in the UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field)
-					// it is possible to end up here thanks to bad sensor systems in the device, notably Samsung devices.
-					// Occasionally, the myMagnetics array gets filled with sensor readings from the accelerometer ( eg [0,0,9.81] ).
-					// This is clearly wrong, so if we get readings in that ballpark, ie magnitude of about 10, we can clearly
-					// just drop it.
-					Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
-				} else if (gravityFieldStrength < 5 || gravityFieldStrength > 15) {
-					// this will happen when the crazy Samsung sensors give the magnetic sensors to the gravity array.
-					// Also, this will happen if there's too much movement or if the person is in freefall, both of which mean
-					// that we shouldn't be using the values.
-					Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
-				} else {
-				
-					
-	
-												// 
-					azimuth = (double) Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
+				// Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
+			} else if (gravityFieldStrength < 5 || gravityFieldStrength > 15) {
+				// this will happen when the crazy Samsung sensors give the magnetic sensors to the gravity array.
+				// Also, this will happen if there's too much movement or if the person is in freefall, both of which mean
+				// that we shouldn't be using the values.
+				// Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
+			} else {
+			
+			
+				float Ro[] = new float[9];
+				float I[] = new float[9];
+				boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
+				if (success) {
+					azimuth = Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
 																	// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
 																	// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
 																	// held up to do a Mexican wave, we don't really care about this state.
 					
 					int oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
 					
-	//				roarHandler.update((float) Math.PI);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
-					roarHandler.update(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
+					roarHandler.setAzimuth(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
+					roarHandler.check();  // this checks to see if we should be roaring or not.
 					
 					int newAzimuth = roarHandler.getAzimuthInDegrees();
 					long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
 					
-					debugText.setText( "Smoothed " + String.valueOf(newAzimuth) + " - Raw " + String.valueOf(azimuth * 180 / Math.PI));
-				
+					// debugText.setText( "Smoothed " + String.valueOf(newAzimuth) + " - Raw " + String.valueOf(azimuth * 180 / Math.PI));
 					
 					rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
 					rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
