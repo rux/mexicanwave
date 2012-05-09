@@ -194,8 +194,8 @@ class RoarHandler {
 		}
 		
 		
-		Long correctedTime = System.currentTimeMillis() + timeOffset;
-		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
+		//Long correctedTime = System.currentTimeMillis() + timeOffset;
+		//SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
 		
 		// Log.i("MexicanWave", String.valueOf(angle));
 		// Log.i("MexicanWave", "** corrected time is " + String.valueOf(dateFormatGmt.format( new Date(correctedTime))));
