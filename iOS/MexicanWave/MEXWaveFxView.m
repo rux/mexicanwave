@@ -48,7 +48,7 @@
 #pragma mark - Configuration
 
 - (void)configureWave {
-    // TEST
+    //Get the size of the wave Image view and add a perspective to it to match image background
     const CGSize viewSize = self.waveImageView.bounds.size;
     
     const CGFloat nearPlaneDistance = viewSize.width / (2.0f * tanf(0.5f*120.0f));

@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    kMEXCrowdTypeSmallGroup,
-    kMEXCrowdTypeStageBased,
-    kMEXCrowdTypeStadium
-} MEXCrowdType;
+    kMEXVenueSizeSmall,
+    kMEXVenueSizeMedium,
+    kMEXVenueSizeLarge
+} MEXVenueSize;
 
 NSString* const MEXWaveModelDidWaveNotification;
 NSString* const MEXWaveSpeedSettingsKey;
 
 @interface MEXWaveModel : NSObject
 
-+ (NSTimeInterval)wavePeriodInSecondsForCrowdType:(MEXCrowdType)crowd;
++ (NSTimeInterval)wavePeriodInSecondsForCrowdType:(MEXVenueSize)venue;
 
-@property (nonatomic) MEXCrowdType crowdType;
+@property (nonatomic) MEXVenueSize venueSize;
 @property (nonatomic,readonly) NSTimeInterval wavePeriodInSeconds;
 @property (nonatomic,readonly) NSUInteger numberOfPeaks;
 @property (nonatomic,readonly) float wavePhase;

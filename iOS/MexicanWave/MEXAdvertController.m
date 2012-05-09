@@ -33,8 +33,9 @@
     UIImage* stretchyBackground = [background stretchableImageWithLeftCapWidth:0.5*background.size.width topCapHeight:0];
     [self.advertButton setBackgroundImage:stretchyBackground forState:UIControlStateNormal];
     
-    [self.advertButton setTitle:NSLocalizedString(@"Download the Yell.com app to start finding", @"Download Yell app Title Button") forState:UIControlStateNormal];
+    [self.advertButton setTitle:NSLocalizedString(@"Download the Yell app to start finding", @"Download Yell app Title Button") forState:UIControlStateNormal];
     
+    self.advertButton.titleLabel.textAlignment = UITextAlignmentCenter;
     
     // Hide the button if we are not in an area where the advert is useful - i.e outside UK, US, ES
     NSString* appStoreURL = [self appstoreURLForCountryCode:[self countryCodeForCurrentLocale]];
@@ -42,14 +43,16 @@
     self.advertButton.hidden = !showLink;    
     [[UsageMetrics sharedInstance] didShowMainPageWithDownloadLink:showLink];
     
+    hintTextLabel.text = NSLocalizedString(@"Create a mexican wave using your camera flash and capture that moment", @"Hint Text shown on first Launch");
+    
     //animate out the text to the user and animate in the Yell advert button
-  [UIView animateWithDuration:0.8 delay:7.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-      hintTextLabel.alpha = 0; 
-  } completion:^(BOOL finished) {
+    [UIView animateWithDuration:0.8 delay:7.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        hintTextLabel.alpha = 0; 
+    } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.8 animations:^{
-                advertButton.alpha = 1;
+            advertButton.alpha = 1.0;
         }];
-  }];
+    }];
     
     
     

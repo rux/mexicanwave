@@ -83,15 +83,15 @@
     
     switch (selection) {
         case 0:
-            self.waveModel.crowdType = kMEXCrowdTypeSmallGroup;
+            self.waveModel.venueSize = kMEXVenueSizeSmall;
             break;
             
         case 1:
-            self.waveModel.crowdType = kMEXCrowdTypeStageBased;    
+            self.waveModel.venueSize = kMEXVenueSizeMedium;
             break;
 
         case 2:
-            self.waveModel.crowdType = kMEXCrowdTypeStadium;
+            self.waveModel.venueSize = kMEXVenueSizeLarge;
             break;
         default:
             break;
@@ -168,7 +168,7 @@
         return;
     }
     
-    const float duration = (self.waveModel.crowdType == kMEXCrowdTypeStadium) ? 0.5 : 0.2;
+    const float duration = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.5 : 0.2;
     //animate the screen flash
     [UIView animateWithDuration:duration animations:^{
         self.whiteFlashView.alpha = 1; 
