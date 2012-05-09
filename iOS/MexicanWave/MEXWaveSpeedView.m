@@ -63,6 +63,9 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 
 -(void)commonInitialisation{
     
+    //Reset all the speed settings to default blank values 
+    [self resetAllWaves];
+    
     self.lblSmall.text =NSLocalizedString(@"S",@"Abbreviation meaning small for venue size");
     self.lblMedium.text =NSLocalizedString(@"M",@"Abbreviation meaning Medium for venue size");
     self.lblLarge.text =NSLocalizedString(@"L",@"Abbreviation meaning Large for venue size");
@@ -70,8 +73,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     self.lblStepOne.text = NSLocalizedString(@"Step 1: Choose your venue size. ", @"Step one of how to use the app - MEXWaveSpeedView");
     self.lblStepTwo.text = NSLocalizedString(@"Step 2: Point your phone at the centre of your venue.", @"Step two of how to use the app - MEXWaveSpeedView");
     self.lblStepThree.text = NSLocalizedString(@"Step 3: Take photos and encourage others to join in.", @"Step three of how to use the app - MEXWaveSpeedView");
-    //Reset all the speed settings to default blank values 
-    [self resetAllWaves];
+
 }
 
 -(void)didEnterBackground{
@@ -117,20 +119,20 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
         //stop the current wave and reset it to default values
         [self resetAllWaves];
         
-        //find the correct selection using the kWaveSelection. If the current view is paused then resume it - else start a new wave form
+        //find the correct selection using the kWaveSelection. Make it Visiable to the user and animate the wave
         switch (newSelection) {
-            case kWaveFunTag:
-                [smallVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeSmallGroup] startingPhase:0 numberOfPeaks:1];
+            case kWaveSmallTag:
+                [smallVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXVenueSizeSmall] startingPhase:0 numberOfPeaks:1];
                 lblSmall.alpha = 1.0f;
                 smallVenueWave.alpha = 1.0f;
                 break;
-            case kWaveGigTag:
-                [mediumVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStageBased] startingPhase:0 numberOfPeaks:1];
+            case kWaveMediumTag:
+                [mediumVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXVenueSizeMedium] startingPhase:0 numberOfPeaks:1];
                 lblMedium.alpha = 1.0f;
                 mediumVenueWave.alpha = 1.0f;
                 break;
-            case kWaveStaduimTag:
-                [largeVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXCrowdTypeStadium] startingPhase:0 numberOfPeaks:1];
+            case kWaveLargeTag:
+                [largeVenueWave animateWithDuration:[MEXWaveModel wavePeriodInSecondsForCrowdType:kMEXVenueSizeLarge] startingPhase:0 numberOfPeaks:1];
                 lblLarge.alpha = 1.0;
                 largeVenueWave.alpha = 1.0f;
                 break;

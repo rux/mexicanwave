@@ -58,8 +58,11 @@
 				self.videoLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.captureSession];
 				self.videoLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
        			}
+          
             
-            //Modify the bounds and radius of the camera view corners to match the gap in middle of application.
+            /**
+                Modify the bounds of the layer and set the corner radius of the camera view to match the gap in middle of application.
+            **/
 			self.videoLayer.frame = cameraView.bounds;
 			[cameraView.layer addSublayer:videoLayer];
             cameraView.clipsToBounds =YES;

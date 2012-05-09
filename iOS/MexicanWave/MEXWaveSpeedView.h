@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MEXWaveFxView.h"
 typedef enum{
-    kWaveFunTag = 200,
-    kWaveGigTag = 201,
-    kWaveStaduimTag = 202,
+    kWaveSmallTag = 200,
+    kWaveMediumTag = 201,
+    kWaveLargeTag = 202,
 } MEXWaveSelection;
 NSString* const kSpeedSegementDidChange;
 

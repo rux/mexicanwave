@@ -28,23 +28,23 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 
 @implementation MEXWaveModel
 
-@synthesize crowdType;
+@synthesize venueSize;
 @synthesize compassModel;
 @synthesize running;
 
-+ (NSTimeInterval)wavePeriodInSecondsForCrowdType:(MEXCrowdType)crowd {
-    switch (crowd) {
-        case kMEXCrowdTypeSmallGroup:
++ (NSTimeInterval)wavePeriodInSecondsForCrowdType:(MEXVenueSize)venue {
+    switch (venue) {
+        case kMEXVenueSizeSmall:
             return PERIOD_IN_SECONDS_FOR_SMALL_GROUP;
             
-        case kMEXCrowdTypeStageBased:
+        case kMEXVenueSizeMedium:
             return PERIOD_IN_SECONDS_FOR_STAGE;
             
-        case kMEXCrowdTypeStadium:
+        case kMEXVenueSizeLarge:
             return PERIOD_IN_SECONDS_FOR_STADIUM;
             
         default:
-            NSAssert(NO, @"Unhandled crowd size enum value %d", crowd);
+            NSAssert(NO, @"Unhandled crowd size enum value %d", venue);
             break;
     }
     return PERIOD_IN_SECONDS_FOR_STADIUM;
@@ -69,7 +69,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
 }
 
 - (NSTimeInterval)wavePeriodInSeconds {
-    return [[self class] wavePeriodInSecondsForCrowdType:self.crowdType];
+    return [[self class] wavePeriodInSecondsForCrowdType:self.venueSize];
 }
 
 - (float)wavePhase {
@@ -80,10 +80,10 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
     return ((float)fmod([correctedDate timeIntervalSince1970] - (self.compassModel.headingInDegreesEastOfNorth / 360.0)*self.wavePeriodInSeconds, self.wavePeriodInSeconds))/self.wavePeriodInSeconds;
 }
 
-- (void)setCrowdType:(MEXCrowdType)newValue {
-    if(crowdType != newValue) {
+- (void)setVenueSize:(MEXVenueSize)newValue{
+    if(venueSize != newValue) {
         [self willChangeValueForKey:@"crowdType"];
-        crowdType = newValue;
+        venueSize = newValue;
         [[NSUserDefaults standardUserDefaults] setInteger:newValue forKey:MEXWaveSpeedSettingsKey];
         [self didChangeValueForKey:@"crowdType"];
         [self scheduleWave];
@@ -126,7 +126,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
     if(self.isRunning) return;
 
     // Read out our saved settings
-    self.crowdType = (MEXCrowdType)[[[NSUserDefaults standardUserDefaults] valueForKey:MEXWaveSpeedSettingsKey] integerValue];    
+    self.venueSize = (MEXVenueSize)[[[NSUserDefaults standardUserDefaults] valueForKey:MEXWaveSpeedSettingsKey] integerValue];    
 
     [self.compassModel startCompass];
     [self scheduleWave];    
@@ -139,11 +139,10 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
     if(!(self = [super init])) {
         return nil;
     }
-    crowdType =  [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey];
     compassModel = [[MEXCompassModel alloc] init];
 
     // Read out our saved settings
-    self.crowdType = (MEXCrowdType)[[[NSUserDefaults standardUserDefaults] valueForKey:MEXWaveSpeedSettingsKey] integerValue];    
+    self.venueSize = (MEXVenueSize)[[[NSUserDefaults standardUserDefaults] valueForKey:MEXWaveSpeedSettingsKey] integerValue];    
    
     // TODO: observe the network clock
     NSNotificationCenter* noteCenter = [NSNotificationCenter defaultCenter];
