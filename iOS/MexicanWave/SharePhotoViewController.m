@@ -45,7 +45,7 @@
     [super viewDidLoad];
    
     //Set up the HUD for when the user saves a photo - this show a progress via whilst saving the photo.
-    progressView = [[ProgressView alloc]initWithFrame:CGRectMake(0, 0, 120, 120)];
+    progressView = [[ProgressView alloc]initWithFrame:CGRectMake(0, 0, 125, 125)];
     progressView.center = CGPointMake(self.view.frame.size.width*0.5, self.view.frame.size.height*0.5);
     progressView.customImage = [UIImage imageNamed:@"tick"];
     [self.view addSubview:progressView];

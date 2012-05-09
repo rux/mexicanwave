@@ -8,6 +8,7 @@
 
 #import "ProgressView.h"
 #import "QuartzCore/QuartzCore.h"
+#define kDefaultAlpha 0.8f
 
 @interface ProgressView ()
 @property(nonatomic,retain) UILabel *titleLabel;
@@ -97,13 +98,13 @@
     if(animate){
         self.alpha = 0;
         [UIView animateWithDuration:0.3 animations:^{
-            self.alpha = 0.7; 
+            self.alpha = kDefaultAlpha; 
         }];
         
         return;
     }
     
-    self.alpha = 0.7;
+    self.alpha = kDefaultAlpha;
 }
 
 -(void)hideWithAnimatiom:(BOOL)animate{
