@@ -27,10 +27,8 @@
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
 @property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
 @property (retain, nonatomic) IBOutlet MEXAdvertController* advertController;
-@property (retain, nonatomic) IBOutlet UIButton *btnCamera;
 
-- (IBAction)didTapTakePhoto:(id)sender;
-- (IBAction)didTapGrabber:(id)sender;
+-(IBAction)didTapGrabber:(id)sender;
 - (void)didChangeCrowdType:(NSNotification*)note;
 - (void)pause;
 - (void)resume;

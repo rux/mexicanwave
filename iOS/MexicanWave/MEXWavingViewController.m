@@ -12,8 +12,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "UsageMetrics.h"
-#import "SharePhotoViewController.h"
 #import "MEXAdvertController.h"
+#import "GenericTextViewController.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
@@ -25,6 +25,7 @@
 @property (nonatomic) SystemSoundID waveSoundID;
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
+-(void)didRecieveLegalNotification:(NSNotification*)note;
 @end
 
 
@@ -37,7 +38,6 @@
 @synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize advertController;
-@synthesize btnCamera;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize waveSoundID,paused;
 
@@ -52,27 +52,6 @@
 }
 
 #pragma mark - UI actions
-
-- (IBAction)didTapTakePhoto:(id)sender {
-    
-    [[CameraSessionController sharedCameraController] capturePhotoWithCompletion:^(UIImage *stillPhoto, NSError *error) {
-              
-        if(error){
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Capture Error", @"Title of capture photo error")  message:NSLocalizedString(@"An error capturing a photo has occured. Please try again",@"Message body of capture photo error") delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok",@"Dismiss button of alert view") otherButtonTitles:nil];
-            [alert show];
-            [alert release];
-            return;
-        }
-        
-        SharePhotoViewController* photoView = [[SharePhotoViewController alloc]init];
-        photoView.takenphoto = stillPhoto;
-        UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:photoView];
-        [self presentModalViewController:navController animated:YES];
-        [navController release];
-        [photoView release];
-    }];
-  
-}
 
 - (void)didChangeCrowdType:(NSNotification*)note{
     if(![note object]){
@@ -215,7 +194,6 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
-    [btnCamera release];
     [super dealloc];
 }
 
@@ -235,7 +213,6 @@
     [super viewDidAppear:animated];
     [self resume];    
     
-    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
         //animate in to hint to the user whats behind the main view
         [self bounceAnimation];
@@ -250,18 +227,14 @@
     //set up camera session
     [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
     [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
-    btnCamera.hidden = ![CameraSessionController isSupported];
 
-    //discovered users tapping camera so lets help them capture a photo
-    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapTakePhoto:)];
-    [self.videoView addGestureRecognizer:tap];
-    [tap release];
-    
+  
     //prevent the phone from auto-locking and dimming
     [UIApplication sharedApplication].idleTimerDisabled = YES;
             
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRecieveLegalNotification:) name:@"Legal" object:nil];
     
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
@@ -282,7 +255,6 @@
 }
 
 - (void)viewDidUnload {
-    [self setBtnCamera:nil];
     [super viewDidUnload];
 
     self.containerView = nil;
@@ -428,6 +400,19 @@
 }
 #pragma mark Yell Advert 
 
+-(void)didRecieveLegalNotification:(NSNotification*)note{
+    GenericTextViewController* text = [[GenericTextViewController alloc]init];
+    text.textToShow = NSLocalizedString(@"Legal Text", @"The text shown in the Legal section");
+    text.title = NSLocalizedString(@"Legal", @"The title text shown in the Legal view");
+    
+    UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:text];
+    UIBarButtonItem* cancel =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:text action:@selector(didTapCancel)];
+    text.navigationItem.leftBarButtonItem = cancel;
+    [self presentModalViewController:navController animated:YES];
+    [text release];
+    [navController release];
+    [cancel release];
+}
 
 - (IBAction)didTapGrabber:(id)sender {
     if(self.isPaused){

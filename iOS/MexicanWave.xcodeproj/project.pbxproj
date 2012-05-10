@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		001A660C15493D8A008B00E3 /* MEXWaveSpeedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */; };
 		001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */; };
-		001A663C15499E53008B00E3 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 001A663B15499E53008B00E3 /* Settings.bundle */; };
 		002779B715512A530080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779B515512A530080BAFC /* Localizable.strings */; };
 		002779C115513B7D0080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779BF15513B7D0080BAFC /* Localizable.strings */; };
 		002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779CD1551747E0080BAFC /* InfoPlist.strings */; };
@@ -28,11 +27,11 @@
 		005F607E153C3C1400999B47 /* yell_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F607C153C3C1400999B47 /* yell_icon@2x.png */; };
 		005F6089153C6BB600999B47 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F6087153C6BB600999B47 /* camera@2x.png */; };
 		005F608A153C6BB600999B47 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 005F6088153C6BB600999B47 /* camera.png */; };
-		005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 005F608C153C6C6500999B47 /* SharePhotoViewController.m */; };
-		005F608F153C6C6500999B47 /* SharePhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 005F608D153C6C6500999B47 /* SharePhotoViewController.xib */; };
 		00900CDD155A6EA4002B4815 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00900CDC155A6EA4002B4815 /* ProgressView.m */; };
 		00900CE1155A8315002B4815 /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 00900CDF155A8315002B4815 /* tick.png */; };
 		00900CE2155A8315002B4815 /* tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00900CE0155A8315002B4815 /* tick@2x.png */; };
+		00900D2E155BDECD002B4815 /* GenericTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00900D2C155BDECC002B4815 /* GenericTextViewController.m */; };
+		00900D2F155BDECD002B4815 /* GenericTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00900D2D155BDECD002B4815 /* GenericTextViewController.xib */; };
 		00C3F14415529731004252EB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14315529731004252EB /* Default.png */; };
 		00C3F14615529735004252EB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14515529735004252EB /* Default@2x.png */; };
 		00C3F15F1553DB8C004252EB /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F15D1553DB8B004252EB /* background.png */; };
@@ -109,7 +108,6 @@
 /* Begin PBXFileReference section */
 		001A660A15493D8A008B00E3 /* MEXWaveSpeedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXWaveSpeedView.h; sourceTree = "<group>"; };
 		001A660B15493D8A008B00E3 /* MEXWaveSpeedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveSpeedView.m; sourceTree = "<group>"; };
-		001A663B15499E53008B00E3 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		002779B615512A530080BAFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		002779C015513B7D0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
 		002779CE1551747E0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = InfoPlist.strings; sourceTree = "<group>"; };
@@ -128,13 +126,13 @@
 		005F607C153C3C1400999B47 /* yell_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yell_icon@2x.png"; sourceTree = "<group>"; };
 		005F6087153C6BB600999B47 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
 		005F6088153C6BB600999B47 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
-		005F608B153C6C6500999B47 /* SharePhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharePhotoViewController.h; sourceTree = "<group>"; };
-		005F608C153C6C6500999B47 /* SharePhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharePhotoViewController.m; sourceTree = "<group>"; };
-		005F608D153C6C6500999B47 /* SharePhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SharePhotoViewController.xib; path = ../SharePhotoViewController.xib; sourceTree = "<group>"; };
 		00900CDB155A6EA4002B4815 /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
 		00900CDC155A6EA4002B4815 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 		00900CDF155A8315002B4815 /* tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tick.png; sourceTree = "<group>"; };
 		00900CE0155A8315002B4815 /* tick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick@2x.png"; sourceTree = "<group>"; };
+		00900D2B155BDECC002B4815 /* GenericTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericTextViewController.h; sourceTree = "<group>"; };
+		00900D2C155BDECC002B4815 /* GenericTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericTextViewController.m; sourceTree = "<group>"; };
+		00900D2D155BDECD002B4815 /* GenericTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericTextViewController.xib; sourceTree = "<group>"; };
 		00C3F14315529731004252EB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
 		00C3F14515529735004252EB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
 		00C3F15D1553DB8B004252EB /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -335,7 +333,6 @@
 				002779BE15513B7D0080BAFC /* es.lproj */,
 				196B8E441518A00100DAD14A /* en.lproj */,
 				1967B91F152320B700A924D5 /* Sounds */,
-				001A663B15499E53008B00E3 /* Settings.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -415,7 +412,6 @@
 				196B8E451518A00100DAD14A /* InfoPlist.strings */,
 				196B8E471518A00100DAD14A /* MainWindow.xib */,
 				196B8E491518A00100DAD14A /* MEXWavingViewController.xib */,
-				005F608D153C6C6500999B47 /* SharePhotoViewController.xib */,
 				196B8DF51517B58700DAD14A /* Images */,
 			);
 			name = en.lproj;
@@ -520,10 +516,11 @@
 				199CB63114FEAABF00A16A97 /* MEXWaveModel.m */,
 				199CB62914FEA47B00A16A97 /* MEXWavingViewController.h */,
 				199CB62A14FEA47C00A16A97 /* MEXWavingViewController.m */,
-				005F608B153C6C6500999B47 /* SharePhotoViewController.h */,
-				005F608C153C6C6500999B47 /* SharePhotoViewController.m */,
 				198F4DD4154845A900BEAF2D /* MEXAdvertController.h */,
 				198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */,
+				00900D2B155BDECC002B4815 /* GenericTextViewController.h */,
+				00900D2C155BDECC002B4815 /* GenericTextViewController.m */,
+				00900D2D155BDECD002B4815 /* GenericTextViewController.xib */,
 			);
 			name = Waving;
 			sourceTree = "<group>";
@@ -618,7 +615,6 @@
 				005F607E153C3C1400999B47 /* yell_icon@2x.png in Resources */,
 				005F6089153C6BB600999B47 /* camera@2x.png in Resources */,
 				005F608A153C6BB600999B47 /* camera.png in Resources */,
-				005F608F153C6C6500999B47 /* SharePhotoViewController.xib in Resources */,
 				0056D384153D85B7004C2BE3 /* tab_lines.png in Resources */,
 				0056D385153D85B7004C2BE3 /* tab_lines@2x.png in Resources */,
 				0056D388153D85D6004C2BE3 /* background_Camera.png in Resources */,
@@ -629,7 +625,6 @@
 				00C6FE69153F0AA100420E4B /* about_hand@2x.png in Resources */,
 				0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */,
 				0046F0AD15470610006A5683 /* circleBackground.png in Resources */,
-				001A663C15499E53008B00E3 /* Settings.bundle in Resources */,
 				002779B715512A530080BAFC /* Localizable.strings in Resources */,
 				002779C115513B7D0080BAFC /* Localizable.strings in Resources */,
 				002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */,
@@ -641,6 +636,7 @@
 				00C3F166155425D3004252EB /* wave_disc@2x.png in Resources */,
 				00900CE1155A8315002B4815 /* tick.png in Resources */,
 				00900CE2155A8315002B4815 /* tick@2x.png in Resources */,
+				00900D2F155BDECD002B4815 /* GenericTextViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,12 +665,12 @@
 				00D26F701536CAD3004BC8ED /* SBJsonBase.m in Sources */,
 				00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */,
 				00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */,
-				005F608E153C6C6500999B47 /* SharePhotoViewController.m in Sources */,
 				00C6FEE51541663400420E4B /* CameraSessionController.m in Sources */,
 				198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */,
 				001A660C15493D8A008B00E3 /* MEXWaveSpeedView.m in Sources */,
 				001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */,
 				00900CDD155A6EA4002B4815 /* ProgressView.m in Sources */,
+				00900D2E155BDECD002B4815 /* GenericTextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
