@@ -46,6 +46,8 @@ class RoarHandler {
 	private final String timeServer;
 	private long timeOffset;
 	
+	public boolean touched;
+	
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, float wD, int wC, boolean sE, boolean vE) {
 		context = c;
@@ -58,6 +60,7 @@ class RoarHandler {
         soundEnabled = sE;
         vibrationEnabled =vE;
         isFlat = false;
+        touched = false;
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -180,9 +183,10 @@ class RoarHandler {
 		
 	public void check() {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
-		if (angle > 175 && angle < 185) {
+		if (angle > 170 && angle < 200) {
 			goWild();
 		} else {
+			this.touched = false;
 			calmDown();
 		}
 		
@@ -206,26 +210,31 @@ class RoarHandler {
 		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
 			
 			
-			mSurface.lightOn();
-			if (vibrationEnabled) {
-				vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
+			if (touched == true) {
+				Log.i("MexicanWaveTouch", "Hit");
+			
+				mSurface.lightOn();
+				if (vibrationEnabled) {
+					vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
+				}
+				screenFlash.setBackgroundColor(waveColor);
+				screenFlash.startAnimation(flashAnim);
+				
+				
+				if(soundEnabled && soundLoaded) {
+					float actualVolume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+					float maxVolume = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+					float volume = actualVolume / maxVolume;
+					soundPool.play(soundId, volume, volume, 1, 0, 1f);
+				}
+				
+				getNtpTime ntpTime = new getNtpTime();
+				ntpTime.execute(timeServer);
+				
+				currentlyRoaring = true;
+			} else {
+				Log.i("MexicanWaveTouch", "missed opportunity");
 			}
-			screenFlash.setBackgroundColor(waveColor);
-			screenFlash.startAnimation(flashAnim);
-			
-			
-			if(soundEnabled && soundLoaded) {
-				float actualVolume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-				float maxVolume = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-				float volume = actualVolume / maxVolume;
-				soundPool.play(soundId, volume, volume, 1, 0, 1f);
-			}
-			
-			getNtpTime ntpTime = new getNtpTime();
-			ntpTime.execute(timeServer);
-			
-			currentlyRoaring = true;
-			
 		}
 	}	
 	

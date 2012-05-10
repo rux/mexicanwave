@@ -20,10 +20,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.omniture.*;
@@ -31,6 +34,7 @@ import com.omniture.*;
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
     
+	private RelativeLayout relativeLayout;
 	private RoarHandler roarHandler;
 	private Context context;
 	private View view;
@@ -72,6 +76,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         PRODUCTION_VERSION = false;
         
+
+
         
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
@@ -263,6 +269,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		}
 		
 	}
+	
 
 	// make the menu, and respond to clicks
 	@Override
@@ -311,5 +318,23 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			roarHandler.vibrationEnabled = vibrationEnabled;
 		}
 	}
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		super.dispatchTouchEvent(ev);
+		
+		if (ev.getAction() == MotionEvent.ACTION_DOWN ) {
+			Log.i("MexicanWaveTouch", "touch down");  // + ev.toString());
+			roarHandler.touched = true;
+		}
+		
+		return false;
+	}
+	
+	
+	
+	
+	
+	
 
 }

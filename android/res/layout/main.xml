@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/surface"
-        android:text="@string/debugPlaceholder"  
+        android:text="@string/debugPlaceholder"
         />
 
     
