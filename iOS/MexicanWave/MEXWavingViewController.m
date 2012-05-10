@@ -13,6 +13,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "UsageMetrics.h"
 #import "MEXAdvertController.h"
+#import "GenericTextViewController.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
@@ -24,6 +25,7 @@
 @property (nonatomic) SystemSoundID waveSoundID;
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
+-(void)didRecieveLegalNotification:(NSNotification*)note;
 @end
 
 
@@ -211,7 +213,6 @@
     [super viewDidAppear:animated];
     [self resume];    
     
-    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
         //animate in to hint to the user whats behind the main view
         [self bounceAnimation];
@@ -233,6 +234,7 @@
             
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRecieveLegalNotification:) name:@"Legal" object:nil];
     
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
@@ -398,6 +400,19 @@
 }
 #pragma mark Yell Advert 
 
+-(void)didRecieveLegalNotification:(NSNotification*)note{
+    GenericTextViewController* text = [[GenericTextViewController alloc]init];
+    text.textToShow = NSLocalizedString(@"Legal Text", @"The text shown in the Legal section");
+    text.title = NSLocalizedString(@"Legal", @"The title text shown in the Legal view");
+    
+    UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:text];
+    UIBarButtonItem* cancel =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:text action:@selector(didTapCancel)];
+    text.navigationItem.leftBarButtonItem = cancel;
+    [self presentModalViewController:navController animated:YES];
+    [text release];
+    [navController release];
+    [cancel release];
+}
 
 - (IBAction)didTapGrabber:(id)sender {
     if(self.isPaused){

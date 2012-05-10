@@ -9,13 +9,18 @@
 #import "SettingsView.h"
 #import "UsageMetrics.h"
 #import "MEXWaveModel.h"
+#import "GenericTextViewController.h"
+
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")
 #define kSettingsKeyStadium NSLocalizedString(@"Stadium", @"Settings Table row title Style")
+#define kSettingsKeyLegal NSLocalizedString(@"Legal", @"The label text shown in the Legal button on the main settings page")
+#define kSettingsKeyVersion NSLocalizedString(@"Version", @"The label text shown in the version display on the main settings page")
+
+
 #define kSettingsVibrationTag 0
 #define kSettingsSoundsTag 1
 #define kSettingsStadiumTag 2
-
 #define kSwitchWidthOffset 20.0f
 
 NSString* const kUserDefaultKeyVibration= @"sound_preference";
@@ -51,8 +56,8 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
 -(void)awakeFromNib{
     
     self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium, nil];
-    NSString* version = [NSString stringWithFormat:@"%@: %@",NSLocalizedString(@"Version", @"The label text shown in the version display on the main settings page"),[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    self.appOptions= [NSArray arrayWithObjects:@"Legal",version, nil];
+    NSString* version = [NSString stringWithFormat:@"%@: %@",kSettingsKeyVersion,[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    self.appOptions= [NSArray arrayWithObjects:kSettingsKeyLegal,version, nil];
 
     [self.table reloadData];
 }
@@ -154,7 +159,13 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
     [defaults synchronize];
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    if(indexPath.row == 0 && indexPath.section == 1){                                                 
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Legal" object:nil];
+    }
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.
