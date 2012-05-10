@@ -111,7 +111,7 @@ NSString* const MEXWaveSpeedSettingsKey = @"MEXWaveSpeedSettingsKey";
         return;
     }
     
-    const float timeToNextWave = self.wavePeriodInSeconds * (0.998 - self.wavePhase);
+    const float timeToNextWave = self.wavePeriodInSeconds * (0.988 - self.wavePhase);
     [self performSelector:@selector(waveDidPassOurBearing) withObject:nil afterDelay:timeToNextWave];
 }
 

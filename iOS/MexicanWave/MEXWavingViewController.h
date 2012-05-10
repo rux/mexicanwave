@@ -28,6 +28,10 @@
 @property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
 @property (retain, nonatomic) IBOutlet MEXAdvertController* advertController;
 
+@property (retain, nonatomic) IBOutlet UIImageView *wellDoneImage;
+
+
+
 -(IBAction)didTapGrabber:(id)sender;
 - (void)didChangeCrowdType:(NSNotification*)note;
 - (void)pause;

@@ -23,6 +23,8 @@
 
 @interface MEXWavingViewController ()
 @property (nonatomic) SystemSoundID waveSoundID;
+@property (nonatomic) BOOL waveVisible;
+
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 -(void)didRecieveLegalNotification:(NSNotification*)note;
@@ -38,8 +40,10 @@
 @synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize advertController;
+@synthesize wellDoneImage;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize waveSoundID,paused;
+@synthesize waveVisible;
 
 - (MEXWaveModel*)waveModel {
     if(!waveModel) {
@@ -146,30 +150,16 @@
     if(self.isPaused){
         return;
     }
-    
-    const float duration = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.5 : 0.2;
-    //animate the screen flash
-    [UIView animateWithDuration:duration animations:^{
-        self.whiteFlashView.alpha = 1; 
-    }completion:^(BOOL finished) {
-        [UIView animateWithDuration:duration animations:^{
-            self.whiteFlashView.alpha = 0;            
-        }];
-    }];
-    
-    // Flash the torch
-    [self torchOn];
+    self.waveVisible = YES;
 
-    // Vibrate
-    if(self.isVibrationOnWaveEnabled) {
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    }
+    double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 1 : 0.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        self.waveVisible = NO;
+    });
     
-    // Play sound
-    if(self.isSoundOnWaveEnabled) {
-        AudioServicesPlaySystemSound(self.waveSoundID);
-    }
-   
+
+       
     
 }
 
@@ -194,6 +184,7 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
+    [wellDoneImage release];
     [super dealloc];
 }
 
@@ -249,12 +240,46 @@
     [swipeRight release];
     [swipeLeft release];
     
-   // self.videoView.layer.cornerRadius = 30.0f;
-    
+    UITapGestureRecognizer* tapWave = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCatchTheWave)];
+    [self.containerView addGestureRecognizer:tapWave];
+    [tapWave release];
     
 }
 
+-(void)didCatchTheWave{
+    if (self.waveVisible) {
+        const float duration = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.55 : 0.35;
+        //animate the screen flash
+        [UIView animateWithDuration:duration animations:^{
+            self.whiteFlashView.alpha = 1; 
+        }completion:^(BOOL finished) {
+            
+            [UIView animateWithDuration:duration animations:^{
+                self.whiteFlashView.alpha = 0;            
+            }completion:^(BOOL finished) {
+            }];
+            
+        }];
+        
+        // Flash the torch
+        [self torchOn];
+        
+        // Vibrate
+        if(self.isVibrationOnWaveEnabled) {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        }
+        
+        // Play sound
+        if(self.isSoundOnWaveEnabled) {
+            AudioServicesPlaySystemSound(self.waveSoundID);
+        }
+
+    }
+            
+}
+
 - (void)viewDidUnload {
+    [self setWellDoneImage:nil];
     [super viewDidUnload];
 
     self.containerView = nil;
