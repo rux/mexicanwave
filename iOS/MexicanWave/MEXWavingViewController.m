@@ -44,6 +44,90 @@
 @synthesize waveSoundID,paused;
 @synthesize waveVisible,gameMode;
 
+
+#pragma mark - Controller lifecycle
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc {
+    [waveModel pause];
+    [videoView release];
+    [waveModel removeObserver:self forKeyPath:kModelKeyPathForPhase];
+    [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeriod];
+    [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeaks];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    AudioServicesDisposeSystemSoundID(waveSoundID);
+    [waveModel release];
+    [waveView release];
+    [containerView release];
+    [settingView release];
+    [tabImageView release];
+    [whiteFlashView release];
+    [advertController release];
+    [super dealloc];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self torchOff];
+    [self pause];
+    //stop filming
+    [[CameraSessionController sharedCameraController] pauseDisplay];   
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self resume];    
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
+        //animate in to hint to the user whats behind the main view
+        [self bounceAnimation];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShownHintToUser];
+    }
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    //set up camera session
+    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
+    [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
+    
+    
+    //prevent the phone from auto-locking and dimming
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRecieveLegalNotification:) name:@"Legal" object:nil];
+    
+    // Load in the wave sound.
+    AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
+    
+    //gestures to allow the user to swipe to back and forth the settings screen
+    UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
+    UIPanGestureRecognizer* swipeRight = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureRight:)];
+    
+    [self.tabImageView addGestureRecognizer:swipeRight];
+    [self.containerView addGestureRecognizer:swipeLeft];
+    
+    [swipeRight release];
+    [swipeLeft release];
+    
+    UITapGestureRecognizer* tapWave = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCatchTheWave:)];
+    tapWave.delegate = self;
+    [self.containerView addGestureRecognizer:tapWave];
+    [tapWave release];
+    
+}
+
 - (MEXWaveModel*)waveModel {
     if(!waveModel) {
         waveModel = [[MEXWaveModel alloc] init];
@@ -165,95 +249,6 @@
     
 }
 
-#pragma mark - Controller lifecycle
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-- (void)dealloc {
-    [waveModel pause];
-    [videoView release];
-    [waveModel removeObserver:self forKeyPath:kModelKeyPathForPhase];
-    [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeriod];
-    [waveModel removeObserver:self forKeyPath:kModelKeyPathForPeaks];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    AudioServicesDisposeSystemSoundID(waveSoundID);
-    [waveModel release];
-    [waveView release];
-    [containerView release];
-    [settingView release];
-    [tabImageView release];
-    [whiteFlashView release];
-    [advertController release];
-    [super dealloc];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self torchOff];
-    [self pause];
-    //stop filming
-    [[CameraSessionController sharedCameraController] pauseDisplay];   
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self resume];    
-    
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
-        //animate in to hint to the user whats behind the main view
-        [self bounceAnimation];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShownHintToUser];
-    }
-    
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-   
-    //set up camera session
-    [[CameraSessionController sharedCameraController] setCameraView:self.videoView];
-    [[CameraSessionController sharedCameraController] setAutoFocusEnabled:YES];
-
-  
-    //prevent the phone from auto-locking and dimming
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
-            
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRecieveLegalNotification:) name:@"Legal" object:nil];
-    
-    // Load in the wave sound.
-    AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
-
-    //gestures to allow the user to swipe to back and forth the settings screen
-    UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
-    UIPanGestureRecognizer* swipeRight = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureRight:)];
-    
-    [self.tabImageView addGestureRecognizer:swipeRight];
-    [self.containerView addGestureRecognizer:swipeLeft];
-      
-    [swipeRight release];
-    [swipeLeft release];
-    
-    UITapGestureRecognizer* tapWave = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCatchTheWave)];
-    [self.containerView addGestureRecognizer:tapWave];
-    [tapWave release];
-    
-}
-
--(void)didCatchTheWave{
-    if (self.waveVisible) {
-        [self startWave];
-    }
-            
-}
-
 -(void)startWave{
     const float duration = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.55 : 0.35;
     //animate the screen flash
@@ -302,6 +297,21 @@
 }
 
 #pragma mark Gesture Recognizer callbacks
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[UIButton class]]) {
+        // we touched a button
+        return NO; // ignore the touch
+    }
+    return YES; // handle the touch
+}
+
+-(void)didCatchTheWave:(UITapGestureRecognizer*)tap{
+    
+    if (self.waveVisible) {
+        [self startWave];
+    }
+    
+}
 
 -(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
     
@@ -449,4 +459,7 @@
     }
     [self bounceAnimation];
 }
+
+
+
 @end

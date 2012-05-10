@@ -14,7 +14,7 @@
 @class MEXWaveModel;
 @class MEXAdvertController;
 
-@interface MEXWavingViewController : UIViewController
+@interface MEXWavingViewController : UIViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic,retain) MEXWaveModel* waveModel;
 @property (nonatomic,getter=isVibrationOnWaveEnabled) BOOL vibrationOnWaveEnabled;
