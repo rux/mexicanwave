@@ -10,7 +10,7 @@
             android:key="pref_wave_duration"
             android:entries="@array/pref_wave_duration_entries"
             android:entryValues="@array/pref_wave_duration_values"
-            android:defaultValue="15"
+            android:defaultValue="7.5"
             />
         
     </PreferenceCategory>    
