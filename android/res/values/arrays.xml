@@ -23,12 +23,10 @@
 
     <string-array name="pref_wave_duration_entries">       
         <item>A small circle of friends</item>
-        <item>A gathering at an event or gig</item>
-        <item>A huge crowd at a stadium</item>
+        <item>A crowd at a stadium</item>
     </string-array>
     <string-array name="pref_wave_duration_values">       
         <item>7.5</item>
-        <item>15</item>
         <item>30</item>
     </string-array>
 
