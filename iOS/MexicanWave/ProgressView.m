@@ -96,7 +96,6 @@
 
 -(void)showWithAnimation:(BOOL)animate{
     if(animate){
-        self.alpha = 0;
         [UIView animateWithDuration:0.3 animations:^{
             self.alpha = kDefaultAlpha; 
         }];
