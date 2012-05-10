@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1280</int>
+		<int key="IBDocument.SystemTarget">1296</int>
 		<string key="IBDocument.SystemVersion">11D50</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.32</string>
@@ -4460,7 +4460,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<object class="IBUIButton" id="824015730">
 								<reference key="NSNextResponder" ref="310183317"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{35, 370}, {250, 60}}</string>
+								<string key="NSFrame">{{35, 380}, {250, 60}}</string>
 								<reference key="NSSuperview" ref="310183317"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="191373211"/>
@@ -4541,7 +4541,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<object class="IBUIImageView" id="777623617">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{319, 170}, {36, 57}}</string>
+								<string key="NSFrame">{{319, 214}, {36, 57}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="949464474"/>
@@ -4669,7 +4669,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="NSFrame">{{30, 330}, {260, 93}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="649404167"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -4701,21 +4701,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 									<string key="NSName">Trebuchet-BoldItalic</string>
 									<double key="NSSize">20</double>
 									<int key="NSfFlags">16</int>
-								</object>
-							</object>
-							<object class="IBUIImageView" id="649404167">
-								<reference key="NSNextResponder" ref="191373211"/>
-								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{124, 343}, {73, 52}}</string>
-								<reference key="NSSuperview" ref="191373211"/>
-								<reference key="NSWindow"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<int key="IBUIContentMode">1</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">tick.png</string>
 								</object>
 							</object>
 						</array>
@@ -4815,14 +4800,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<reference key="destination" ref="1041226851"/>
 					</object>
 					<int key="connectionID">42</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">wellDoneImage</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="649404167"/>
-					</object>
-					<int key="connectionID">168</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -4931,7 +4908,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="949464474"/>
 							<reference ref="1041226851"/>
 							<reference ref="777623617"/>
-							<reference ref="649404167"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 						<string key="objectName">Front View</string>
@@ -5014,11 +4990,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<reference key="parent" ref="310183317"/>
 						<string key="objectName">Advert button</string>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">167</int>
-						<reference key="object" ref="649404167"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -5034,7 +5005,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 				<string key="164.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="164.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="0.0" key="164.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
-				<string key="167.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="21.CustomClassName">SettingsView</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -5213,7 +5183,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="tabImageView">UIImageView</string>
 						<string key="videoView">UIView</string>
 						<string key="waveView">MEXWaveFxView</string>
-						<string key="wellDoneImage">UIImageView</string>
 						<string key="whiteFlashView">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -5240,10 +5209,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<object class="IBToOneOutletInfo" key="waveView">
 							<string key="name">waveView</string>
 							<string key="candidateClassName">MEXWaveFxView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="wellDoneImage">
-							<string key="name">wellDoneImage</string>
-							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="whiteFlashView">
 							<string key="name">whiteFlashView</string>
@@ -5281,6 +5246,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
+		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
+			<real value="1296" key="NS.object.0"/>
+		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
@@ -5289,7 +5258,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<string key="background_Camera.png">{320, 460}</string>
 			<string key="tab.png">{21, 47}</string>
 			<string key="tab_lines.png">{33, 33}</string>
-			<string key="tick.png">{30, 22}</string>
 			<string key="wave_disc.png">{170, 340}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>

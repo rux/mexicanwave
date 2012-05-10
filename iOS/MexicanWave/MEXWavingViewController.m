@@ -24,7 +24,7 @@
 @interface MEXWavingViewController ()
 @property (nonatomic) SystemSoundID waveSoundID;
 @property (nonatomic) BOOL waveVisible;
-
+-(void)startWave;
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 -(void)didRecieveLegalNotification:(NSNotification*)note;
@@ -40,10 +40,9 @@
 @synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize advertController;
-@synthesize wellDoneImage;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize waveSoundID,paused;
-@synthesize waveVisible;
+@synthesize waveVisible,gameMode;
 
 - (MEXWaveModel*)waveModel {
     if(!waveModel) {
@@ -127,6 +126,7 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
     self.soundOnWaveEnabled = [defaults boolForKey:kUserDefaultKeySound];
+    self.gameMode = [defaults boolForKey:@"Game Mode"];
     // Start running again
     [self.waveModel resume];
 
@@ -150,6 +150,11 @@
     if(self.isPaused){
         return;
     }
+    if(!self.isGameMode){
+        [self startWave];
+        return;
+    }
+    
     self.waveVisible = YES;
 
     double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 1 : 0.5;
@@ -157,9 +162,6 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         self.waveVisible = NO;
     });
-    
-
-       
     
 }
 
@@ -184,7 +186,6 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
-    [wellDoneImage release];
     [super dealloc];
 }
 
@@ -248,38 +249,41 @@
 
 -(void)didCatchTheWave{
     if (self.waveVisible) {
-        const float duration = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.55 : 0.35;
-        //animate the screen flash
-        [UIView animateWithDuration:duration animations:^{
-            self.whiteFlashView.alpha = 1; 
-        }completion:^(BOOL finished) {
-            
-            [UIView animateWithDuration:duration animations:^{
-                self.whiteFlashView.alpha = 0;            
-            }completion:^(BOOL finished) {
-            }];
-            
-        }];
-        
-        // Flash the torch
-        [self torchOn];
-        
-        // Vibrate
-        if(self.isVibrationOnWaveEnabled) {
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-        }
-        
-        // Play sound
-        if(self.isSoundOnWaveEnabled) {
-            AudioServicesPlaySystemSound(self.waveSoundID);
-        }
-
+        [self startWave];
     }
             
 }
 
+-(void)startWave{
+    const float duration = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.55 : 0.35;
+    //animate the screen flash
+    [UIView animateWithDuration:duration animations:^{
+        self.whiteFlashView.alpha = 1; 
+    }completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:duration animations:^{
+            self.whiteFlashView.alpha = 0;            
+        }completion:^(BOOL finished) {
+        }];
+        
+    }];
+    
+    // Flash the torch
+    [self torchOn];
+    
+    // Vibrate
+    if(self.isVibrationOnWaveEnabled) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+    
+    // Play sound
+    if(self.isSoundOnWaveEnabled) {
+        AudioServicesPlaySystemSound(self.waveSoundID);
+    }
+
+}
+
 - (void)viewDidUnload {
-    [self setWellDoneImage:nil];
     [super viewDidUnload];
 
     self.containerView = nil;

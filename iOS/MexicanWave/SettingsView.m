@@ -55,7 +55,7 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
 
 -(void)awakeFromNib{
     
-    self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium, nil];
+    self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium,@"Game Mode", nil];
     NSString* version = [NSString stringWithFormat:@"%@: %@",kSettingsKeyVersion,[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     self.appOptions= [NSArray arrayWithObjects:kSettingsKeyLegal,version, nil];
 
@@ -134,7 +134,10 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
             break;
         case kSettingsStadiumTag:
             switchControl.on = speedSelection;
-            break;            
+            break; 
+        case 3:
+            switchControl.on = [defaults boolForKey:@"Game Mode"];
+            break; 
     }
     
     return cell;
@@ -154,6 +157,15 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
     else if(currentSwitch.tag == kSettingsStadiumTag){
         const NSInteger selection = currentSwitch.isOn ? 2 : 0;
         [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:selection]];
+    }
+    else if(currentSwitch.tag == 3){
+        [defaults setBool:currentSwitch.isOn forKey:@"Game Mode"];
+        if(currentSwitch.isOn){
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Game Mode" message:@"Tap the screen as the wave passes to Flash, Vibrate and Create the wave" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }
+        
     }
         
     [defaults synchronize];
