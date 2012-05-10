@@ -9,24 +9,31 @@
 #import "SettingsView.h"
 #import "UsageMetrics.h"
 #import "MEXWaveModel.h"
-#define kNumberOfSettings 2
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")
-#define kSettingsKeySpeed NSLocalizedString(@"Style", @"Settings Table row title Style")
+#define kSettingsKeyStadium NSLocalizedString(@"Stadium", @"Settings Table row title Style")
 #define kSettingsVibrationTag 0
 #define kSettingsSoundsTag 1
+#define kSettingsStadiumTag 2
+
 #define kSwitchWidthOffset 20.0f
 
 NSString* const kUserDefaultKeyVibration= @"sound_preference";
 NSString* const kUserDefaultKeySound =@"vibration_preference";
 
 @interface SettingsView ()
+
+@property(nonatomic,retain) NSArray* userSettingOptions;
+@property(nonatomic,retain) NSArray* appOptions;
+
 @end
 
 @implementation SettingsView
 
-@synthesize table,speedView;
+@synthesize table,speedView,userSettingOptions,appOptions;
 - (void)dealloc {
+    [appOptions release];
+    [userSettingOptions release];
     [speedView release];
     [table release];
     [super dealloc];
@@ -42,11 +49,21 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
 }
 
 -(void)awakeFromNib{
+    
+    self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium, nil];
+    NSString* version = [NSString stringWithFormat:@"%@: %@",NSLocalizedString(@"Version", @"The label text shown in the version display on the main settings page"),[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    self.appOptions= [NSArray arrayWithObjects:@"Legal",version, nil];
+
     [self.table reloadData];
 }
 #pragma mark TableView Delegates
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    if(section !=0){
+        return nil;
+    }
+    
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(10, 10, 300, 30);
     label.backgroundColor = [UIColor clearColor];
@@ -68,7 +85,11 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return kNumberOfSettings;
+    return section == 0 ? [userSettingOptions count] : [appOptions count];
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -77,23 +98,40 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //add a switch that enables the user to change the settings
-        UISwitch* switchControl = [[[UISwitch alloc]init]autorelease];
-        switchControl.tag = 99;
-        switchControl.center = CGPointMake(320 - switchControl.frame.size.width*0.5 -kSwitchWidthOffset , cell.frame.size.height*0.5f);
-        [switchControl addTarget:self action:@selector(didChangeTableSwitch:) forControlEvents:UIControlEventValueChanged];
-        [cell addSubview:switchControl];
     }
     
         
+    cell.textLabel.text = indexPath.section == 0 ? [userSettingOptions objectAtIndex:indexPath.row] : [appOptions objectAtIndex:indexPath.row];
+    cell.accessoryType = (indexPath.section == 1 && indexPath.row == 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
+    cell.selectionStyle = (indexPath.section == 1 && indexPath.row == 0) ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
+    
+    if(indexPath.section == 1){
+        return cell;
+    }
+    
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    //get the switch for row and update the  labels and switch from userdefaults
-    UISwitch* currentSwitch = (UISwitch*)[cell viewWithTag:99];
-    currentSwitch.tag = indexPath.row;
-    currentSwitch.on = (indexPath.row == kSettingsVibrationTag) ? [defaults boolForKey:kUserDefaultKeyVibration] : [defaults boolForKey:kUserDefaultKeySound];
-    cell.textLabel.text = (indexPath.row == kSettingsVibrationTag) ? kSettingsKeyVibration : kSettingsKeySounds;
+    UISwitch* switchControl = [[[UISwitch alloc]init]autorelease];
+    switchControl.tag = indexPath.row;
+    switchControl.center = CGPointMake(320 - switchControl.frame.size.width*0.5 -kSwitchWidthOffset , cell.frame.size.height*0.5f);
+    [switchControl addTarget:self action:@selector(didChangeTableSwitch:) forControlEvents:UIControlEventValueChanged];
+    [cell addSubview:switchControl];
+        
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;   
+    const BOOL speedSelection = ([[[NSUserDefaults standardUserDefaults] valueForKey:MEXWaveSpeedSettingsKey] integerValue] == 0) ? NO : YES;
+
+    switch (indexPath.row) {
+        case kSettingsVibrationTag:
+            switchControl.on = [defaults boolForKey:kUserDefaultKeyVibration];
+            break;
+        case kSettingsSoundsTag:
+            switchControl.on = [defaults boolForKey:kUserDefaultKeySound];
+            break;
+        case kSettingsStadiumTag:
+            switchControl.on = speedSelection;
+            break;            
+    }
+    
     return cell;
 }
 
@@ -107,6 +145,10 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
     //if its not sound lets double check its vibration
     else if(currentSwitch.tag == kSettingsVibrationTag){
         [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyVibration];
+    }
+    else if(currentSwitch.tag == kSettingsStadiumTag){
+        const NSInteger selection = currentSwitch.isOn ? 2 : 0;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:selection]];
     }
         
     [defaults synchronize];

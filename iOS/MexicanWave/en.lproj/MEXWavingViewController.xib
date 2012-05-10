@@ -49,7 +49,7 @@
 								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="310183317"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="837017336"/>
+								<reference key="NSNextKeyView" ref="824015730"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">10</int>
 									<object class="NSImage" key="NSImage">
@@ -4457,7 +4457,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<float key="IBUISectionHeaderHeight">10</float>
 								<float key="IBUISectionFooterHeight">10</float>
 							</object>
-							<object class="IBUIButton" id="837017336">
+							<object class="IBUIButton" id="824015730">
 								<reference key="NSNextResponder" ref="310183317"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{35, 370}, {250, 60}}</string>
@@ -4541,7 +4541,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<object class="IBUIImageView" id="777623617">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{320, 138}, {36, 57}}</string>
+								<string key="NSFrame">{{319, 170}, {36, 57}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="949464474"/>
@@ -4854,14 +4854,14 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">advertButton</string>
 						<reference key="source" ref="859106399"/>
-						<reference key="destination" ref="837017336"/>
+						<reference key="destination" ref="824015730"/>
 					</object>
 					<int key="connectionID">166</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">didTapAdvertButton:</string>
-						<reference key="source" ref="837017336"/>
+						<reference key="source" ref="824015730"/>
 						<reference key="destination" ref="859106399"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -4902,12 +4902,12 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<array class="NSMutableArray" key="children">
 							<reference ref="595236571"/>
 							<reference ref="5844338"/>
-							<reference ref="777623617"/>
 							<reference ref="957085552"/>
 							<reference ref="805234120"/>
 							<reference ref="576328331"/>
 							<reference ref="949464474"/>
 							<reference ref="1041226851"/>
+							<reference ref="777623617"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 						<string key="objectName">Front View</string>
@@ -4940,7 +4940,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<reference key="object" ref="310183317"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="437127057"/>
-							<reference ref="837017336"/>
+							<reference ref="824015730"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 					</object>
@@ -4986,7 +4986,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">164</int>
-						<reference key="object" ref="837017336"/>
+						<reference key="object" ref="824015730"/>
 						<reference key="parent" ref="310183317"/>
 						<string key="objectName">Advert button</string>
 					</object>
