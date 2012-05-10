@@ -12,7 +12,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "UsageMetrics.h"
-#import "SharePhotoViewController.h"
 #import "MEXAdvertController.h"
 
 #define kTorchOnTime 0.25f
