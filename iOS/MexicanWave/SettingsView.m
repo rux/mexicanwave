@@ -23,9 +23,9 @@
 #define kSettingsStadiumTag 2
 #define kSwitchWidthOffset 20.0f
 
-NSString* const kUserDefaultKeyVibration= @"sound_preference";
-NSString* const kUserDefaultKeySound =@"vibration_preference";
-
+NSString* const kUserDefaultKeyVibration = @"sound_preference";
+NSString* const kUserDefaultKeySound = @"vibration_preference";
+NSString* const kUserDefaultKeyGameMode = @"gameMode";
 @interface SettingsView ()
 
 @property(nonatomic,retain) NSArray* userSettingOptions;
@@ -136,7 +136,7 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
             switchControl.on = speedSelection;
             break; 
         case 3:
-            switchControl.on = [defaults boolForKey:@"Game Mode"];
+            switchControl.on = [defaults boolForKey:kUserDefaultKeyGameMode];
             break; 
     }
     
@@ -159,7 +159,7 @@ NSString* const kUserDefaultKeySound =@"vibration_preference";
         [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:selection]];
     }
     else if(currentSwitch.tag == 3){
-        [defaults setBool:currentSwitch.isOn forKey:@"Game Mode"];
+        [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyGameMode];
         if(currentSwitch.isOn){
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Game Mode" message:@"Tap the screen as the wave passes to Flash, Vibrate and Create the wave" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];

@@ -210,7 +210,7 @@
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	self.vibrationOnWaveEnabled = [defaults boolForKey:kUserDefaultKeyVibration];    
     self.soundOnWaveEnabled = [defaults boolForKey:kUserDefaultKeySound];
-    self.gameMode = [defaults boolForKey:@"Game Mode"];
+    self.gameMode = [defaults boolForKey:kUserDefaultKeyGameMode];
     // Start running again
     [self.waveModel resume];
 
