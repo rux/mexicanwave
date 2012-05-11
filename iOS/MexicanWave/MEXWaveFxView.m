@@ -72,28 +72,26 @@
 }
 
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)startingPhase numberOfPeaks:(NSUInteger)peaksPerCycle {
-   
-    [self cancelAnimations];
-    
-    CABasicAnimation* animation;
-    animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    
-    animation.fromValue = [NSNumber numberWithFloat:0];
+
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    animation.fromValue = [NSNumber numberWithFloat:0.0];
     animation.toValue = [NSNumber numberWithFloat:2.0 * M_PI];
     animation.duration = 1.0;
-    animation.removedOnCompletion = NO;
     animation.repeatCount = HUGE_VALF;    // Repeat forever           
     animation.speed = 1.0/duration;
     animation.timeOffset = startingPhase;
+    animation.fillMode = kCAFillModeForwards;
     [self.waveImageView.layer addAnimation:animation forKey:@"transform.rotation.z"];
 }
 
 -(void)pauseAnimations{
+    
+    
     const CFTimeInterval timeAtPause = CACurrentMediaTime();
     self.waveImageView.layer.speed = 0;
     self.waveImageView.layer.timeOffset = timeAtPause;
     self.paused = YES;
-
+    
 }
 - (void)resumeAnimations{
     if(!self.isPaused){
