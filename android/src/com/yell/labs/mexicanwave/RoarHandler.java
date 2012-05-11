@@ -31,9 +31,12 @@ class RoarHandler {
 	public boolean isFlat;
 	public int waveCount;
 	public double azimuth;
-	private float waveDuration;
-	private int waveColor;
+	public float waveDuration;
+	public int waveColor;
 	public boolean vibrationEnabled;
+	
+	public boolean gameMode;
+	
 	public boolean soundEnabled;
 	private AudioManager audioManager;
 	private SoundPool soundPool;
@@ -49,16 +52,17 @@ class RoarHandler {
 	public boolean touched;
 	
 
-	RoarHandler(Context c, View v, PreviewSurface previewSurface, float wD, int wC, boolean sE, boolean vE) {
+	RoarHandler(Context c, View v, PreviewSurface previewSurface, float wD, int wC, boolean sE, boolean vE, boolean gM) {
 		context = c;
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         screenFlash = (View) v;
         mSurface = previewSurface;
         this.setWaveDuration(wD);
         this.setFlash(wD);
-        this.setWaveColor(wC);
+        waveColor = wC;
         soundEnabled = sE;
-        vibrationEnabled =vE;
+        vibrationEnabled = vE;
+        gameMode = gM;
         isFlat = false;
         touched = false;
         
@@ -119,19 +123,13 @@ class RoarHandler {
 		}
 	}
 	
-	public void setSound(boolean s) {
-		soundEnabled = s;
-	}
-
 	public void setWaveDuration(float w) {
 		waveDuration = w;
 		// waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
 		waveCount =1;
 		this.setFlash(w);
 	}
-	public void setWaveColor(int c) {
-		waveColor = c;
-	}
+
 	public void setFlash(float w) {
 		if (w < 20) {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash);
@@ -156,9 +154,6 @@ class RoarHandler {
 		azimuth = (double) Math.atan2(x, y);  // upside down x and y.  do not be afraid.  Tom said it was OK
 	}
 	
-	public double getAzimuth() {
-		return azimuth;
-	}
 	public int getAzimuthInDegrees() {
 		return (int) (this.azimuth*180/Math.PI);
 	}
