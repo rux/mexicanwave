@@ -28,7 +28,7 @@
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 -(void)didRecieveLegalNotification:(NSNotification*)note;
-- (void)confetti;
+- (void)mexicanConfetti;
 @end
 
 
@@ -313,12 +313,12 @@
     
     if (self.waveVisible) {
         [self startWave];
-        [self confetti];
+        [self mexicanConfetti];
     }
     
 }
 
-- (void)confetti {
+- (void)mexicanConfetti {
 	int n = 15;
 	int i;
 	
