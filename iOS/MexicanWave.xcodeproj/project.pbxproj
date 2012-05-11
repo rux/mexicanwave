@@ -32,6 +32,8 @@
 		00900CE2155A8315002B4815 /* tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00900CE0155A8315002B4815 /* tick@2x.png */; };
 		00900D2E155BDECD002B4815 /* GenericTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00900D2C155BDECC002B4815 /* GenericTextViewController.m */; };
 		00900D2F155BDECD002B4815 /* GenericTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00900D2D155BDECD002B4815 /* GenericTextViewController.xib */; };
+		00AC81C5155D09D3003B3D2D /* mexican_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AC81C3155D09D3003B3D2D /* mexican_2.png */; };
+		00AC81C6155D09D3003B3D2D /* mexican.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AC81C4155D09D3003B3D2D /* mexican.png */; };
 		00C3F14415529731004252EB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14315529731004252EB /* Default.png */; };
 		00C3F14615529735004252EB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14515529735004252EB /* Default@2x.png */; };
 		00C3F15F1553DB8C004252EB /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F15D1553DB8B004252EB /* background.png */; };
@@ -133,6 +135,8 @@
 		00900D2B155BDECC002B4815 /* GenericTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericTextViewController.h; sourceTree = "<group>"; };
 		00900D2C155BDECC002B4815 /* GenericTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericTextViewController.m; sourceTree = "<group>"; };
 		00900D2D155BDECD002B4815 /* GenericTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericTextViewController.xib; sourceTree = "<group>"; };
+		00AC81C3155D09D3003B3D2D /* mexican_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mexican_2.png; sourceTree = "<group>"; };
+		00AC81C4155D09D3003B3D2D /* mexican.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mexican.png; sourceTree = "<group>"; };
 		00C3F14315529731004252EB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
 		00C3F14515529735004252EB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../../Default@2x.png"; sourceTree = "<group>"; };
 		00C3F15D1553DB8B004252EB /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 		196B8DF51517B58700DAD14A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				00AC81C3155D09D3003B3D2D /* mexican_2.png */,
+				00AC81C4155D09D3003B3D2D /* mexican.png */,
 				00900CDF155A8315002B4815 /* tick.png */,
 				00900CE0155A8315002B4815 /* tick@2x.png */,
 				00C3F1611553ED9B004252EB /* wave_disc.png */,
@@ -637,6 +643,8 @@
 				00900CE1155A8315002B4815 /* tick.png in Resources */,
 				00900CE2155A8315002B4815 /* tick@2x.png in Resources */,
 				00900D2F155BDECD002B4815 /* GenericTextViewController.xib in Resources */,
+				00AC81C5155D09D3003B3D2D /* mexican_2.png in Resources */,
+				00AC81C6155D09D3003B3D2D /* mexican.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
