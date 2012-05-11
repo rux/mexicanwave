@@ -27,11 +27,11 @@ class RoarHandler {
 	public boolean isFlat;
 	public int waveCount;
 	public double azimuth;
-	public float waveDuration;
+	public int waveDuration;
 	public int waveColor;
 	public boolean vibrationEnabled;
 	
-	public boolean gameMode;
+	public boolean noGameMode;
 	
 	public boolean soundEnabled;
 	private AudioManager audioManager;
@@ -48,7 +48,7 @@ class RoarHandler {
 	public boolean touched;
 	
 
-	RoarHandler(Context c, View v, PreviewSurface previewSurface, float wD, int wC, boolean sE, boolean vE, boolean gM) {
+	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE, boolean vE, boolean nGM) {
 		context = c;
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         screenFlash = (View) v;
@@ -58,7 +58,7 @@ class RoarHandler {
         waveColor = wC;
         soundEnabled = sE;
         vibrationEnabled = vE;
-        gameMode = gM;
+        noGameMode = nGM;
         isFlat = false;
         touched = false;
         
@@ -119,7 +119,7 @@ class RoarHandler {
 		}
 	}
 	
-	public void setWaveDuration(float w) {
+	public void setWaveDuration(int w) {
 		waveDuration = w;
 		// waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
 		waveCount =1;

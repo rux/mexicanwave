@@ -73,11 +73,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
-        float waveDuration = Float.parseFloat(prefs.getString("pref_wave_duration", "15"));
+        boolean stadiumMode = prefs.getBoolean("pref_stadium", false);
+        int waveDuration = stadiumMode ? 30 : 10;
+        
         int waveColor = Color.parseColor(prefs.getString("pref_coloring", "#EEFFFFFF"));
         boolean soundEnabled = prefs.getBoolean("pref_sound", false);
         boolean vibrationEnabled = prefs.getBoolean("pref_vibration", true);
-        boolean gameMode = prefs.getBoolean("pref_game", true);
+        boolean noGameMode = prefs.getBoolean("pref_no_game", false);
         
         
         setContentView(R.layout.main);
@@ -90,7 +92,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
 
-        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor, soundEnabled, vibrationEnabled, gameMode);
+        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor, soundEnabled, vibrationEnabled, noGameMode);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -291,9 +293,12 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		roarHandler.calmDown();
-		if (key.equals("pref_group_size_values")) {
-			roarHandler.setWaveDuration(Integer.parseInt(prefs.getString("pref_wave_duration", "10")));
+		if (key.equals("pref_stadium")) {
+			boolean stadiumMode = prefs.getBoolean("pref_stadium", false);
+		    int waveDuration = stadiumMode ? 30 : 10;
+			roarHandler.setWaveDuration(waveDuration);
 		}
+		
 		if (key.equals("pref_color_values")) {
 			roarHandler.waveColor = Color.parseColor(prefs.getString("pref_coloring", "Color.WHITE"));
 		}
@@ -306,8 +311,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			roarHandler.vibrationEnabled = prefs.getBoolean(key, true);
 		}
 
-		if (key.equals("pref_game")) {
-			roarHandler.gameMode = prefs.getBoolean(key, true);
+		if (key.equals("pref_no_game")) {
+			roarHandler.noGameMode = prefs.getBoolean(key, false);
 		}
 	}
 
