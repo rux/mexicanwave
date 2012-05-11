@@ -64,9 +64,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	private AppMeasurement s;
 	
-	private TextView debugText;
-	
-	
+		
 	private static boolean PRODUCTION_VERSION;
 
     @Override
@@ -92,7 +90,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         warning = (View) findViewById(R.id.holdThePhone);
         waveCompass = (ImageView) findViewById(R.id.spinningDisc);
         
-        debugText = (TextView) findViewById(R.id.debugText1);
   
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
@@ -118,6 +115,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         to how your visitor data is collected.  Changes should only be made
         when instructed to do so by your account manager.*/
         s.trackingServer = "yellgroup.122.2o7.net";
+        
+        
+
         
     }
     
@@ -224,7 +224,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					int newAzimuth = roarHandler.getAzimuthInDegrees();
 					long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
 					
-					// debugText.setText( "Smoothed " + String.valueOf(newAzimuth) + " - Raw " + String.valueOf(azimuth * 180 / Math.PI));
 					
 					rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
 					rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
