@@ -137,7 +137,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         s.channel = "android/MexicanWave";
         s.track();
         
-
     	wakeLock.acquire();
     }
  
@@ -226,7 +225,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					
 					
 					rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
-					rotateAnimation.setDuration( 20 ); // this is a bit of a guess because I *think* the game sensor delay rate is about 50Hz.
+					rotateAnimation.setDuration( 25 ); 
 					waveCompass.startAnimation(rotateAnimation);
 					
 					if (cameraIsInitialised != true ) {
