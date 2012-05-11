@@ -22,11 +22,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.omniture.*;
@@ -34,7 +32,6 @@ import com.omniture.*;
 
 public class MexicanwaveActivity extends Activity implements SensorEventListener, PreviewSurface.Callback, OnSharedPreferenceChangeListener {
     
-	private RelativeLayout relativeLayout;
 	private RoarHandler roarHandler;
 	private Context context;
 	private View view;

@@ -23,7 +23,7 @@
             android:title="The idea is to 'catch' the wave as it goes past you, but if you'd prefer it to
             	just light up whether you tap the screen or not, you can choose to untick this box"
             android:key="pref_game"
-            android:defaultValue=true/>
+            android:defaultValue="true"/>
         
     </PreferenceCategory>    
     
