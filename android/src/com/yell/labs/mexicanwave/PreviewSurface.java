@@ -18,6 +18,7 @@ limitations under the License.
 package com.yell.labs.mexicanwave;
 
 import java.io.IOException;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Context;
@@ -100,11 +101,12 @@ class PreviewSurface extends SurfaceView implements SurfaceHolder.Callback {
     	}
     }
     
-    public void lightOff() {
+    public TimerTask lightOff() {
     	if (hasSurface && hasCamera) {
 	        mParameters.setFlashMode(Parameters.FLASH_MODE_OFF);
 	        mCamera.setParameters(mParameters);
     	}
+		return null;
     }
 
     public void lightOn() {

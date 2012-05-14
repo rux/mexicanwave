@@ -1,5 +1,7 @@
 package com.yell.labs.mexicanwave;
 
+import java.util.Timer;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -40,6 +42,7 @@ class RoarHandler {
 	private boolean soundLoaded;
 	
 	private Animation flashAnim;
+	private int flashTimer;
 	
 	private SntpClient sntpClient;
 	private final String timeServer;
@@ -205,6 +208,11 @@ class RoarHandler {
 				Log.i("MexicanWaveTouch", "Hit");
 			
 				mSurface.lightOn();
+				
+				new Timer().schedule(mSurface.lightOff(), 5000);
+				
+				
+				
 				if (vibrationEnabled) {
 					vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
 				}
@@ -230,9 +238,9 @@ class RoarHandler {
 	}	
 	
 	public void calmDown() {
-		if(cameraReady && (currentlyRoaring == true)) {
-			mSurface.lightOff();
-		}
+		//if(cameraReady && (currentlyRoaring == true)) {
+		//	mSurface.lightOff();
+		//}
 		currentlyRoaring = false;
 	}
 }
