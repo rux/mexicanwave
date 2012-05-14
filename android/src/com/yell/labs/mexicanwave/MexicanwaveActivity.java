@@ -113,10 +113,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         to how your visitor data is collected.  Changes should only be made
         when instructed to do so by your account manager.*/
         s.trackingServer = "yellgroup.122.2o7.net";
-        
-        
 
-        
     }
     
 	@Override
