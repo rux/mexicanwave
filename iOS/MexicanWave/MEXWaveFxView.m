@@ -104,7 +104,7 @@
                              [NSNumber numberWithFloat:20], nil];
 
  
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gameMode) name:kGameModeDidChange object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGameMode) name:kGameModeDidChange object:nil];
     [self enableGameMode];
 }
 
