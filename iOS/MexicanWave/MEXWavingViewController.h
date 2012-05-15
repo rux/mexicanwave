@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SettingsView.h"
 #import "CameraSessionController.h"
-
+#import "MEXGameController.h"
 @class MEXWaveFxView;
 @class MEXWaveModel;
 @class MEXAdvertController;
@@ -29,10 +29,13 @@
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
 @property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
 @property (retain, nonatomic) IBOutlet MEXAdvertController* advertController;
-@property (retain, nonatomic) IBOutlet UIImageView *gameModeSprite;
+@property (retain, nonatomic) IBOutlet MEXGameController* gameController;
+
 
 - (IBAction)didTapGrabber:(id)sender;
 - (void)didChangeCrowdType:(NSNotification*)note;
 - (void)pause;
 - (void)resume;
+-(void)startWave;
+
 @end

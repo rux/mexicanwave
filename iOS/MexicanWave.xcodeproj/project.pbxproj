@@ -49,6 +49,7 @@
 		002CA95A156252C000B9B155 /* background_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA956156252C000B9B155 /* background_2@2x.png */; };
 		002CA95B156252C000B9B155 /* background_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA957156252C000B9B155 /* background_3@2x.png */; };
 		002CA95C156252C000B9B155 /* background_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA958156252C000B9B155 /* background_4@2x.png */; };
+		002CA96315629E0000B9B155 /* MEXGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 002CA96215629DFF00B9B155 /* MEXGameController.m */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
 		0056D384153D85B7004C2BE3 /* tab_lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D382153D85B7004C2BE3 /* tab_lines.png */; };
@@ -186,6 +187,8 @@
 		002CA956156252C000B9B155 /* background_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background_2@2x.png"; sourceTree = "<group>"; };
 		002CA957156252C000B9B155 /* background_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background_3@2x.png"; sourceTree = "<group>"; };
 		002CA958156252C000B9B155 /* background_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background_4@2x.png"; sourceTree = "<group>"; };
+		002CA96115629DFF00B9B155 /* MEXGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXGameController.h; sourceTree = "<group>"; };
+		002CA96215629DFF00B9B155 /* MEXGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXGameController.m; sourceTree = "<group>"; };
 		0046F0AA154705E4006A5683 /* circleBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circleBackground@2x.png"; sourceTree = "<group>"; };
 		0046F0AC15470610006A5683 /* circleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleBackground.png; sourceTree = "<group>"; };
 		0056D382153D85B7004C2BE3 /* tab_lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_lines.png; sourceTree = "<group>"; };
@@ -648,6 +651,8 @@
 				199CB63114FEAABF00A16A97 /* MEXWaveModel.m */,
 				199CB62914FEA47B00A16A97 /* MEXWavingViewController.h */,
 				199CB62A14FEA47C00A16A97 /* MEXWavingViewController.m */,
+				002CA96115629DFF00B9B155 /* MEXGameController.h */,
+				002CA96215629DFF00B9B155 /* MEXGameController.m */,
 				198F4DD4154845A900BEAF2D /* MEXAdvertController.h */,
 				198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */,
 				00900D2B155BDECC002B4815 /* GenericTextViewController.h */,
@@ -842,6 +847,7 @@
 				001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */,
 				00900CDD155A6EA4002B4815 /* ProgressView.m in Sources */,
 				00900D2E155BDECD002B4815 /* GenericTextViewController.m in Sources */,
+				002CA96315629E0000B9B155 /* MEXGameController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

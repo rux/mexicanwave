@@ -23,10 +23,8 @@
 
 @interface MEXWavingViewController ()
 @property (nonatomic) SystemSoundID waveSoundID;
-@property (nonatomic,getter = isWaveVisible) BOOL waveVisible;
-@property (nonatomic,getter = isAnimating) BOOL animating;
 
--(void)startWave;
+
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 -(void)didRecieveLegalNotification:(NSNotification*)note;
@@ -42,10 +40,10 @@
 @synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize advertController;
-@synthesize gameModeSprite;
+@synthesize gameController;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize waveSoundID,paused;
-@synthesize waveVisible,gameMode,animating;
+@synthesize gameMode;
 
 
 #pragma mark - Controller lifecycle
@@ -69,7 +67,7 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
-    [gameModeSprite release];
+    [gameController release];
     [super dealloc];
 }
 
@@ -127,7 +125,7 @@
     [swipeRight release];
     [swipeLeft release];
     
-    UITapGestureRecognizer* tapWave = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCatchTheWave:)];
+    UITapGestureRecognizer* tapWave = [[UITapGestureRecognizer alloc] initWithTarget:gameController action:@selector(didTapDisplay)];
     tapWave.delegate = self;
     [self.containerView addGestureRecognizer:tapWave];
     [tapWave release];
@@ -241,12 +239,12 @@
         return;
     }
     
-    self.waveVisible = YES;
+    self.gameController.canWave = YES;
 
     double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 1 : 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        self.waveVisible = NO;
+         self.gameController.canWave = NO;
     });
     
 }
@@ -292,7 +290,7 @@
     self.tabImageView = nil;
     self.whiteFlashView = nil;
     self.advertController = nil;
-    self.gameModeSprite = nil;
+    self.gameController = nil;
     
     
     self.waveSoundID = 0;
@@ -309,29 +307,7 @@
     return YES; // handle the touch
 }
 
--(void)didCatchTheWave:(UITapGestureRecognizer*)tap{
-    
-    if (self.isWaveVisible) {
-        if(self.isAnimating){
-            return;
-        }
 
-        self.animating = YES;
-        [self startWave];
-                
-        const CGPoint currentCenter = self.gameModeSprite.center;
-        [UIView animateWithDuration:1.1 animations:^{
-            self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 100);
-        }completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.8 animations:^{
-                self.gameModeSprite.center = currentCenter;
-            }completion:^(BOOL finished) {
-                self.animating = NO;
-            }];
-        }];
-    }
-    
-}
 
 -(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
     
