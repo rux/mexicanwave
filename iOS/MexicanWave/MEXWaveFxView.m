@@ -15,13 +15,21 @@
 
 @interface MEXWaveFxView ()
 - (void)configureWave;
+-(void)animateBounceWithCycleTime:(NSTimeInterval)cycleTime activeTime:(NSTimeInterval)activeTime phase:(float)phase imageViewIndex:(NSInteger)index;
+
+@property(nonatomic,retain) NSArray* sprites;
+@property(nonatomic,retain) NSArray* animationHeights;
+
 @end
 
 
 @implementation MEXWaveFxView
 
 @synthesize paused;
-@synthesize waveImageView;
+@synthesize sprites;
+
+@synthesize sprite_1,sprite_2,sprite_3,sprite_4,sprite_5,sprite_6,sprite_7,sprite_8,sprite_9,sprite_10,sprite_11,sprite_12,animationHeights;
+
 #pragma mark - Lifecycle
 
 - (id)initWithFrame:(CGRect)frame {
@@ -32,83 +40,153 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if(!(self = [super initWithCoder:aDecoder])) {
-        return nil;
-    }
+-(void)awakeFromNib{
     [self configureWave];
-    return self;
 }
 
 - (void)dealloc {
-    [waveImageView release];    
+    [sprites release];
+    [animationHeights release];
+    [sprite_1 release];
+    [sprite_2 release];
+    [sprite_3 release];
+    [sprite_4 release];
+    [sprite_5 release];
+    [sprite_6 release];
+    [sprite_7 release];
+    [sprite_8 release];
+    [sprite_9 release];
+    [sprite_10 release];
+    [sprite_11 release];
+    [sprite_12 release];
     [super dealloc];
+}
+#define SIGN(x) ((x) < 0.0f ? -1.0f : 1.0f)
+
+- (CGPoint)positionOnProjectedCircleForAngle:(float)angle center:(CGPoint)center {
+    const float y = 132.0f*2.0f*(fabsf(angle) - 0.5f);
+    return CGPointMake(center.x + SIGN(angle)*sqrtf(132.0f*132.0f - y*y), center.y - y);
+}
+
+- (CGFloat)scaleFactorOnProjectedCircleForAngle:(float)fractionalAngle {
+    return (76.0f/128.0f) * (1.0f - fabsf(fractionalAngle)*0.86);    
 }
 
 #pragma mark - Configuration
-
 - (void)configureWave {
-    //Get the size of the wave Image view and add a perspective to it to match image background
-    const CGSize viewSize = self.waveImageView.bounds.size;
-    
-    const CGFloat nearPlaneDistance = viewSize.width / (2.0f * tanf(0.5f*120.0f));
-    // 120 degrees Field Of View angle
-    CATransform3D perspectiveTransform = CATransform3DIdentity;
-    perspectiveTransform.m11 = nearPlaneDistance / viewSize.width;
-    perspectiveTransform.m22 = nearPlaneDistance / viewSize.height;
-    perspectiveTransform.m33 = -1.0f;
-    perspectiveTransform.m43 = -1.0f;
-    perspectiveTransform.m34 = -2.0f*nearPlaneDistance;
-    
-    
-    CATransform3D discOrientTransform = CATransform3DMakeRotation(0.0f * M_PI/180.0f, 0.0f, 0.0f, 1.0f);
-    // Spin the image around the plane over time
-    discOrientTransform = CATransform3DRotate(discOrientTransform, 40.0f * M_PI/180.0f, 1.0f, 0.0f, 0.0f);
-    // 40 degree rotation away from face-on
-    discOrientTransform = CATransform3DConcat(perspectiveTransform, discOrientTransform);
-    
-    self.waveImageView.layer.transform = discOrientTransform;   
+    self.sprites = [NSArray arrayWithObjects:
+                    sprite_12,
+                    sprite_11,
+                    sprite_10,
+                    sprite_9,
+                    sprite_8,
+                    sprite_7,
+                    sprite_6,
+                    sprite_5,
+                    sprite_4,
+                    sprite_3,
+                    sprite_2,
+                    sprite_1, nil];
+       
+    self.animationHeights = [NSArray arrayWithObjects:
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:50],
+                             [NSNumber numberWithFloat:76],
+                             [NSNumber numberWithFloat:100],
+                             [NSNumber numberWithFloat:72],
+                             [NSNumber numberWithFloat:50],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:20], nil];
+
+ 
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseAnimations) name:UIApplicationDidEnterBackgroundNotification object:nil];
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeAnimations) name:UIApplicationWillEnterForegroundNotification object:nil];
     
 }
 
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)startingPhase numberOfPeaks:(NSUInteger)peaksPerCycle {
    
-    [self cancelAnimations];
+    const NSUInteger numberOfLamps = self.sprites.count;
+    [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        const float phase = (float)(idx * peaksPerCycle) / (float)numberOfLamps + startingPhase;   
+        [self animateBounceWithCycleTime:duration activeTime:kActiveTime/(NSTimeInterval)peaksPerCycle phase:phase imageViewIndex:idx];
+    }];
     
-    CABasicAnimation* animation;
-    animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+
     
-    animation.fromValue = [NSNumber numberWithFloat:0];
-    animation.toValue = [NSNumber numberWithFloat:2.0 * M_PI];
-    animation.duration = 1.0;
-    animation.removedOnCompletion = NO;
-    animation.repeatCount = HUGE_VALF;    // Repeat forever           
-    animation.speed = 1.0/duration;
-    animation.timeOffset = startingPhase;
-    [self.waveImageView.layer addAnimation:animation forKey:@"transform.rotation.z"];
 }
-
+-(void)animateBounceWithCycleTime:(NSTimeInterval)cycleTime activeTime:(NSTimeInterval)activeTime phase:(float)phase imageViewIndex:(NSInteger)index {
+    
+    UIImageView* current = (UIImageView*)[self.sprites objectAtIndex:index];
+    const NSNumber* offset = (NSNumber*)[self.animationHeights objectAtIndex:index];
+    
+    [current.layer removeAllAnimations];
+   
+    const NSInteger originalY = current.center.y;
+    
+    
+    CAKeyframeAnimation* postionAnim = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
+    postionAnim.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:originalY],
+                          [NSNumber numberWithFloat:originalY-[offset integerValue]],
+                          [NSNumber numberWithFloat:originalY],nil];
+    postionAnim.keyTimes = [NSArray arrayWithObjects:
+                            [NSNumber numberWithFloat:0.5*(1.0-activeTime)],
+                            [NSNumber numberWithFloat:0.5],
+                            [NSNumber numberWithFloat:0.5*(1.0+activeTime)],nil];
+    
+    postionAnim.speed = 1.0/cycleTime;
+    postionAnim.duration = 1.0;
+    postionAnim.timeOffset = phase;
+    postionAnim.repeatCount = HUGE_VALF;  
+    
+    [current.layer addAnimation:postionAnim forKey:@"postionAnim"];
+   
+}
 -(void)pauseAnimations{
-    const CFTimeInterval timeAtPause = CACurrentMediaTime();
-    self.waveImageView.layer.speed = 0;
-    self.waveImageView.layer.timeOffset = timeAtPause;
+        
+    [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+     
+        UIImageView* currentSprite =(UIImageView*)obj;
+        const CFTimeInterval timeAtPause = CACurrentMediaTime();
+        currentSprite.layer.speed = 0;
+        currentSprite.layer.timeOffset = timeAtPause;
+        
+    }];
+    
+    
     self.paused = YES;
-
+    
 }
 - (void)resumeAnimations{
     if(!self.isPaused){
         return;
-    }
-    CFTimeInterval pausedTime = [self.waveImageView.layer timeOffset];
-    self.waveImageView.layer.speed = 1.0;
-    self.waveImageView.layer.timeOffset = 0.0;
-    self.waveImageView.layer.beginTime = 0.0;
-    CFTimeInterval timeSincePause = [self.waveImageView.layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
-    self.waveImageView.layer.beginTime = timeSincePause;
+    }   
+    [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        UIImageView* currentSprite =(UIImageView*)obj;
+        CFTimeInterval pausedTime = [currentSprite.layer timeOffset];
+        currentSprite.layer.speed = 1.0;
+        currentSprite.layer.timeOffset = 0.0;
+        currentSprite.layer.beginTime = 0.0;
+        CFTimeInterval timeSincePause = [currentSprite.layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+        currentSprite.layer.beginTime = timeSincePause;
+        
+        
+    }];
     self.paused = NO;
 }
 - (void)cancelAnimations{
-    [self.waveImageView.layer removeAllAnimations];
+    [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        UIImageView* currentSprite =(UIImageView*)obj;
+
+        [currentSprite.layer removeAllAnimations];
+        
+    }];
+    
     self.paused = NO;
 
 }

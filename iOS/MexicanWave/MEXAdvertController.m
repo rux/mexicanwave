@@ -43,7 +43,7 @@
     self.advertButton.hidden = !showLink;    
     [[UsageMetrics sharedInstance] didShowMainPageWithDownloadLink:showLink];
     
-    hintTextLabel.text = NSLocalizedString(@"Create a mexican wave using your camera flash and capture that moment", @"Hint Text shown on first Launch");
+    hintTextLabel.text = NSLocalizedString(@"Create a digital mexican wave with your camera flash and catch the light on your phone", @"Hint Text shown on first Launch");
     
     //animate out the text to the user and animate in the Yell advert button
     [UIView animateWithDuration:0.8 delay:7.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{

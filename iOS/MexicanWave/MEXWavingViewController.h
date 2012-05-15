@@ -21,6 +21,7 @@
 @property (nonatomic,getter=isSoundOnWaveEnabled) BOOL soundOnWaveEnabled;
 @property (nonatomic,getter=isPaused) BOOL paused;
 @property (nonatomic,getter=isGameMode) BOOL gameMode;
+@property (retain, nonatomic) IBOutlet UIView *confettiView;
 
 @property (retain, nonatomic) IBOutlet UIView *containerView;
 @property (retain, nonatomic) IBOutlet UIView *videoView;

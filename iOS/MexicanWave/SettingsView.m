@@ -26,6 +26,8 @@
 NSString* const kUserDefaultKeyVibration = @"sound_preference";
 NSString* const kUserDefaultKeySound = @"vibration_preference";
 NSString* const kUserDefaultKeyGameMode = @"gameMode";
+NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
+
 @interface SettingsView ()
 
 @property(nonatomic,retain) NSArray* userSettingOptions;
@@ -35,11 +37,10 @@ NSString* const kUserDefaultKeyGameMode = @"gameMode";
 
 @implementation SettingsView
 
-@synthesize table,speedView,userSettingOptions,appOptions;
+@synthesize table,userSettingOptions,appOptions;
 - (void)dealloc {
     [appOptions release];
     [userSettingOptions release];
-    [speedView release];
     [table release];
     [super dealloc];
 }

@@ -28,11 +28,13 @@
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 -(void)didRecieveLegalNotification:(NSNotification*)note;
+- (void)mexicanConfetti;
 @end
 
 
 @implementation MEXWavingViewController
 @synthesize videoView;
+@synthesize confettiView;
 @synthesize containerView;
 @synthesize waveView;
 @synthesize settingView;
@@ -66,6 +68,7 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
+    [confettiView release];
     [super dealloc];
 }
 
@@ -199,8 +202,6 @@
     [self torchOff];
     // Suspend the model
     [self.waveModel pause];
-    //As the settings view is about to become visible start animating the current speed selection
-    [self.settingView.speedView startAnimatingCurrentSelection];
    
 }
 
@@ -219,9 +220,7 @@
     //sets up for video capture sessions. Gives the controller the correct view and setttings
     [[CameraSessionController sharedCameraController] resumeDisplay];
     
-    //as the main view is now visable stop animating the help guide on the settings view
-    [self.settingView.speedView stopAnimating];
-    
+   
 }
 
 #pragma mark - Notifications
@@ -279,6 +278,7 @@
 }
 
 - (void)viewDidUnload {
+    [self setConfettiView:nil];
     [super viewDidUnload];
 
     self.containerView = nil;
@@ -309,9 +309,75 @@
     
     if (self.waveVisible) {
         [self startWave];
+        [self mexicanConfetti];
     }
     
 }
+
+- (void)mexicanConfetti {
+	int n = 15;
+	int i;
+	
+	for (i = 0; i<n; i++) {
+		CALayer *l  = [CALayer layer];
+		l.contents = (id)[[UIImage imageNamed:@"mexican.png"] CGImage];
+		l.frame = CGRectMake(0, 0, 36, 22);
+		[self.confettiView.layer addSublayer:l];
+		
+		float duration = ((float)(arc4random() % 100) / 55.0f) + 0.1f;
+		
+		CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+		animationGroup.delegate = self;
+		animationGroup.duration = duration;
+		
+		CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+		CGPoint startPoint = CGPointMake(arc4random() % 10, arc4random() % 30);
+        NSLog(@"%f",startPoint.x);
+		positionAnimation.fromValue = [NSValue valueWithCGPoint:startPoint];
+		
+		float x = startPoint.x - ((10 - startPoint.x ) * 0.4f);
+		float y = (startPoint.y - ((20 - startPoint.y) * 0.4f)) ;
+		CGPoint endPoint = CGPointMake(x, y);
+		
+		positionAnimation.toValue = [NSValue valueWithCGPoint:endPoint];
+		positionAnimation.timingFunction = [CAMediaTimingFunction functionWithName:@"easeIn"]; 
+		positionAnimation.duration = duration;
+		
+		CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+		opacityAnimation.fromValue = [NSNumber numberWithFloat:0.7f];
+		opacityAnimation.toValue = [NSNumber numberWithFloat:0.0f];
+		opacityAnimation.duration = duration - 0.1;
+		opacityAnimation.fillMode = kCAFillModeForwards;
+		l.opacity = 0;
+		
+		CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+		rotateAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+		rotateAnimation.toValue = [NSNumber numberWithFloat:arc4random() % 4 + 7];
+		rotateAnimation.duration = duration;
+		
+		CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+		scaleAnimation.fromValue = [NSNumber numberWithFloat:0.6f];
+		scaleAnimation.toValue = [NSNumber numberWithFloat:((arc4random() % 70) / 40.0f) + 1.0f];
+		scaleAnimation.duration = duration;
+		
+		animationGroup.animations = [NSArray arrayWithObjects:positionAnimation, opacityAnimation, rotateAnimation, scaleAnimation, nil];
+		animationGroup.delegate = self;
+		// Add the animation, overriding the implicit animation.
+		
+		[animationGroup setValue:l forKey:@"animatedLayer"];
+		[l addAnimation:animationGroup forKey:@"confetti"];
+	}
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+	CALayer *l = [anim valueForKey:@"animatedLayer"];
+	if (l) {
+		[l removeFromSuperlayer];
+		//[confettiLayers removeObject:l];		
+	}
+}
+
+
 
 -(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
     
