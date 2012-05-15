@@ -35,7 +35,6 @@
 
 @implementation MEXWavingViewController
 @synthesize videoView;
-@synthesize confettiView;
 @synthesize containerView;
 @synthesize waveView;
 @synthesize settingView;
@@ -70,7 +69,6 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
-    [confettiView release];
     [gameModeSprite release];
     [super dealloc];
 }
@@ -283,23 +281,23 @@
 }
 
 - (void)viewDidUnload {
-    [self setConfettiView:nil];
-    [self setGameModeSprite:nil];
-    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[CameraSessionController sharedCameraController] setCameraView:nil];
+    AudioServicesDisposeSystemSoundID(waveSoundID);
+    [self torchOff];
 
+    
     self.containerView = nil;
     self.settingView = nil;
     self.tabImageView = nil;
     self.whiteFlashView = nil;
     self.advertController = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.gameModeSprite = nil;
     
-    [self torchOff];
     
-    [[CameraSessionController sharedCameraController] setCameraView:nil];
-    AudioServicesDisposeSystemSoundID(waveSoundID);
     self.waveSoundID = 0;
     self.waveView = nil;
+    [super viewDidUnload];
 }
 
 #pragma mark Gesture Recognizer callbacks

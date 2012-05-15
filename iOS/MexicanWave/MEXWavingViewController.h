@@ -21,18 +21,17 @@
 @property (nonatomic,getter=isSoundOnWaveEnabled) BOOL soundOnWaveEnabled;
 @property (nonatomic,getter=isPaused) BOOL paused;
 @property (nonatomic,getter=isGameMode) BOOL gameMode;
-@property (retain, nonatomic) IBOutlet UIView *confettiView;
 
 @property (retain, nonatomic) IBOutlet UIView *containerView;
 @property (retain, nonatomic) IBOutlet UIView *videoView;
-@property (nonatomic,retain) IBOutlet MEXWaveFxView* waveView;
+@property (retain, nonatomic) IBOutlet MEXWaveFxView* waveView;
 @property (retain, nonatomic) IBOutlet SettingsView *settingView;
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
 @property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
 @property (retain, nonatomic) IBOutlet MEXAdvertController* advertController;
 @property (retain, nonatomic) IBOutlet UIImageView *gameModeSprite;
 
--(IBAction)didTapGrabber:(id)sender;
+- (IBAction)didTapGrabber:(id)sender;
 - (void)didChangeCrowdType:(NSNotification*)note;
 - (void)pause;
 - (void)resume;
