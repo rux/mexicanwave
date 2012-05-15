@@ -94,7 +94,7 @@
     if(userHintPref < 4){
         //animate in to hint to the user whats behind the main view
         [self bounceAnimation];
-        [[NSUserDefaults standardUserDefaults] setInteger:userHintPref++ forKey:kShownHintToUser];
+        [[NSUserDefaults standardUserDefaults] setInteger:userHintPref+1 forKey:kShownHintToUser];
     }
     
 }
