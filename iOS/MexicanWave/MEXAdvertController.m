@@ -8,7 +8,7 @@
 
 #import "MEXAdvertController.h"
 #import "UsageMetrics.h"
-
+#import "SettingsView.h"
 #define kNSLocaleKeyUK @"GB"
 #define kNSLocaleKeyES @"ES"
 #define kNSLocaleKeyUS @"US"
@@ -42,8 +42,12 @@
     const BOOL showLink = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:appStoreURL]];
     self.advertButton.hidden = !showLink;    
     [[UsageMetrics sharedInstance] didShowMainPageWithDownloadLink:showLink];
+
+    const BOOL gameMode = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode];
     
-    hintTextLabel.text = NSLocalizedString(@"Create a digital mexican wave with your camera flash and catch the light on your phone", @"Hint Text shown on first Launch");
+    
+
+    hintTextLabel.text = !gameMode ? NSLocalizedString(@"Using the viewfinder, point your phone at the centre of the venue and join the Mexican Wave.", @"Hint Text shown on first Launch") : NSLocalizedString(@"Tap the screen in time to make your cactus be part of the wave", @"Hint Text shown on first Launch for Game Mode");
     
     //animate out the text to the user and animate in the Yell advert button
     [UIView animateWithDuration:0.8 delay:7.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
