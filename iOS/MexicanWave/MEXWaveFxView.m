@@ -103,6 +103,9 @@
                              [NSNumber numberWithFloat:20], nil];
 
  
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseAnimations) name:UIApplicationDidEnterBackgroundNotification object:nil];
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeAnimations) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
 }
 
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)startingPhase numberOfPeaks:(NSUInteger)peaksPerCycle {
@@ -144,6 +147,7 @@
    
 }
 -(void)pauseAnimations{
+        
     [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
      
         UIImageView* currentSprite =(UIImageView*)obj;

@@ -45,7 +45,6 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     [self.viewController pause];
-    [self.viewController.settingView.speedView didEnterBackground];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -55,7 +54,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    [self.viewController.settingView.speedView didBecomeActive];
+    [self.viewController resume];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
