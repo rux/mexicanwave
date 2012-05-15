@@ -11,6 +11,7 @@
 @interface MEXGameController : NSObject
 
 @property (retain, nonatomic) IBOutlet UIView *errorView;
+@property (retain, nonatomic) IBOutlet UILabel *errorMessage;
 @property (retain, nonatomic) IBOutlet UIImageView *gameModeSprite;
 @property (nonatomic) BOOL canAnimate;
 @property (nonatomic) BOOL canWave;
