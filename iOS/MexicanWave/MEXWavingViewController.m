@@ -23,12 +23,13 @@
 
 @interface MEXWavingViewController ()
 @property (nonatomic) SystemSoundID waveSoundID;
-@property (nonatomic) BOOL waveVisible;
+@property (nonatomic,getter = isWaveVisible) BOOL waveVisible;
+@property (nonatomic,getter = isAnimating) BOOL animating;
+
 -(void)startWave;
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 -(void)didRecieveLegalNotification:(NSNotification*)note;
-- (void)mexicanConfetti;
 @end
 
 
@@ -42,9 +43,10 @@
 @synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize advertController;
+@synthesize gameModeSprite;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize waveSoundID,paused;
-@synthesize waveVisible,gameMode;
+@synthesize waveVisible,gameMode,animating;
 
 
 #pragma mark - Controller lifecycle
@@ -69,6 +71,7 @@
     [whiteFlashView release];
     [advertController release];
     [confettiView release];
+    [gameModeSprite release];
     [super dealloc];
 }
 
@@ -279,6 +282,7 @@
 
 - (void)viewDidUnload {
     [self setConfettiView:nil];
+    [self setGameModeSprite:nil];
     [super viewDidUnload];
 
     self.containerView = nil;
@@ -307,77 +311,27 @@
 
 -(void)didCatchTheWave:(UITapGestureRecognizer*)tap{
     
-    if (self.waveVisible) {
+    if (self.isWaveVisible) {
+        if(self.isAnimating){
+            return;
+        }
+
+        self.animating = YES;
         [self startWave];
-        [self mexicanConfetti];
+                
+        const CGPoint currentCenter = self.gameModeSprite.center;
+        [UIView animateWithDuration:1.1 animations:^{
+            self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 100);
+        }completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.8 animations:^{
+                self.gameModeSprite.center = currentCenter;
+            }completion:^(BOOL finished) {
+                self.animating = NO;
+            }];
+        }];
     }
     
 }
-
-- (void)mexicanConfetti {
-	int n = 15;
-	int i;
-	
-	for (i = 0; i<n; i++) {
-		CALayer *l  = [CALayer layer];
-		l.contents = (id)[[UIImage imageNamed:@"mexican.png"] CGImage];
-		l.frame = CGRectMake(0, 0, 36, 22);
-		[self.confettiView.layer addSublayer:l];
-		
-		float duration = ((float)(arc4random() % 100) / 55.0f) + 0.1f;
-		
-		CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-		animationGroup.delegate = self;
-		animationGroup.duration = duration;
-		
-		CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-		CGPoint startPoint = CGPointMake(arc4random() % 10, arc4random() % 30);
-        NSLog(@"%f",startPoint.x);
-		positionAnimation.fromValue = [NSValue valueWithCGPoint:startPoint];
-		
-		float x = startPoint.x - ((10 - startPoint.x ) * 0.4f);
-		float y = (startPoint.y - ((20 - startPoint.y) * 0.4f)) ;
-		CGPoint endPoint = CGPointMake(x, y);
-		
-		positionAnimation.toValue = [NSValue valueWithCGPoint:endPoint];
-		positionAnimation.timingFunction = [CAMediaTimingFunction functionWithName:@"easeIn"]; 
-		positionAnimation.duration = duration;
-		
-		CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-		opacityAnimation.fromValue = [NSNumber numberWithFloat:0.7f];
-		opacityAnimation.toValue = [NSNumber numberWithFloat:0.0f];
-		opacityAnimation.duration = duration - 0.1;
-		opacityAnimation.fillMode = kCAFillModeForwards;
-		l.opacity = 0;
-		
-		CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-		rotateAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
-		rotateAnimation.toValue = [NSNumber numberWithFloat:arc4random() % 4 + 7];
-		rotateAnimation.duration = duration;
-		
-		CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-		scaleAnimation.fromValue = [NSNumber numberWithFloat:0.6f];
-		scaleAnimation.toValue = [NSNumber numberWithFloat:((arc4random() % 70) / 40.0f) + 1.0f];
-		scaleAnimation.duration = duration;
-		
-		animationGroup.animations = [NSArray arrayWithObjects:positionAnimation, opacityAnimation, rotateAnimation, scaleAnimation, nil];
-		animationGroup.delegate = self;
-		// Add the animation, overriding the implicit animation.
-		
-		[animationGroup setValue:l forKey:@"animatedLayer"];
-		[l addAnimation:animationGroup forKey:@"confetti"];
-	}
-}
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-	CALayer *l = [anim valueForKey:@"animatedLayer"];
-	if (l) {
-		[l removeFromSuperlayer];
-		//[confettiLayers removeObject:l];		
-	}
-}
-
-
 
 -(void)didRecievePanGestureLeft:(UIPanGestureRecognizer*)recognizer{
     

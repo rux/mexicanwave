@@ -30,6 +30,7 @@
 @property (retain, nonatomic) IBOutlet UIImageView *tabImageView;
 @property (retain, nonatomic) IBOutlet UIView *whiteFlashView;
 @property (retain, nonatomic) IBOutlet MEXAdvertController* advertController;
+@property (retain, nonatomic) IBOutlet UIImageView *gameModeSprite;
 
 -(IBAction)didTapGrabber:(id)sender;
 - (void)didChangeCrowdType:(NSNotification*)note;
