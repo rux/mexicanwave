@@ -12,6 +12,13 @@
 		002779B715512A530080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779B515512A530080BAFC /* Localizable.strings */; };
 		002779C115513B7D0080BAFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779BF15513B7D0080BAFC /* Localizable.strings */; };
 		002779CF1551747E0080BAFC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002779CD1551747E0080BAFC /* InfoPlist.strings */; };
+		002CA8F615611E6500B9B155 /* SpriteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 002CA8F515611E6500B9B155 /* SpriteView.m */; };
+		002CA9101561442E00B9B155 /* background_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA90C1561442E00B9B155 /* background_1.png */; };
+		002CA9111561442E00B9B155 /* background_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA90D1561442E00B9B155 /* background_2.png */; };
+		002CA9121561442E00B9B155 /* background_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA90E1561442E00B9B155 /* background_3.png */; };
+		002CA9131561442E00B9B155 /* background_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA90F1561442E00B9B155 /* background_4.png */; };
+		002CA9161561453500B9B155 /* sprite1.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA9141561453500B9B155 /* sprite1.png */; };
+		002CA9171561453500B9B155 /* sprite1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002CA9151561453500B9B155 /* sprite1@2x.png */; };
 		0046F0AB154705E4006A5683 /* circleBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AA154705E4006A5683 /* circleBackground@2x.png */; };
 		0046F0AD15470610006A5683 /* circleBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 0046F0AC15470610006A5683 /* circleBackground.png */; };
 		0056D384153D85B7004C2BE3 /* tab_lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 0056D382153D85B7004C2BE3 /* tab_lines.png */; };
@@ -113,6 +120,14 @@
 		002779B615512A530080BAFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		002779C015513B7D0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
 		002779CE1551747E0080BAFC /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = InfoPlist.strings; sourceTree = "<group>"; };
+		002CA8F415611E6500B9B155 /* SpriteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteView.h; sourceTree = "<group>"; };
+		002CA8F515611E6500B9B155 /* SpriteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpriteView.m; sourceTree = "<group>"; };
+		002CA90C1561442E00B9B155 /* background_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_1.png; sourceTree = "<group>"; };
+		002CA90D1561442E00B9B155 /* background_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_2.png; sourceTree = "<group>"; };
+		002CA90E1561442E00B9B155 /* background_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_3.png; sourceTree = "<group>"; };
+		002CA90F1561442E00B9B155 /* background_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_4.png; sourceTree = "<group>"; };
+		002CA9141561453500B9B155 /* sprite1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sprite1.png; sourceTree = "<group>"; };
+		002CA9151561453500B9B155 /* sprite1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite1@2x.png"; sourceTree = "<group>"; };
 		0046F0AA154705E4006A5683 /* circleBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circleBackground@2x.png"; sourceTree = "<group>"; };
 		0046F0AC15470610006A5683 /* circleBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circleBackground.png; sourceTree = "<group>"; };
 		0056D382153D85B7004C2BE3 /* tab_lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_lines.png; sourceTree = "<group>"; };
@@ -269,6 +284,18 @@
 			path = MexicanWave/es.lproj;
 			sourceTree = "<group>";
 		};
+		002CA90B1561442E00B9B155 /* Split Background */ = {
+			isa = PBXGroup;
+			children = (
+				002CA90C1561442E00B9B155 /* background_1.png */,
+				002CA90D1561442E00B9B155 /* background_2.png */,
+				002CA90E1561442E00B9B155 /* background_3.png */,
+				002CA90F1561442E00B9B155 /* background_4.png */,
+			);
+			name = "Split Background";
+			path = Background;
+			sourceTree = "<group>";
+		};
 		00813F08152DE72A00262289 /* Settings / Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +354,8 @@
 				00C6FEE31541663400420E4B /* CameraSessionController.m */,
 				1903F3CB1510F23900807542 /* MEXWaveFxView.h */,
 				1903F3CC1510F23A00807542 /* MEXWaveFxView.m */,
+				002CA8F415611E6500B9B155 /* SpriteView.h */,
+				002CA8F515611E6500B9B155 /* SpriteView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -353,6 +382,9 @@
 		196B8DF51517B58700DAD14A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				002CA9141561453500B9B155 /* sprite1.png */,
+				002CA9151561453500B9B155 /* sprite1@2x.png */,
+				002CA90B1561442E00B9B155 /* Split Background */,
 				00AC81C3155D09D3003B3D2D /* mexican_2.png */,
 				00AC81C4155D09D3003B3D2D /* mexican.png */,
 				00900CDF155A8315002B4815 /* tick.png */,
@@ -645,6 +677,12 @@
 				00900D2F155BDECD002B4815 /* GenericTextViewController.xib in Resources */,
 				00AC81C5155D09D3003B3D2D /* mexican_2.png in Resources */,
 				00AC81C6155D09D3003B3D2D /* mexican.png in Resources */,
+				002CA9101561442E00B9B155 /* background_1.png in Resources */,
+				002CA9111561442E00B9B155 /* background_2.png in Resources */,
+				002CA9121561442E00B9B155 /* background_3.png in Resources */,
+				002CA9131561442E00B9B155 /* background_4.png in Resources */,
+				002CA9161561453500B9B155 /* sprite1.png in Resources */,
+				002CA9171561453500B9B155 /* sprite1@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,6 +717,7 @@
 				001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */,
 				00900CDD155A6EA4002B4815 /* ProgressView.m in Sources */,
 				00900D2E155BDECD002B4815 /* GenericTextViewController.m in Sources */,
+				002CA8F615611E6500B9B155 /* SpriteView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

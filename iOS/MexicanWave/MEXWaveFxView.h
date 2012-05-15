@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface MEXWaveFxView : UIView
 
@@ -17,4 +18,17 @@
 - (void)resumeAnimations;
 - (void)cancelAnimations;
 
+
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_1;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_2;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_3;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_4;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_5;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_6;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_7;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_8;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_9;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_10;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_11;
+@property(nonatomic,retain) IBOutlet UIImageView* sprite_12;
 @end
