@@ -61,22 +61,33 @@
 }
 
 #pragma mark - Configuration
-#import "SpriteView.h"
 - (void)configureWave {
-    self.sprites = [NSArray arrayWithObjects:sprite_12,sprite_11,sprite_10,sprite_9,sprite_8,sprite_7,sprite_6,sprite_5,sprite_4,sprite_3,sprite_2,sprite_1, nil];
+    self.sprites = [NSArray arrayWithObjects:
+                    sprite_12,
+                    sprite_11,
+                    sprite_10,
+                    sprite_9,
+                    sprite_8,
+                    sprite_7,
+                    sprite_6,
+                    sprite_5,
+                    sprite_4,
+                    sprite_3,
+                    sprite_2,
+                    sprite_1, nil];
        
     self.animationHeights = [NSArray arrayWithObjects:
-                             [NSNumber numberWithFloat:35],
-                             [NSNumber numberWithFloat:35],
-                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:30],
                              [NSNumber numberWithFloat:50],
                              [NSNumber numberWithFloat:76],
                              [NSNumber numberWithFloat:100],
-                             [NSNumber numberWithFloat:76],
+                             [NSNumber numberWithFloat:72],
                              [NSNumber numberWithFloat:50],
-                             [NSNumber numberWithFloat:35],
-                             [NSNumber numberWithFloat:35],
-                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:30],
                              [NSNumber numberWithFloat:20], nil];
 
  
@@ -114,7 +125,7 @@
     
     postionAnim.speed = 1.0/cycleTime;
     postionAnim.duration = 1.0;
-    postionAnim.timeOffset = phase - 0.5;
+    postionAnim.timeOffset = phase;
     postionAnim.repeatCount = HUGE_VALF;  
     
     [current.layer addAnimation:postionAnim forKey:@"postionAnim"];
