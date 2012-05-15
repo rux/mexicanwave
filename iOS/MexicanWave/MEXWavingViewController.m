@@ -91,10 +91,12 @@
     [super viewDidAppear:animated];
     [self resume];    
     
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
+    NSInteger userHintPref = [[NSUserDefaults standardUserDefaults] integerForKey:kShownHintToUser];
+    
+    if(userHintPref < 4){
         //animate in to hint to the user whats behind the main view
         [self bounceAnimation];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShownHintToUser];
+        [[NSUserDefaults standardUserDefaults] setInteger:userHintPref++ forKey:kShownHintToUser];
     }
     
 }
