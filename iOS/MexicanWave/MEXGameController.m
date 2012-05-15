@@ -12,7 +12,10 @@
 
 @implementation MEXGameController
 @synthesize gameModeSprite,canAnimate,animating,canWave;
+@synthesize showingError,errorView;
+
 -(void)dealloc{
+    [errorView release];
     [gameModeSprite release];
     [super dealloc];
 }
@@ -23,6 +26,11 @@
         if(self.isAnimating){
             return;
         }
+        
+        if(self.isShowingError){
+            self.errorView.hidden = YES;
+        }
+        
         self.animating = YES;
         MEXAppDelegate* appDel = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
         
@@ -44,8 +52,28 @@
         }];
     }
     else {
+        if(!self.showingError && !self.animating){
+                
+            self.errorView.alpha = 0;
+            self.errorView.hidden = NO;
+
+            [UIView animateWithDuration:0.6 animations:^{
+                self.errorView.alpha = 1;
+                
+            }completion:^(BOOL finished) {
+                
+                [UIView animateWithDuration:0.4 animations:^{
+                    self.errorView.alpha = 0;
+                    
+                }completion:^(BOOL finished) {
+                    
+                    self.showingError = NO;
+                }];
+            }];
+            
+            
+        }
         
-        NSLog(@"No good");
     }
 }
 

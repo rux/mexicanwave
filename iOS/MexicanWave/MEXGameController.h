@@ -10,10 +10,12 @@
 
 @interface MEXGameController : NSObject
 
-
+@property (retain, nonatomic) IBOutlet UIView *errorView;
 @property (retain, nonatomic) IBOutlet UIImageView *gameModeSprite;
 @property (nonatomic) BOOL canAnimate;
 @property (nonatomic) BOOL canWave;
+@property (nonatomic,getter = isShowingError) BOOL showingError;
+
 @property (nonatomic, getter = isAnimating) BOOL animating;
 
 -(void)didTapDisplay;
