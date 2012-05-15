@@ -26,7 +26,7 @@
 @implementation MEXWaveFxView
 
 @synthesize paused;
-@synthesize waveImageView,sprites;
+@synthesize sprites;
 
 @synthesize sprite_1,sprite_2,sprite_3,sprite_4,sprite_5,sprite_6,sprite_7,sprite_8,sprite_9,sprite_10,sprite_11,sprite_12,animationHeights;
 
@@ -46,7 +46,19 @@
 
 - (void)dealloc {
     [sprites release];
-    [waveImageView release];    
+    [animationHeights release];
+    [sprite_1 release];
+    [sprite_2 release];
+    [sprite_3 release];
+    [sprite_4 release];
+    [sprite_5 release];
+    [sprite_6 release];
+    [sprite_7 release];
+    [sprite_8 release];
+    [sprite_9 release];
+    [sprite_10 release];
+    [sprite_11 release];
+    [sprite_12 release];
     [super dealloc];
 }
 #define SIGN(x) ((x) < 0.0f ? -1.0f : 1.0f)
@@ -132,28 +144,45 @@
    
 }
 -(void)pauseAnimations{
+    [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+     
+        UIImageView* currentSprite =(UIImageView*)obj;
+        const CFTimeInterval timeAtPause = CACurrentMediaTime();
+        currentSprite.layer.speed = 0;
+        currentSprite.layer.timeOffset = timeAtPause;
+        
+    }];
     
     
-    const CFTimeInterval timeAtPause = CACurrentMediaTime();
-    self.waveImageView.layer.speed = 0;
-    self.waveImageView.layer.timeOffset = timeAtPause;
     self.paused = YES;
     
 }
 - (void)resumeAnimations{
     if(!self.isPaused){
         return;
-    }
-    CFTimeInterval pausedTime = [self.waveImageView.layer timeOffset];
-    self.waveImageView.layer.speed = 1.0;
-    self.waveImageView.layer.timeOffset = 0.0;
-    self.waveImageView.layer.beginTime = 0.0;
-    CFTimeInterval timeSincePause = [self.waveImageView.layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
-    self.waveImageView.layer.beginTime = timeSincePause;
+    }   
+    [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        UIImageView* currentSprite =(UIImageView*)obj;
+        CFTimeInterval pausedTime = [currentSprite.layer timeOffset];
+        currentSprite.layer.speed = 1.0;
+        currentSprite.layer.timeOffset = 0.0;
+        currentSprite.layer.beginTime = 0.0;
+        CFTimeInterval timeSincePause = [currentSprite.layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+        currentSprite.layer.beginTime = timeSincePause;
+        
+        
+    }];
     self.paused = NO;
 }
 - (void)cancelAnimations{
-    [self.waveImageView.layer removeAllAnimations];
+    [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        UIImageView* currentSprite =(UIImageView*)obj;
+
+        [currentSprite.layer removeAllAnimations];
+        
+    }];
+    
     self.paused = NO;
 
 }
