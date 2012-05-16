@@ -4,6 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/black"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical" >
 
     <com.yell.labs.mexicanwave.PreviewSurface
@@ -17,53 +18,122 @@
         android:layout_width="1dp"
         android:layout_height="1dp"
         android:background="#000"/>
+   
+    
         
-    
-
-
-    <ImageView
-        android:id="@+id/spinningDisc"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/radarImageDescription"
-        android:src="@drawable/wave_disc" />
-    <ImageView
-        android:id="@+id/backgroundImage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/backgroundImageDescription"
-        android:src="@drawable/background" />    
-    
-    
-    
-    
-    
-    
-    
-
-    <View
-        android:id="@+id/screenFlash"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="#EE000000"
-        />
-    <!--  the colour set for the background of the above view is black so the first few seconds are blanked out - the camera
-          is initialising and the movement is insanely jerky, so I've decided that it's better to just obscure it
-          completely. -->
-    
     <TextView
         android:id="@+id/holdThePhone"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#AA000000"
         android:gravity="center"
-        android:text="@string/pleaseHoldUpThePhone" />
+        android:text="@string/pleaseHoldUpThePhone"
+        android:visibility="gone"
+        />
+    
 
 
+    <ImageView
+        android:id="@+id/background_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/background_0" />  
+        
+    <ImageView
+        android:id="@+id/background_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_0"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:layout_margin="0px"
+        android:src="@drawable/background_1" />
+    
+    <ImageView
+        android:id="@+id/background_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_1"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_2" />
+    
+    <ImageView
+        android:id="@+id/background_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_2"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_3" />
+    
+    <ImageView
+        android:id="@+id/background_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_3"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_4" />
+    
+    <ImageView
+        android:id="@+id/background_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_4"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_5" />
+    
+    <ImageView
+        android:id="@+id/background_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_5"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_6" />
+    
+    <ImageView
+        android:id="@+id/background_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_6"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_7" />
+    
+    <ImageView
+        android:id="@+id/background_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_7"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_8" />
+    
+    <ImageView
+        android:id="@+id/background_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_8"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_9" />
+    
+    <!--  the colour set for the background of the above view is black so the first few seconds are blanked out - the camera
+          is initialising and the movement is insanely jerky, so I've decided that it's better to just obscure it
+          completely. -->
 
+    <View
+        android:id="@+id/screenFlash"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="#EE000000"
+        android:visibility="invisible" />
     
 </RelativeLayout>

@@ -212,7 +212,6 @@ class RoarHandler {
 				new Timer().schedule(mSurface.lightOff(), 5000);
 				
 				
-				
 				if (vibrationEnabled) {
 					vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
 				}

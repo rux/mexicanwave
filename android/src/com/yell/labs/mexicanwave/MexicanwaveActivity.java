@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.omniture.*;
@@ -45,8 +46,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private double azimuth;
 	private PreviewSurface mSurface;
 		
-	ImageView waveCompass;
-	private Animation rotateAnimation;
 	
 	private PowerManager powerManager;
 	private WakeLock wakeLock;
@@ -57,9 +56,12 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	private AppMeasurement s;
 	
-	
+	private RelativeLayout layout;
 		
 	private static boolean PRODUCTION_VERSION;
+	
+	
+	private Cactus[] cacti;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,10 +85,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         
         setContentView(R.layout.main);
+        layout = (RelativeLayout) findViewById(R.id.overallLayout);
         context = this;
         view = (View) findViewById(R.id.screenFlash);
         warning = (View) findViewById(R.id.holdThePhone);
-        waveCompass = (ImageView) findViewById(R.id.spinningDisc);
         
   
         mSurface = (PreviewSurface) findViewById(R.id.surface);
@@ -113,6 +115,35 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         to how your visitor data is collected.  Changes should only be made
         when instructed to do so by your account manager.*/
         s.trackingServer = "yellgroup.122.2o7.net";
+        
+        cacti = new Cactus[12];
+        cacti[0] = new Cactus(context, R.drawable.sprite_1, 70, 350, 70, 3000, 210);
+        cacti[1] = new Cactus(context, R.drawable.sprite_1, 32, 200, 60, 3000, 240);
+        cacti[2] = new Cactus(context, R.drawable.sprite_1, 40, 130, 50, 2500, 270);
+        cacti[3] = new Cactus(context, R.drawable.sprite_1, 100, 60, 70, 2000, 300);
+        cacti[4] = new Cactus(context, R.drawable.sprite_1, 160, 40, 60, 2000, 330);
+        cacti[5] = new Cactus(context, R.drawable.sprite_1, 220, 30, 50, 2000, 0);
+        
+        cacti[6] = new Cactus(context, R.drawable.sprite_1, 280, 40, 70, 2000, 30);
+        cacti[7] = new Cactus(context, R.drawable.sprite_1, 320, 60, 60, 2000, 60);
+        cacti[8] = new Cactus(context, R.drawable.sprite_1, 360, 130, 50, 2500, 90);
+        cacti[9] = new Cactus(context, R.drawable.sprite_1, 368, 200, 70, 3000, 120);
+        cacti[10] = new Cactus(context, R.drawable.sprite_1, 320, 350, 60, 3000, 150);
+        
+
+        layout.addView(cacti[0], cacti[0].layoutParams);
+        layout.addView(cacti[1], cacti[1].layoutParams);
+        layout.addView(cacti[2], cacti[2].layoutParams);
+        layout.addView(cacti[3], cacti[3].layoutParams);
+        layout.addView(cacti[4], cacti[4].layoutParams);
+        layout.addView(cacti[5], cacti[5].layoutParams);
+        layout.addView(cacti[6], cacti[6].layoutParams);
+        layout.addView(cacti[7], cacti[7].layoutParams);
+        layout.addView(cacti[8], cacti[8].layoutParams);
+        layout.addView(cacti[9], cacti[9].layoutParams);
+        layout.addView(cacti[10], cacti[10].layoutParams);
+        
+        
 
     }
     
@@ -218,10 +249,10 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					int newAzimuth = roarHandler.getAzimuthInDegrees();
 					long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
 					
+					int oldAngle = (int) ((-oldAzimuth + offset) % 360);
+					int newAngle = (int) ((-newAzimuth + offset) % 360);
 					
-					rotateAnimation = new RotateAnimation(-oldAzimuth + offset, -newAzimuth + offset, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF , 0.5f);
-					rotateAnimation.setDuration( 25 ); 
-					waveCompass.startAnimation(rotateAnimation);
+
 					
 					if (cameraIsInitialised != true ) {
 						if (roarHandler.getWhetherCameraIsReady() == true) {
@@ -230,6 +261,11 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 						}
 					}
 					
+					for (Cactus cactus : cacti) {
+						if (cactus != null  && (Math.abs(newAngle - cactus.angle) < 15) ) {
+							cactus.bounce();
+						}
+					}
 	
 	
 					
