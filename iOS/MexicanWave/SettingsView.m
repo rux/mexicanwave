@@ -165,7 +165,7 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
         [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyGameMode];
         [[NSNotificationCenter defaultCenter] postNotificationName:kGameModeDidChange object:nil];
         if(currentSwitch.isOn){
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Game Mode" message:NSLocalizedString(@"Tap the screen in time to make your cactus be part of the wave", @"Hint Text shown on first Launch for Game Mode")
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Game Mode",@"Title for Game Mode") message:NSLocalizedString(@"Tap the screen in time to make your cactus be part of the wave", @"Hint Text shown on first Launch for Game Mode")
  delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Dismiss button of alert view") otherButtonTitles:nil];
             [alert show];
             [alert release];       
