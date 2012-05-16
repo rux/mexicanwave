@@ -125,6 +125,7 @@
     [swipeRight release];
     [swipeLeft release];
     
+    //Add a tap gesture to the container view and pass its touches to the game controller
     UITapGestureRecognizer* tapWave = [[UITapGestureRecognizer alloc] initWithTarget:gameController action:@selector(didTapDisplay)];
     tapWave.delegate = self;
     [self.containerView addGestureRecognizer:tapWave];

@@ -45,8 +45,6 @@
 
     const BOOL gameMode = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode];
     
-    
-
     hintTextLabel.text = !gameMode ? NSLocalizedString(@"Using the viewfinder, point your phone at the centre of the venue and join the Mexican Wave.", @"Hint Text shown on first Launch") : NSLocalizedString(@"Tap the screen in time to make your cactus be part of the wave", @"Hint Text shown on first Launch for Game Mode");
     
     //animate out the text to the user and animate in the Yell advert button
