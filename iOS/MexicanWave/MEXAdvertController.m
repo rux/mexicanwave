@@ -51,8 +51,8 @@
     [UIView animateWithDuration:0.8 delay:7.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         hintTextLabel.alpha = 0; 
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.3 animations:^{
-            self.clearBackgound.alpha = 0; 
+        [UIView animateWithDuration:0.4 animations:^{
+            self.clearBackgound.alpha = 1; 
         }];
     }];
     
