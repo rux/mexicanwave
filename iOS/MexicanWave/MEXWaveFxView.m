@@ -134,7 +134,6 @@
     UIImageView* current = (UIImageView*)[self.sprites objectAtIndex:index];
     const NSNumber* offset = (NSNumber*)[self.animationHeights objectAtIndex:index];
     
-    [current.layer removeAllAnimations];
    
     const NSInteger originalY = current.center.y;
     
