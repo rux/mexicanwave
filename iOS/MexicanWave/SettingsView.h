@@ -12,6 +12,7 @@ NSString* const kUserDefaultKeyVibration;
 NSString* const kUserDefaultKeySound;
 NSString* const kUserDefaultKeyGameMode;
 NSString* const kSpeedSegementDidChange;
+NSString* const kGameModeDidChange;
 
 @interface SettingsView : UIView <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
 

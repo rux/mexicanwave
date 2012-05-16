@@ -23,18 +23,16 @@
 
 @interface MEXWavingViewController ()
 @property (nonatomic) SystemSoundID waveSoundID;
-@property (nonatomic) BOOL waveVisible;
--(void)startWave;
+
+
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
 -(void)didRecieveLegalNotification:(NSNotification*)note;
-- (void)mexicanConfetti;
 @end
 
 
 @implementation MEXWavingViewController
 @synthesize videoView;
-@synthesize confettiView;
 @synthesize containerView;
 @synthesize waveView;
 @synthesize settingView;
@@ -42,9 +40,10 @@
 @synthesize whiteFlashView;
 @synthesize waveModel;
 @synthesize advertController;
+@synthesize gameController;
 @synthesize vibrationOnWaveEnabled, soundOnWaveEnabled;
 @synthesize waveSoundID,paused;
-@synthesize waveVisible,gameMode;
+@synthesize gameMode;
 
 
 #pragma mark - Controller lifecycle
@@ -68,7 +67,7 @@
     [tabImageView release];
     [whiteFlashView release];
     [advertController release];
-    [confettiView release];
+    [gameController release];
     [super dealloc];
 }
 
@@ -88,10 +87,12 @@
     [super viewDidAppear:animated];
     [self resume];    
     
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:kShownHintToUser]){
+    NSInteger userHintPref = [[NSUserDefaults standardUserDefaults] integerForKey:kShownHintToUser];
+    
+    if(userHintPref < 4){
         //animate in to hint to the user whats behind the main view
         [self bounceAnimation];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kShownHintToUser];
+        [[NSUserDefaults standardUserDefaults] setInteger:userHintPref+1 forKey:kShownHintToUser];
     }
     
 }
@@ -112,7 +113,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRecieveLegalNotification:) name:@"Legal" object:nil];
     
     // Load in the wave sound.
-    AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
+    AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"spring" withExtension:@"mp3"], &waveSoundID);
     
     //gestures to allow the user to swipe to back and forth the settings screen
     UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
@@ -124,7 +125,8 @@
     [swipeRight release];
     [swipeLeft release];
     
-    UITapGestureRecognizer* tapWave = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didCatchTheWave:)];
+    //Add a tap gesture to the container view and pass its touches to the game controller
+    UITapGestureRecognizer* tapWave = [[UITapGestureRecognizer alloc] initWithTarget:gameController action:@selector(didTapDisplay)];
     tapWave.delegate = self;
     [self.containerView addGestureRecognizer:tapWave];
     [tapWave release];
@@ -238,12 +240,12 @@
         return;
     }
     
-    self.waveVisible = YES;
+    self.gameController.canWave = YES;
 
-    double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 1 : 0.5;
+    double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.7 : 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        self.waveVisible = NO;
+         self.gameController.canWave = NO;
     });
     
 }
@@ -271,29 +273,30 @@
     }
     
     // Play sound
-    if(self.isSoundOnWaveEnabled) {
+    if(self.isSoundOnWaveEnabled && !self.isGameMode) {
         AudioServicesPlaySystemSound(self.waveSoundID);
     }
 
 }
 
 - (void)viewDidUnload {
-    [self setConfettiView:nil];
-    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[CameraSessionController sharedCameraController] setCameraView:nil];
+    AudioServicesDisposeSystemSoundID(waveSoundID);
+    [self torchOff];
 
+    
     self.containerView = nil;
     self.settingView = nil;
     self.tabImageView = nil;
     self.whiteFlashView = nil;
     self.advertController = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.gameController = nil;
     
-    [self torchOff];
     
-    [[CameraSessionController sharedCameraController] setCameraView:nil];
-    AudioServicesDisposeSystemSoundID(waveSoundID);
     self.waveSoundID = 0;
     self.waveView = nil;
+    [super viewDidUnload];
 }
 
 #pragma mark Gesture Recognizer callbacks
@@ -303,78 +306,6 @@
         return NO; // ignore the touch
     }
     return YES; // handle the touch
-}
-
--(void)didCatchTheWave:(UITapGestureRecognizer*)tap{
-    
-    if (self.waveVisible) {
-        [self startWave];
-        [self mexicanConfetti];
-    }
-    
-}
-
-- (void)mexicanConfetti {
-	int n = 15;
-	int i;
-	
-	for (i = 0; i<n; i++) {
-		CALayer *l  = [CALayer layer];
-		l.contents = (id)[[UIImage imageNamed:@"mexican.png"] CGImage];
-		l.frame = CGRectMake(0, 0, 36, 22);
-		[self.confettiView.layer addSublayer:l];
-		
-		float duration = ((float)(arc4random() % 100) / 55.0f) + 0.1f;
-		
-		CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-		animationGroup.delegate = self;
-		animationGroup.duration = duration;
-		
-		CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-		CGPoint startPoint = CGPointMake(arc4random() % 10, arc4random() % 30);
-        NSLog(@"%f",startPoint.x);
-		positionAnimation.fromValue = [NSValue valueWithCGPoint:startPoint];
-		
-		float x = startPoint.x - ((10 - startPoint.x ) * 0.4f);
-		float y = (startPoint.y - ((20 - startPoint.y) * 0.4f)) ;
-		CGPoint endPoint = CGPointMake(x, y);
-		
-		positionAnimation.toValue = [NSValue valueWithCGPoint:endPoint];
-		positionAnimation.timingFunction = [CAMediaTimingFunction functionWithName:@"easeIn"]; 
-		positionAnimation.duration = duration;
-		
-		CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-		opacityAnimation.fromValue = [NSNumber numberWithFloat:0.7f];
-		opacityAnimation.toValue = [NSNumber numberWithFloat:0.0f];
-		opacityAnimation.duration = duration - 0.1;
-		opacityAnimation.fillMode = kCAFillModeForwards;
-		l.opacity = 0;
-		
-		CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-		rotateAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
-		rotateAnimation.toValue = [NSNumber numberWithFloat:arc4random() % 4 + 7];
-		rotateAnimation.duration = duration;
-		
-		CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-		scaleAnimation.fromValue = [NSNumber numberWithFloat:0.6f];
-		scaleAnimation.toValue = [NSNumber numberWithFloat:((arc4random() % 70) / 40.0f) + 1.0f];
-		scaleAnimation.duration = duration;
-		
-		animationGroup.animations = [NSArray arrayWithObjects:positionAnimation, opacityAnimation, rotateAnimation, scaleAnimation, nil];
-		animationGroup.delegate = self;
-		// Add the animation, overriding the implicit animation.
-		
-		[animationGroup setValue:l forKey:@"animatedLayer"];
-		[l addAnimation:animationGroup forKey:@"confetti"];
-	}
-}
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-	CALayer *l = [anim valueForKey:@"animatedLayer"];
-	if (l) {
-		[l removeFromSuperlayer];
-		//[confettiLayers removeObject:l];		
-	}
 }
 
 
