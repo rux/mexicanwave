@@ -27,6 +27,8 @@
 @synthesize gameModeSprite,canAnimate,animating,canWave;
 @synthesize showingError,errorView;
 @synthesize errorMessage,waveSoundID,errorSoundID;
+
+
 -(void)dealloc{
      AudioServicesDisposeSystemSoundID(waveSoundID);
      AudioServicesDisposeSystemSoundID(errorSoundID);
@@ -37,8 +39,10 @@
 }
 
 -(void)awakeFromNib{
+    //Bug in latest x-Code a label size isnt auto adjusted 
     [errorMessage setAdjustsFontSizeToFitWidth:YES];
-    // Load in the wave sound.
+
+    // Load in the wave sounds.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"spring" withExtension:@"mp3"], &waveSoundID);
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"boing" withExtension:@"mp3"], &errorSoundID);
 
@@ -48,6 +52,7 @@
 -(void)setCanWave:(BOOL)wave{
     canWave = wave;
     
+    //if we cant wave and we are currently not animating we can assume you have missed the wave.
     if(!canWave && !self.animating){
         
         if(!self.showingError){
@@ -67,6 +72,12 @@
 }
 
 -(void)didTapDisplay{
+    
+   
+      /*Check we are allowed to wave - this is to check the timings 
+       Are we all ready animating? there is no need to animate twice
+       If we are showing an error get rid of it we are about to wave */
+    
     if(self.canWave){
         if(self.isAnimating){
             return;
@@ -87,6 +98,11 @@
 }
 
 -(void)animateErrorBubbleWithMessage:(NSString*)message{
+    /*
+     Tell everyone we are showing an error and prepare it for animation
+     Play the 'boing' error sound and animate the speech bubble into view. */
+    
+    
     self.showingError = YES;
     self.errorView.alpha = 0;
     self.errorView.hidden = NO;
@@ -114,6 +130,12 @@
 }
 
 -(void)animateSprite{
+    
+    /* Tell everyone are about to animate, get the center point of the gamemode sprite and animate
+     its center point up. Once at peak play the spring sound
+     flash the screen and the camera flash and vibrate if needed. 
+     Then return to a hidden state. */
+    
     self.animating = YES;
     MEXAppDelegate* appDel = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
@@ -125,6 +147,7 @@
         self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 100);
         
     }completion:^(BOOL finished) {
+        
         [appDel.viewController startWave];
         
         [UIView animateWithDuration:0.8 animations:^{
