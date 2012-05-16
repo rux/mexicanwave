@@ -10,6 +10,7 @@
 
 @interface MEXAdvertController : NSObject
 
+@property (nonatomic,retain) IBOutlet UIImageView* clearBackgound;
 @property (nonatomic,retain) IBOutlet UIButton* advertButton;
 @property (nonatomic,retain) IBOutlet UILabel* hintTextLabel;
 - (IBAction)didTapAdvertButton:(id)sender;

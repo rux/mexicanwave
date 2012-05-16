@@ -16,7 +16,7 @@
 @implementation MEXAdvertController
 
 @synthesize advertButton;
-@synthesize hintTextLabel;
+@synthesize hintTextLabel,clearBackgound;
 
 - (IBAction)didTapAdvertButton:(id)sender {
     NSString* countryCode = [self countryCodeForCurrentLocale];
@@ -50,7 +50,11 @@
     //animate out the text to the user and animate in the Yell advert button
     [UIView animateWithDuration:0.8 delay:7.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         hintTextLabel.alpha = 0; 
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.clearBackgound.alpha = 0; 
+        }];
+    }];
     
    
     
@@ -78,6 +82,7 @@
 }
 
 -(void)dealloc{
+    [clearBackgound release];
     [advertButton release];
     [hintTextLabel release];
     [super dealloc];

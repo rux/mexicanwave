@@ -90,18 +90,18 @@
                     sprite_1, nil];
        
     self.animationHeights = [NSArray arrayWithObjects:
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:40],
                              [NSNumber numberWithFloat:50],
-                             [NSNumber numberWithFloat:76],
+                             [NSNumber numberWithFloat:80],
                              [NSNumber numberWithFloat:100],
-                             [NSNumber numberWithFloat:72],
+                             [NSNumber numberWithFloat:80],
                              [NSNumber numberWithFloat:50],
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:20], nil];
+                             [NSNumber numberWithFloat:40],
+                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:30], nil];
 
  
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGameMode) name:kGameModeDidChange object:nil];
