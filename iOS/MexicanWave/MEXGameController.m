@@ -15,7 +15,10 @@
 @interface MEXGameController()
 @property (nonatomic) SystemSoundID waveSoundID;
 @property (nonatomic) SystemSoundID errorSoundID;
+
 -(void)playAudioClipForSound:(SystemSoundID)sound;
+-(void)animateErrorBubbleWithMessage:(NSString*)message;
+-(void)animateSprite;
 @end
 
 @implementation MEXGameController
@@ -42,6 +45,27 @@
     
 }
 
+-(void)setCanWave:(BOOL)wave{
+    canWave = wave;
+    
+    if(!canWave && !self.animating){
+        
+        if(!self.showingError){
+            
+            [self animateErrorBubbleWithMessage:@"Missed"];
+            
+        }
+    }
+}
+
+-(void)playAudioClipForSound:(SystemSoundID)sound{
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeySound]){
+        AudioServicesPlaySystemSound(sound);
+    }
+    
+}
+
 -(void)didTapDisplay{
     if(self.canWave){
         if(self.isAnimating){
@@ -52,93 +76,68 @@
             self.errorView.hidden = YES;
         }
         
-        self.animating = YES;
-        MEXAppDelegate* appDel = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
+        [self animateSprite];
+        return;
+    }
+           
+    if(!self.showingError && !self.animating){
+        [self animateErrorBubbleWithMessage:@"Oops"];         
+    }
         
-        [self playAudioClipForSound:waveSoundID];
+}
+
+-(void)animateErrorBubbleWithMessage:(NSString*)message{
+    self.showingError = YES;
+    self.errorView.alpha = 0;
+    self.errorView.hidden = NO;
+    self.errorMessage.text = message;
+
+    [self playAudioClipForSound:errorSoundID];
+    
+    [UIView animateWithDuration:0.6 animations:^{
+        self.errorView.alpha = 1;
         
-        const CGPoint currentCenter = self.gameModeSprite.center;
+    }completion:^(BOOL finished) {
         
-        [UIView animateWithDuration:1.1 animations:^{
-            self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 100);
+        [UIView animateWithDuration:0.4 animations:^{
+            self.errorView.alpha = 0;
             
         }completion:^(BOOL finished) {
-            [appDel.viewController startWave];
             
-            [UIView animateWithDuration:0.8 animations:^{
-                self.gameModeSprite.center = currentCenter;
-                
-            }completion:^(BOOL finished) {
-                
-                self.animating = NO;
-            }];
+            self.showingError = NO;
+            self.errorView.hidden = YES;
+
         }];
-    }
-    else {
-        if(!self.showingError && !self.animating){
-                
-            self.errorView.alpha = 0;
-            self.errorView.hidden = NO;
-            [self playAudioClipForSound:errorSoundID];
-            
-            [UIView animateWithDuration:0.6 animations:^{
-                self.errorView.alpha = 1;
-                
-            }completion:^(BOOL finished) {
-                
-                [UIView animateWithDuration:0.4 animations:^{
-                    self.errorView.alpha = 0;
-                    
-                }completion:^(BOOL finished) {
-                    
-                    self.showingError = NO;
-                }];
-            }];
-            
-            
-        }
-        
-    }
-}
-
--(void)setCanWave:(BOOL)wave{
-    canWave = wave;
+    }];
     
-    if(!canWave && !self.animating){
-        
-        if(!self.showingError){
-            self.showingError = YES;
-            self.errorMessage.text = @"Missed";
-            self.errorView.alpha = 0;
-            self.errorView.hidden = NO;
 
-            [self playAudioClipForSound:errorSoundID];
-            
-            [UIView animateWithDuration:1.0 animations:^{
-                self.errorView.alpha = 1;
-                
-            }completion:^(BOOL finished) {
-                
-                [UIView animateWithDuration:0.6 animations:^{
-                    self.errorView.alpha = 0;
-                    
-                }completion:^(BOOL finished) {
-                    self.showingError = NO;
-                    self.errorView.hidden = YES;
-                    self.errorMessage.text = @"Oops";
-                }];
-            }];
-        }
-    }
 }
 
--(void)playAudioClipForSound:(SystemSoundID)sound{
-       
-    if([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeySound]){
-        AudioServicesPlaySystemSound(sound);
-    }
+-(void)animateSprite{
+    self.animating = YES;
+    MEXAppDelegate* appDel = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
+    [self playAudioClipForSound:waveSoundID];
+    
+    const CGPoint currentCenter = self.gameModeSprite.center;
+    
+    [UIView animateWithDuration:1.1 animations:^{
+        self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 100);
+        
+    }completion:^(BOOL finished) {
+        [appDel.viewController startWave];
+        
+        [UIView animateWithDuration:0.8 animations:^{
+            self.gameModeSprite.center = currentCenter;
+            
+        }completion:^(BOOL finished) {
+            
+            self.animating = NO;
+        }];
+    }];
 }
+
+
   
 
 @end
