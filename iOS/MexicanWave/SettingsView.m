@@ -27,6 +27,7 @@ NSString* const kUserDefaultKeyVibration = @"sound_preference";
 NSString* const kUserDefaultKeySound = @"vibration_preference";
 NSString* const kUserDefaultKeyGameMode = @"gameMode";
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
+NSString* const kGameModeDidChange = @"kGameModeDidChange";
 
 @interface SettingsView ()
 
@@ -104,6 +105,7 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
     }
     
         
@@ -161,10 +163,12 @@ NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
     }
     else if(currentSwitch.tag == 3){
         [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyGameMode];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kGameModeDidChange object:nil];
         if(currentSwitch.isOn){
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Game Mode" message:@"Tap the screen as the wave passes to Flash, Vibrate and Create the wave" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Game Mode",@"Title for Game Mode") message:NSLocalizedString(@"Tap the screen in time to make your cactus be part of the wave", @"Hint Text shown on first Launch for Game Mode")
+ delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"Dismiss button of alert view") otherButtonTitles:nil];
             [alert show];
-            [alert release];
+            [alert release];       
         }
         
     }

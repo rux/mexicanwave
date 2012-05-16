@@ -8,15 +8,15 @@
 
 #import "MEXWaveFxView.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "SettingsView.h"
 #define kDefaultWidth 320.0f
 
 #define kActiveTime 0.5
 
 @interface MEXWaveFxView ()
-- (void)configureWave;
+-(void)configureWave;
 -(void)animateBounceWithCycleTime:(NSTimeInterval)cycleTime activeTime:(NSTimeInterval)activeTime phase:(float)phase imageViewIndex:(NSInteger)index;
-
+-(void)enableGameMode;
 @property(nonatomic,retain) NSArray* sprites;
 @property(nonatomic,retain) NSArray* animationHeights;
 
@@ -45,6 +45,7 @@
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [sprites release];
     [animationHeights release];
     [sprite_1 release];
@@ -89,22 +90,31 @@
                     sprite_1, nil];
        
     self.animationHeights = [NSArray arrayWithObjects:
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:30],
+                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:40],
                              [NSNumber numberWithFloat:50],
-                             [NSNumber numberWithFloat:76],
+                             [NSNumber numberWithFloat:80],
                              [NSNumber numberWithFloat:100],
-                             [NSNumber numberWithFloat:72],
+                             [NSNumber numberWithFloat:80],
                              [NSNumber numberWithFloat:50],
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:30],
-                             [NSNumber numberWithFloat:20], nil];
+                             [NSNumber numberWithFloat:40],
+                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:35],
+                             [NSNumber numberWithFloat:30], nil];
 
  
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseAnimations) name:UIApplicationDidEnterBackgroundNotification object:nil];
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeAnimations) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGameMode) name:kGameModeDidChange object:nil];
+    [self enableGameMode];
+}
+
+-(void)enableGameMode{
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode]){
+        self.sprite_7.image = nil;
+        return;
+    }
+    
+    self.sprite_7.image = [UIImage imageNamed:@"sprite_8.png"];
     
 }
 
