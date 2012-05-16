@@ -113,7 +113,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRecieveLegalNotification:) name:@"Legal" object:nil];
     
     // Load in the wave sound.
-    AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"clapping" withExtension:@"caf"], &waveSoundID);
+    AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"spring" withExtension:@"mp3"], &waveSoundID);
     
     //gestures to allow the user to swipe to back and forth the settings screen
     UIPanGestureRecognizer* swipeLeft = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(didRecievePanGestureLeft:)];
@@ -241,7 +241,7 @@
     
     self.gameController.canWave = YES;
 
-    double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 1 : 0.5;
+    double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.7 : 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
          self.gameController.canWave = NO;
@@ -272,7 +272,7 @@
     }
     
     // Play sound
-    if(self.isSoundOnWaveEnabled) {
+    if(self.isSoundOnWaveEnabled && !self.isGameMode) {
         AudioServicesPlaySystemSound(self.waveSoundID);
     }
 

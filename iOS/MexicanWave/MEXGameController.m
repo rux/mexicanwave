@@ -9,12 +9,24 @@
 #import "MEXGameController.h"
 #import "MEXAppDelegate.h"
 #import "MEXWavingViewController.h"
+#import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+
+@interface MEXGameController()
+@property (nonatomic) SystemSoundID waveSoundID;
+@property (nonatomic) SystemSoundID errorSoundID;
+-(void)playAudioClipForSound:(SystemSoundID)sound;
+@end
 
 @implementation MEXGameController
+
+
 @synthesize gameModeSprite,canAnimate,animating,canWave;
 @synthesize showingError,errorView;
-@synthesize errorMessage;
+@synthesize errorMessage,waveSoundID,errorSoundID;
 -(void)dealloc{
+     AudioServicesDisposeSystemSoundID(waveSoundID);
+     AudioServicesDisposeSystemSoundID(errorSoundID);
     [errorMessage release];
     [errorView release];
     [gameModeSprite release];
@@ -23,6 +35,11 @@
 
 -(void)awakeFromNib{
     [errorMessage setAdjustsFontSizeToFitWidth:YES];
+    // Load in the wave sound.
+    AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"spring" withExtension:@"mp3"], &waveSoundID);
+    AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"boing" withExtension:@"mp3"], &errorSoundID);
+
+    
 }
 
 -(void)didTapDisplay{
@@ -37,6 +54,8 @@
         
         self.animating = YES;
         MEXAppDelegate* appDel = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
+        
+        [self playAudioClipForSound:waveSoundID];
         
         const CGPoint currentCenter = self.gameModeSprite.center;
         
@@ -60,7 +79,8 @@
                 
             self.errorView.alpha = 0;
             self.errorView.hidden = NO;
-
+            [self playAudioClipForSound:errorSoundID];
+            
             [UIView animateWithDuration:0.6 animations:^{
                 self.errorView.alpha = 1;
                 
@@ -91,6 +111,8 @@
             self.errorMessage.text = @"Missed";
             self.errorView.alpha = 0;
             self.errorView.hidden = NO;
+
+            [self playAudioClipForSound:errorSoundID];
             
             [UIView animateWithDuration:1.0 animations:^{
                 self.errorView.alpha = 1;
@@ -109,5 +131,14 @@
         }
     }
 }
+
+-(void)playAudioClipForSound:(SystemSoundID)sound{
+       
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeySound]){
+        AudioServicesPlaySystemSound(sound);
+    }
+    
+}
+  
 
 @end
