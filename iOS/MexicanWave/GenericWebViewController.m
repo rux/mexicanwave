@@ -26,7 +26,9 @@
 
 - (void)viewDidLoad
 {
-    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+    [webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Mexican Wave Legal" ofType:@"doc"]] MIMEType:@"application/msword" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"http://www.yell.com"]];
+
+   // [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

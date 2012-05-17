@@ -439,11 +439,6 @@
 -(void)didRecieveLegalNotification:(NSNotification*)note{
     GenericWebViewController* webView = [[GenericWebViewController alloc]init];
     
-    
-    NSLog(@"%@",[[NSBundle mainBundle] pathForResource:@"Mexican Wave Legal" ofType:@"html"]);
-    NSLog(@"%@",[NSURL URLWithString:[[NSBundle mainBundle] pathForResource:@"Mexican Wave Legal" ofType:@"html"]]);
-    webView.url = [NSURL URLWithString:[[NSBundle mainBundle] pathForResource:@"Mexican Wave Legal" ofType:@"html"]];
-    NSLog(@"%@",webView.url);
     webView.title = NSLocalizedString(@"Legal", @"The title text shown in the Legal view");
     
     UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:webView];
