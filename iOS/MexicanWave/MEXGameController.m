@@ -72,8 +72,9 @@
 }
 
 -(void)didTapDisplay{
-    
-   
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode]){
+        return;
+    }
       /*Check we are allowed to wave - this is to check the timings 
        Are we all ready animating? there is no need to animate twice
        If we are showing an error get rid of it we are about to wave */
