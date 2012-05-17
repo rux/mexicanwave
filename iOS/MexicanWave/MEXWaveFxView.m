@@ -131,12 +131,13 @@
 }
 -(void)animateBounceWithCycleTime:(NSTimeInterval)cycleTime activeTime:(NSTimeInterval)activeTime phase:(float)phase imageViewIndex:(NSInteger)index {
     
-    UIImageView* current = (UIImageView*)[self.sprites objectAtIndex:index];
+  
+    
+    UIImageView* currentSprite = (UIImageView*)[self.sprites objectAtIndex:index];
     const NSNumber* offset = (NSNumber*)[self.animationHeights objectAtIndex:index];
     
    
-    const NSInteger originalY = current.center.y;
-    
+    const NSInteger originalY = currentSprite.center.y;
     
     CAKeyframeAnimation* postionAnim = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
     postionAnim.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:originalY],
@@ -151,9 +152,12 @@
     postionAnim.duration = 1.0;
     postionAnim.timeOffset = phase;
     postionAnim.repeatCount = HUGE_VALF;  
+    postionAnim.removedOnCompletion = NO;
+    postionAnim.fillMode = kCAFillModeBackwards;
+    [currentSprite.layer removeAnimationForKey:@"postion"];
+
+    [currentSprite.layer addAnimation:postionAnim forKey:@"postion"];
     
-    [current.layer addAnimation:postionAnim forKey:@"postionAnim"];
-   
 }
 -(void)pauseAnimations{
         
