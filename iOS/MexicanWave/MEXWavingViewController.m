@@ -235,18 +235,20 @@
     if(self.isPaused){
         return;
     }
-    if(!self.isGameMode){
-        [self startWave];
+    if(self.isGameMode){
+        self.gameController.canWave = YES;
+        
+        double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.9 : 0.7;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            self.gameController.canWave = NO;
+        });
+        
         return;
     }
-    
-    self.gameController.canWave = YES;
+    [self startWave];
 
-    double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.7 : 0.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-         self.gameController.canWave = NO;
-    });
+    
     
 }
 
