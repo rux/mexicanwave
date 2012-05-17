@@ -76,7 +76,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
         boolean stadiumMode = prefs.getBoolean("pref_stadium", false);
-        int waveDuration = stadiumMode ? 30 : 10;
+        int waveDuration = stadiumMode ? 10 : 5;
         
         int waveColor = Color.parseColor(prefs.getString("pref_coloring", "#EEFFFFFF"));
         boolean soundEnabled = prefs.getBoolean("pref_sound", false);
