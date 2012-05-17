@@ -108,6 +108,8 @@
 		00E3FC8D1565316800F43EFD /* Mexican Wave Legal.doc in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC8C1565316800F43EFD /* Mexican Wave Legal.doc */; };
 		00E3FC90156532BC00F43EFD /* woodenTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC8E156532BB00F43EFD /* woodenTab.png */; };
 		00E3FC91156532BC00F43EFD /* woodenTab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC8F156532BC00F43EFD /* woodenTab@2x.png */; };
+		00E3FC94156535A000F43EFD /* settings_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC921565359F00F43EFD /* settings_background.png */; };
+		00E3FC95156535A000F43EFD /* settings_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC931565359F00F43EFD /* settings_background@2x.png */; };
 		1903F3CD1510F23A00807542 /* MEXWaveFxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3CC1510F23A00807542 /* MEXWaveFxView.m */; };
 		1967B90F1523044B00A924D5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1967B90E1523044B00A924D5 /* AudioToolbox.framework */; };
 		196B8E141517B58700DAD14A /* button-l.png in Resources */ = {isa = PBXBuildFile; fileRef = 196B8DF81517B58700DAD14A /* button-l.png */; };
@@ -261,6 +263,8 @@
 		00E3FC8C1565316800F43EFD /* Mexican Wave Legal.doc */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mexican Wave Legal.doc"; path = "MexicanWave/Mexican Wave Legal.doc"; sourceTree = "<group>"; };
 		00E3FC8E156532BB00F43EFD /* woodenTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = woodenTab.png; path = Background/woodenTab.png; sourceTree = "<group>"; };
 		00E3FC8F156532BC00F43EFD /* woodenTab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "woodenTab@2x.png"; path = "Background/woodenTab@2x.png"; sourceTree = "<group>"; };
+		00E3FC921565359F00F43EFD /* settings_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings_background.png; path = Background/settings_background.png; sourceTree = "<group>"; };
+		00E3FC931565359F00F43EFD /* settings_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings_background@2x.png"; path = "Background/settings_background@2x.png"; sourceTree = "<group>"; };
 		1903F3CB1510F23900807542 /* MEXWaveFxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXWaveFxView.h; sourceTree = "<group>"; };
 		1903F3CC1510F23A00807542 /* MEXWaveFxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveFxView.m; sourceTree = "<group>"; };
 		1967B90E1523044B00A924D5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -493,6 +497,8 @@
 		196B8DF51517B58700DAD14A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				00E3FC921565359F00F43EFD /* settings_background.png */,
+				00E3FC931565359F00F43EFD /* settings_background@2x.png */,
 				00E3FC8E156532BB00F43EFD /* woodenTab.png */,
 				00E3FC8F156532BC00F43EFD /* woodenTab@2x.png */,
 				00CEAC2E1563DE0900E14F67 /* Background */,
@@ -808,6 +814,8 @@
 				00E3FC8D1565316800F43EFD /* Mexican Wave Legal.doc in Resources */,
 				00E3FC90156532BC00F43EFD /* woodenTab.png in Resources */,
 				00E3FC91156532BC00F43EFD /* woodenTab@2x.png in Resources */,
+				00E3FC94156535A000F43EFD /* settings_background.png in Resources */,
+				00E3FC95156535A000F43EFD /* settings_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
