@@ -61,7 +61,7 @@
         
         if(!self.showingError){
             
-            [self animateErrorBubbleWithMessage:@"Missed"];
+            [self animateErrorBubbleWithMessage:NSLocalizedString(@"Missed", @"Title shown when user hasnt tapped in game mode")];
             
         }
     }
@@ -97,7 +97,7 @@
     }
            
     if(!self.showingError && !self.animating){
-        [self animateErrorBubbleWithMessage:@"Oops"];         
+        [self animateErrorBubbleWithMessage:NSLocalizedString(@"Oops", @"Title shown when user has tapped to early")];         
     }
         
 }
