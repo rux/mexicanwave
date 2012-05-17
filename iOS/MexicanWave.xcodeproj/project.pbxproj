@@ -60,8 +60,6 @@
 		00900CDD155A6EA4002B4815 /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00900CDC155A6EA4002B4815 /* ProgressView.m */; };
 		00900CE1155A8315002B4815 /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 00900CDF155A8315002B4815 /* tick.png */; };
 		00900CE2155A8315002B4815 /* tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00900CE0155A8315002B4815 /* tick@2x.png */; };
-		00900D2E155BDECD002B4815 /* GenericTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00900D2C155BDECC002B4815 /* GenericTextViewController.m */; };
-		00900D2F155BDECD002B4815 /* GenericTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00900D2D155BDECD002B4815 /* GenericTextViewController.xib */; };
 		00AC81C5155D09D3003B3D2D /* mexican_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AC81C3155D09D3003B3D2D /* mexican_2.png */; };
 		00AC81C6155D09D3003B3D2D /* mexican.png in Resources */ = {isa = PBXBuildFile; fileRef = 00AC81C4155D09D3003B3D2D /* mexican.png */; };
 		00C3F14415529731004252EB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 00C3F14315529731004252EB /* Default.png */; };
@@ -114,6 +112,11 @@
 		00D26F701536CAD3004BC8ED /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F681536CAD3004BC8ED /* SBJsonBase.m */; };
 		00D26F711536CAD3004BC8ED /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F6A1536CAD3004BC8ED /* SBJsonParser.m */; };
 		00D26F721536CAD3004BC8ED /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F6C1536CAD3004BC8ED /* SBJsonWriter.m */; };
+		00E3FC791563FEFE00F43EFD /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E3FC771563FEFE00F43EFD /* GenericWebViewController.m */; };
+		00E3FC7A1563FEFE00F43EFD /* GenericWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC781563FEFE00F43EFD /* GenericWebViewController.xib */; };
+		00E3FC7C1563FFE600F43EFD /* Mexican Wave Legal.html in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC7B1563FFE600F43EFD /* Mexican Wave Legal.html */; };
+		00E3FC7F1564F00500F43EFD /* setting_plank.png in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC7D1564F00500F43EFD /* setting_plank.png */; };
+		00E3FC801564F00500F43EFD /* setting_plank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC7E1564F00500F43EFD /* setting_plank@2x.png */; };
 		1903F3CD1510F23A00807542 /* MEXWaveFxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3CC1510F23A00807542 /* MEXWaveFxView.m */; };
 		1967B90F1523044B00A924D5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1967B90E1523044B00A924D5 /* AudioToolbox.framework */; };
 		1967B923152320B700A924D5 /* clapping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1967B921152320B700A924D5 /* clapping.caf */; };
@@ -216,9 +219,6 @@
 		00900CDC155A6EA4002B4815 /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 		00900CDF155A8315002B4815 /* tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tick.png; sourceTree = "<group>"; };
 		00900CE0155A8315002B4815 /* tick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick@2x.png"; sourceTree = "<group>"; };
-		00900D2B155BDECC002B4815 /* GenericTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericTextViewController.h; sourceTree = "<group>"; };
-		00900D2C155BDECC002B4815 /* GenericTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericTextViewController.m; sourceTree = "<group>"; };
-		00900D2D155BDECD002B4815 /* GenericTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericTextViewController.xib; sourceTree = "<group>"; };
 		00AC81C3155D09D3003B3D2D /* mexican_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mexican_2.png; sourceTree = "<group>"; };
 		00AC81C4155D09D3003B3D2D /* mexican.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mexican.png; sourceTree = "<group>"; };
 		00C3F14315529731004252EB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../../Default.png; sourceTree = "<group>"; };
@@ -285,6 +285,12 @@
 		00D26F6A1536CAD3004BC8ED /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		00D26F6B1536CAD3004BC8ED /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		00D26F6C1536CAD3004BC8ED /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		00E3FC761563FEFE00F43EFD /* GenericWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericWebViewController.h; sourceTree = "<group>"; };
+		00E3FC771563FEFE00F43EFD /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericWebViewController.m; sourceTree = "<group>"; };
+		00E3FC781563FEFE00F43EFD /* GenericWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericWebViewController.xib; sourceTree = "<group>"; };
+		00E3FC7B1563FFE600F43EFD /* Mexican Wave Legal.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "Mexican Wave Legal.html"; sourceTree = "<group>"; };
+		00E3FC7D1564F00500F43EFD /* setting_plank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_plank.png; sourceTree = "<group>"; };
+		00E3FC7E1564F00500F43EFD /* setting_plank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_plank@2x.png"; sourceTree = "<group>"; };
 		1903F3CB1510F23900807542 /* MEXWaveFxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXWaveFxView.h; sourceTree = "<group>"; };
 		1903F3CC1510F23A00807542 /* MEXWaveFxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveFxView.m; sourceTree = "<group>"; };
 		1967B90E1523044B00A924D5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -428,6 +434,8 @@
 		00CEAC2E1563DE0900E14F67 /* Background */ = {
 			isa = PBXGroup;
 			children = (
+				00E3FC7D1564F00500F43EFD /* setting_plank.png */,
+				00E3FC7E1564F00500F43EFD /* setting_plank@2x.png */,
 				00CEAC5B1563E77700E14F67 /* background_9_clear.png */,
 				00CEAC5C1563E77800E14F67 /* background_9_clear@2x.png */,
 				00CEAC571563E04400E14F67 /* camera_surround.png */,
@@ -622,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				1967B918152304E800A924D5 /* Resources */,
+				00E3FC7B1563FFE600F43EFD /* Mexican Wave Legal.html */,
 				199CB60A14FEA3CA00A16A97 /* MexicanWave */,
 				199CB60314FEA3CA00A16A97 /* Frameworks */,
 				199CB60114FEA3CA00A16A97 /* Products */,
@@ -702,9 +711,9 @@
 				002CA96215629DFF00B9B155 /* MEXGameController.m */,
 				198F4DD4154845A900BEAF2D /* MEXAdvertController.h */,
 				198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */,
-				00900D2B155BDECC002B4815 /* GenericTextViewController.h */,
-				00900D2C155BDECC002B4815 /* GenericTextViewController.m */,
-				00900D2D155BDECD002B4815 /* GenericTextViewController.xib */,
+				00E3FC761563FEFE00F43EFD /* GenericWebViewController.h */,
+				00E3FC771563FEFE00F43EFD /* GenericWebViewController.m */,
+				00E3FC781563FEFE00F43EFD /* GenericWebViewController.xib */,
 			);
 			name = Waving;
 			sourceTree = "<group>";
@@ -816,7 +825,6 @@
 				00C3F166155425D3004252EB /* wave_disc@2x.png in Resources */,
 				00900CE1155A8315002B4815 /* tick.png in Resources */,
 				00900CE2155A8315002B4815 /* tick@2x.png in Resources */,
-				00900D2F155BDECD002B4815 /* GenericTextViewController.xib in Resources */,
 				00AC81C5155D09D3003B3D2D /* mexican_2.png in Resources */,
 				00AC81C6155D09D3003B3D2D /* mexican.png in Resources */,
 				002CA93715624DE900B9B155 /* hat_large.png in Resources */,
@@ -877,6 +885,10 @@
 				00CEAC5A1563E04400E14F67 /* camera_surround@2x.png in Resources */,
 				00CEAC5D1563E77800E14F67 /* background_9_clear.png in Resources */,
 				00CEAC5E1563E77800E14F67 /* background_9_clear@2x.png in Resources */,
+				00E3FC7A1563FEFE00F43EFD /* GenericWebViewController.xib in Resources */,
+				00E3FC7C1563FFE600F43EFD /* Mexican Wave Legal.html in Resources */,
+				00E3FC7F1564F00500F43EFD /* setting_plank.png in Resources */,
+				00E3FC801564F00500F43EFD /* setting_plank@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -909,8 +921,8 @@
 				198F4DD31547F2BB00BEAF2D /* UsageMetrics.m in Sources */,
 				001A663915498E9F008B00E3 /* MEXAdvertController.m in Sources */,
 				00900CDD155A6EA4002B4815 /* ProgressView.m in Sources */,
-				00900D2E155BDECD002B4815 /* GenericTextViewController.m in Sources */,
 				002CA96315629E0000B9B155 /* MEXGameController.m in Sources */,
+				00E3FC791563FEFE00F43EFD /* GenericWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

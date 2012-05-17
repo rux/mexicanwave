@@ -13,7 +13,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "UsageMetrics.h"
 #import "MEXAdvertController.h"
-#import "GenericTextViewController.h"
+#import "GenericWebViewController.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
@@ -437,15 +437,20 @@
 #pragma mark Yell Advert 
 
 -(void)didRecieveLegalNotification:(NSNotification*)note{
-    GenericTextViewController* text = [[GenericTextViewController alloc]init];
-    text.textToShow = NSLocalizedString(@"Legal Text", @"The text shown in the Legal section");
-    text.title = NSLocalizedString(@"Legal", @"The title text shown in the Legal view");
+    GenericWebViewController* webView = [[GenericWebViewController alloc]init];
     
-    UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:text];
-    UIBarButtonItem* cancel =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:text action:@selector(didTapCancel)];
-    text.navigationItem.leftBarButtonItem = cancel;
+    
+    NSLog(@"%@",[[NSBundle mainBundle] pathForResource:@"Mexican Wave Legal" ofType:@"html"]);
+    NSLog(@"%@",[NSURL URLWithString:[[NSBundle mainBundle] pathForResource:@"Mexican Wave Legal" ofType:@"html"]]);
+    webView.url = [NSURL URLWithString:[[NSBundle mainBundle] pathForResource:@"Mexican Wave Legal" ofType:@"html"]];
+    NSLog(@"%@",webView.url);
+    webView.title = NSLocalizedString(@"Legal", @"The title text shown in the Legal view");
+    
+    UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:webView];
+    UIBarButtonItem* cancel =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:webView action:@selector(didTapCancel)];
+    webView.navigationItem.leftBarButtonItem = cancel;
     [self presentModalViewController:navController animated:YES];
-    [text release];
+    [webView release];
     [navController release];
     [cancel release];
 }

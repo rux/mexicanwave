@@ -9,7 +9,6 @@
 #import "SettingsView.h"
 #import "UsageMetrics.h"
 #import "MEXWaveModel.h"
-#import "GenericTextViewController.h"
 
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")

@@ -4861,17 +4861,17 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 										<string key="NSFrame">{{100, 308}, {120, 150}}</string>
 										<reference key="NSSuperview" ref="1016465742"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="726273895"/>
+										<reference key="NSNextKeyView" ref="294165473"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<int key="IBUIContentMode">1</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<object class="NSCustomResource" key="IBUIImage" id="198054315">
+										<object class="NSCustomResource" key="IBUIImage" id="407818409">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">sprite_8.png</string>
 										</object>
 									</object>
-									<object class="IBUIImageView" id="726273895">
+									<object class="IBUIImageView" id="294165473">
 										<reference key="NSNextResponder" ref="1016465742"/>
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{100, 308}, {120, 150}}</string>
@@ -4882,7 +4882,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 										<int key="IBUIContentMode">1</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<reference key="IBUIImage" ref="198054315"/>
+										<reference key="IBUIImage" ref="407818409"/>
 									</object>
 									<object class="IBUIImageView" id="420257346">
 										<reference key="NSNextResponder" ref="1016465742"/>
@@ -4944,7 +4944,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="NSFrame">{{65, 40}, {190, 150}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="5844338"/>
+								<reference key="NSNextKeyView" ref="566446244"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">2</int>
 									<bytes key="NSRGB">MC4zMjk0MTE3NzQ5IDAuMzI5NDExNzc0OSAwLjMyOTQxMTc3NDkAA</bytes>
@@ -5037,7 +5037,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="NSFrameSize">{320, 460}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1041226851"/>
+								<reference key="NSNextKeyView" ref="5844338"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEAA</bytes>
@@ -5049,10 +5049,10 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<object class="IBUIButton" id="5844338">
 								<reference key="NSNextResponder" ref="191373211"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{261, 2}, {59, 49}}</string>
+								<string key="NSFrame">{{261, 9}, {50, 27}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="566446244"/>
+								<reference key="NSNextKeyView" ref="1041226851"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
@@ -5068,7 +5068,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								</object>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">tab_lines.png</string>
+									<string key="NSResourceName">setting_plank.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
@@ -5086,7 +5086,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 								<string key="NSFrame">{{30, 330}, {260, 93}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -5408,7 +5407,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">gameModeSprite</string>
 						<reference key="source" ref="894594068"/>
-						<reference key="destination" ref="726273895"/>
+						<reference key="destination" ref="294165473"/>
 					</object>
 					<int key="connectionID">241</int>
 				</object>
@@ -5489,12 +5488,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 						<string key="objectName">Hint Label</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">54</int>
-						<reference key="object" ref="5844338"/>
-						<reference key="parent" ref="191373211"/>
-						<string key="objectName">Slide drag button</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">164</int>
 						<reference key="object" ref="824015730"/>
 						<reference key="parent" ref="310183317"/>
@@ -5530,7 +5523,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 							<reference ref="746137766"/>
 							<reference ref="52425871"/>
 							<reference ref="420257346"/>
-							<reference ref="726273895"/>
+							<reference ref="294165473"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -5735,9 +5728,15 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">240</int>
-						<reference key="object" ref="726273895"/>
+						<reference key="object" ref="294165473"/>
 						<reference key="parent" ref="1016465742"/>
 						<string key="objectName">Game Mode Sprite</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">54</int>
+						<reference key="object" ref="5844338"/>
+						<reference key="parent" ref="191373211"/>
+						<string key="objectName">Slide drag button</string>
 					</object>
 				</array>
 			</object>
@@ -6046,6 +6045,7 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<string key="background_9_clear.png">{320, 210}</string>
 			<string key="camera_surround.png">{320, 461}</string>
 			<string key="cloud.png">{82, 72}</string>
+			<string key="setting_plank.png">{16, 16}</string>
 			<string key="sprite.png">{44, 112}</string>
 			<string key="sprite_1.png">{44, 114}</string>
 			<string key="sprite_2.png">{44, 114}</string>
@@ -6054,7 +6054,6 @@ AAgAAAAIAAIACAACAAAAAgAAAAEAAQABAAE</bytes>
 			<string key="sprite_6.png">{80, 123}</string>
 			<string key="sprite_8.png">{80, 116}</string>
 			<string key="tab.png">{21, 47}</string>
-			<string key="tab_lines.png">{33, 33}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
