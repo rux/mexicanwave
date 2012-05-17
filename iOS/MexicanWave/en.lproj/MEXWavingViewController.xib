@@ -43,7 +43,7 @@
 						<reference key="NSNextResponder" ref="1002267159"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIImageView" id="577316744">
+							<object class="IBUIImageView" id="307869355">
 								<reference key="NSNextResponder" ref="310183317"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{320, 460}</string>
@@ -88,7 +88,7 @@
 								<string key="NSFrame">{{35, 380}, {250, 60}}</string>
 								<reference key="NSSuperview" ref="310183317"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="191373211"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -132,7 +132,7 @@
 						<string key="NSFrameSize">{320, 541}</string>
 						<reference key="NSSuperview" ref="1002267159"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="577316744"/>
+						<reference key="NSNextKeyView" ref="307869355"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEAA</bytes>
@@ -505,7 +505,7 @@
 										<int key="IBUIContentMode">1</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<object class="NSCustomResource" key="IBUIImage" id="407818409">
+										<object class="NSCustomResource" key="IBUIImage">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">sprite_8.png</string>
 										</object>
@@ -521,7 +521,10 @@
 										<int key="IBUIContentMode">1</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<reference key="IBUIImage" ref="407818409"/>
+										<object class="NSCustomResource" key="IBUIImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">sprite_11.png</string>
+										</object>
 									</object>
 									<object class="IBUIImageView" id="420257346">
 										<reference key="NSNextResponder" ref="1016465742"/>
@@ -712,7 +715,7 @@
 								<string key="NSFrame">{{30, 330}, {260, 93}}</string>
 								<reference key="NSSuperview" ref="191373211"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="310183317"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -761,7 +764,7 @@
 				<string key="NSFrameSize">{320, 460}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="191373211"/>
+				<reference key="NSNextKeyView" ref="310183317"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -1100,7 +1103,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="437127057"/>
 							<reference ref="824015730"/>
-							<reference ref="577316744"/>
+							<reference ref="307869355"/>
 						</array>
 						<reference key="parent" ref="1002267159"/>
 					</object>
@@ -1368,7 +1371,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">242</int>
-						<reference key="object" ref="577316744"/>
+						<reference key="object" ref="307869355"/>
 						<reference key="parent" ref="310183317"/>
 					</object>
 				</array>
@@ -1687,6 +1690,7 @@
 			<string key="settings_background.png">{320, 480}</string>
 			<string key="sprite.png">{44, 112}</string>
 			<string key="sprite_1.png">{44, 114}</string>
+			<string key="sprite_11.png">{80, 116}</string>
 			<string key="sprite_2.png">{44, 114}</string>
 			<string key="sprite_4.png">{80, 128}</string>
 			<string key="sprite_5.png">{80, 117}</string>
