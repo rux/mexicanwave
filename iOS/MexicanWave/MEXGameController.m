@@ -15,6 +15,9 @@
 @interface MEXGameController()
 @property (nonatomic) SystemSoundID waveSoundID;
 @property (nonatomic) SystemSoundID errorSoundID;
+@property (nonatomic,getter = isShowingError) BOOL showingError; //Boolean for when error message is visiable
+@property (nonatomic, getter = isAnimating) BOOL animating; //Boolean to show when the sprite is currently being animated.
+
 
 -(void)playAudioClipForSound:(SystemSoundID)sound;
 -(void)animateErrorBubbleWithMessage:(NSString*)message;
@@ -24,7 +27,7 @@
 @implementation MEXGameController
 
 
-@synthesize gameModeSprite,canAnimate,animating,canWave;
+@synthesize gameModeSprite,animating,canWave;
 @synthesize showingError,errorView;
 @synthesize errorMessage,waveSoundID,errorSoundID;
 
