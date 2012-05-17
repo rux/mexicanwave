@@ -9,12 +9,16 @@
 #import "MEXGameController.h"
 #import "MEXAppDelegate.h"
 #import "MEXWavingViewController.h"
+#import "MEXWaveModel.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface MEXGameController()
 @property (nonatomic) SystemSoundID waveSoundID;
 @property (nonatomic) SystemSoundID errorSoundID;
+@property (nonatomic,getter = isShowingError) BOOL showingError; //Boolean for when error message is visiable
+@property (nonatomic, getter = isAnimating) BOOL animating; //Boolean to show when the sprite is currently being animated.
+
 
 -(void)playAudioClipForSound:(SystemSoundID)sound;
 -(void)animateErrorBubbleWithMessage:(NSString*)message;
@@ -24,7 +28,7 @@
 @implementation MEXGameController
 
 
-@synthesize gameModeSprite,canAnimate,animating,canWave;
+@synthesize gameModeSprite,animating,canWave;
 @synthesize showingError,errorView;
 @synthesize errorMessage,waveSoundID,errorSoundID;
 
@@ -72,8 +76,9 @@
 }
 
 -(void)didTapDisplay{
-    
-   
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode]){
+        return;
+    }
       /*Check we are allowed to wave - this is to check the timings 
        Are we all ready animating? there is no need to animate twice
        If we are showing an error get rid of it we are about to wave */
@@ -139,18 +144,20 @@
     self.animating = YES;
     MEXAppDelegate* appDel = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
+    const float speed = [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey] == kMEXVenueSizeSmall ? 0.6 : 1.0 ;
+    
     [self playAudioClipForSound:waveSoundID];
     
     const CGPoint currentCenter = self.gameModeSprite.center;
     
-    [UIView animateWithDuration:1.1 animations:^{
+    [UIView animateWithDuration:speed animations:^{
         self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 100);
         
     }completion:^(BOOL finished) {
         
         [appDel.viewController startWave];
         
-        [UIView animateWithDuration:0.8 animations:^{
+        [UIView animateWithDuration:speed animations:^{
             self.gameModeSprite.center = currentCenter;
             
         }completion:^(BOOL finished) {

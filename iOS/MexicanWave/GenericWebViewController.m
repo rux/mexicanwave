@@ -1,20 +1,20 @@
 //
-//  GenericTextViewControllerViewController.m
+//  GenericWebViewController.m
 //  MexicanWave
 //
-//  Created by Daniel Anderton on 10/05/2012.
+//  Created by Daniel Anderton on 16/05/2012.
 //  Copyright (c) 2012 Yell Group Plc. All rights reserved.
 //
 
-#import "GenericTextViewController.h"
+#import "GenericWebViewController.h"
 
-@interface GenericTextViewController ()
+@interface GenericWebViewController ()
 
 @end
 
-@implementation GenericTextViewController
-@synthesize textToShow;
-@synthesize textView;
+@implementation GenericWebViewController
+@synthesize webView,url;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,14 +26,20 @@
 
 - (void)viewDidLoad
 {
-    textView.text = textToShow;
+    [webView loadData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Mexican Wave Legal" ofType:@"doc"]] MIMEType:@"application/msword" textEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:@"http://www.yell.com"]];
+
+    
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    self.navigationController.navigationBar.translucent = YES;
+    
+   // [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
 {
-    [self setTextView:nil];
+    [self setWebView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -44,12 +50,13 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc {
+    [url release];
+    [webView release];
+    [super dealloc];
+}
+
 -(void)didTapCancel{
     [self dismissModalViewControllerAnimated:YES];
-}
--(void)dealloc{
-    [textToShow release];
-    [textView release];
-    [super dealloc];
 }
 @end

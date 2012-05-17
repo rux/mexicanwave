@@ -13,7 +13,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "UsageMetrics.h"
 #import "MEXAdvertController.h"
-#import "GenericTextViewController.h"
+#import "GenericWebViewController.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
@@ -235,18 +235,20 @@
     if(self.isPaused){
         return;
     }
-    if(!self.isGameMode){
-        [self startWave];
+    if(self.isGameMode){
+        self.gameController.canWave = YES;
+        
+        double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.9 : 0.7;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            self.gameController.canWave = NO;
+        });
+        
         return;
     }
-    
-    self.gameController.canWave = YES;
+    [self startWave];
 
-    double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.7 : 0.5;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-         self.gameController.canWave = NO;
-    });
+    
     
 }
 
@@ -437,15 +439,15 @@
 #pragma mark Yell Advert 
 
 -(void)didRecieveLegalNotification:(NSNotification*)note{
-    GenericTextViewController* text = [[GenericTextViewController alloc]init];
-    text.textToShow = NSLocalizedString(@"Legal Text", @"The text shown in the Legal section");
-    text.title = NSLocalizedString(@"Legal", @"The title text shown in the Legal view");
+    GenericWebViewController* webView = [[GenericWebViewController alloc]init];
     
-    UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:text];
-    UIBarButtonItem* cancel =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:text action:@selector(didTapCancel)];
-    text.navigationItem.leftBarButtonItem = cancel;
+    webView.title = NSLocalizedString(@"Legal", @"The title text shown in the Legal view");
+    
+    UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:webView];
+    UIBarButtonItem* cancel =[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:webView action:@selector(didTapCancel)];
+    webView.navigationItem.leftBarButtonItem = cancel;
     [self presentModalViewController:navController animated:YES];
-    [text release];
+    [webView release];
     [navController release];
     [cancel release];
 }

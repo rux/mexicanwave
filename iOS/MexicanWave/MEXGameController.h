@@ -9,15 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface MEXGameController : NSObject
+//The view that holds the bubble and label which is shown where user incorrectly taps
 
-@property (retain, nonatomic) IBOutlet UIView *errorView;
-@property (retain, nonatomic) IBOutlet UILabel *errorMessage;
-@property (retain, nonatomic) IBOutlet UIImageView *gameModeSprite;
-@property (nonatomic) BOOL canAnimate;
-@property (nonatomic) BOOL canWave;
-@property (nonatomic,getter = isShowingError) BOOL showingError;
+@property (retain, nonatomic) IBOutlet UIView *errorView; 
+@property (retain, nonatomic) IBOutlet UILabel *errorMessage; //The label of Error message to show
+@property (retain, nonatomic) IBOutlet UIImageView *gameModeSprite; //The Sprite image to move when the tap gesture is successful.
+@property (nonatomic) BOOL canWave; //Boolean to check if we are allowed to animate. (if YES its the correct time to animate sprite)
 
-@property (nonatomic, getter = isAnimating) BOOL animating;
 
 -(void)didTapDisplay;
 
