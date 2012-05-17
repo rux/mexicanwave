@@ -105,7 +105,7 @@
 		00E3FC7A1563FEFE00F43EFD /* GenericWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC781563FEFE00F43EFD /* GenericWebViewController.xib */; };
 		00E3FC7F1564F00500F43EFD /* setting_plank.png in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC7D1564F00500F43EFD /* setting_plank.png */; };
 		00E3FC801564F00500F43EFD /* setting_plank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC7E1564F00500F43EFD /* setting_plank@2x.png */; };
-		00E3FC861564F79100F43EFD /* Mexican Wave Legal.doc in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC851564F79100F43EFD /* Mexican Wave Legal.doc */; };
+		00E3FC8D1565316800F43EFD /* Mexican Wave Legal.doc in Resources */ = {isa = PBXBuildFile; fileRef = 00E3FC8C1565316800F43EFD /* Mexican Wave Legal.doc */; };
 		1903F3CD1510F23A00807542 /* MEXWaveFxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1903F3CC1510F23A00807542 /* MEXWaveFxView.m */; };
 		1967B90F1523044B00A924D5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1967B90E1523044B00A924D5 /* AudioToolbox.framework */; };
 		196B8E141517B58700DAD14A /* button-l.png in Resources */ = {isa = PBXBuildFile; fileRef = 196B8DF81517B58700DAD14A /* button-l.png */; };
@@ -253,10 +253,10 @@
 		00D26F6C1536CAD3004BC8ED /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		00E3FC761563FEFE00F43EFD /* GenericWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericWebViewController.h; sourceTree = "<group>"; };
 		00E3FC771563FEFE00F43EFD /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericWebViewController.m; sourceTree = "<group>"; };
-		00E3FC781563FEFE00F43EFD /* GenericWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericWebViewController.xib; sourceTree = "<group>"; };
+		00E3FC781563FEFE00F43EFD /* GenericWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GenericWebViewController.xib; path = ../GenericWebViewController.xib; sourceTree = "<group>"; };
 		00E3FC7D1564F00500F43EFD /* setting_plank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting_plank.png; sourceTree = "<group>"; };
 		00E3FC7E1564F00500F43EFD /* setting_plank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setting_plank@2x.png"; sourceTree = "<group>"; };
-		00E3FC851564F79100F43EFD /* Mexican Wave Legal.doc */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mexican Wave Legal.doc"; path = "MexicanWave/Sounds/Mexican Wave Legal.doc"; sourceTree = "<group>"; };
+		00E3FC8C1565316800F43EFD /* Mexican Wave Legal.doc */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Mexican Wave Legal.doc"; path = "MexicanWave/Mexican Wave Legal.doc"; sourceTree = "<group>"; };
 		1903F3CB1510F23900807542 /* MEXWaveFxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEXWaveFxView.h; sourceTree = "<group>"; };
 		1903F3CC1510F23A00807542 /* MEXWaveFxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEXWaveFxView.m; sourceTree = "<group>"; };
 		1967B90E1523044B00A924D5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -472,7 +472,6 @@
 				002779BE15513B7D0080BAFC /* es.lproj */,
 				196B8E441518A00100DAD14A /* en.lproj */,
 				1967B91F152320B700A924D5 /* Sounds */,
-				00E3FC851564F79100F43EFD /* Mexican Wave Legal.doc */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -535,6 +534,7 @@
 				196B8E451518A00100DAD14A /* InfoPlist.strings */,
 				196B8E471518A00100DAD14A /* MainWindow.xib */,
 				196B8E491518A00100DAD14A /* MEXWavingViewController.xib */,
+				00E3FC781563FEFE00F43EFD /* GenericWebViewController.xib */,
 				196B8DF51517B58700DAD14A /* Images */,
 			);
 			name = en.lproj;
@@ -563,6 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				1967B918152304E800A924D5 /* Resources */,
+				00E3FC8C1565316800F43EFD /* Mexican Wave Legal.doc */,
 				199CB60A14FEA3CA00A16A97 /* MexicanWave */,
 				199CB60314FEA3CA00A16A97 /* Frameworks */,
 				199CB60114FEA3CA00A16A97 /* Products */,
@@ -645,7 +646,6 @@
 				198F4DD5154845AA00BEAF2D /* MEXAdvertController.m */,
 				00E3FC761563FEFE00F43EFD /* GenericWebViewController.h */,
 				00E3FC771563FEFE00F43EFD /* GenericWebViewController.m */,
-				00E3FC781563FEFE00F43EFD /* GenericWebViewController.xib */,
 			);
 			name = Waving;
 			sourceTree = "<group>";
@@ -799,7 +799,7 @@
 				00E3FC7A1563FEFE00F43EFD /* GenericWebViewController.xib in Resources */,
 				00E3FC7F1564F00500F43EFD /* setting_plank.png in Resources */,
 				00E3FC801564F00500F43EFD /* setting_plank@2x.png in Resources */,
-				00E3FC861564F79100F43EFD /* Mexican Wave Legal.doc in Resources */,
+				00E3FC8D1565316800F43EFD /* Mexican Wave Legal.doc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
