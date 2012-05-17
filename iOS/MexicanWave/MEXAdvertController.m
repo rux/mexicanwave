@@ -50,7 +50,7 @@
     
     //Animate out the hint text label and animate the rocks and grass and fancy background back into the view,
     
-    [UIView animateWithDuration:0.8 delay:7.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+    [UIView animateWithDuration:0.8 delay:10.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         hintTextLabel.alpha = 0; 
     } 
     completion:^(BOOL finished) {
