@@ -26,6 +26,7 @@ import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,6 +65,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	
 	private ImageView[] cacti;
+	private boolean[] cactiBouncing;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,6 +124,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         
         cacti = new ImageView[12];
+        cactiBouncing = new boolean[12];
         
         cacti[0] = (ImageView) findViewById(R.id.cactus_0);
         cacti[1] = (ImageView) findViewById(R.id.cactus_1);
@@ -259,12 +262,14 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					
 					for (ImageView cactus : cacti) {
 						if (cactus != null) {
-							Object tag = cactus.getTag();  //TODO is there a better way to do this?  Seems a little wrong to have to do so much conversion...
-							Integer angle = Integer.valueOf(String.valueOf(tag));
-							if (Math.abs(newAngle - angle) < 15) {
-						
-								bounce(cactus);
-							}
+								Object tag = cactus.getTag();  
+								//TODO is there a better way to do this?  Seems a little wrong to have to do so much conversion...
+								String stringAngle = String.valueOf(tag);
+								Integer angle = Integer.valueOf(stringAngle);
+								if (Math.abs(newAngle - angle) < 15) {
+									
+									bounce(cactus);
+								}
 						}
 					}
 	
@@ -302,23 +307,36 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	
 	
-	private void bounce(ImageView cactus) {
+	private void bounce(final ImageView cactus) {
 		//if (isBouncing == false) {
 			Log.i("MexBounce", "bounce started for " + String.valueOf(cactus.getTop()));
 			
+			boolean isCurrentlyAnimating = false;
+			
+			Animation ani = cactus.getAnimation();
+			if (ani != null) {
+			    isCurrentlyAnimating = !ani.hasEnded();
+			}
+			
+			Log.i("mex", " ani " + String.valueOf(isCurrentlyAnimating));
+						
 			int bounceHeight = -20 -cactus.getTop()/5;
 			
 	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, bounceHeight );
 	        bounceAnimation.setDuration(2000);
 	        bounceAnimation.setInterpolator(new CycleInterpolator(1));
-			
-			cactus.startAnimation(bounceAnimation);
-			
+	        
+
+		
+	        if (isCurrentlyAnimating == false) {
+	        	cactus.startAnimation(bounceAnimation);
+	        }
+
 			// cactus.isBouncing = true;
 		//}
 	}
 	
-	
+
 	
 	
 	

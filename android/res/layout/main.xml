@@ -45,16 +45,36 @@
 
 
     <ImageView
-        android:id="@+id/background_0"
+        android:id="@+id/background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/backgroundImageDescription"
         android:layout_marginBottom="0dp"
+        android:src="@drawable/background"
+         />  
+        <ImageView
+        android:id="@+id/cactus_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="20dp"
+        android:tag="1"
+        />  
+
+
+    <ImageView
+        android:id="@+id/background_0"
+        android:layout_below="@+id/background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/background_0"
          />  
         
-        <ImageView
+            <ImageView
         android:id="@+id/cactus_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,15 +83,7 @@
         android:layout_marginTop="25dp"
         android:tag="330"
         />        
-        <ImageView
-        android:id="@+id/cactus_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/sprite_1"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="20dp"
-        android:tag="0"
-        />        
+      
         <ImageView
         android:id="@+id/cactus_6"
         android:layout_width="wrap_content"
@@ -241,7 +253,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="240dp"
+        android:layout_marginLeft="250dp"
         android:layout_marginTop="225dp"
         android:tag="150"
         />
