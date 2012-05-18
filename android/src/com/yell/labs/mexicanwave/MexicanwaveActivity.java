@@ -304,14 +304,17 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	private void bounce(ImageView cactus) {
 		//if (isBouncing == false) {
-			Log.i("MexBounce", "bounce started for " + String.valueOf(cactus));
+			Log.i("MexBounce", "bounce started for " + String.valueOf(cactus.getTop()));
 			
-	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, -40);
+			int bounceHeight = -20 -cactus.getTop()/5;
+			
+	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, bounceHeight );
 	        bounceAnimation.setDuration(2000);
 	        bounceAnimation.setInterpolator(new CycleInterpolator(1));
 			
 			cactus.startAnimation(bounceAnimation);
-			//isBouncing = true;
+			
+			// cactus.isBouncing = true;
 		//}
 	}
 	
