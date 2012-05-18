@@ -23,7 +23,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.CycleInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,7 +63,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private static boolean PRODUCTION_VERSION;
 	
 	
-	private Cactus[] cacti;
+	private ImageView[] cacti;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,33 +118,25 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         when instructed to do so by your account manager.*/
         s.trackingServer = "yellgroup.122.2o7.net";
         
-        cacti = new Cactus[12];
-        cacti[0] = new Cactus(context, R.drawable.sprite_1, 70, 350, 70, 3000, 210);
-        cacti[1] = new Cactus(context, R.drawable.sprite_1, 32, 200, 60, 3000, 240);
-        cacti[2] = new Cactus(context, R.drawable.sprite_1, 40, 130, 50, 2500, 270);
-        cacti[3] = new Cactus(context, R.drawable.sprite_1, 100, 60, 70, 2000, 300);
-        cacti[4] = new Cactus(context, R.drawable.sprite_1, 160, 40, 60, 2000, 330);
-        cacti[5] = new Cactus(context, R.drawable.sprite_1, 220, 30, 50, 2000, 0);
         
-        cacti[6] = new Cactus(context, R.drawable.sprite_1, 280, 40, 70, 2000, 30);
-        cacti[7] = new Cactus(context, R.drawable.sprite_1, 320, 60, 60, 2000, 60);
-        cacti[8] = new Cactus(context, R.drawable.sprite_1, 360, 130, 50, 2500, 90);
-        cacti[9] = new Cactus(context, R.drawable.sprite_1, 368, 200, 70, 3000, 120);
-        cacti[10] = new Cactus(context, R.drawable.sprite_1, 320, 350, 60, 3000, 150);
+        
+        
+        cacti = new ImageView[12];
+        
+        cacti[0] = (ImageView) findViewById(R.id.cactus_0);
+        cacti[1] = (ImageView) findViewById(R.id.cactus_1);
+        cacti[2] = (ImageView) findViewById(R.id.cactus_2);
+        cacti[3] = (ImageView) findViewById(R.id.cactus_3);
+        cacti[4] = (ImageView) findViewById(R.id.cactus_4);
+        cacti[5] = (ImageView) findViewById(R.id.cactus_5);
+        cacti[6] = (ImageView) findViewById(R.id.cactus_6);
+        cacti[7] = (ImageView) findViewById(R.id.cactus_7);
+        cacti[8] = (ImageView) findViewById(R.id.cactus_8);
+        cacti[9] = (ImageView) findViewById(R.id.cactus_9);
+        cacti[10] = (ImageView) findViewById(R.id.cactus_10);
+        cacti[11] = (ImageView) findViewById(R.id.cactus_11);
         
 
-        layout.addView(cacti[0], cacti[0].layoutParams);
-        layout.addView(cacti[1], cacti[1].layoutParams);
-        layout.addView(cacti[2], cacti[2].layoutParams);
-        layout.addView(cacti[3], cacti[3].layoutParams);
-        layout.addView(cacti[4], cacti[4].layoutParams);
-        layout.addView(cacti[5], cacti[5].layoutParams);
-        layout.addView(cacti[6], cacti[6].layoutParams);
-        layout.addView(cacti[7], cacti[7].layoutParams);
-        layout.addView(cacti[8], cacti[8].layoutParams);
-        layout.addView(cacti[9], cacti[9].layoutParams);
-        layout.addView(cacti[10], cacti[10].layoutParams);
-        
         
 
     }
@@ -162,6 +156,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         s.pageName = "android/MexicanWave";
         s.channel = "android/MexicanWave";
         s.track();
+        
+        
         
     	wakeLock.acquire();
     }
@@ -261,9 +257,14 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 						}
 					}
 					
-					for (Cactus cactus : cacti) {
-						if (cactus != null  && (Math.abs(newAngle - cactus.angle) < 15) ) {
-							cactus.bounce();
+					for (ImageView cactus : cacti) {
+						if (cactus != null) {
+							Object tag = cactus.getTag();  //TODO is there a better way to do this?  Seems a little wrong to have to do so much conversion...
+							Integer angle = Integer.valueOf(String.valueOf(tag));
+							if (Math.abs(newAngle - angle) < 15) {
+						
+								bounce(cactus);
+							}
 						}
 					}
 	
@@ -298,6 +299,25 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		}
 		
 	}
+	
+	
+	
+	private void bounce(ImageView cactus) {
+		//if (isBouncing == false) {
+			Log.i("MexBounce", "bounce started for " + String.valueOf(cactus));
+			
+	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, -40);
+	        bounceAnimation.setDuration(2000);
+	        bounceAnimation.setInterpolator(new CycleInterpolator(1));
+			
+			cactus.startAnimation(bounceAnimation);
+			//isBouncing = true;
+		//}
+	}
+	
+	
+	
+	
 	
 
 	// make the menu, and respond to clicks

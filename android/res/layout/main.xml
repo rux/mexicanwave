@@ -4,8 +4,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/black"
-    android:layout_gravity="center_horizontal"
-    android:orientation="vertical" >
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical"
+    >
 
     <com.yell.labs.mexicanwave.PreviewSurface
         android:id="@+id/surface"
@@ -53,15 +54,62 @@
         android:src="@drawable/background_0"
          />  
         
+        <ImageView
+        android:id="@+id/cactus_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="25dp"
+        android:tag="330"
+        />        
+        <ImageView
+        android:id="@+id/cactus_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="20dp"
+        android:tag="0"
+        />        
+        <ImageView
+        android:id="@+id/cactus_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="190dp"
+        android:layout_marginTop="25dp"
+        android:tag="30"
+        />
+    
+    
     <ImageView
         android:id="@+id/background_1"
         android:layout_below="@+id/background_0"
         android:contentDescription="@string/backgroundImageDescription"
         android:layout_margin="0px"
         android:src="@drawable/background_1"
-        
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        />
+    
+        <ImageView
+        android:id="@+id/cactus_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="35dp"
+        android:tag="300"
+        />    
+        <ImageView
+        android:id="@+id/cactus_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="35dp"
+        android:tag="60"
         />
     
     <ImageView
@@ -74,6 +122,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     
+    
+
+    
+    
     <ImageView
         android:id="@+id/background_3"
         android:layout_width="wrap_content"
@@ -84,6 +136,28 @@
         android:src="@drawable/background_3"
         
          />
+    
+        
+        <ImageView
+        android:id="@+id/cactus_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="75dp"
+        android:tag="270"
+        />    
+        <ImageView
+        android:id="@+id/cactus_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="75dp"
+        android:tag="90"
+        />
+    
+    
     
     <ImageView
         android:id="@+id/background_4"
@@ -105,6 +179,30 @@
         android:src="@drawable/background_5"
          />
     
+    
+            <ImageView
+        android:id="@+id/cactus_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="125dp"
+        android:tag="240"
+        />    
+        <ImageView
+        android:id="@+id/cactus_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="270dp"
+        android:layout_marginTop="125dp"
+        android:tag="120"
+        />
+    
+    
+    
+    
+    
     <ImageView
         android:id="@+id/background_6"
         android:layout_width="wrap_content"
@@ -114,6 +212,9 @@
         android:contentDescription="@string/backgroundImageDescription"
         android:src="@drawable/background_6"
          />
+
+    
+
     
     <ImageView
         android:id="@+id/background_7"
@@ -125,6 +226,26 @@
         android:src="@drawable/background_7"
          />
     
+        
+        <ImageView
+        android:id="@+id/cactus_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="225dp"
+        android:tag="210"
+        />    
+        <ImageView
+        android:id="@+id/cactus_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="270dp"
+        android:layout_marginTop="225dp"
+        android:tag="150"
+        />
+    
     <ImageView
         android:id="@+id/background_8"
         android:layout_width="wrap_content"
@@ -134,6 +255,19 @@
         android:contentDescription="@string/backgroundImageDescription"
         android:src="@drawable/background_8"
          />
+    
+    
+    
+        <ImageView
+        android:id="@+id/cactus_11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sprite_1"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="275dp"
+        android:tag="180"
+        />
+    
     
     <ImageView
         android:id="@+id/background_9"
