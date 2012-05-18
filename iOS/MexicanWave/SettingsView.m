@@ -15,7 +15,7 @@
 #define kSettingsKeyStadium NSLocalizedString(@"Stadium", @"Settings Table row title Style")
 #define kSettingsKeyLegal NSLocalizedString(@"Legal", @"The label text shown in the Legal button on the main settings page")
 #define kSettingsKeyVersion NSLocalizedString(@"Version", @"The label text shown in the version display on the main settings page")
-
+#define kSettingsKeyGameMode NSLocalizedString(@"Game Mode",@"Title for Game Mode")
 
 #define kSettingsVibrationTag 0
 #define kSettingsSoundsTag 1
@@ -56,7 +56,7 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
 
 -(void)awakeFromNib{
     
-    self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium,@"Game Mode", nil];
+    self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium,kSettingsKeyGameMode, nil];
     NSString* version = [NSString stringWithFormat:@"%@: %@",kSettingsKeyVersion,[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     self.appOptions= [NSArray arrayWithObjects:kSettingsKeyLegal,version, nil];
 
