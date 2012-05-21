@@ -120,9 +120,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         when instructed to do so by your account manager.*/
         s.trackingServer = "yellgroup.122.2o7.net";
         
-        
-        
-        
         cacti = new ImageView[12];
         cactiBouncing = new boolean[12];
         
@@ -139,9 +136,21 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         cacti[10] = (ImageView) findViewById(R.id.cactus_10);
         cacti[11] = (ImageView) findViewById(R.id.cactus_11);
         
-
+		
         
-
+        cacti[0].setMaxHeight(150);
+        cacti[1].setMaxHeight(100);
+        cacti[2].setMaxHeight(80);
+        cacti[3].setMaxHeight(60);
+        cacti[4].setMaxHeight(50);
+        cacti[5].setMaxHeight(40);
+        cacti[6].setMaxHeight(50);
+        cacti[7].setMaxHeight(60);
+        cacti[8].setMaxHeight(80);
+        cacti[9].setMaxHeight(100);
+        cacti[10].setMaxHeight(150);
+        cacti[11].setMaxHeight(225);  // this should be the biggest one
+       
     }
     
 	@Override
@@ -167,13 +176,11 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
  
 	@Override
     protected void onPause() {
-
     	// Debug.stopMethodTracing();
     	super.onPause();
     	mySensorManager.unregisterListener(this);
     	roarHandler.calmDown();
         mSurface.releaseCamera();
-        
         wakeLock.release();
     }
 
@@ -267,7 +274,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 								String stringAngle = String.valueOf(tag);
 								Integer angle = Integer.valueOf(stringAngle);
 								if (Math.abs(newAngle - angle) < 15) {
-									
 									bounce(cactus);
 								}
 						}
@@ -309,8 +315,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	private void bounce(final ImageView cactus) {
 		//if (isBouncing == false) {
-			Log.i("MexBounce", "bounce started for " + String.valueOf(cactus.getTop()));
-			
+		
+		   // int h = cactus.getTop();
+		  
+			// Log.i("MexBounce", "bounce started for " + String.valueOf(h));
+
+		
+		
 			boolean isCurrentlyAnimating = false;
 			
 			Animation ani = cactus.getAnimation();
@@ -318,7 +329,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			    isCurrentlyAnimating = !ani.hasEnded();
 			}
 			
-			Log.i("mex", " ani " + String.valueOf(isCurrentlyAnimating));
+			// Log.i("mex", " ani " + String.valueOf(isCurrentlyAnimating));
 						
 			int bounceHeight = -20 -cactus.getTop()/5;
 			
@@ -327,7 +338,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	        bounceAnimation.setInterpolator(new CycleInterpolator(1));
 	        
 
-		
 	        if (isCurrentlyAnimating == false) {
 	        	cactus.startAnimation(bounceAnimation);
 	        }

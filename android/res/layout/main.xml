@@ -53,16 +53,17 @@
         android:layout_marginBottom="0dp"
         android:src="@drawable/background"
          />  
-        <ImageView
-        android:id="@+id/cactus_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/sprite_1"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="20dp"
-        android:tag="1"
-        />  
 
+        <ImageView
+            android:id="@+id/cactus_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="155dp"
+            android:layout_marginTop="22dp"
+            android:src="@drawable/sprite_1"
+            android:tag="1"
+            android:adjustViewBounds="true"
+             />
 
     <ImageView
         android:id="@+id/background_0"
@@ -79,9 +80,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="110dp"
+        android:layout_marginLeft="113dp"
         android:layout_marginTop="25dp"
         android:tag="330"
+            android:adjustViewBounds="true"
         />        
       
         <ImageView
@@ -89,9 +91,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="190dp"
+        android:layout_marginLeft="197dp"
         android:layout_marginTop="25dp"
         android:tag="30"
+            android:adjustViewBounds="true"
         />
     
     
@@ -110,18 +113,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="39dp"
         android:tag="300"
+            android:adjustViewBounds="true"
         />    
         <ImageView
         android:id="@+id/cactus_7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="220dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginLeft="230dp"
+        android:layout_marginTop="39dp"
         android:tag="60"
+            android:adjustViewBounds="true"
         />
     
     <ImageView
@@ -155,18 +160,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="36dp"
+        android:layout_marginLeft="39dp"
         android:layout_marginTop="75dp"
         android:tag="270"
+            android:adjustViewBounds="true"
         />    
         <ImageView
         android:id="@+id/cactus_8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="255dp"
+        android:layout_marginLeft="261dp"
         android:layout_marginTop="75dp"
         android:tag="90"
+            android:adjustViewBounds="true"
         />
     
     
@@ -200,6 +207,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="125dp"
         android:tag="240"
+            android:adjustViewBounds="true"
         />    
         <ImageView
         android:id="@+id/cactus_9"
@@ -209,6 +217,7 @@
         android:layout_marginLeft="270dp"
         android:layout_marginTop="125dp"
         android:tag="120"
+            android:adjustViewBounds="true"
         />
     
     
@@ -225,6 +234,16 @@
         android:src="@drawable/background_6"
          />
 
+    
+    <!--  center disc -->
+       <ImageView
+        android:id="@+id/center_disc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/background_8"
+        android:layout_centerHorizontal="true"
+        
+        android:src="@drawable/centre_disc" />
     
 
     
@@ -245,17 +264,19 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="200dp"
         android:tag="210"
+            android:adjustViewBounds="true"
         />    
         <ImageView
         android:id="@+id/cactus_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="225dp"
+        android:layout_marginLeft="242dp"
+        android:layout_marginTop="200dp"
         android:tag="150"
+            android:adjustViewBounds="true"
         />
     
     <ImageView
@@ -275,9 +296,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="275dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginTop="250dp"
         android:tag="180"
+            android:adjustViewBounds="true"
         />
     
     
@@ -290,6 +312,6 @@
         android:contentDescription="@string/backgroundImageDescription"
         android:src="@drawable/background_9"
          />
-    
+
 
 </RelativeLayout>
