@@ -187,7 +187,7 @@ class RoarHandler {
 		if (angle > 170 && angle < 200) {
 			goWild();
 		} else {
-			// this.touched = false;
+			touched = false;
 		}
 		
 		
@@ -214,7 +214,7 @@ class RoarHandler {
 				lightSwitch.execute(waveFlashLength); 
 
 				if (vibrationEnabled) {
-					vibrator.vibrate(waveFlashLength);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
+					vibrator.vibrate(waveFlashLength);
 				}
 				screenFlash.setBackgroundColor(waveColor);
 				screenFlash.startAnimation(flashAnim);
@@ -234,6 +234,8 @@ class RoarHandler {
 			} else {
 				Log.i("MexicanWaveTouch", "missed opportunity");
 			}
+
+			touched = false;
 		}
 	}	
 	
