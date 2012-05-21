@@ -42,7 +42,7 @@ class RoarHandler {
 	private boolean soundLoaded;
 	
 	private Animation flashAnim;
-	private int flashTimer;
+	private Timer flashTimer;
 	
 	private SntpClient sntpClient;
 	private final String timeServer;
@@ -209,7 +209,7 @@ class RoarHandler {
 			
 				mSurface.lightOn();
 				
-				new Timer().schedule(mSurface.lightOff(), 5000);
+				flashTimer.schedule(mSurface.lightOff(), 5000);
 				
 				
 				if (vibrationEnabled) {

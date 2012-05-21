@@ -25,6 +25,7 @@ import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -110,6 +111,7 @@ class PreviewSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void lightOn() {
+    	Log.i("mex light", "light is being switched on:");
     	if (this.isShown() && hasCamera) {
 	        mParameters.setFlashMode(Parameters.FLASH_MODE_TORCH);
 	        mCamera.setParameters(mParameters);
