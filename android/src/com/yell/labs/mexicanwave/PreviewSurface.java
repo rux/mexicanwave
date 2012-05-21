@@ -112,7 +112,7 @@ class PreviewSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     public void lightOn() {
     	Log.i("mex light", "light is being switched on:");
-    	if (this.isShown() && hasCamera) {
+    	if (this.isShown() && hasCamera  && mParameters.getFlashMode() != Parameters.FLASH_MODE_TORCH ) {
 	        mParameters.setFlashMode(Parameters.FLASH_MODE_TORCH);
 	        mCamera.setParameters(mParameters);
     	} else {

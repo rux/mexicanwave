@@ -138,16 +138,16 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
 		
         
-        cacti[0].setMaxHeight(150);
-        cacti[1].setMaxHeight(100);
-        cacti[2].setMaxHeight(80);
-        cacti[3].setMaxHeight(60);
-        cacti[4].setMaxHeight(50);
         cacti[5].setMaxHeight(40);
+        cacti[4].setMaxHeight(50);
         cacti[6].setMaxHeight(50);
+        cacti[3].setMaxHeight(60);
         cacti[7].setMaxHeight(60);
+        cacti[2].setMaxHeight(80);
         cacti[8].setMaxHeight(80);
+        cacti[1].setMaxHeight(100);
         cacti[9].setMaxHeight(100);
+        cacti[0].setMaxHeight(150);
         cacti[10].setMaxHeight(150);
         cacti[11].setMaxHeight(225);  // this should be the biggest one
        

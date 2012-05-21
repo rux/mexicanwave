@@ -31,6 +31,7 @@ class RoarHandler {
 	public double azimuth;
 	public int waveDuration;
 	public int waveColor;
+	public int waveFlashLength;
 	public boolean vibrationEnabled;
 	
 	public boolean noGameMode;
@@ -93,8 +94,8 @@ class RoarHandler {
         ntpTime.execute(timeServer);
         
         
-        
-        currentlyRoaring = true;  // this is initialised as true, so when the app starts, the calmDown() gets called and sets everything to the non-roaring state
+        flashTimer = new Timer();
+        currentlyRoaring = false;  
 	}
 	
 
@@ -130,10 +131,16 @@ class RoarHandler {
 	}
 
 	public void setFlash(float w) {
+		
+		// I realise that there are two timings here.  The waveFlashLength is for the camera flash and the vibrator. Flashanim is
+		// for the screen.
+
 		if (w < 20) {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash);
+			waveFlashLength = 1700;
 		} else {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash_long);
+			waveFlashLength = 4000;
 		}
 	}
 	
@@ -180,8 +187,7 @@ class RoarHandler {
 		if (angle > 170 && angle < 200) {
 			goWild();
 		} else {
-			this.touched = false;
-			calmDown();
+			// this.touched = false;
 		}
 		
 		
@@ -200,20 +206,15 @@ class RoarHandler {
 	}
 	
 	public void goWild() {
-		
 		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
-			
-			
 			if (touched == true) {
-				Log.i("MexicanWaveTouch", "Hit");
-			
 				mSurface.lightOn();
 				
-				flashTimer.schedule(mSurface.lightOff(), 5000);
-				
-				
+				lightSwitchTask lightSwitch = new lightSwitchTask();
+				lightSwitch.execute(waveFlashLength); 
+
 				if (vibrationEnabled) {
-					vibrator.vibrate(100 * (int) waveDuration);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
+					vibrator.vibrate(waveFlashLength);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
 				}
 				screenFlash.setBackgroundColor(waveColor);
 				screenFlash.startAnimation(flashAnim);
@@ -237,10 +238,34 @@ class RoarHandler {
 	}	
 	
 	public void calmDown() {
-		//if(cameraReady && (currentlyRoaring == true)) {
-		//	mSurface.lightOff();
-		//}
+		if(cameraReady && (currentlyRoaring == true)) {
+			mSurface.lightOff();
+		}
 		currentlyRoaring = false;
+	}
+	
+	
+	
+	private class lightSwitchTask extends AsyncTask<Integer, Void, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(Integer... params) {
+			Log.i("mex ASYNC", "ASYNC lightswitch");
+			try {
+				Log.i("mex ASYNC", "ASYNC lightswitch Pre sleep");
+				Thread.sleep((long) params[0]);
+				Log.i("mex ASYNC", "ASYNC lightswitch Post sleep");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			Log.i("mex ASYNC", "ASYNC lightswitch end sleep");
+			calmDown();
+			return true;
+		}
+
 	}
 }
 
