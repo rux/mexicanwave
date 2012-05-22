@@ -43,6 +43,9 @@
         />
     
 
+    
+    
+    
 
     <ImageView
         android:id="@+id/background"
@@ -188,6 +191,16 @@
         android:src="@drawable/background_4"
          />
     
+    
+            <!--  bg obscuring view -->
+        <View
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="#000"
+        android:layout_below="@+id/background_4"   
+        /> 
+    
+    
     <ImageView
         android:id="@+id/background_5"
         android:layout_width="wrap_content"
@@ -235,13 +248,23 @@
          />
 
     
+        <!--  bg obscuring view -->
+        <View
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="#000"
+        android:layout_below="@+id/background_6"   
+        /> 
+    
+    
+    
     <!--  center disc -->
        <ImageView
         android:id="@+id/center_disc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/background_8"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="62dp"
         
         android:src="@drawable/centre_disc" />
     
