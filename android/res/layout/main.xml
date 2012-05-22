@@ -188,6 +188,16 @@
         android:src="@drawable/background_4"
          />
     
+    
+            <!--  bg obscuring view -->
+        <View
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="#000"
+        android:layout_below="@+id/background_4"   
+        /> 
+    
+    
     <ImageView
         android:id="@+id/background_5"
         android:layout_width="wrap_content"
@@ -234,6 +244,16 @@
         android:src="@drawable/background_6"
          />
 
+    
+        <!--  bg obscuring view -->
+        <View
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="#000"
+        android:layout_below="@+id/background_6"   
+        /> 
+    
+    
     
     <!--  center disc -->
        <ImageView
