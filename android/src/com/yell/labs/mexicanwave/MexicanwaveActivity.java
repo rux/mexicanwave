@@ -48,22 +48,12 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private float averageZGravity;
 	private double azimuth;
 	private PreviewSurface mSurface;
-		
-	
 	private PowerManager powerManager;
 	private WakeLock wakeLock;
-	
 	private SharedPreferences prefs;
-
 	private boolean cameraIsInitialised;
-	
 	private AppMeasurement s;
-	
-	private RelativeLayout layout;
-		
 	private static boolean PRODUCTION_VERSION;
-	
-	
 	private ImageView[] cacti;
 	private boolean[] cactiBouncing;
 
@@ -73,10 +63,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         
         PRODUCTION_VERSION = false;
-        
 
-
-        
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
         boolean stadiumMode = prefs.getBoolean("pref_stadium", false);
@@ -87,14 +74,11 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         boolean vibrationEnabled = prefs.getBoolean("pref_vibration", true);
         boolean noGameMode = prefs.getBoolean("pref_no_game", false);
         
-        
         setContentView(R.layout.main);
-        layout = (RelativeLayout) findViewById(R.id.overallLayout);
         context = this;
         view = (View) findViewById(R.id.screenFlash);
         warning = (View) findViewById(R.id.holdThePhone);
         
-  
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
 
@@ -137,7 +121,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         cacti[11] = (ImageView) findViewById(R.id.cactus_11);
         
 		
-        
+        // TODO maybe move these to the XML, but for now it's easier to move them around when all these values are in the same place
         cacti[5].setMaxHeight(40);
         cacti[4].setMaxHeight(50);
         cacti[6].setMaxHeight(50);
@@ -168,9 +152,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         s.pageName = "android/MexicanWave";
         s.channel = "android/MexicanWave";
         s.track();
-        
-        
-        
     	wakeLock.acquire();
     }
  
@@ -186,7 +167,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 
 	@Override
 	public void cameraReady() {
-		roarHandler.setReady(true);
+		roarHandler.cameraReady = true;
 	}
 
 	@Override
@@ -213,17 +194,14 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		if ((sensorType == Sensor.TYPE_MAGNETIC_FIELD || sensorType == Sensor.TYPE_ACCELEROMETER) && myGravities != null && myMagnetics != null) {
 			
 			
-			// check the magnitude of magnetometers
+			// check the magnitude of magnetometers - to handle dodgy readings
 			double magneticFieldStrength = (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
-			// Log.i("MexicanWaveMagnets", " magneticFieldStrength = " +  magneticFieldStrength );
 			
-			// check the magnitude of magnetometers
+			// check the magnitude of gravity sensors
 			double gravityFieldStrength = (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
-			// Log.i("MexicanWaveGravity", " gravityFieldStrength = " +  gravityFieldStrength );
 			
-			
-			
-			if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ranges in the UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field)
+			if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ranges in the
+				// UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field).
 				// it is possible to end up here thanks to bad sensor systems in the device, notably Samsung devices.
 				// Occasionally, the myMagnetics array gets filled with sensor readings from the accelerometer ( eg [0,0,9.81] ).
 				// This is clearly wrong, so if we get readings in that ballpark, ie magnitude of about 10, we can clearly
@@ -236,8 +214,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				// that we shouldn't be using the values.
 				// Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
 			} else {
-			
-			
 				float Ro[] = new float[9];
 				float I[] = new float[9];
 				boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
@@ -278,10 +254,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 								}
 						}
 					}
-	
-	
-					
-					
+
 					
 					
 					
@@ -291,9 +264,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					// of 9.80665m/s^2, that we won't be using this app on any other planets.
 					// TODO - make this work on other planets.
 					
-					averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loved to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
-	
-					// Log.i("MexicanWave", " ##### Z Gravity is " + String.valueOf(averageZGravity) + " raw is " + String.valueOf( Math.min(Math.abs(myGravities[2]), 9.80665f)));
+					averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loves to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
+
 					if (Math.abs(averageZGravity) > 9 ) {
 						// device is too flat
 						roarHandler.isFlat = true;
@@ -314,41 +286,25 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	
 	private void bounce(final ImageView cactus) {
-		//if (isBouncing == false) {
+		boolean isCurrentlyAnimating = false;
 		
-		   // int h = cactus.getTop();
-		  
-			// Log.i("MexBounce", "bounce started for " + String.valueOf(h));
+		Animation ani = cactus.getAnimation();
+		if (ani != null) {
+		    isCurrentlyAnimating = !ani.hasEnded();
+		}
 
-		
-		
-			boolean isCurrentlyAnimating = false;
-			
-			Animation ani = cactus.getAnimation();
-			if (ani != null) {
-			    isCurrentlyAnimating = !ani.hasEnded();
-			}
-			
-			// Log.i("mex", " ani " + String.valueOf(isCurrentlyAnimating));
-						
+        if (isCurrentlyAnimating == false) {
 			int bounceHeight = -20 -cactus.getTop()/5;
 			
 	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, bounceHeight );
 	        bounceAnimation.setDuration(2000);
 	        bounceAnimation.setInterpolator(new CycleInterpolator(1));
-	        
-
-	        if (isCurrentlyAnimating == false) {
-	        	cactus.startAnimation(bounceAnimation);
-	        }
-
-			// cactus.isBouncing = true;
-		//}
+        
+        	cactus.startAnimation(bounceAnimation);
+        }
 	}
 	
 
-	
-	
 	
 
 	// make the menu, and respond to clicks
@@ -366,20 +322,18 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		case R.id.about:
 			startActivity(new Intent(this, AboutActivity.class));
 			return true;
-			
-			
-			default:
-				return super.onOptionsItemSelected(item);
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		
 	}
+	
 	
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		roarHandler.calmDown();
 		if (key.equals("pref_stadium")) {
 			boolean stadiumMode = prefs.getBoolean("pref_stadium", false);
-		    int waveDuration = stadiumMode ? 30 : 10;
+		    int waveDuration = stadiumMode ? 10 : 5;
 			roarHandler.setWaveDuration(waveDuration);
 		}
 		
@@ -400,6 +354,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		}
 	}
 
+	
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		super.dispatchTouchEvent(ev);
@@ -411,11 +366,4 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		
 		return false;
 	}
-	
-	
-	
-	
-	
-	
-
 }

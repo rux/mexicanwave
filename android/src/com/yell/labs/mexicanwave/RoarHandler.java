@@ -27,7 +27,6 @@ class RoarHandler {
 	public boolean cameraReady;	
 	public boolean currentlyRoaring;
 	public boolean isFlat;
-	public int waveCount;
 	public double azimuth;
 	public int waveDuration;
 	public int waveColor;
@@ -58,7 +57,6 @@ class RoarHandler {
         screenFlash = (View) v;
         mSurface = previewSurface;
         this.setWaveDuration(wD);
-        this.setFlash(wD);
         waveColor = wC;
         soundEnabled = sE;
         vibrationEnabled = vE;
@@ -77,7 +75,7 @@ class RoarHandler {
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         
         
-        flashAnim.setAnimationListener(new AnimationListener() {  // this is a workaround for a bug that means we can't define the last frame stay put afterh the animation's finished
+        flashAnim.setAnimationListener(new AnimationListener() {  // this is a workaround for a bug that means we can't define the last frame stay put after the animation's finished
 			@Override
 			public void onAnimationStart(Animation animation) {}
 			@Override
@@ -125,16 +123,10 @@ class RoarHandler {
 	
 	public void setWaveDuration(int w) {
 		waveDuration = w;
-		// waveCount = (waveDuration == 15) ? 2 : 1;  // the gig speed, 15, has two waves going around
-		waveCount =1;
-		this.setFlash(w);
-	}
 
-	public void setFlash(float w) {
-		
-		// I realise that there are two timings here.  The waveFlashLength is for the camera flash and the vibrator. Flashanim is
-		// for the screen.
-
+		// There are two timings here.  The waveFlashLength is for the camera flash and the vibrator. Flashanim is
+		// for the screen.  Different because the animation is a bit more complex, so is done in the XML files rather
+		// than just assigning it a time.
 		if (w < 20) {
 			flashAnim = AnimationUtils.loadAnimation(context, R.anim.flash);
 			waveFlashLength = 1700;
@@ -143,6 +135,7 @@ class RoarHandler {
 			waveFlashLength = 4000;
 		}
 	}
+
 	
 	public void setAzimuth(double a) {
 		double oldAzimuth = (double) azimuth;
@@ -172,11 +165,10 @@ class RoarHandler {
 		// SimpleDateFormat dateFormatGmt = new SimpleDateFormat("HH:mm:ss");
 		//Log.i("MexicanWave", " current corrected milliseconds " + (System.currentTimeMillis() + timeOffset) + " and date is " + String.valueOf(dateFormatGmt.format( new Date((System.currentTimeMillis() + timeOffset)))));
 		
-		
 		float offsetDegrees =  ((milliseconds * 6 * (60/this.waveDuration) ) / 1000);
 
 		// divide by 1000 to get milliseconds => seconds. multiply by 6 to get seconds => degrees. 
-		 // Log.i("MexicanWave", "**()()** making with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
+		 // Log.i("MexicanWave", "making offset with offset " + String.valueOf(timeOffset) + "ms, and offset degrees is " + String.valueOf(offsetDegrees));
 		//return (int) 0;
 		return (long) offsetDegrees;
 	}
@@ -187,7 +179,7 @@ class RoarHandler {
 		if (angle > 170 && angle < 200) {
 			goWild();
 		} else {
-			// this.touched = false;
+			touched = false;
 		}
 		
 		
@@ -198,23 +190,21 @@ class RoarHandler {
 		// Log.i("MexicanWave", "** corrected time is " + String.valueOf(dateFormatGmt.format( new Date(correctedTime))));
 	}
 
-	public void setReady(boolean ready) {
-		cameraReady = ready;
-	}
+
 	public boolean getWhetherCameraIsReady() {
 		return (mSurface.hasCamera && mSurface.hasSurface) ? true : false;
 	}
 	
 	public void goWild() {
 		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
-			if (touched == true) {
+			if (touched == true || noGameMode==true) {
 				mSurface.lightOn();
 				
 				lightSwitchTask lightSwitch = new lightSwitchTask();
 				lightSwitch.execute(waveFlashLength); 
 
 				if (vibrationEnabled) {
-					vibrator.vibrate(waveFlashLength);  // don't mind casting to int because the actual duration of the vibration isn't really all that important.
+					vibrator.vibrate(waveFlashLength);
 				}
 				screenFlash.setBackgroundColor(waveColor);
 				screenFlash.startAnimation(flashAnim);
@@ -234,6 +224,8 @@ class RoarHandler {
 			} else {
 				Log.i("MexicanWaveTouch", "missed opportunity");
 			}
+
+			touched = false;
 		}
 	}	
 	
@@ -250,22 +242,16 @@ class RoarHandler {
 
 		@Override
 		protected Boolean doInBackground(Integer... params) {
-			Log.i("mex ASYNC", "ASYNC lightswitch");
 			try {
-				Log.i("mex ASYNC", "ASYNC lightswitch Pre sleep");
 				Thread.sleep((long) params[0]);
-				Log.i("mex ASYNC", "ASYNC lightswitch Post sleep");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			
-			Log.i("mex ASYNC", "ASYNC lightswitch end sleep");
 			calmDown();
 			return true;
 		}
-
 	}
 }
 
