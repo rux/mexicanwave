@@ -26,8 +26,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
@@ -323,8 +325,17 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, bounceHeight );
 	        bounceAnimation.setDuration(2000);
 	        bounceAnimation.setInterpolator(new CycleInterpolator(1));
+	        
+	        ScaleAnimation scaleAnimation = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+	        scaleAnimation.setDuration(2000);
+	        scaleAnimation.setInterpolator(new CycleInterpolator(1));
         
-        	cactus.startAnimation(bounceAnimation);
+	        AnimationSet aniSet = new AnimationSet(true);
+	        aniSet.setInterpolator(new CycleInterpolator(1));
+	        aniSet.addAnimation(scaleAnimation);
+	        aniSet.addAnimation(bounceAnimation);
+
+        	cactus.startAnimation(aniSet);
         }
 	}
 	
