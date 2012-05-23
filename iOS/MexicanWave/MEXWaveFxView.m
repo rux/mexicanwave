@@ -134,6 +134,10 @@
   
     
     UIImageView* currentSprite = (UIImageView*)[self.sprites objectAtIndex:index];
+    [currentSprite.layer removeAnimationForKey:@"postion"];
+    [currentSprite.layer removeAnimationForKey:@"bobbleAnimation"];
+   
+    
     const NSNumber* offset = (NSNumber*)[self.animationHeights objectAtIndex:index];
     
    
@@ -154,9 +158,42 @@
     postionAnim.repeatCount = HUGE_VALF;  
     postionAnim.removedOnCompletion = NO;
     postionAnim.fillMode = kCAFillModeBackwards;
-    [currentSprite.layer removeAnimationForKey:@"postion"];
-
+   
     [currentSprite.layer addAnimation:postionAnim forKey:@"postion"];
+    
+    
+    CAKeyframeAnimation *bobbleAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+	
+	CATransform3D startingScale = CATransform3DScale (currentSprite.layer.transform, 0.6, 0.6, 0.6);
+	CATransform3D overshootScale = CATransform3DScale (currentSprite.layer.transform, 1.2, 1.25, 1.0);
+	CATransform3D endingScale = currentSprite.layer.transform;
+	
+	NSArray *boundsValues = [NSArray arrayWithObjects:[NSValue valueWithCATransform3D:startingScale],
+							 [NSValue valueWithCATransform3D:overshootScale],
+							 [NSValue valueWithCATransform3D:endingScale], nil];
+	[bobbleAnimation setValues:boundsValues];
+	
+    bobbleAnimation.keyTimes = [NSArray arrayWithObjects:
+                            [NSNumber numberWithFloat:0.5*(1.0-activeTime)],
+                            [NSNumber numberWithFloat:0.5],
+                            [NSNumber numberWithFloat:0.5*(1.0+activeTime)],nil];
+
+	
+	NSArray *timingFunctions = [NSArray arrayWithObjects:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut], 
+								[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut],
+								[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut],
+								nil];
+	[bobbleAnimation setTimingFunctions:timingFunctions];
+	bobbleAnimation.fillMode = kCAFillModeBackwards;
+	bobbleAnimation.removedOnCompletion = YES;
+    bobbleAnimation.speed = 1.0/cycleTime;
+    bobbleAnimation.duration = 1.0;
+    bobbleAnimation.timeOffset = phase;
+    bobbleAnimation.repeatCount = HUGE_VAL;
+	
+    [currentSprite.layer addAnimation:bobbleAnimation forKey:@"bobbleAnimation"];
+
+    
     
 }
 -(void)pauseAnimations{

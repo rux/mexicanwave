@@ -147,11 +147,16 @@
     const float speed = [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey] == kMEXVenueSizeSmall ? 0.6 : 1.0 ;
     
     [self playAudioClipForSound:waveSoundID];
+    CATransform3D orginalScale = CATransform3DScale (gameModeSprite.layer.transform, 1.0, 1.0, 1);
+    CATransform3D startingScale = CATransform3DScale (gameModeSprite.layer.transform, 0.7, 0.7, 1);
+	CATransform3D overshootScale = CATransform3DScale (gameModeSprite.layer.transform, 1.2, 1.25, 1.0);
+    self.gameModeSprite.layer.transform = startingScale;
     
     const CGPoint currentCenter = self.gameModeSprite.center;
     
     [UIView animateWithDuration:speed animations:^{
         self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 100);
+        self.gameModeSprite.layer.transform = overshootScale;
         
     }completion:^(BOOL finished) {
         
@@ -159,9 +164,9 @@
         
         [UIView animateWithDuration:speed animations:^{
             self.gameModeSprite.center = currentCenter;
+            self.gameModeSprite.layer.transform = orginalScale;
             
         }completion:^(BOOL finished) {
-            
             self.animating = NO;
         }];
     }];
