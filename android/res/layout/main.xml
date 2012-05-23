@@ -300,9 +300,9 @@
         android:id="@+id/cactus_11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/sprite_1"
+        android:src="@drawable/sprite_8"
         android:layout_marginLeft="115dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="220dp"
         android:tag="180"
             android:adjustViewBounds="true"
         />

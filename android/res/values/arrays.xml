@@ -12,13 +12,13 @@
     </string-array>
 
     <string-array name="pref_color_values">       
-        <item>#EEFFFFFF</item>       
-        <item>#EEFF0000</item>       
-        <item>#EEFF8800</item>       
-        <item>#EEFFFF00</item>       
-        <item>#EE00FF00</item>       
-        <item>#EE0000FF</item>       
-        <item>#EE880088</item>
+        <item>#CCFFFFFF</item>       
+        <item>#CCFF0000</item>       
+        <item>#CCFF8800</item>       
+        <item>#CCFFFF00</item>       
+        <item>#CC00FF00</item>       
+        <item>#CC0000FF</item>       
+        <item>#CC880088</item>
 	</string-array>
 
     <string-array name="pref_wave_duration_entries">       
