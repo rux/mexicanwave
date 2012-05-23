@@ -200,6 +200,8 @@ class RoarHandler {
 			if (touched == true || noGameMode==true) {
 				mSurface.lightOn();
 				
+				
+				
 				lightSwitchTask lightSwitch = new lightSwitchTask();
 				lightSwitch.execute(waveFlashLength); 
 
@@ -208,6 +210,7 @@ class RoarHandler {
 				}
 				screenFlash.setBackgroundColor(waveColor);
 				screenFlash.startAnimation(flashAnim);
+				
 				
 				
 				if(soundEnabled && soundLoaded) {

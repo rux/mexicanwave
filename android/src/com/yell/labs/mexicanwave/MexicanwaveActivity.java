@@ -1,6 +1,9 @@
 package com.yell.labs.mexicanwave;
 
 
+import java.util.Random;
+
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -56,6 +59,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private static boolean PRODUCTION_VERSION;
 	private ImageView[] cacti;
 	private boolean[] cactiBouncing;
+	private int[] frontCactusOptions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         cacti = new ImageView[12];
         cactiBouncing = new boolean[12];
+        frontCactusOptions = new int[6];
         
         cacti[0] = (ImageView) findViewById(R.id.cactus_0);
         cacti[1] = (ImageView) findViewById(R.id.cactus_1);
@@ -134,6 +139,15 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         cacti[0].setMaxHeight(150);
         cacti[10].setMaxHeight(150);
         cacti[11].setMaxHeight(225);  // this should be the biggest one
+        
+		frontCactusOptions[0] = R.drawable.sprite_5;
+		frontCactusOptions[1] = R.drawable.sprite_6;
+		frontCactusOptions[2] = R.drawable.sprite_8;
+		frontCactusOptions[3] = R.drawable.sprite_9;
+		frontCactusOptions[4] = R.drawable.sprite_10;
+		frontCactusOptions[5] = R.drawable.sprite_11;
+		
+		Log.i("Mex Init", String.valueOf(frontCactusOptions[1]));
        
     }
     
@@ -250,7 +264,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 								String stringAngle = String.valueOf(tag);
 								Integer angle = Integer.valueOf(stringAngle);
 								if (Math.abs(newAngle - angle) < 15) {
-									bounce(cactus);
+									bounce(cactus, angle);
 								}
 						}
 					}
@@ -285,7 +299,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	
 	
 	
-	private void bounce(final ImageView cactus) {
+	private void bounce(final ImageView cactus, final Integer angle) {
 		boolean isCurrentlyAnimating = false;
 		
 		Animation ani = cactus.getAnimation();
@@ -294,6 +308,16 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		}
 
         if (isCurrentlyAnimating == false) {
+        	
+        	// change the front sprite image
+        	if (angle == 180 ) {
+        		Random rand = new Random();
+        		
+        		int r = rand.nextInt(5);
+        		cactus.setImageResource(frontCactusOptions[r]);
+        		
+        	}
+        	
 			int bounceHeight = -20 -cactus.getTop()/5;
 			
 	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, bounceHeight );
