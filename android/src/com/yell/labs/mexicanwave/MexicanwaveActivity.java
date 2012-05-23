@@ -318,7 +318,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         		
         	}
         	
-			int bounceHeight = -20 -cactus.getTop()/5;
+			int bounceHeight = -20 -cactus.getTop()/3;
 			
 	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, bounceHeight );
 	        bounceAnimation.setDuration(2000);
