@@ -110,7 +110,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         cacti = new ImageView[12];
         cactiBouncing = new boolean[12];
-        frontCactusOptions = new int[6];
         
         cacti[0] = (ImageView) findViewById(R.id.cactus_0);
         cacti[1] = (ImageView) findViewById(R.id.cactus_1);
@@ -140,12 +139,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         cacti[10].setMaxHeight(150);
         cacti[11].setMaxHeight(225);  // this should be the biggest one
         
-		frontCactusOptions[0] = R.drawable.sprite_5;
-		frontCactusOptions[1] = R.drawable.sprite_6;
+
+        frontCactusOptions = new int[4];
+
+        frontCactusOptions[0] = R.drawable.sprite_1;
+		frontCactusOptions[1] = R.drawable.sprite_4;
 		frontCactusOptions[2] = R.drawable.sprite_8;
 		frontCactusOptions[3] = R.drawable.sprite_9;
-		frontCactusOptions[4] = R.drawable.sprite_10;
-		frontCactusOptions[5] = R.drawable.sprite_11;
 		
 		Log.i("Mex Init", String.valueOf(frontCactusOptions[1]));
        
@@ -313,7 +313,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         	if (angle == 180 ) {
         		Random rand = new Random();
         		
-        		int r = rand.nextInt(5);
+        		int r = rand.nextInt(4);
         		cactus.setImageResource(frontCactusOptions[r]);
         		
         	}
