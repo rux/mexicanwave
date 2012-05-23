@@ -319,7 +319,16 @@
          />
 
     
-    
+    <ImageView
+        android:id="@+id/background_tile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_9"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_tile"
+        android:scaleType="center"
+        />    
     
              
    
@@ -344,10 +353,7 @@
         android:text="@string/pleaseHoldUpThePhone"
         android:visibility="gone"
         />
-    
-    
-    
-    
-    
+
+
 
 </RelativeLayout>
