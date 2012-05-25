@@ -210,7 +210,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		}
 		
 		if ((sensorType == Sensor.TYPE_MAGNETIC_FIELD || sensorType == Sensor.TYPE_ACCELEROMETER) && myGravities != null && myMagnetics != null) {
-
 			if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
 				// check the magnitude of magnetometers - to handle dodgy readings
 				magneticFieldStrength = (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
@@ -218,10 +217,11 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				// check the magnitude of gravity sensors
 				gravityFieldStrength = (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
 			}
-			
-			if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ranges in the
-				// UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field).
-				// it is possible to end up here thanks to bad sensor systems in the device, notably Samsung devices.
+
+			Log.i("MexicanWave", " mag:"+ String.valueOf(magneticFieldStrength) + " grav:"+ String.valueOf(gravityFieldStrength));
+
+			if ( magneticFieldStrength < 20 || magneticFieldStrength > SensorManager.MAGNETIC_FIELD_EARTH_MAX ) {  // 20 rather than the SensorManager.MAGNETIC_FIELD_EARTH_MIN
+				// because I saw plenty of sub-30 readings that are good enough to be valid IMHO
 				
 				 Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
 			} else if (gravityFieldStrength < 5 || gravityFieldStrength > 15) {
@@ -234,6 +234,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				float I[] = new float[9];
 				boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 				if (success) {
+					Log.w("MexicanWaveMagnets", " successful");
 					azimuth = Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
 																	// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
 																	// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
@@ -271,27 +272,29 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 						}
 					}
 
-					
-					
-					
-					// The way we calculate the vector for direction does not work well when the phone is flat,
-					// so we first check to make sure that we've not got the z-axis of the device aligned 
-					// to the gravity of Earth.  I have made the assumption, as is evidenced by my choice
-					// of 9.80665m/s^2, that we won't be using this app on any other planets.
-					// TODO - make this work on other planets.
-					
-					averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loves to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
 
-					if (Math.abs(averageZGravity) > 9 ) {
-						// device is too flat
-						roarHandler.isFlat = true;
-						warning.setVisibility(View.VISIBLE);
-					}
-					if (Math.abs(averageZGravity) < 8 ) {
-						// device is now OK
-						roarHandler.isFlat = false;
-						warning.setVisibility(View.INVISIBLE);
-					}
+				} else {
+					Log.e("Mex", "failed to get rotation matrix");
+				}					
+					
+					
+				// The way we calculate the vector for direction does not work well when the phone is flat,
+				// so we first check to make sure that we've not got the z-axis of the device aligned 
+				// to the gravity of Earth.  I have made the assumption, as is evidenced by my choice
+				// of 9.80665m/s^2, that we won't be using this app on any other planets.
+				// TODO - make this work on other planets.
+				
+				averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loves to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
+
+				if (Math.abs(averageZGravity) > 9 ) {
+					// device is too flat
+					roarHandler.isFlat = true;
+					warning.setVisibility(View.VISIBLE);
+				}
+				if (Math.abs(averageZGravity) < 8 ) {
+					// device is now OK
+					roarHandler.isFlat = false;
+					warning.setVisibility(View.INVISIBLE);
 				}
 			}
 			
