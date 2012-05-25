@@ -50,6 +50,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private Sensor magnetometer;
 	private float[] myGravities;
 	private float[] myMagnetics;
+	private float[] mySanityCheckForSensorValues;
 	private double magneticFieldStrength;
 	private double gravityFieldStrength;
 	private float averageZGravity;
@@ -223,16 +224,19 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				// because I saw plenty of sub-30 readings that are good enough to be valid IMHO
 				
 				 Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
+				 myMagnetics = null;
 			} else if (gravityFieldStrength < 5 || gravityFieldStrength > 15) {
 				// this will happen when the crazy Samsung sensors give the magnetic sensors to the gravity array.
 				// Also, this will happen if there's too much movement or if the person is in freefall, both of which mean
 				// that we shouldn't be using the values.
 				 Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
+				 myGravities = null;
 			} else {
 				float Ro[] = new float[9];
 				float I[] = new float[9];
 				boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 				if (success) {
+					Log.i("Mex", "Rotation matrix succesfully calculated");
 					azimuth = Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
 																	// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
 																	// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
