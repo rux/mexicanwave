@@ -50,6 +50,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private Sensor magnetometer;
 	private float[] myGravities;
 	private float[] myMagnetics;
+	private double magneticFieldStrength;
+	private double gravityFieldStrength;
 	private float averageZGravity;
 	private double azimuth;
 	private PreviewSurface mSurface;
@@ -198,37 +200,35 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		
 		int sensorType = event.sensor.getType();
 		
 		if (sensorType == Sensor.TYPE_ACCELEROMETER) {
 			myGravities = event.values;
-		}
-		if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
+		} else if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
 			myMagnetics = event.values;
 		}
 		
 		if ((sensorType == Sensor.TYPE_MAGNETIC_FIELD || sensorType == Sensor.TYPE_ACCELEROMETER) && myGravities != null && myMagnetics != null) {
-			
-			
-			// check the magnitude of magnetometers - to handle dodgy readings
-			double magneticFieldStrength = (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
-			
-			// check the magnitude of gravity sensors
-			double gravityFieldStrength = (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
+
+			if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
+				// check the magnitude of magnetometers - to handle dodgy readings
+				magneticFieldStrength = (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
+			} else if (sensorType == Sensor.TYPE_ACCELEROMETER) {
+				// check the magnitude of gravity sensors
+				gravityFieldStrength = (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
+			}
 			
 			if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ranges in the
 				// UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field).
 				// it is possible to end up here thanks to bad sensor systems in the device, notably Samsung devices.
-				// Occasionally, the myMagnetics array gets filled with sensor readings from the accelerometer ( eg [0,0,9.81] ).
-				// This is clearly wrong, so if we get readings in that ballpark, ie magnitude of about 10, we can clearly
-				// just drop it.
 				
-				// Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
+				 Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
 			} else if (gravityFieldStrength < 5 || gravityFieldStrength > 15) {
 				// this will happen when the crazy Samsung sensors give the magnetic sensors to the gravity array.
 				// Also, this will happen if there's too much movement or if the person is in freefall, both of which mean
 				// that we shouldn't be using the values.
-				// Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
+				 Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
 			} else {
 				float Ro[] = new float[9];
 				float I[] = new float[9];
