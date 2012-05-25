@@ -269,7 +269,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_9"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="232dp"
         android:tag="210"
             android:adjustViewBounds="true"
         />    
@@ -279,7 +279,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_10"
         android:layout_marginLeft="232dp"
-        android:layout_marginTop="225dp"
+        android:layout_marginTop="232dp"
         android:tag="150"
             android:adjustViewBounds="true"
         />

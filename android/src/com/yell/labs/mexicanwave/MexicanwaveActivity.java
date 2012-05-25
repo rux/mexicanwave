@@ -44,7 +44,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private RoarHandler roarHandler;
 	private Context context;
 	private View view;
-	private View warning;
+	private TextView warning;
 	private SensorManager mySensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
@@ -85,7 +85,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         setContentView(R.layout.main);
         context = this;
         view = (View) findViewById(R.id.screenFlash);
-        warning = (View) findViewById(R.id.holdThePhone);
+        warning = (TextView) findViewById(R.id.holdThePhone);
         
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
@@ -218,7 +218,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				gravityFieldStrength = (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
 			}
 
-			Log.i("MexicanWave", " mag:"+ String.valueOf(magneticFieldStrength) + " grav:"+ String.valueOf(gravityFieldStrength));
 
 			if ( magneticFieldStrength < 20 || magneticFieldStrength > SensorManager.MAGNETIC_FIELD_EARTH_MAX ) {  // 20 rather than the SensorManager.MAGNETIC_FIELD_EARTH_MIN
 				// because I saw plenty of sub-30 readings that are good enough to be valid IMHO
@@ -234,7 +233,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 				float I[] = new float[9];
 				boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 				if (success) {
-					Log.w("MexicanWaveMagnets", " successful");
 					azimuth = Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
 																	// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
 																	// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
@@ -290,6 +288,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					// device is too flat
 					roarHandler.isFlat = true;
 					warning.setVisibility(View.VISIBLE);
+					warning.setText(R.string.pleaseHoldUpThePhone);
 				}
 				if (Math.abs(averageZGravity) < 8 ) {
 					// device is now OK
