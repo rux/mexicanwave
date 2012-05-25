@@ -205,9 +205,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		int sensorType = event.sensor.getType();
 		
 		if (sensorType == Sensor.TYPE_ACCELEROMETER) {
-			myGravities = event.values;
+			myGravities = event.values.clone();
 		} else if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
-			myMagnetics = event.values;
+			myMagnetics = event.values.clone();
 		}
 		
 		if ((sensorType == Sensor.TYPE_MAGNETIC_FIELD || sensorType == Sensor.TYPE_ACCELEROMETER) && myGravities != null && myMagnetics != null) {
@@ -234,9 +234,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 			} else {
 				float Ro[] = new float[9];
 				float I[] = new float[9];
+								
 				boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 				if (success) {
-					Log.i("Mex", "Rotation matrix succesfully calculated");
 					azimuth = Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
 																	// held up with the screen vertical.  The unpredictable zone for behaviour becomes the state
 																	// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
