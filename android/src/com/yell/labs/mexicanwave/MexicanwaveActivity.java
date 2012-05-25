@@ -336,7 +336,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	        scaleAnimation.setDuration(2000);
         
 	        AnimationSet aniSet = new AnimationSet(true);
-	        aniSet.setInterpolator(new CycleInterpolator(1));
+	        aniSet.setInterpolator(new CycleInterpolator(0.5f));
 	        aniSet.addAnimation(scaleAnimation);
 	        aniSet.addAnimation(bounceAnimation);
 
