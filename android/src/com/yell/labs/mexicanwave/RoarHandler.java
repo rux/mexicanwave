@@ -179,12 +179,12 @@ class RoarHandler {
 	public void check() {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
 		if (angle > 170 && angle < 200) {
-			goWild();
+			goWild(angle);
+
 		} else {
 			
 			if (currentlyRoaring == false && noGameMode == false && missedTouchOpportunity == true) {
 				myToast.makeText(context, "You missed!", Toast.LENGTH_SHORT).show();
-				missedTouchOpportunity = false;
 			}
 			
 			missedTouchOpportunity = false;
@@ -204,7 +204,7 @@ class RoarHandler {
 		return (mSurface.hasCamera && mSurface.hasSurface) ? true : false;
 	}
 	
-	public void goWild() {
+	public void goWild(long angle) {
 		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
 			if (touched == true || noGameMode==true) {
 				mSurface.lightOn();
@@ -232,6 +232,10 @@ class RoarHandler {
 				getNtpTime ntpTime = new getNtpTime();
 				ntpTime.execute(timeServer);
 				
+				if (currentlyRoaring == false) {
+					myToast.makeText(context, String.valueOf(score(angle)), 500).show();
+				}
+				
 				currentlyRoaring = true;
 
 			} else {
@@ -250,6 +254,13 @@ class RoarHandler {
 		currentlyRoaring = false;
 	}
 	
+	public long score(long angle ) {
+		long points = 0;
+		
+		points = 20 - (angle - 180);
+		
+		return points;
+	}
 	
 	
 	private class lightSwitchTask extends AsyncTask<Integer, Void, Boolean> {
