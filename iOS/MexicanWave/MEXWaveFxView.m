@@ -75,6 +75,8 @@
 
 #pragma mark - Configuration
 - (void)configureWave {
+    
+    //set up the image sprites.
     self.sprites = [NSArray arrayWithObjects:
                     sprite_12,
                     sprite_11,
@@ -88,7 +90,8 @@
                     sprite_3,
                     sprite_2,
                     sprite_1, nil];
-       
+    
+    //set up and array of the hieghts that each sprite changes its y center point   
     self.animationHeights = [NSArray arrayWithObjects:
                              [NSNumber numberWithFloat:35],
                              [NSNumber numberWithFloat:35],
@@ -130,17 +133,16 @@
     
 }
 -(void)animateBounceWithCycleTime:(NSTimeInterval)cycleTime activeTime:(NSTimeInterval)activeTime phase:(float)phase imageViewIndex:(NSInteger)index {
-    
-  
+      
     
     UIImageView* currentSprite = (UIImageView*)[self.sprites objectAtIndex:index];
+
+    //remove the old animations
     [currentSprite.layer removeAnimationForKey:@"postion"];
     [currentSprite.layer removeAnimationForKey:@"bobbleAnimation"];
    
-    
+    //move the center y point up to animate up
     const NSNumber* offset = (NSNumber*)[self.animationHeights objectAtIndex:index];
-    
-   
     const NSInteger originalY = currentSprite.center.y;
     
     CAKeyframeAnimation* postionAnim = [CAKeyframeAnimation animationWithKeyPath:@"position.y"];
@@ -161,7 +163,7 @@
    
     [currentSprite.layer addAnimation:postionAnim forKey:@"postion"];
     
-    
+    //Animate a growing effect to make it look like the sprites are enlarging
     CAKeyframeAnimation *bobbleAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
 	
 	CATransform3D startingScale = CATransform3DScale (currentSprite.layer.transform, 0.6, 0.6, 0.6);
@@ -230,6 +232,7 @@
     self.paused = NO;
 }
 - (void)cancelAnimations{
+    
     [self.sprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIImageView* currentSprite =(UIImageView*)obj;
 

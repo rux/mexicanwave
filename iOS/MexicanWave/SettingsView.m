@@ -9,6 +9,8 @@
 #import "SettingsView.h"
 #import "UsageMetrics.h"
 #import "MEXWaveModel.h"
+#import "MEXAppDelegate.h"
+#import "MEXWavingViewController.h"
 
 #define kSettingsKeyVibration NSLocalizedString(@"Vibration", @"Settings Table row title vibration")
 #define kSettingsKeySounds NSLocalizedString(@"Sounds", @"Settings Table row title sounds")
@@ -178,8 +180,11 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if(indexPath.row == 0 && indexPath.section == 1){                                                 
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Legal" object:nil];
+    if(indexPath.row == 0 && indexPath.section == 1){   
+        
+        MEXAppDelegate* appDelagate = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
+        [appDelagate.viewController didTapLegelButton:self];
+        
     }
 }
 

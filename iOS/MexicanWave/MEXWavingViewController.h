@@ -37,5 +37,5 @@
 - (void)pause;
 - (void)resume;
 -(void)startWave;
-
+-(void)didTapLegelButton:(id)sender;
 @end

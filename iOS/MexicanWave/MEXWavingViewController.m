@@ -27,7 +27,7 @@
 
 -(void)bounceAnimation;
 -(void)setTorchMode:(AVCaptureTorchMode)newMode;
--(void)didRecieveLegalNotification:(NSNotification*)note;
+
 @end
 
 
@@ -110,7 +110,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didWave:) name:MEXWaveModelDidWaveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeCrowdType:) name:kSpeedSegementDidChange object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRecieveLegalNotification:) name:@"Legal" object:nil];
     
     // Load in the wave sound.
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"spring" withExtension:@"mp3"], &waveSoundID);
@@ -438,7 +437,7 @@
 }
 #pragma mark Yell Advert 
 
--(void)didRecieveLegalNotification:(NSNotification*)note{
+-(void)didTapLegelButton:(id)sender{
     GenericWebViewController* webView = [[GenericWebViewController alloc]init];
     
     webView.title = NSLocalizedString(@"Legal", @"The title text shown in the Legal view");

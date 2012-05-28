@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GenericWebViewController : UIViewController
+@interface GenericWebViewController : UIViewController <UIWebViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UIWebView *webView;
+@property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic,retain) NSURL* url;
 @end

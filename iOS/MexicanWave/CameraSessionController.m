@@ -62,6 +62,7 @@
             
             /**
                 Modify the bounds of the layer and set the corner radius of the camera view to match the gap in middle of application.
+                CAUTION: this is assuming that the view is the one on the main app screen
             **/
 			self.videoLayer.frame = cameraView.bounds;
 			[cameraView.layer addSublayer:videoLayer];
