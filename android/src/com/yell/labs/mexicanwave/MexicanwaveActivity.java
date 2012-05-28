@@ -26,8 +26,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
@@ -42,12 +45,15 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private RoarHandler roarHandler;
 	private Context context;
 	private View view;
-	private View warning;
+	private TextView warning;
 	private SensorManager mySensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
 	private float[] myGravities;
 	private float[] myMagnetics;
+	private float[] mySanityCheckForSensorValues;
+	private double magneticFieldStrength;
+	private double gravityFieldStrength;
 	private float averageZGravity;
 	private double azimuth;
 	private PreviewSurface mSurface;
@@ -81,7 +87,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         setContentView(R.layout.main);
         context = this;
         view = (View) findViewById(R.id.screenFlash);
-        warning = (View) findViewById(R.id.holdThePhone);
+        warning = (TextView) findViewById(R.id.holdThePhone);
         
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
@@ -110,7 +116,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         
         cacti = new ImageView[12];
         cactiBouncing = new boolean[12];
-        frontCactusOptions = new int[6];
         
         cacti[0] = (ImageView) findViewById(R.id.cactus_0);
         cacti[1] = (ImageView) findViewById(R.id.cactus_1);
@@ -140,12 +145,13 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         cacti[10].setMaxHeight(150);
         cacti[11].setMaxHeight(225);  // this should be the biggest one
         
-		frontCactusOptions[0] = R.drawable.sprite_5;
-		frontCactusOptions[1] = R.drawable.sprite_6;
+
+        frontCactusOptions = new int[4];
+
+        frontCactusOptions[0] = R.drawable.sprite_1;
+		frontCactusOptions[1] = R.drawable.sprite_4;
 		frontCactusOptions[2] = R.drawable.sprite_8;
 		frontCactusOptions[3] = R.drawable.sprite_9;
-		frontCactusOptions[4] = R.drawable.sprite_10;
-		frontCactusOptions[5] = R.drawable.sprite_11;
 		
 		Log.i("Mex Init", String.valueOf(frontCactusOptions[1]));
        
@@ -196,40 +202,40 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		
 		int sensorType = event.sensor.getType();
 		
 		if (sensorType == Sensor.TYPE_ACCELEROMETER) {
-			myGravities = event.values;
-		}
-		if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
-			myMagnetics = event.values;
+			myGravities = event.values.clone();
+		} else if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
+			myMagnetics = event.values.clone();
 		}
 		
 		if ((sensorType == Sensor.TYPE_MAGNETIC_FIELD || sensorType == Sensor.TYPE_ACCELEROMETER) && myGravities != null && myMagnetics != null) {
-			
-			
-			// check the magnitude of magnetometers - to handle dodgy readings
-			double magneticFieldStrength = (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
-			
-			// check the magnitude of gravity sensors
-			double gravityFieldStrength = (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
-			
-			if ( magneticFieldStrength < 18 || magneticFieldStrength > 65 ) {  // values take because the are the working ranges in the
-				// UK.  Or here http://en.wikipedia.org/wiki/Orders_of_magnitude_(magnetic_field).
-				// it is possible to end up here thanks to bad sensor systems in the device, notably Samsung devices.
-				// Occasionally, the myMagnetics array gets filled with sensor readings from the accelerometer ( eg [0,0,9.81] ).
-				// This is clearly wrong, so if we get readings in that ballpark, ie magnitude of about 10, we can clearly
-				// just drop it.
+			if (sensorType == Sensor.TYPE_MAGNETIC_FIELD) {
+				// check the magnitude of magnetometers - to handle dodgy readings
+				magneticFieldStrength = (Math.sqrt(myMagnetics[0]*myMagnetics[0] + myMagnetics[1]*myMagnetics[1] + myMagnetics[2]*myMagnetics[2]));
+			} else if (sensorType == Sensor.TYPE_ACCELEROMETER) {
+				// check the magnitude of gravity sensors
+				gravityFieldStrength = (Math.sqrt(myGravities[0]*myGravities[0] + myGravities[1]*myGravities[1] + myGravities[2]*myGravities[2]));
+			}
+
+
+			if ( magneticFieldStrength < 20 || magneticFieldStrength > SensorManager.MAGNETIC_FIELD_EARTH_MAX ) {  // 20 rather than the SensorManager.MAGNETIC_FIELD_EARTH_MIN
+				// because I saw plenty of sub-30 readings that are good enough to be valid IMHO
 				
-				// Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
+				 Log.e("MexicanWaveMagnets", " magneticFieldStrength is outside expected tolerances, dropping measurement.  We may have interference. " + String.valueOf(magneticFieldStrength)  );
+				 myMagnetics = null;
 			} else if (gravityFieldStrength < 5 || gravityFieldStrength > 15) {
 				// this will happen when the crazy Samsung sensors give the magnetic sensors to the gravity array.
 				// Also, this will happen if there's too much movement or if the person is in freefall, both of which mean
 				// that we shouldn't be using the values.
-				// Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
+				 Log.e("MexicanWaveGravity", " gravityFieldStrength is outside expected tolerances, dropping measurement. " + String.valueOf(gravityFieldStrength));
+				 myGravities = null;
 			} else {
 				float Ro[] = new float[9];
 				float I[] = new float[9];
+								
 				boolean success = SensorManager.getRotationMatrix(Ro, I, myGravities, myMagnetics);
 				if (success) {
 					azimuth = Math.atan2(-Ro[2], -Ro[5]);   // This is a matrix transform that means that we have expected behaviour when the phone is
@@ -269,27 +275,30 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 						}
 					}
 
-					
-					
-					
-					// The way we calculate the vector for direction does not work well when the phone is flat,
-					// so we first check to make sure that we've not got the z-axis of the device aligned 
-					// to the gravity of Earth.  I have made the assumption, as is evidenced by my choice
-					// of 9.80665m/s^2, that we won't be using this app on any other planets.
-					// TODO - make this work on other planets.
-					
-					averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loves to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
 
-					if (Math.abs(averageZGravity) > 9 ) {
-						// device is too flat
-						roarHandler.isFlat = true;
-						warning.setVisibility(View.VISIBLE);
-					}
-					if (Math.abs(averageZGravity) < 8 ) {
-						// device is now OK
-						roarHandler.isFlat = false;
-						warning.setVisibility(View.INVISIBLE);
-					}
+				} else {
+					Log.e("Mex", "failed to get rotation matrix");
+				}					
+					
+					
+				// The way we calculate the vector for direction does not work well when the phone is flat,
+				// so we first check to make sure that we've not got the z-axis of the device aligned 
+				// to the gravity of Earth.  I have made the assumption, as is evidenced by my choice
+				// of 9.80665m/s^2, that we won't be using this app on any other planets.
+				// TODO - make this work on other planets.
+				
+				averageZGravity = (averageZGravity*9 + Math.min(Math.abs(myGravities[2]), 9.80665f) )/10;  // abs and min are to hard-filter any rogue readings (samsung nexus loves to give a -32.75 reading every few seconds for no reason whilst flat on a table.)
+
+				if (Math.abs(averageZGravity) > 9 ) {
+					// device is too flat
+					roarHandler.isFlat = true;
+					warning.setVisibility(View.VISIBLE);
+					warning.setText(R.string.pleaseHoldUpThePhone);
+				}
+				if (Math.abs(averageZGravity) < 8 ) {
+					// device is now OK
+					roarHandler.isFlat = false;
+					warning.setVisibility(View.INVISIBLE);
 				}
 			}
 			
@@ -313,18 +322,25 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         	if (angle == 180 ) {
         		Random rand = new Random();
         		
-        		int r = rand.nextInt(5);
+        		int r = rand.nextInt(4);
         		cactus.setImageResource(frontCactusOptions[r]);
         		
         	}
         	
-			int bounceHeight = -20 -cactus.getTop()/5;
+			int bounceHeight = -20 -cactus.getTop()/3;
 			
 	        TranslateAnimation bounceAnimation = new TranslateAnimation(0, 0, 0, bounceHeight );
-	        bounceAnimation.setDuration(2000);
-	        bounceAnimation.setInterpolator(new CycleInterpolator(1));
+	        bounceAnimation.setDuration(1400);
+	        
+	        ScaleAnimation scaleAnimation = new ScaleAnimation(1.0f, 1.5f, 1.0f, 1.5f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+	        scaleAnimation.setDuration(1400);
         
-        	cactus.startAnimation(bounceAnimation);
+	        AnimationSet aniSet = new AnimationSet(true);
+	        aniSet.setInterpolator(new CycleInterpolator(0.5f));
+	        aniSet.addAnimation(scaleAnimation);
+	        aniSet.addAnimation(bounceAnimation);
+
+        	cactus.startAnimation(aniSet);
         }
 	}
 	

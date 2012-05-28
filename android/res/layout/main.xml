@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="152dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="28dp"
             android:src="@drawable/sprite_1"
             android:tag="1"
             android:adjustViewBounds="true"
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_7"
         android:layout_marginLeft="110dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         android:tag="330"
             android:adjustViewBounds="true"
         />        
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite"
         android:layout_marginLeft="193dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         android:tag="30"
             android:adjustViewBounds="true"
         />
@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_1"
         android:layout_marginLeft="71dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="52dp"
         android:tag="300"
             android:adjustViewBounds="true"
         />    
@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_2"
         android:layout_marginLeft="225dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="52dp"
         android:tag="60"
             android:adjustViewBounds="true"
         />
@@ -146,7 +146,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_3"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="97dp"
         android:tag="270"
             android:adjustViewBounds="true"
         />    
@@ -156,7 +156,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_4"
         android:layout_marginLeft="252dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="97dp"
         android:tag="90"
             android:adjustViewBounds="true"
         />
@@ -200,7 +200,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_5"
         android:layout_marginLeft="14dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="149dp"
         android:tag="240"
             android:adjustViewBounds="true"
         />    
@@ -210,7 +210,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_8"
         android:layout_marginLeft="263dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="149dp"
         android:tag="120"
             android:adjustViewBounds="true"
         />
@@ -269,7 +269,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_9"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="235dp"
         android:tag="210"
             android:adjustViewBounds="true"
         />    
@@ -279,7 +279,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_10"
         android:layout_marginLeft="232dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="235dp"
         android:tag="150"
             android:adjustViewBounds="true"
         />
@@ -302,7 +302,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sprite_8"
         android:layout_marginLeft="115dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="285dp"
         android:tag="180"
             android:adjustViewBounds="true"
         />
@@ -319,7 +319,16 @@
          />
 
     
-    
+    <ImageView
+        android:id="@+id/background_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/background_9"
+        android:layout_margin="0px"
+        android:contentDescription="@string/backgroundImageDescription"
+        android:src="@drawable/background_bottom"
+        android:scaleType="center"
+        />    
     
              
    
@@ -344,10 +353,7 @@
         android:text="@string/pleaseHoldUpThePhone"
         android:visibility="gone"
         />
-    
-    
-    
-    
-    
+
+
 
 </RelativeLayout>

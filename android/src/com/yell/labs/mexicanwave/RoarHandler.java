@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 
 
@@ -49,6 +50,9 @@ class RoarHandler {
 	private long timeOffset;
 	
 	public boolean touched;
+	private boolean missedTouchOpportunity; // this detects when the wave has passed the main point
+	
+	private Toast myToast;
 	
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE, boolean vE, boolean nGM) {
@@ -179,6 +183,13 @@ class RoarHandler {
 		if (angle > 170 && angle < 200) {
 			goWild();
 		} else {
+			
+			if (currentlyRoaring == false && noGameMode == false && missedTouchOpportunity == true) {
+				myToast.makeText(context, "You missed!", Toast.LENGTH_SHORT).show();
+				missedTouchOpportunity = false;
+			}
+			
+			missedTouchOpportunity = false;
 			touched = false;
 		}
 		
@@ -224,8 +235,10 @@ class RoarHandler {
 				ntpTime.execute(timeServer);
 				
 				currentlyRoaring = true;
+
 			} else {
 				Log.i("MexicanWaveTouch", "missed opportunity");
+				missedTouchOpportunity = true;
 			}
 
 			touched = false;
