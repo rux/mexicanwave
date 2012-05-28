@@ -3,7 +3,6 @@ package com.yell.labs.mexicanwave;
 
 import java.util.Random;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,12 +26,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.CycleInterpolator;
-import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,7 +47,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private Sensor magnetometer;
 	private float[] myGravities;
 	private float[] myMagnetics;
-	private float[] mySanityCheckForSensorValues;
 	private double magneticFieldStrength;
 	private double gravityFieldStrength;
 	private float averageZGravity;
@@ -64,7 +59,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private AppMeasurement s;
 	private static boolean PRODUCTION_VERSION;
 	private ImageView[] cacti;
-	private boolean[] cactiBouncing;
 	private int[] frontCactusOptions;
 
     @Override
@@ -115,7 +109,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         s.trackingServer = "yellgroup.122.2o7.net";
         
         cacti = new ImageView[12];
-        cactiBouncing = new boolean[12];
         
         cacti[0] = (ImageView) findViewById(R.id.cactus_0);
         cacti[1] = (ImageView) findViewById(R.id.cactus_1);

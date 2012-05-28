@@ -43,7 +43,6 @@ class RoarHandler {
 	private boolean soundLoaded;
 	
 	private Animation flashAnim;
-	private Timer flashTimer;
 	
 	private SntpClient sntpClient;
 	private final String timeServer;
@@ -52,7 +51,7 @@ class RoarHandler {
 	public boolean touched;
 	private boolean missedTouchOpportunity; // this detects when the wave has passed the main point
 	
-	private Toast myToast;
+	private  Toast myToast;
 	
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE, boolean vE, boolean nGM) {
@@ -96,7 +95,6 @@ class RoarHandler {
         ntpTime.execute(timeServer);
         
         
-        flashTimer = new Timer();
         currentlyRoaring = false;  
 	}
 	
