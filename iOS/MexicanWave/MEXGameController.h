@@ -16,6 +16,9 @@
 @property (retain, nonatomic) IBOutlet UIImageView *gameModeSprite; //The Sprite image to move when the tap gesture is successful.
 @property (nonatomic) BOOL canWave; //Boolean to check if we are allowed to animate. (if YES its the correct time to animate sprite)
 
+@property (retain, nonatomic) IBOutlet UILabel *lblHighscore; //The label of Error message to show
+@property (retain, nonatomic) IBOutlet UILabel *lblCurrentScore; //The label of Error message to show
+
 
 -(void)didTapDisplay;
 

@@ -13,16 +13,23 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
+#define kHighScoreKey @"kHighScoreKey"
+
 @interface MEXGameController()
 @property (nonatomic) SystemSoundID waveSoundID;
 @property (nonatomic) SystemSoundID errorSoundID;
 @property (nonatomic,getter = isShowingError) BOOL showingError; //Boolean for when error message is visiable
 @property (nonatomic, getter = isAnimating) BOOL animating; //Boolean to show when the sprite is currently being animated.
 
+@property (nonatomic) NSInteger currentScore;
 
 -(void)playAudioClipForSound:(SystemSoundID)sound;
 -(void)animateErrorBubbleWithMessage:(NSString*)message;
 -(void)animateSprite;
+-(void)enableGameMode;
+
+-(void)resetUserScore;
+-(void)updateUserScore;
 @end
 
 @implementation MEXGameController
@@ -30,10 +37,11 @@
 
 @synthesize gameModeSprite,animating,canWave;
 @synthesize showingError,errorView;
-@synthesize errorMessage,waveSoundID,errorSoundID;
-
+@synthesize errorMessage,waveSoundID,errorSoundID,currentScore;
+@synthesize lblHighscore,lblCurrentScore;
 
 -(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
      AudioServicesDisposeSystemSoundID(waveSoundID);
      AudioServicesDisposeSystemSoundID(errorSoundID);
     [errorMessage release];
@@ -50,11 +58,34 @@
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"spring" withExtension:@"mp3"], &waveSoundID);
     AudioServicesCreateSystemSoundID((CFURLRef)[[NSBundle mainBundle] URLForResource:@"boing" withExtension:@"mp3"], &errorSoundID);
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGameMode) name:kGameModeDidChange object:nil];
+   
+    double delayInSeconds = 7.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self enableGameMode];
+
+    });
+                  
+}
+
+-(void)enableGameMode{
+    
+    const NSInteger gameTextAlpha = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode] ? 1 : 0;
+
+    lblHighscore.text = [NSString stringWithFormat:@"High Score: %u",[[NSUserDefaults standardUserDefaults] integerForKey:kHighScoreKey]];
+    lblCurrentScore.text = [NSString stringWithFormat:@"Score: %u",currentScore];
+    
+      
+    lblCurrentScore.alpha = gameTextAlpha;
+    lblHighscore.alpha = gameTextAlpha;
+
     
 }
 
 -(void)setCanWave:(BOOL)wave{
     canWave = wave;
+      
     
     //if we cant wave and we are currently not animating we can assume you have missed the wave.
     if(!canWave && !self.animating){
@@ -62,7 +93,7 @@
         if(!self.showingError){
             
             [self animateErrorBubbleWithMessage:NSLocalizedString(@"Missed", @"Title shown when user hasnt tapped in game mode")];
-            
+        
         }
     }
 }
@@ -106,7 +137,7 @@
     /*
      Tell everyone we are showing an error and prepare it for animation
      Play the 'boing' error sound and animate the speech bubble into view. */
-    
+    [self resetUserScore];
     
     self.showingError = YES;
     self.errorView.alpha = 0;
@@ -144,6 +175,8 @@
     self.animating = YES;
     MEXAppDelegate* appDel = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
     
+    [self updateUserScore];
+    
     const float speed = [[NSUserDefaults standardUserDefaults] integerForKey:MEXWaveSpeedSettingsKey] == kMEXVenueSizeSmall ? 0.6 : 1.0 ;
     
     [self playAudioClipForSound:waveSoundID];
@@ -172,7 +205,23 @@
     }];
 }
 
+-(void)updateUserScore{
+    
+    currentScore +=10;
+    lblCurrentScore.text = [NSString stringWithFormat:@"Score: %u",currentScore];
+    if(currentScore> [[NSUserDefaults standardUserDefaults] integerForKey:kHighScoreKey]){
+        [[NSUserDefaults standardUserDefaults] setInteger:currentScore forKey:kHighScoreKey];
+        lblHighscore.text = [NSString stringWithFormat:@"High Score: %u",currentScore];
+        
+    }
+    
+}
 
+-(void)resetUserScore{
+    currentScore = 0;
+    lblCurrentScore.text = [NSString stringWithFormat:@"Score: %u",currentScore];
+
+}
   
 
 @end

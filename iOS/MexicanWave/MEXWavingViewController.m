@@ -237,7 +237,7 @@
     if(self.isGameMode){
         self.gameController.canWave = YES;
         
-        double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 0.9 : 0.7;
+        double delayInSeconds = (self.waveModel.venueSize == kMEXVenueSizeLarge) ? 1.0 : 0.9;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             self.gameController.canWave = NO;
@@ -455,7 +455,10 @@
     if(self.isPaused){
         return;
     }
-    [self bounceAnimation];
+    [UIView animateWithDuration:0.55 animations:^{
+        self.containerView.frame = CGRectMake(-320, 0.0f, self.containerView.frame.size.width, self.containerView.frame.size.height);} completion:^(BOOL finished) {
+            [self pause];
+        }];
 }
 
 
