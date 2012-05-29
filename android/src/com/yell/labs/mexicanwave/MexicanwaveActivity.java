@@ -252,7 +252,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					roarHandler.setAzimuth(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 					roarHandler.check();  // this checks to see if we should be roaring or not.
 					
-					if (roarHandler.currentlyRoaring == true && roarHandler.noGameMode == false ) {
+					if (roarHandler.noGameMode == false ) {
 						
 						// scores might have changed, so update prefs if this is the case
 						if (roarHandler.score > roarHandler.highScore) {
@@ -336,14 +336,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 
         if (isCurrentlyAnimating == false) {
         	
-        	// change the front sprite image
-        	if (angle == 180 ) {
-        		Random rand = new Random();
-        		
-        		int r = rand.nextInt(4);
-        		cactus.setImageResource(frontCactusOptions[r]);
-        		
-        	}
+
         	
 			int bounceHeight = -20 -cactus.getTop()/3;
 			
@@ -357,8 +350,25 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	        aniSet.setInterpolator(new CycleInterpolator(0.5f));
 	        aniSet.addAnimation(scaleAnimation);
 	        aniSet.addAnimation(bounceAnimation);
+	        
+	        
+        	// change the front sprite image, and bounce ONLY IF it's meant to
+        	if (angle == 180 ) {
+        		Random rand = new Random();
+        		
+        		int r = rand.nextInt(4);
+        		cactus.setImageResource(frontCactusOptions[r]);
+        		
+        		if (roarHandler.currentlyRoaring==true) {
+        			cactus.startAnimation(aniSet);
+        		}
+        		
+        	} else {
+        		cactus.startAnimation(aniSet);
+        	}
+	        
 
-        	cactus.startAnimation(aniSet);
+        	
         }
 	}
 	

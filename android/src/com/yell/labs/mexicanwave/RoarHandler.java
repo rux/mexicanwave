@@ -53,8 +53,6 @@ class RoarHandler {
 	public boolean touched;
 	private boolean missedTouchOpportunity; // this detects when the wave has passed the main point
 	
-	private  Toast myToast;
-
 	public int score;
 	public int highScore;
 
@@ -188,7 +186,8 @@ class RoarHandler {
 			goWild(angle);
 		} else {
 			if (currentlyRoaring == false && noGameMode == false && missedTouchOpportunity == true) {
-				myToast.makeText(context, "You missed!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "You missed!", Toast.LENGTH_SHORT).show();
+				score = this.score - 5;
 				missedTouchOpportunity = false;
 			}
 			touched = false;
@@ -235,7 +234,7 @@ class RoarHandler {
 				
 				if (currentlyRoaring == false) {
 					score = this.score + score(angle);
-					// myToast.makeText(context, String.valueOf(score), 500).show();
+					// Toast.makeText(context, String.valueOf(score), 500).show();
 					missedTouchOpportunity = false;
 				}
 				
