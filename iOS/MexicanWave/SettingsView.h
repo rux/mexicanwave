@@ -16,6 +16,8 @@ NSString* const kGameModeDidChange;
 NSString* const kUserDefaultKeyCustomCactus;
 NSString* const kUserDefaultKeyCustomCactusImages;
 
+NSString* const kCustomCactusImagesDidChange;
+
 
 @interface SettingsView : UIView <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate>
 

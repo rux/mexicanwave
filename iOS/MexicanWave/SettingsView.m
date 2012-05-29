@@ -35,6 +35,7 @@ NSString* const kUserDefaultKeyCustomCactus = @"customCactus";
 NSString* const kUserDefaultKeyCustomCactusImages = @"customCactusImages";
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 NSString* const kGameModeDidChange = @"kGameModeDidChange";
+NSString* const kCustomCactusImagesDidChange = @"kCustomCactusImagesDidChange";
 
 @interface SettingsView ()
 
@@ -185,12 +186,20 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
     }
     
     else if(currentSwitch.tag == kSettingsCustomCactusTag){
+        
+        [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyCustomCactus];
+
+        
         if(currentSwitch.isOn){
 
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Use Facebook Profile Photos",@"Title for Custom Catucs Alert View") message:NSLocalizedString(@"Would you like to set your profile picture as your cactus?", @"Hint Text when changing custom cactus") delegate:self cancelButtonTitle:NSLocalizedString(@"No", @"Dismiss button of alert view") otherButtonTitles:NSLocalizedString(@"Yes", @"Agree to alert view"),nil];
             alert.tag = kSettingsCustomCactusTag;
             [alert show];
             [alert release];      
+        }
+        else{
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserDefaultKeyCustomCactusImages];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCustomCactusImagesDidChange object:nil];
         }
     }
 

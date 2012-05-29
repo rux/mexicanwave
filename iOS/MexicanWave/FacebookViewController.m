@@ -11,6 +11,7 @@
 #import "FacebookUser.h"
 #import "JSON.h"
 #import "UIImageView+WebCache.h"
+#import "SettingsView.h"
 
 @interface FacebookViewController ()
 @property(nonatomic,retain) NSMutableArray* facebookUsers;
@@ -67,8 +68,8 @@
             [images addObject:UIImagePNGRepresentation(user.profilePhoto)];
         }
         [images insertObject:UIImagePNGRepresentation(userProfile.profilePhoto) atIndex:0];
-        [[NSUserDefaults standardUserDefaults] setObject:images forKey:@"Game Mode Photos"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"userPhotos" object:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:images forKey:kUserDefaultKeyCustomCactusImages];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCustomCactusImagesDidChange object:nil];
     }];
 }
 
@@ -166,6 +167,7 @@
     
     
      if(indexPath.section == 0){
+         cell.accessoryType = UITableViewCellAccessoryCheckmark;
          cell.textLabel.text = userProfile.fullname;
          [cell.imageView setImageWithURL:userProfile.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholder"]];
          return cell;
@@ -231,7 +233,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    
+    if(indexPath.section ==0){
+        return;
+    }
     
     
     UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -239,7 +243,7 @@
     if(cell.accessoryType == UITableViewCellAccessoryNone){
         
         if([selectedUsers count]==4){
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Oops" message:@"You can only add two friends photos" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Oops" message:@"You can only add 4 friends" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
             [alert release];
             return;   

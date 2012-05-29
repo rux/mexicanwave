@@ -107,7 +107,7 @@
                              [NSNumber numberWithFloat:35],
                              [NSNumber numberWithFloat:30], nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableUserPhotos) name:@"userPhotos" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableUserPhotos) name:kCustomCactusImagesDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGameMode) name:kGameModeDidChange object:nil];
     [self enableGameMode];
 }
@@ -123,6 +123,7 @@
 }
 -(void)enableUserPhotos{
 
+    
     NSArray* frontOrderedSprites = [NSArray arrayWithObjects:
                                    sprite_7,
                                    sprite_6,
@@ -138,18 +139,28 @@
                                    sprite_1, nil];
 
     
-    NSMutableArray* images = (NSMutableArray*)[[NSUserDefaults standardUserDefaults] objectForKey:@"Game Mode Photos"];
+    NSMutableArray* images = (NSMutableArray*)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultKeyCustomCactusImages];
+    if(images){    
         
-    
-    for (NSInteger i = 0; i<[images count]; i++) {
-        NSData* data = (NSData*)[images objectAtIndex:i];
-        UIImageView *sprite = (UIImageView*)[frontOrderedSprites objectAtIndex:i];
-        
-        sprite.image = [self maskImage:[UIImage imageWithData:data]];
-
-    }
+        for (NSInteger i = 0; i<[images count]; i++) {
+            NSData* data = (NSData*)[images objectAtIndex:i];
+            UIImageView *sprite = (UIImageView*)[frontOrderedSprites objectAtIndex:i];
+            
+            sprite.image = [self maskImage:[UIImage imageWithData:data]];
+            
+        }
    
+    }  else{
         
+        self.sprite_5.image = [UIImage imageNamed:@"sprite_5"];
+        self.sprite_9.image = [UIImage imageNamed:@"sprite_5"];
+        self.sprite_6.image = [UIImage imageNamed:@"sprite_6"];
+        self.sprite_8.image = [UIImage imageNamed:@"sprite_6"];
+        self.sprite_7.image = [UIImage imageNamed:@"sprite_8"];
+    }
+    
+    
+    
 }
 
 - (UIImage*) maskImage:(UIImage *)image {
