@@ -161,7 +161,7 @@
         self.sprite_7.image = [UIImage imageNamed:@"sprite_8"];
     }
     
-    
+    [self enableGameMode];
     
 }
 
