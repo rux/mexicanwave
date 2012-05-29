@@ -43,6 +43,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private Context context;
 	private View view;
 	private TextView warning;
+	private TextView scoreView;
 	private SensorManager mySensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
@@ -83,6 +84,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         context = this;
         view = (View) findViewById(R.id.screenFlash);
         warning = (TextView) findViewById(R.id.holdThePhone);
+        scoreView = (TextView) findViewById(R.id.score);
         
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
@@ -246,8 +248,6 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					roarHandler.check();  // this checks to see if we should be roaring or not.
 					
 					if (roarHandler.currentlyRoaring == true) {
-						TextView s = (TextView) findViewById(R.id.score);
-						
 						
 						// scores might have changed, so update prefs if this is the case
 						if (roarHandler.score > roarHandler.highScore) {
@@ -257,9 +257,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 							editor.commit();
 						}
 						
-						String scoreText = "Score: " + String.valueOf(roarHandler.score) + " High score: " + String.valueOf(roarHandler.highScore);
+						String scoreText = "Score: " + String.valueOf(roarHandler.score) + "\nHigh score: " + String.valueOf(roarHandler.highScore);
 						
-						s.setText(scoreText);
+						scoreView.setText(scoreText);
 					}
 					
 					int newAzimuth = roarHandler.getAzimuthInDegrees();

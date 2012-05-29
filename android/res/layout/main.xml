@@ -335,9 +335,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/background_9"
-        android:text="Score: 0"
+        android:text=""
         android:textColor="@color/black"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
          />
     
     <!--  the colour set for the background of the below view is black so the first few seconds are blanked out - the camera
