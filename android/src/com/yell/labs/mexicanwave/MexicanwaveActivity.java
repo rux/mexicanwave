@@ -62,6 +62,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private static boolean PRODUCTION_VERSION;
 	private ImageView[] cacti;
 	private int[] frontCactusOptions;
+	
+	private Scorer scorer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,11 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
 
-        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor, soundEnabled, vibrationEnabled, noGameMode);
+        
+
+        scorer = new Scorer(context, prefs.getInt("highScore", 0) , scoreView) ;
+        
+        roarHandler = new RoarHandler(context, view, mSurface, waveDuration, waveColor, soundEnabled, vibrationEnabled, noGameMode, scorer);
         
         mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mySensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -152,13 +158,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		Log.i("Mex Init", String.valueOf(frontCactusOptions[1]));
 		
 		
-		roarHandler.highScore = prefs.getInt("highScore", 0);
-		
-		if (prefs.getBoolean("pref_no_game", false) == false) {
-			String scoreText = "Score: 0\nHigh score: " + String.valueOf(roarHandler.highScore);
-			scoreView.setText(scoreText);
-		}
-       
+
+     
     }
     
 	@Override
@@ -253,23 +254,19 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					roarHandler.check();  // this checks to see if we should be roaring or not.
 					
 					if (roarHandler.noGameMode == false ) {
-						
 						// scores might have changed, so update prefs if this is the case
-						if (roarHandler.score > roarHandler.highScore) {
-							roarHandler.highScore = roarHandler.score;
+						if (scorer.score > scorer.highScore) {
+							scorer.highScore = scorer.score;
 							Editor editor = prefs.edit();
-							editor.putInt("highScore", roarHandler.highScore);
+							editor.putInt("highScore", scorer.highScore);
 							editor.commit();
 						}
-
-						String scoreText = "Score: " + String.valueOf(roarHandler.score) + "\nHigh score: " + String.valueOf(roarHandler.highScore);
-						scoreView.setText(scoreText);
 					}
 					
 					int newAzimuth = roarHandler.getAzimuthInDegrees();
 					long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
 					
-					int oldAngle = (int) ((-oldAzimuth + offset) % 360);
+					// int oldAngle = (int) ((-oldAzimuth + offset) % 360);
 					int newAngle = (int) ((-newAzimuth + offset) % 360);
 					
 
