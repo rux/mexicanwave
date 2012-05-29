@@ -3,6 +3,8 @@ package com.yell.labs.mexicanwave;
 import java.util.Timer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -51,8 +53,8 @@ class RoarHandler {
 	public boolean touched;
 	private boolean missedTouchOpportunity; // this detects when the wave has passed the main point
 	
-	private  Toast myToast;
-	
+	public int score;
+	public int highScore;
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE, boolean vE, boolean nGM) {
 		context = c;
@@ -66,6 +68,7 @@ class RoarHandler {
         noGameMode = nGM;
         isFlat = false;
         touched = false;
+        score = 0;
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -178,16 +181,15 @@ class RoarHandler {
 		
 	public void check() {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
+
 		if (angle > 170 && angle < 200) {
-			goWild();
+			goWild(angle);
 		} else {
-			
 			if (currentlyRoaring == false && noGameMode == false && missedTouchOpportunity == true) {
-				myToast.makeText(context, "You missed!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "You missed!", Toast.LENGTH_SHORT).show();
+				score = this.score - 5;
 				missedTouchOpportunity = false;
 			}
-			
-			missedTouchOpportunity = false;
 			touched = false;
 		}
 		
@@ -204,12 +206,10 @@ class RoarHandler {
 		return (mSurface.hasCamera && mSurface.hasSurface) ? true : false;
 	}
 	
-	public void goWild() {
+	public void goWild(long angle) {
 		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
 			if (touched == true || noGameMode==true) {
 				mSurface.lightOn();
-				
-				
 				
 				lightSwitchTask lightSwitch = new lightSwitchTask();
 				lightSwitch.execute(waveFlashLength); 
@@ -232,6 +232,12 @@ class RoarHandler {
 				getNtpTime ntpTime = new getNtpTime();
 				ntpTime.execute(timeServer);
 				
+				if (currentlyRoaring == false) {
+					score = this.score + score(angle);
+					// Toast.makeText(context, String.valueOf(score), 500).show();
+					missedTouchOpportunity = false;
+				}
+				
 				currentlyRoaring = true;
 
 			} else {
@@ -250,6 +256,11 @@ class RoarHandler {
 		currentlyRoaring = false;
 	}
 	
+	public int score(long angle ) {
+		int points = 0;
+		points = (int) (20 - (angle - 180));
+		return points;
+	}
 	
 	
 	private class lightSwitchTask extends AsyncTask<Integer, Void, Boolean> {

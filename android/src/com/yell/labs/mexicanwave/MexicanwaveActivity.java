@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -42,6 +43,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	private Context context;
 	private View view;
 	private TextView warning;
+	private TextView scoreView;
 	private SensorManager mySensorManager;
 	private Sensor accelerometer;
 	private Sensor magnetometer;
@@ -82,6 +84,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
         context = this;
         view = (View) findViewById(R.id.screenFlash);
         warning = (TextView) findViewById(R.id.holdThePhone);
+        scoreView = (TextView) findViewById(R.id.score);
         
         mSurface = (PreviewSurface) findViewById(R.id.surface);
         mSurface.setCallback(this);
@@ -147,6 +150,14 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		frontCactusOptions[3] = R.drawable.sprite_9;
 		
 		Log.i("Mex Init", String.valueOf(frontCactusOptions[1]));
+		
+		
+		roarHandler.highScore = prefs.getInt("highScore", 0);
+		
+		if (prefs.getBoolean("pref_no_game", false) == false) {
+			String scoreText = "Score: 0\nHigh score: " + String.valueOf(roarHandler.highScore);
+			scoreView.setText(scoreText);
+		}
        
     }
     
@@ -241,6 +252,20 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					roarHandler.setAzimuth(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 					roarHandler.check();  // this checks to see if we should be roaring or not.
 					
+					if (roarHandler.noGameMode == false ) {
+						
+						// scores might have changed, so update prefs if this is the case
+						if (roarHandler.score > roarHandler.highScore) {
+							roarHandler.highScore = roarHandler.score;
+							Editor editor = prefs.edit();
+							editor.putInt("highScore", roarHandler.highScore);
+							editor.commit();
+						}
+
+						String scoreText = "Score: " + String.valueOf(roarHandler.score) + "\nHigh score: " + String.valueOf(roarHandler.highScore);
+						scoreView.setText(scoreText);
+					}
+					
 					int newAzimuth = roarHandler.getAzimuthInDegrees();
 					long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
 					
@@ -311,14 +336,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 
         if (isCurrentlyAnimating == false) {
         	
-        	// change the front sprite image
-        	if (angle == 180 ) {
-        		Random rand = new Random();
-        		
-        		int r = rand.nextInt(4);
-        		cactus.setImageResource(frontCactusOptions[r]);
-        		
-        	}
+
         	
 			int bounceHeight = -20 -cactus.getTop()/3;
 			
@@ -332,8 +350,25 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 	        aniSet.setInterpolator(new CycleInterpolator(0.5f));
 	        aniSet.addAnimation(scaleAnimation);
 	        aniSet.addAnimation(bounceAnimation);
+	        
+	        
+        	// change the front sprite image, and bounce ONLY IF it's meant to
+        	if (angle == 180 ) {
+        		Random rand = new Random();
+        		
+        		int r = rand.nextInt(4);
+        		cactus.setImageResource(frontCactusOptions[r]);
+        		
+        		if (roarHandler.currentlyRoaring==true) {
+        			cactus.startAnimation(aniSet);
+        		}
+        		
+        	} else {
+        		cactus.startAnimation(aniSet);
+        	}
+	        
 
-        	cactus.startAnimation(aniSet);
+        	
         }
 	}
 	
