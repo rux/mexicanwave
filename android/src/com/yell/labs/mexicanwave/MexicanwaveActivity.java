@@ -261,9 +261,8 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 							editor.putInt("highScore", roarHandler.highScore);
 							editor.commit();
 						}
-						
+
 						String scoreText = "Score: " + String.valueOf(roarHandler.score) + "\nHigh score: " + String.valueOf(roarHandler.highScore);
-						
 						scoreView.setText(scoreText);
 					}
 					

@@ -183,20 +183,14 @@ class RoarHandler {
 		
 	public void check() {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
+
 		if (angle > 170 && angle < 200) {
 			goWild(angle);
-			
-			
-			
-						
-
 		} else {
-			
 			if (currentlyRoaring == false && noGameMode == false && missedTouchOpportunity == true) {
 				myToast.makeText(context, "You missed!", Toast.LENGTH_SHORT).show();
+				missedTouchOpportunity = false;
 			}
-			
-			missedTouchOpportunity = false;
 			touched = false;
 		}
 		
@@ -217,8 +211,6 @@ class RoarHandler {
 		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
 			if (touched == true || noGameMode==true) {
 				mSurface.lightOn();
-				
-				
 				
 				lightSwitchTask lightSwitch = new lightSwitchTask();
 				lightSwitch.execute(waveFlashLength); 
@@ -244,6 +236,7 @@ class RoarHandler {
 				if (currentlyRoaring == false) {
 					score = this.score + score(angle);
 					// myToast.makeText(context, String.valueOf(score), 500).show();
+					missedTouchOpportunity = false;
 				}
 				
 				currentlyRoaring = true;
