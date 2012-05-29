@@ -118,6 +118,12 @@
         self.sprite_7.image = nil;
         return;
     }
+    NSMutableArray* images = (NSMutableArray*)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultKeyCustomCactusImages];
+    if(images){  
+        NSData* data = (NSData*)[images objectAtIndex:0];
+        self.sprite_7.image = [self maskImage:[UIImage imageWithData:data]];
+        return;        
+    }
     
     self.sprite_7.image = [UIImage imageNamed:@"sprite_8.png"];
     

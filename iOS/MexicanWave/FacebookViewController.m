@@ -57,6 +57,7 @@
 }
 -(void)didTapCancel{
     [self dismissModalViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCustomCactusImagesDidChange object:nil];
 }
 
 -(void)didTapSave{
@@ -70,6 +71,8 @@
         [images insertObject:UIImagePNGRepresentation(userProfile.profilePhoto) atIndex:0];
         [[NSUserDefaults standardUserDefaults] setObject:images forKey:kUserDefaultKeyCustomCactusImages];
         [[NSNotificationCenter defaultCenter] postNotificationName:kCustomCactusImagesDidChange object:nil];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserDefaultKeyCustomCactus];
+
     }];
 }
 

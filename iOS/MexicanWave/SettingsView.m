@@ -68,7 +68,14 @@ NSString* const kCustomCactusImagesDidChange = @"kCustomCactusImagesDidChange";
     self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium,kSettingsKeyGameMode,kSettingsKeyCustomCactus, nil];
     NSString* version = [NSString stringWithFormat:@"%@: %@",kSettingsKeyVersion,[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     self.appOptions= [NSArray arrayWithObjects:kSettingsKeyLegal,version, nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didTapReload) name:kCustomCactusImagesDidChange object:nil];
 
+    [self.table reloadData];
+}
+
+
+-(void)didTapReload{
     [self.table reloadData];
 }
 #pragma mark TableView Delegates
@@ -187,17 +194,15 @@ NSString* const kCustomCactusImagesDidChange = @"kCustomCactusImagesDidChange";
     
     else if(currentSwitch.tag == kSettingsCustomCactusTag){
         
-        [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyCustomCactus];
-
-        
         if(currentSwitch.isOn){
 
             UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Use Facebook Profile Photos",@"Title for Custom Catucs Alert View") message:NSLocalizedString(@"Would you like to set your profile picture as your cactus?", @"Hint Text when changing custom cactus") delegate:self cancelButtonTitle:NSLocalizedString(@"No", @"Dismiss button of alert view") otherButtonTitles:NSLocalizedString(@"Yes", @"Agree to alert view"),nil];
             alert.tag = kSettingsCustomCactusTag;
             [alert show];
-            [alert release];      
+            [alert release];   
         }
         else{
+            [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyCustomCactus];
             [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserDefaultKeyCustomCactusImages];
             [[NSNotificationCenter defaultCenter] postNotificationName:kCustomCactusImagesDidChange object:nil];
         }
@@ -224,6 +229,8 @@ NSString* const kCustomCactusImagesDidChange = @"kCustomCactusImagesDidChange";
         MEXAppDelegate* appDelagate = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
         [appDelagate.viewController didTapFacebook:self];
     }
+    
+    [self.table reloadData];
 }
 
 
