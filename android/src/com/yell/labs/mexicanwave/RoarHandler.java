@@ -3,6 +3,8 @@ package com.yell.labs.mexicanwave;
 import java.util.Timer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -52,7 +54,9 @@ class RoarHandler {
 	private boolean missedTouchOpportunity; // this detects when the wave has passed the main point
 	
 	private  Toast myToast;
-	
+
+	public int score;
+	public int highScore;
 
 	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE, boolean vE, boolean nGM) {
 		context = c;
@@ -66,6 +70,7 @@ class RoarHandler {
         noGameMode = nGM;
         isFlat = false;
         touched = false;
+        score = 0;
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -180,6 +185,10 @@ class RoarHandler {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
 		if (angle > 170 && angle < 200) {
 			goWild(angle);
+			
+			
+			
+						
 
 		} else {
 			
@@ -233,7 +242,8 @@ class RoarHandler {
 				ntpTime.execute(timeServer);
 				
 				if (currentlyRoaring == false) {
-					myToast.makeText(context, String.valueOf(score(angle)), 500).show();
+					score = this.score + score(angle);
+					// myToast.makeText(context, String.valueOf(score), 500).show();
 				}
 				
 				currentlyRoaring = true;
@@ -254,11 +264,9 @@ class RoarHandler {
 		currentlyRoaring = false;
 	}
 	
-	public long score(long angle ) {
-		long points = 0;
-		
-		points = 20 - (angle - 180);
-		
+	public int score(long angle ) {
+		int points = 0;
+		points = (int) (20 - (angle - 180));
 		return points;
 	}
 	

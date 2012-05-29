@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -147,6 +148,9 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		frontCactusOptions[3] = R.drawable.sprite_9;
 		
 		Log.i("Mex Init", String.valueOf(frontCactusOptions[1]));
+		
+		
+		roarHandler.highScore = prefs.getInt("highScore", 0);
        
     }
     
@@ -240,6 +244,23 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					
 					roarHandler.setAzimuth(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 					roarHandler.check();  // this checks to see if we should be roaring or not.
+					
+					if (roarHandler.currentlyRoaring == true) {
+						TextView s = (TextView) findViewById(R.id.score);
+						
+						
+						// scores might have changed, so update prefs if this is the case
+						if (roarHandler.score > roarHandler.highScore) {
+							roarHandler.highScore = roarHandler.score;
+							Editor editor = prefs.edit();
+							editor.putInt("highScore", roarHandler.highScore);
+							editor.commit();
+						}
+						
+						String scoreText = "Score: " + String.valueOf(roarHandler.score) + " High score: " + String.valueOf(roarHandler.highScore);
+						
+						s.setText(scoreText);
+					}
 					
 					int newAzimuth = roarHandler.getAzimuthInDegrees();
 					long offset = roarHandler.getWaveOffestFromAzimuthInDegrees();
