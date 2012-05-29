@@ -66,9 +66,31 @@
         [self enableGameMode];
 
     });
-                  
+    [self enableUserPhotos];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableUserPhotos) name:kCustomCactusImagesDidChange object:nil];
 }
 
+-(void)enableUserPhotos{
+                                        
+    
+    NSMutableArray* images = (NSMutableArray*)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultKeyCustomCactusImages];
+    if(images){    
+        
+        NSData* data = (NSData*)[images objectAtIndex:0];
+            
+        gameModeSprite.image = [self maskImage:[UIImage imageWithData:data]];
+        
+    }  
+    
+    else{
+        
+        self.gameModeSprite.image = [UIImage imageNamed:@"sprite_11"];
+    
+    }
+    
+    
+    
+}
 -(void)enableGameMode{
     
     const NSInteger gameTextAlpha = [[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode] ? 1 : 0;
@@ -222,6 +244,48 @@
     lblCurrentScore.text = [NSString stringWithFormat:@"Score: %u",currentScore];
 
 }
-  
+ 
+- (UIImage*) maskImage:(UIImage *)image {
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    UIImage *maskImage = [UIImage imageNamed:@"mask.png"];
+    CGImageRef maskImageRef = [maskImage CGImage];
+    
+    // create a bitmap graphics context the size of the image
+    CGContextRef mainViewContentContext = CGBitmapContextCreate (NULL, maskImage.size.width, maskImage.size.height, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
+    
+    
+    if (mainViewContentContext==NULL)
+        return NULL;
+    
+    CGFloat ratio = 0;
+    
+    ratio = maskImage.size.width/ image.size.width;
+    
+    if(ratio * image.size.height < maskImage.size.height) {
+        ratio = maskImage.size.height/ image.size.height;
+    } 
+    
+    CGRect rect1  = {{0, 0}, {maskImage.size.width, maskImage.size.height}};
+    CGRect rect2  = {{-((image.size.width*ratio)-maskImage.size.width)/2 , -((image.size.height*ratio)-maskImage.size.height)/2}, {image.size.width*ratio, image.size.height*ratio}};
+    
+    
+    CGContextClipToMask(mainViewContentContext, rect1, maskImageRef);
+    CGContextDrawImage(mainViewContentContext, rect2, image.CGImage);
+    
+    
+    // Create CGImageRef of the main view bitmap content, and then
+    // release that bitmap context
+    CGImageRef newImage = CGBitmapContextCreateImage(mainViewContentContext);
+    CGContextRelease(mainViewContentContext);
+    
+    UIImage *theImage = [UIImage imageWithCGImage:newImage];
+    
+    CGImageRelease(newImage);
+    
+    // return the image
+    return theImage;
+}
 
 @end

@@ -110,6 +110,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableUserPhotos) name:kCustomCactusImagesDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGameMode) name:kGameModeDidChange object:nil];
     [self enableGameMode];
+    [self enableUserPhotos];
 }
 
 -(void)enableGameMode{
@@ -121,6 +122,7 @@
     self.sprite_7.image = [UIImage imageNamed:@"sprite_8.png"];
     
 }
+
 -(void)enableUserPhotos{
 
     
