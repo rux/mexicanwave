@@ -170,6 +170,7 @@
     
     
      if(indexPath.section == 0){
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;
          cell.accessoryType = UITableViewCellAccessoryCheckmark;
          cell.textLabel.text = userProfile.fullname;
          [cell.imageView setImageWithURL:userProfile.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholder"]];
@@ -180,12 +181,11 @@
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.textLabel.text = user.fullname;
     [cell.imageView setImageWithURL:user.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;    
     
     for (NSIndexPath* path in selectedUsers){
         if(path.row == indexPath.row){
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
-
         }
     }
     

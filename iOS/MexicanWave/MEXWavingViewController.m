@@ -454,7 +454,7 @@
 -(void)didTapFacebook:(id)sender{
     FacebookViewController* facebook = [[FacebookViewController alloc]init];
     
-    facebook.title = NSLocalizedString(@"Choose your friends", @"The title text shown in the Facebook view");
+    facebook.title = NSLocalizedString(@"Select 4 Friends", @"The title text shown in the Facebook view");
     
     UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:facebook];
     

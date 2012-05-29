@@ -196,7 +196,7 @@ NSString* const kCustomCactusImagesDidChange = @"kCustomCactusImagesDidChange";
         
         if(currentSwitch.isOn){
 
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Use Facebook Profile Photos",@"Title for Custom Catucs Alert View") message:NSLocalizedString(@"Would you like to set your profile picture as your cactus?", @"Hint Text when changing custom cactus") delegate:self cancelButtonTitle:NSLocalizedString(@"No", @"Dismiss button of alert view") otherButtonTitles:NSLocalizedString(@"Yes", @"Agree to alert view"),nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Use Facebook Profile Photos",@"Title for Custom Catucs Alert View") message:NSLocalizedString(@"Would you like to replace the cactuses with a photo of you and your friends?", @"Hint Text when changing custom cactus") delegate:self cancelButtonTitle:NSLocalizedString(@"No", @"Dismiss button of alert view") otherButtonTitles:NSLocalizedString(@"Yes", @"Agree to alert view"),nil];
             alert.tag = kSettingsCustomCactusTag;
             [alert show];
             [alert release];   

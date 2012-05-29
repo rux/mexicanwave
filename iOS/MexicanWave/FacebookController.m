@@ -40,7 +40,9 @@ static NSString* kAppId = @"223708291010693";
         facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
         facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
     }
-        
+    if (![facebook isSessionValid]) {
+        [facebook authorize:nil];
+    }  
     facebookRequestQueue = [[NSMutableArray alloc]init];
     
     return self;
@@ -49,13 +51,17 @@ static NSString* kAppId = @"223708291010693";
 -(void)facebookRequestWithPath:(NSString*)path withCompletion:(FacebookAPICallBack)callback{
     if (![facebook isSessionValid]) {
         [facebook authorize:nil];
+        FacebookRequest* newRequest = [[FacebookRequest alloc]initWithPath:path andBlock:callback];
+        [facebookRequestQueue addObject:newRequest];
+        [newRequest release];
+        return;
     }
     
     FacebookRequest* newRequest = [[FacebookRequest alloc]initWithPath:path andBlock:callback];
     [facebookRequestQueue addObject:newRequest];
     [newRequest release];
 
-    [self startFacebookRequest];
+    [facebook isSessionValid] ? [self startFacebookRequest] : nil;
 }
 
 -(void)startFacebookRequest{
@@ -80,12 +86,14 @@ static NSString* kAppId = @"223708291010693";
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
     [defaults synchronize];
+    [self startFacebookRequest];
     
 }
 -(void)fbDidExtendToken:(NSString *)accessToken expiresAt:(NSDate *)expiresAt{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [self startFacebookRequest];
     [defaults synchronize];
 }
 -(void)fbDidLogout{
