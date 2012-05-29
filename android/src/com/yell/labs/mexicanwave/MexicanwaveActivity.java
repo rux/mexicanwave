@@ -153,6 +153,11 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 		
 		
 		roarHandler.highScore = prefs.getInt("highScore", 0);
+		
+		if (prefs.getBoolean("pref_no_game", false) == false) {
+			String scoreText = "Score: 0\nHigh score: " + String.valueOf(roarHandler.highScore);
+			scoreView.setText(scoreText);
+		}
        
     }
     
@@ -247,7 +252,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 					roarHandler.setAzimuth(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 					roarHandler.check();  // this checks to see if we should be roaring or not.
 					
-					if (roarHandler.currentlyRoaring == true) {
+					if (roarHandler.currentlyRoaring == true && roarHandler.noGameMode == false ) {
 						
 						// scores might have changed, so update prefs if this is the case
 						if (roarHandler.score > roarHandler.highScore) {
