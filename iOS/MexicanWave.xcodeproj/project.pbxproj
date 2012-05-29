@@ -92,6 +92,11 @@
 		00D165D01574C7530075ED9A /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D165C61574C7530075ED9A /* SDWebImagePrefetcher.m */; };
 		00D165D11574C7530075ED9A /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D165C81574C7530075ED9A /* UIButton+WebCache.m */; };
 		00D165D21574C7530075ED9A /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D165CA1574C7530075ED9A /* UIImageView+WebCache.m */; };
+		00D165D71574C8270075ED9A /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D165D41574C8270075ED9A /* FacebookController.m */; };
+		00D165D81574C8270075ED9A /* FacebookUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D165D61574C8270075ED9A /* FacebookUser.m */; };
+		00D165DC1574CF3D0075ED9A /* FacebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D165DB1574CF3D0075ED9A /* FacebookViewController.m */; };
+		00D165DF1574D7360075ED9A /* FacebookRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D165DE1574D7360075ED9A /* FacebookRequest.m */; };
+		00D165E11574E6F20075ED9A /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D165E01574E6F20075ED9A /* mask.png */; };
 		00D26F361535BE85004BC8ED /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F351535BE85004BC8ED /* SettingsView.m */; };
 		00D26F551536C886004BC8ED /* AppUpgradeConfiguration.plist in Resources */ = {isa = PBXBuildFile; fileRef = 00D26F4A1536C886004BC8ED /* AppUpgradeConfiguration.plist */; };
 		00D26F561536C886004BC8ED /* AppUpgradeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D26F4C1536C886004BC8ED /* AppUpgradeController.m */; };
@@ -262,6 +267,15 @@
 		00D165C81574C7530075ED9A /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
 		00D165C91574C7530075ED9A /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		00D165CA1574C7530075ED9A /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		00D165D31574C8270075ED9A /* FacebookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookController.h; sourceTree = "<group>"; };
+		00D165D41574C8270075ED9A /* FacebookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookController.m; sourceTree = "<group>"; };
+		00D165D51574C8270075ED9A /* FacebookUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookUser.h; sourceTree = "<group>"; };
+		00D165D61574C8270075ED9A /* FacebookUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookUser.m; sourceTree = "<group>"; };
+		00D165DA1574CF3D0075ED9A /* FacebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookViewController.h; sourceTree = "<group>"; };
+		00D165DB1574CF3D0075ED9A /* FacebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookViewController.m; sourceTree = "<group>"; };
+		00D165DD1574D7350075ED9A /* FacebookRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookRequest.h; sourceTree = "<group>"; };
+		00D165DE1574D7360075ED9A /* FacebookRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookRequest.m; sourceTree = "<group>"; };
+		00D165E01574E6F20075ED9A /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
 		00D26F341535BE85004BC8ED /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		00D26F351535BE85004BC8ED /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		00D26F4A1536C886004BC8ED /* AppUpgradeConfiguration.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppUpgradeConfiguration.plist; sourceTree = "<group>"; };
@@ -415,6 +429,7 @@
 		00813F08152DE72A00262289 /* Settings / Config */ = {
 			isa = PBXGroup;
 			children = (
+				00D165D91574CF0A0075ED9A /* Facebook Controllers */,
 				00D26F341535BE85004BC8ED /* SettingsView.h */,
 				00D26F351535BE85004BC8ED /* SettingsView.m */,
 			);
@@ -517,6 +532,21 @@
 			path = "Image Cache";
 			sourceTree = "<group>";
 		};
+		00D165D91574CF0A0075ED9A /* Facebook Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				00D165D31574C8270075ED9A /* FacebookController.h */,
+				00D165D41574C8270075ED9A /* FacebookController.m */,
+				00D165D51574C8270075ED9A /* FacebookUser.h */,
+				00D165D61574C8270075ED9A /* FacebookUser.m */,
+				00D165DA1574CF3D0075ED9A /* FacebookViewController.h */,
+				00D165DB1574CF3D0075ED9A /* FacebookViewController.m */,
+				00D165DD1574D7350075ED9A /* FacebookRequest.h */,
+				00D165DE1574D7360075ED9A /* FacebookRequest.m */,
+			);
+			name = "Facebook Controllers";
+			sourceTree = "<group>";
+		};
 		00D26F491536C886004BC8ED /* DeprecationAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -589,6 +619,7 @@
 		196B8DF51517B58700DAD14A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				00D165E01574E6F20075ED9A /* mask.png */,
 				00CEAC2E1563DE0900E14F67 /* Background */,
 				002CA91815624DE900B9B155 /* Mexican Sprites */,
 				002CA9641562A62A00B9B155 /* cloud@2x.png */,
@@ -892,6 +923,7 @@
 				00FEAAD4156CE6A6003E1921 /* background_10@2x.png in Resources */,
 				00D165A81574C6F90075ED9A /* FBDialog.bundle in Resources */,
 				00D165CB1574C7530075ED9A /* placeholder.png in Resources */,
+				00D165E11574E6F20075ED9A /* mask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -937,6 +969,10 @@
 				00D165D01574C7530075ED9A /* SDWebImagePrefetcher.m in Sources */,
 				00D165D11574C7530075ED9A /* UIButton+WebCache.m in Sources */,
 				00D165D21574C7530075ED9A /* UIImageView+WebCache.m in Sources */,
+				00D165D71574C8270075ED9A /* FacebookController.m in Sources */,
+				00D165D81574C8270075ED9A /* FacebookUser.m in Sources */,
+				00D165DC1574CF3D0075ED9A /* FacebookViewController.m in Sources */,
+				00D165DF1574D7360075ED9A /* FacebookRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,8 +13,11 @@ NSString* const kUserDefaultKeySound;
 NSString* const kUserDefaultKeyGameMode;
 NSString* const kSpeedSegementDidChange;
 NSString* const kGameModeDidChange;
+NSString* const kUserDefaultKeyCustomCactus;
+NSString* const kUserDefaultKeyCustomCactusImages;
 
-@interface SettingsView : UIView <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate>
+
+@interface SettingsView : UIView <UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *table;
 

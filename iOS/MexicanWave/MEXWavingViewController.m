@@ -14,6 +14,7 @@
 #import "UsageMetrics.h"
 #import "MEXAdvertController.h"
 #import "GenericWebViewController.h"
+#import "FacebookViewController.h"
 
 #define kTorchOnTime 0.25f
 #define kModelKeyPathForPeriod @"wavePeriodInSeconds"
@@ -449,6 +450,17 @@
     [webView release];
     [navController release];
     [cancel release];
+}
+-(void)didTapFacebook:(id)sender{
+    FacebookViewController* facebook = [[FacebookViewController alloc]init];
+    
+    facebook.title = NSLocalizedString(@"Choose your friends", @"The title text shown in the Facebook view");
+    
+    UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:facebook];
+    
+    [self presentModalViewController:navController animated:YES];
+    [facebook release];
+    [navController release];
 }
 
 - (IBAction)didTapGrabber:(id)sender {
