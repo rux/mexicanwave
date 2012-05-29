@@ -38,4 +38,5 @@
 - (void)resume;
 -(void)startWave;
 -(void)didTapLegelButton:(id)sender;
+-(void)didTapFacebook:(id)sender;
 @end

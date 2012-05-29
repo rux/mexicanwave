@@ -10,7 +10,7 @@
 #import "MEXWavingViewController.h"
 #import "AppUpgradeModel.h"
 #import "UsageMetrics.h"
-
+#import "FacebookController.h"
 @interface MEXAppDelegate ()
 // -- App upgrade model (upgrade encouragement support) --
 @property (nonatomic, retain)  AppUpgradeController* upgradeController;
@@ -65,6 +65,11 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+// For iOS 4.2+ support
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [[[FacebookController sharedController] facebook] handleOpenURL:url]; 
 }
 
 /**

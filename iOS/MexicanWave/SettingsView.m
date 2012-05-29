@@ -18,17 +18,24 @@
 #define kSettingsKeyLegal NSLocalizedString(@"Legal", @"The label text shown in the Legal button on the main settings page")
 #define kSettingsKeyVersion NSLocalizedString(@"Version", @"The label text shown in the version display on the main settings page")
 #define kSettingsKeyGameMode NSLocalizedString(@"Game Mode",@"Title for Game Mode")
+#define kSettingsKeyCustomCactus NSLocalizedString(@"Custom Cactus",@"Title for Custom Cactus")
+
 
 #define kSettingsVibrationTag 0
 #define kSettingsSoundsTag 1
 #define kSettingsStadiumTag 2
+#define kSettingsGameModeTag 3
+#define kSettingsCustomCactusTag 4
 #define kSwitchWidthOffset 20.0f
 
 NSString* const kUserDefaultKeyVibration = @"sound_preference";
 NSString* const kUserDefaultKeySound = @"vibration_preference";
 NSString* const kUserDefaultKeyGameMode = @"gameMode";
+NSString* const kUserDefaultKeyCustomCactus = @"customCactus";
+NSString* const kUserDefaultKeyCustomCactusImages = @"customCactusImages";
 NSString* const kSpeedSegementDidChange = @"kSpeedSegementDidChange";
 NSString* const kGameModeDidChange = @"kGameModeDidChange";
+NSString* const kCustomCactusImagesDidChange = @"kCustomCactusImagesDidChange";
 
 @interface SettingsView ()
 
@@ -58,10 +65,17 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
 
 -(void)awakeFromNib{
     
-    self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium,kSettingsKeyGameMode, nil];
+    self.userSettingOptions= [NSArray arrayWithObjects:kSettingsKeyVibration,kSettingsKeySounds,kSettingsKeyStadium,kSettingsKeyGameMode,kSettingsKeyCustomCactus, nil];
     NSString* version = [NSString stringWithFormat:@"%@: %@",kSettingsKeyVersion,[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     self.appOptions= [NSArray arrayWithObjects:kSettingsKeyLegal,version, nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didTapReload) name:kCustomCactusImagesDidChange object:nil];
 
+    [self.table reloadData];
+}
+
+
+-(void)didTapReload{
     [self.table reloadData];
 }
 #pragma mark TableView Delegates
@@ -114,6 +128,7 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
     cell.accessoryType = (indexPath.section == 1 && indexPath.row == 0) ? UITableViewCellAccessoryDisclosureIndicator : UITableViewCellAccessoryNone;
     cell.selectionStyle = (indexPath.section == 1 && indexPath.row == 0) ? UITableViewCellSelectionStyleBlue : UITableViewCellSelectionStyleNone;
     
+     
     if(indexPath.section == 1){
         return cell;
     }
@@ -139,8 +154,11 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
         case kSettingsStadiumTag:
             switchControl.on = speedSelection;
             break; 
-        case 3:
+        case kSettingsGameModeTag:
             switchControl.on = [defaults boolForKey:kUserDefaultKeyGameMode];
+            break; 
+        case kSettingsCustomCactusTag:
+            switchControl.on = [defaults boolForKey:kUserDefaultKeyCustomCactus];
             break; 
     }
     
@@ -162,7 +180,7 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
         const NSInteger selection = currentSwitch.isOn ? 2 : 0;
         [[NSNotificationCenter defaultCenter] postNotificationName:kSpeedSegementDidChange object:[NSNumber numberWithInteger:selection]];
     }
-    else if(currentSwitch.tag == 3){
+    else if(currentSwitch.tag == kSettingsGameModeTag){
         [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyGameMode];
         [[NSNotificationCenter defaultCenter] postNotificationName:kGameModeDidChange object:nil];
         if(currentSwitch.isOn){
@@ -173,6 +191,24 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
         }
         
     }
+    
+    else if(currentSwitch.tag == kSettingsCustomCactusTag){
+        
+        if(currentSwitch.isOn){
+
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Use Facebook Profile Photos",@"Title for Custom Catucs Alert View") message:NSLocalizedString(@"Would you like to replace the cactuses with a photo of you and your friends?", @"Hint Text when changing custom cactus") delegate:self cancelButtonTitle:NSLocalizedString(@"No", @"Dismiss button of alert view") otherButtonTitles:NSLocalizedString(@"Yes", @"Agree to alert view"),nil];
+            alert.tag = kSettingsCustomCactusTag;
+            [alert show];
+            [alert release];   
+        }
+        else{
+            [defaults setBool:currentSwitch.isOn forKey:kUserDefaultKeyCustomCactus];
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserDefaultKeyCustomCactusImages];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCustomCactusImagesDidChange object:nil];
+        }
+    }
+
+    
         
     [defaults synchronize];
 }
@@ -188,13 +224,14 @@ NSString* const kGameModeDidChange = @"kGameModeDidChange";
     }
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+-(void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if(alertView.tag == kSettingsCustomCactusTag && alertView.cancelButtonIndex != buttonIndex){
+        MEXAppDelegate* appDelagate = (MEXAppDelegate*)[[UIApplication sharedApplication] delegate];
+        [appDelagate.viewController didTapFacebook:self];
+    }
+    
+    [self.table reloadData];
 }
-*/
+
 
 @end

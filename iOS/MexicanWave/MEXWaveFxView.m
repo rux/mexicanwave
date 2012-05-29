@@ -17,6 +17,7 @@
 -(void)configureWave;
 -(void)animateBounceWithCycleTime:(NSTimeInterval)cycleTime activeTime:(NSTimeInterval)activeTime phase:(float)phase imageViewIndex:(NSInteger)index;
 -(void)enableGameMode;
+- (UIImage*) maskImage:(UIImage *)image;
 @property(nonatomic,retain) NSArray* sprites;
 @property(nonatomic,retain) NSArray* animationHeights;
 
@@ -106,9 +107,10 @@
                              [NSNumber numberWithFloat:35],
                              [NSNumber numberWithFloat:30], nil];
 
- 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableUserPhotos) name:kCustomCactusImagesDidChange object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGameMode) name:kGameModeDidChange object:nil];
     [self enableGameMode];
+    [self enableUserPhotos];
 }
 
 -(void)enableGameMode{
@@ -116,11 +118,101 @@
         self.sprite_7.image = nil;
         return;
     }
+    NSMutableArray* images = (NSMutableArray*)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultKeyCustomCactusImages];
+    if(images){  
+        NSData* data = (NSData*)[images objectAtIndex:0];
+        self.sprite_7.image = [self maskImage:[UIImage imageWithData:data]];
+        return;        
+    }
     
     self.sprite_7.image = [UIImage imageNamed:@"sprite_8.png"];
     
 }
 
+-(void)enableUserPhotos{
+
+    
+    NSArray* frontOrderedSprites = [NSArray arrayWithObjects:
+                                   sprite_7,
+                                   sprite_6,
+                                   sprite_8,
+                                   sprite_5,
+                                   sprite_9,
+                                   sprite_4,
+                                   sprite_10,
+                                   sprite_3,
+                                   sprite_11,
+                                   sprite_2,
+                                   sprite_12,
+                                   sprite_1, nil];
+
+    
+    NSMutableArray* images = (NSMutableArray*)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultKeyCustomCactusImages];
+    if(images){    
+        
+        for (NSInteger i = 0; i<[images count]; i++) {
+            NSData* data = (NSData*)[images objectAtIndex:i];
+            UIImageView *sprite = (UIImageView*)[frontOrderedSprites objectAtIndex:i];
+            
+            sprite.image = [self maskImage:[UIImage imageWithData:data]];
+            
+        }
+   
+    }  else{
+        
+        self.sprite_5.image = [UIImage imageNamed:@"sprite_5"];
+        self.sprite_9.image = [UIImage imageNamed:@"sprite_5"];
+        self.sprite_6.image = [UIImage imageNamed:@"sprite_6"];
+        self.sprite_8.image = [UIImage imageNamed:@"sprite_6"];
+        self.sprite_7.image = [UIImage imageNamed:@"sprite_8"];
+    }
+    
+    [self enableGameMode];
+    
+}
+
+- (UIImage*) maskImage:(UIImage *)image {
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    UIImage *maskImage = [UIImage imageNamed:@"mask.png"];
+    CGImageRef maskImageRef = [maskImage CGImage];
+    
+    // create a bitmap graphics context the size of the image
+    CGContextRef mainViewContentContext = CGBitmapContextCreate (NULL, maskImage.size.width, maskImage.size.height, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
+    
+    
+    if (mainViewContentContext==NULL)
+        return NULL;
+    
+    CGFloat ratio = 0;
+    
+    ratio = maskImage.size.width/ image.size.width;
+    
+    if(ratio * image.size.height < maskImage.size.height) {
+        ratio = maskImage.size.height/ image.size.height;
+    } 
+    
+    CGRect rect1  = {{0, 0}, {maskImage.size.width, maskImage.size.height}};
+    CGRect rect2  = {{-((image.size.width*ratio)-maskImage.size.width)/2 , -((image.size.height*ratio)-maskImage.size.height)/2}, {image.size.width*ratio, image.size.height*ratio}};
+    
+    
+    CGContextClipToMask(mainViewContentContext, rect1, maskImageRef);
+    CGContextDrawImage(mainViewContentContext, rect2, image.CGImage);
+    
+    
+    // Create CGImageRef of the main view bitmap content, and then
+    // release that bitmap context
+    CGImageRef newImage = CGBitmapContextCreateImage(mainViewContentContext);
+    CGContextRelease(mainViewContentContext);
+    
+    UIImage *theImage = [UIImage imageWithCGImage:newImage];
+    
+    CGImageRelease(newImage);
+    
+    // return the image
+    return theImage;
+}
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)startingPhase numberOfPeaks:(NSUInteger)peaksPerCycle {
    
     const NSUInteger numberOfLamps = self.sprites.count;
