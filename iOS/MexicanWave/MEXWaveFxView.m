@@ -113,6 +113,8 @@
     [self enableUserPhotos];
 }
 
+#pragma mark User settings
+
 -(void)enableGameMode{
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode]){
@@ -143,7 +145,7 @@
                                    sprite_9,
                                    nil];
 
-    //reset all the sprite images to there defaults;
+    //reset all the sprite images to there defaults
     self.sprite_5.image = [UIImage imageNamed:@"sprite_5"];
     self.sprite_9.image = [UIImage imageNamed:@"sprite_5"];
     self.sprite_6.image = [UIImage imageNamed:@"sprite_6"];
@@ -219,6 +221,9 @@
     // return the image
     return theImage;
 }
+
+#pragma mark Animation
+
 - (void)animateWithDuration:(NSTimeInterval)duration startingPhase:(float)startingPhase numberOfPeaks:(NSUInteger)peaksPerCycle {
    
     const NSUInteger numberOfLamps = self.sprites.count;

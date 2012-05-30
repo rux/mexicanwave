@@ -24,6 +24,7 @@
 }
 
 -(void)dealloc{
+    self.completionBlock = nil;
     [path release];
     [super dealloc];
 }

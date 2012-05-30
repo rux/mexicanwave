@@ -13,11 +13,8 @@
 @interface FacebookController : NSObject <FBSessionDelegate, FBRequestDelegate>
 
 + (id)sharedController;
--(void)startFacebookRequest;
 -(void)facebookRequestWithPath:(NSString*)path withCompletion:(FacebookAPICallBack)callback;
 
-@property(nonatomic,retain)NSMutableArray* facebookRequestQueue;
-@property(nonatomic,retain) Facebook* facebook;
-@property(nonatomic,getter = isFetching) BOOL fetching;
+
 
 @end
