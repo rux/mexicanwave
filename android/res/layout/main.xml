@@ -48,6 +48,7 @@
             android:src="@drawable/sprite_1"
             android:tag="1"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
              />
 
     <ImageView
@@ -69,6 +70,7 @@
         android:layout_marginTop="35dp"
         android:tag="330"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />        
       
         <ImageView
@@ -80,6 +82,7 @@
         android:layout_marginTop="35dp"
         android:tag="30"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />
     
     
@@ -102,6 +105,7 @@
         android:layout_marginTop="52dp"
         android:tag="300"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />    
         <ImageView
         android:id="@+id/cactus_7"
@@ -112,6 +116,7 @@
         android:layout_marginTop="52dp"
         android:tag="60"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />
     
     <ImageView
@@ -149,6 +154,7 @@
         android:layout_marginTop="97dp"
         android:tag="270"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />    
         <ImageView
         android:id="@+id/cactus_8"
@@ -159,6 +165,7 @@
         android:layout_marginTop="97dp"
         android:tag="90"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />
     
     
@@ -203,6 +210,7 @@
         android:layout_marginTop="149dp"
         android:tag="240"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />    
         <ImageView
         android:id="@+id/cactus_9"
@@ -213,6 +221,7 @@
         android:layout_marginTop="149dp"
         android:tag="120"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />
     
     
@@ -247,6 +256,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/background_8"
         android:layout_marginLeft="62dp"
+        android:contentDescription="@string/backgroundImageDescription"
         
         android:src="@drawable/centre_disc" />
     
@@ -272,6 +282,7 @@
         android:layout_marginTop="235dp"
         android:tag="210"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />    
         <ImageView
         android:id="@+id/cactus_10"
@@ -282,6 +293,7 @@
         android:layout_marginTop="235dp"
         android:tag="150"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />
     
     <ImageView
@@ -305,6 +317,7 @@
         android:layout_marginTop="285dp"
         android:tag="180"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/cactus"
         />
     
     

@@ -10,7 +10,7 @@ import android.util.Log;
 public class SntpClient {
 	   private static final String TAG = "SntpClient";
 
-	    private static final int REFERENCE_TIME_OFFSET = 16;
+	    // private static final int REFERENCE_TIME_OFFSET = 16;
 	    private static final int ORIGINATE_TIME_OFFSET = 24;
 	    private static final int RECEIVE_TIME_OFFSET = 32;
 	    private static final int TRANSMIT_TIME_OFFSET = 40;

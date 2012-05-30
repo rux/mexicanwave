@@ -31,7 +31,6 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.omniture.*;
@@ -248,7 +247,7 @@ public class MexicanwaveActivity extends Activity implements SensorEventListener
 																	// when the phone is flat, screen parallel to the ground, but as we want the phones to be 
 																	// held up to do a Mexican wave, we don't really care about this state.
 					
-					int oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
+					// int oldAzimuth = roarHandler.getAzimuthInDegrees();  // the old azimuth is used to feed into the animation that smoothes the rotation animation
 					
 					roarHandler.setAzimuth(azimuth);  // this sends new raw (and usually very, very noisy) data to the roarHandler, where it is smoothed out and set.
 					roarHandler.check();  // this checks to see if we should be roaring or not.
