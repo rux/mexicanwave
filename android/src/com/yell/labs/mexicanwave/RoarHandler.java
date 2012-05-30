@@ -1,10 +1,7 @@
 package com.yell.labs.mexicanwave;
 
-import java.util.Timer;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
