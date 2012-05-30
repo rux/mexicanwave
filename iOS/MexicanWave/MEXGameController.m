@@ -207,7 +207,7 @@
     const CGPoint currentCenter = self.gameModeSprite.center;
     
     [UIView animateWithDuration:speed animations:^{
-        self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 100);
+        self.gameModeSprite.center = CGPointMake(currentCenter.x, currentCenter.y - 115);
         self.gameModeSprite.layer.transform = overshootScale;
         
     }completion:^(BOOL finished) {
