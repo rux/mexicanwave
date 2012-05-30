@@ -11,12 +11,19 @@
 #import "FacebookUser.h"
 #import "FacebookRequest.h"
 
+/*Facebook Graph API Docs can be found: https://developers.facebook.com/tools/explorer
+ SDK can be found at https://developers.facebook.com/docs/reference/iossdk/
+ */
+
+static NSString* kAppId = @"223708291010693";
+
 @interface FacebookController()
 
 @property(nonatomic,retain)NSMutableArray* facebookRequestQueue;
 @property(nonatomic,retain) Facebook* facebook;
 @property(nonatomic,getter = isFetching) BOOL fetching;
--(void)startFacebookRequests;
+
+-(void)startFacebookRequests; 
 
 @end
 
@@ -24,7 +31,6 @@
 @implementation FacebookController
 @synthesize facebook;
 @synthesize facebookRequestQueue,fetching;
-static NSString* kAppId = @"223708291010693";
 
 -(void)dealloc{
     [facebook release];
@@ -65,6 +71,7 @@ static NSString* kAppId = @"223708291010693";
 
 -(void)facebookRequestWithPath:(NSString*)path withCompletion:(FacebookAPICallBack)callback{
     
+    //if we are not authized - add the current request to the queue and go authoize
     if (![facebook isSessionValid]) {
         [facebook authorize:nil];
         FacebookRequest* newRequest = [[FacebookRequest alloc]initWithPath:path andBlock:callback];
@@ -77,11 +84,16 @@ static NSString* kAppId = @"223708291010693";
     [facebookRequestQueue addObject:newRequest];
     [newRequest release];
 
-    [facebook isSessionValid] ? [self startFacebookRequests] : nil;
+    [self startFacebookRequests];
+    
 }
 
 -(void)startFacebookRequests{
-    
+    /*
+     Check if we are already completing a request
+     Make sure there is requests in th queue
+     Take the first item of the queue and request its path with facebook
+     */
     if(self.isFetching){
         return;
     }

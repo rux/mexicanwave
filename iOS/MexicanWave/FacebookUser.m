@@ -18,14 +18,12 @@
     if(!dict){
         return nil;
     }
-    
-    
+        
     self.fullname = [dict valueForKey:@"name"];
     self.userID = [dict valueForKey:@"id"];
     
     if([self.userID length]){
-    
-        self.profileImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture",self.userID]];
+            self.profileImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture",self.userID]];
         [[SDWebImageManager sharedManager] downloadWithURL:self.profileImageURL delegate:self];
     }
     
@@ -35,6 +33,7 @@
 -(void)webImageManager:(SDWebImageManager *)imageManager didFinishWithImage:(UIImage *)image{
     self.profilePhoto = image;
 }
+
 -(void)dealloc{
     [profilePhoto release];
     [fullname release];

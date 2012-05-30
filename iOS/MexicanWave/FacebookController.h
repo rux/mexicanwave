@@ -13,7 +13,7 @@
 @interface FacebookController : NSObject <FBSessionDelegate, FBRequestDelegate>
 
 + (id)sharedController;
--(void)facebookRequestWithPath:(NSString*)path withCompletion:(FacebookAPICallBack)callback;
+-(void)facebookRequestWithPath:(NSString*)path withCompletion:(FacebookAPICallBack)callback; // Add a request to the queue - Path relates to FB Graph API 
 
 
 
