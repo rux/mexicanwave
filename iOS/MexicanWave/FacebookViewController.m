@@ -122,6 +122,10 @@
     [[FacebookController sharedController] facebookRequestWithPath:@"me" withCompletion:^(FBRequest *request, NSError *error, NSData *data) {
         
         if(error){
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"An error has occured, Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes",nil];
+            [alert show];
+            [alert release];
+            
             return;
         }
         
@@ -148,6 +152,10 @@
     [[FacebookController sharedController] facebookRequestWithPath:@"me/friends" withCompletion:^(FBRequest *request, NSError *error, NSData *data) {
         
         if(error){
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"An error has occured, Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes",nil];
+            [alert show];
+            [alert release];
+                        
             return;
         }
         
@@ -316,6 +324,16 @@
     }
     
    
+}
+
+-(void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if(alertView.cancelButtonIndex == buttonIndex){
+        [self didTapCancel];
+    }
+    else {
+        [self didTapReload];
+    }
+    
 }
 
 @end

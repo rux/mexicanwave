@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FacebookViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+@interface FacebookViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
 @end
