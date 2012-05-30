@@ -20,7 +20,6 @@ static NSString* kAppId = @"223708291010693";
 @interface FacebookController()
 
 @property(nonatomic,retain)NSMutableArray* facebookRequestQueue;
-@property(nonatomic,retain) Facebook* facebook;
 @property(nonatomic,getter = isFetching) BOOL fetching;
 
 -(void)startFacebookRequests; 

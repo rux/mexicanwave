@@ -14,6 +14,7 @@
 
 + (id)sharedController;
 -(void)facebookRequestWithPath:(NSString*)path withCompletion:(FacebookAPICallBack)callback; // Add a request to the queue - Path relates to FB Graph API 
+@property(nonatomic,retain) Facebook* facebook;
 
 
 
