@@ -60,35 +60,34 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGameMode) name:kGameModeDidChange object:nil];
    
+    
+    //The delay allows for the hint text to dissappear
+
     double delayInSeconds = 7.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self enableGameMode];
-
     });
+    
     [self enableUserPhotos];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableUserPhotos) name:kCustomCactusImagesDidChange object:nil];
 }
 
 -(void)enableUserPhotos{
                                         
-    
+    //if we have a custom image to use set up the sprite
     NSMutableArray* images = (NSMutableArray*)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultKeyCustomCactusImages];
     if(images){    
         
         NSData* data = (NSData*)[images objectAtIndex:0];
-            
         gameModeSprite.image = [self maskImage:[UIImage imageWithData:data]];
-        
     }  
     
     else{
-        
         self.gameModeSprite.image = [UIImage imageNamed:@"sprite_11"];
-    
     }
-    
-    
+       
     
 }
 -(void)enableGameMode{
@@ -97,12 +96,10 @@
 
     lblHighscore.text = [NSString stringWithFormat:@"High Score: %u",[[NSUserDefaults standardUserDefaults] integerForKey:kHighScoreKey]];
     lblCurrentScore.text = [NSString stringWithFormat:@"Score: %u",currentScore];
-    
-      
+          
     lblCurrentScore.alpha = gameTextAlpha;
     lblHighscore.alpha = gameTextAlpha;
 
-    
 }
 
 -(void)setCanWave:(BOOL)wave{
