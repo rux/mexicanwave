@@ -12,31 +12,42 @@
 #import "JSON.h"
 #import "UIImageView+WebCache.h"
 #import "SettingsView.h"
-
+#import "QuartzCore/QuartzCore.h"
 @interface FacebookViewController ()
 @property(nonatomic,retain) NSMutableArray* facebookUsers;
 @property(nonatomic,retain) NSMutableArray* selectedUsers;
 @property(nonatomic,retain) FacebookUser *userProfile;
+@property(nonatomic,retain) UIView* loadingView;
+@property(nonatomic,retain) UITableView* tableView;
 -(void)fetchFriends;
+-(void)shouldShowLoadingScreen:(BOOL)loading;
+
 @end
 
 @implementation FacebookViewController
-@synthesize facebookUsers,userProfile,selectedUsers;
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+@synthesize facebookUsers,userProfile,selectedUsers,loadingView;
+@synthesize tableView;
+
+-(void)dealloc{
+    [tableView release];
+    [facebookUsers release];
+    [selectedUsers release];
+    [userProfile release];
+    [loadingView release];
+    [super dealloc];
 }
+
 
 - (void)viewDidLoad
 {
+    
+    tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    [self.view addSubview:tableView];
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
-     self.clearsSelectionOnViewWillAppear = NO;
     
       
     UIBarButtonItem* save = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didTapSave)];
@@ -50,6 +61,36 @@
     selectedUsers = [[NSMutableArray alloc]init];
     
     
+}
+
+
+-(void)shouldShowLoadingScreen:(BOOL)loading{
+    if(!loadingView){
+        loadingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+        loadingView.backgroundColor = [UIColor blackColor];
+        loadingView.alpha = 0; 
+        loadingView.layer.cornerRadius = 10.0f;
+        
+        UIActivityIndicatorView* activity = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        activity.center = loadingView.center;
+        [activity startAnimating];
+        [loadingView addSubview:activity];
+        loadingView.center = CGPointMake(self.view.frame.size.width*0.5, self.view.frame.size.height*0.5);
+        
+        [self.view insertSubview:loadingView aboveSubview:self.tableView];
+    }
+ 
+    if(loading){
+        [UIView animateWithDuration:0.2 animations:^{
+            loadingView.alpha = 1; 
+        }];
+    }
+    else {
+        [UIView animateWithDuration:0.3 animations:^{
+            loadingView.alpha = 0; 
+        }];
+    }
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -77,14 +118,21 @@
 }
 
 -(void)didTapReload{
-    
+    [self shouldShowLoadingScreen:YES];
     [[FacebookController sharedController] facebookRequestWithPath:@"me" withCompletion:^(FBRequest *request, NSError *error, NSData *data) {
+        
+        if(error){
+            return;
+        }
+        
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         id jsonResponse = [response JSONValue];
         [response release];
         
         userProfile = [[FacebookUser alloc]initWithDictionary:(NSDictionary*)jsonResponse];
         [[self tableView] reloadData];
+        [self shouldShowLoadingScreen:NO];
+
     }];
     
     [self fetchFriends];
@@ -95,8 +143,14 @@
     if(!facebookUsers){
         facebookUsers = [[NSMutableArray alloc]init];
     }
-    
+    [self shouldShowLoadingScreen:YES];
+
     [[FacebookController sharedController] facebookRequestWithPath:@"me/friends" withCompletion:^(FBRequest *request, NSError *error, NSData *data) {
+        
+        if(error){
+            return;
+        }
+        
         [facebookUsers removeAllObjects];
         [selectedUsers removeAllObjects];
         NSString* response = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
@@ -116,6 +170,7 @@
         
         [response release];
         [self.tableView reloadData];
+        [self shouldShowLoadingScreen:NO];
     }];
 
 }
@@ -158,11 +213,11 @@
     return [facebookUsers count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [table dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -233,7 +288,7 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)table didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     if(indexPath.section ==0){
@@ -241,7 +296,7 @@
     }
     
     
-    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell* cell = [table cellForRowAtIndexPath:indexPath];
     
     if(cell.accessoryType == UITableViewCellAccessoryNone){
         
