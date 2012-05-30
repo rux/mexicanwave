@@ -18,7 +18,6 @@ import android.view.SurfaceView;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 
 
@@ -50,13 +49,12 @@ class RoarHandler {
 	private final String timeServer;
 	private long timeOffset;
 	
-	public boolean touched;
-	private boolean missedTouchOpportunity; // this detects when the wave has passed the main point
+	public Scorer scorer;
 	
-	public int score;
-	public int highScore;
+	public boolean touched;
+	
 
-	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE, boolean vE, boolean nGM) {
+	RoarHandler(Context c, View v, PreviewSurface previewSurface, int wD, int wC, boolean sE, boolean vE, boolean nGM, Scorer s) {
 		context = c;
 		vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);  
         screenFlash = (View) v;
@@ -68,7 +66,7 @@ class RoarHandler {
         noGameMode = nGM;
         isFlat = false;
         touched = false;
-        score = 0;
+        scorer = s;
         
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -182,15 +180,14 @@ class RoarHandler {
 	public void check() {
 		long angle = (-this.getAzimuthInDegrees() + this.getWaveOffestFromAzimuthInDegrees()) % 360;
 
-		if (angle > 170 && angle < 200) {
+		if (angle < 170) {
+			scorer.scoreHasBeenRegisteredForThisCycle = false;
+			touched = false;
+		}
+		else if (angle > 170 && angle < 200) {
 			goWild(angle);
 		} else {
-			if (currentlyRoaring == false && noGameMode == false && missedTouchOpportunity == true) {
-				Toast.makeText(context, "You missed!", Toast.LENGTH_SHORT).show();
-				score = this.score - 5;
-				missedTouchOpportunity = false;
-			}
-			touched = false;
+			scorer.checkMiss();
 		}
 		
 		
@@ -209,6 +206,12 @@ class RoarHandler {
 	public void goWild(long angle) {
 		if (currentlyRoaring != true && cameraReady && isFlat == false) {			
 			if (touched == true || noGameMode==true) {
+				if (noGameMode == false) {
+
+					scorer.registerScoreFromAngle(angle);
+					scorer.scoreHasBeenRegisteredForThisCycle = true;
+				}
+				
 				mSurface.lightOn();
 				
 				lightSwitchTask lightSwitch = new lightSwitchTask();
@@ -232,20 +235,15 @@ class RoarHandler {
 				getNtpTime ntpTime = new getNtpTime();
 				ntpTime.execute(timeServer);
 				
-				if (currentlyRoaring == false) {
-					score = this.score + score(angle);
-					// Toast.makeText(context, String.valueOf(score), 500).show();
-					missedTouchOpportunity = false;
-				}
-				
+
+								
 				currentlyRoaring = true;
 
 			} else {
 				Log.i("MexicanWaveTouch", "missed opportunity");
-				missedTouchOpportunity = true;
 			}
-
 			touched = false;
+
 		}
 	}	
 	
@@ -256,11 +254,7 @@ class RoarHandler {
 		currentlyRoaring = false;
 	}
 	
-	public int score(long angle ) {
-		int points = 0;
-		points = (int) (20 - (angle - 180));
-		return points;
-	}
+
 	
 	
 	private class lightSwitchTask extends AsyncTask<Integer, Void, Boolean> {
