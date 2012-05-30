@@ -122,7 +122,7 @@
     [[FacebookController sharedController] facebookRequestWithPath:@"me" withCompletion:^(FBRequest *request, NSError *error, NSData *data) {
         
         if(error){
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"An error has occured, Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes",nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Error", @"Title for Error on Alert View") message:NSLocalizedString(@"An error has occured, Would you like to try again?",@"Message shown on Facebook Error Alert") delegate:self cancelButtonTitle:@"No" otherButtonTitles:NSLocalizedString(@"OK", @"Dismiss button of alert view"),nil];
             [alert show];
             [alert release];
             
@@ -152,7 +152,7 @@
     [[FacebookController sharedController] facebookRequestWithPath:@"me/friends" withCompletion:^(FBRequest *request, NSError *error, NSData *data) {
         
         if(error){
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"An error has occured, Would you like to try again?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes",nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Error", @"Title for Error on Alert View") message:NSLocalizedString(@"An error has occured, Would you like to try again?",@"Message shown on Facebook Error Alert") delegate:self cancelButtonTitle:@"No" otherButtonTitles:NSLocalizedString(@"OK", @"Dismiss button of alert view"),nil];
             [alert show];
             [alert release];
                         
@@ -186,10 +186,10 @@
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
     if(section == 1 && [facebookUsers count]){
-        return @"Choose your friends";
+        return NSLocalizedString(@"Choose your friends",@"Table View header for choosing facebook Profile");
     }
     
-    return userProfile ? @"Your Profile" : @"";
+    return userProfile ? NSLocalizedString(@"Your Profile",@"Facebook table Header for your profie") : @"";
 }
 
 - (void)viewDidUnload
@@ -309,7 +309,7 @@
     if(cell.accessoryType == UITableViewCellAccessoryNone){
         
         if([selectedUsers count]==4){
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Oops" message:@"You can only add 4 friends" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Oops",@"Title shown when user has tapped to many friends") message:NSLocalizedString(@"You can only add 4 friends",@"Alert Body for when the user has selected too many friends") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
             [alert release];
             return;   
