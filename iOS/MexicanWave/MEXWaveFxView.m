@@ -143,12 +143,22 @@
                                    sprite_9,
                                    nil];
 
+    //reset all the sprite images to there defaults;
+    self.sprite_5.image = [UIImage imageNamed:@"sprite_5"];
+    self.sprite_9.image = [UIImage imageNamed:@"sprite_5"];
+    self.sprite_6.image = [UIImage imageNamed:@"sprite_6"];
+    self.sprite_8.image = [UIImage imageNamed:@"sprite_6"];
+    self.sprite_7.image = [UIImage imageNamed:@"sprite_8"];
+    
+    
     //if there is images to change
     NSMutableArray* images = (NSMutableArray*)[[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultKeyCustomCactusImages];
     if(images){    
         
-        NSAssert1([images count]>[frontOrderedSprites count], @"There is more facebook images than spirtes to change %u", [images count]);
-        
+        if([images count] > [frontOrderedSprites count]){
+            return;
+        }
+                        
         for (NSInteger i = 0; i<[images count]; i++) {
             NSData* data = (NSData*)[images objectAtIndex:i];
             UIImageView *sprite = (UIImageView*)[frontOrderedSprites objectAtIndex:i];
@@ -158,17 +168,7 @@
    
     }  
     
-    //reset all the sprite images to there defaults;
-    else{
-        
-        self.sprite_5.image = [UIImage imageNamed:@"sprite_5"];
-        self.sprite_9.image = [UIImage imageNamed:@"sprite_5"];
-        self.sprite_6.image = [UIImage imageNamed:@"sprite_6"];
-        self.sprite_8.image = [UIImage imageNamed:@"sprite_6"];
-        self.sprite_7.image = [UIImage imageNamed:@"sprite_8"];
-        
-        
-    }
+   
     //if we are in game mode we dont want the sprite to animate so we just remove its image from the view
     if([[NSUserDefaults standardUserDefaults] boolForKey:kUserDefaultKeyGameMode]){
         self.sprite_7.image = nil;
